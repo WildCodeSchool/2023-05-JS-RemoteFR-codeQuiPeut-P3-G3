@@ -1,1 +1,11 @@
 @import "../variables.scss";
+
+
+.admin{
+    width:100%;
+    min-height: 100vh;
+    overflow: none;
+    box-sizing: border-box;
+    padding:10%;
+    background-color: white;
+}

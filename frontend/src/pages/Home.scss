@@ -1,0 +1,41 @@
+@import "../variables.scss";
+
+
+.hero-header{
+  height: calc(100vh - $height-nav);
+  width:100%;
+  box-sizing: border-box;
+  border: 10px solid green;
+}
+
+
+.wrap-content{
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding:5vh;
+    gap:20vh;
+    border: 10px solid red;
+
+    > section:first-child {
+        margin-top: 15vh;
+    }
+
+    > section:last-child {
+        margin-bottom: 15vh;
+    }
+
+
+    section{
+        box-sizing: border-box;
+        height: 80vh;
+        width:100%;
+        border: 2px solid black;
+        background-color: white;
+        max-width: 1300px;
+    }
+
+
+}
