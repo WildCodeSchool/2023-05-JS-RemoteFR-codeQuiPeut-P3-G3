@@ -1,6 +1,9 @@
 /* COMPONENTS */
 import Home from "./pages/Home"
 import Admin from "./pages/Admin"
+import NavBar from "./components/global/NavBar"
+import Profile from "./pages/Profile"
+import Games from "./pages/Games"
 
 /* PACKAGES */
 import { Routes, Route } from "react-router-dom"
@@ -14,7 +17,7 @@ function App() {
       {/* NAVBAR */}
       <header className="nav">
         {/* -> Navbar à ajouter ici */}
-        <p style={{ textAlign: "center" }}> navbar </p>
+        <NavBar />
       </header>
 
       {/* MAIN CONTENT */}
@@ -22,13 +25,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/games" element={<Games />} />
         </Routes>
       </main>
-
-      {/* FOOTER */}
-      <footer>
-        <p style={{ textAlign: "center" }}> footer </p>
-      </footer>
     </>
   )
 }

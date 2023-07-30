@@ -1,0 +1,191 @@
+@import "../../../../../variables.scss";
+
+// variables.scss
+$landscape-columns: repeat(2, 1fr) 0.4fr;
+$landscape-rows: 0.5fr 6fr;
+
+$portrait-columns: repeat(2, 1fr) 0.4fr;
+$portrait-rows: 0.5fr 6fr 2fr;
+
+$desktop-columns: 0.2fr 1fr 0.2fr;
+$desktop-rows: repeat(2, 1fr);
+
+@mixin scene-styles {
+  display: grid;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  min-height: 80vh;
+}
+
+@mixin landscape-styles {
+  @media (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin portrait-styles {
+  @media (orientation: portrait) {
+    @content;
+  }
+}
+
+@mixin desktop-styles {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+
+.scenes {
+  @include scene-styles;
+
+  /* PORTRAIT / LANDSCAPE */
+  @include landscape-styles {
+    grid-template-columns: $landscape-columns;
+    grid-template-rows: $landscape-rows;
+    background-color: yellow;
+  }
+
+  @include portrait-styles {
+    grid-template-columns: $portrait-columns;
+    grid-template-rows: $portrait-rows;
+    background-color: red;
+  }
+
+  /* DESKTOP */
+  @include desktop-styles {
+    grid-template-columns: $desktop-columns;
+    grid-template-rows: $desktop-rows;
+  }
+
+  /* PLACEMENT ELEMENTS GRID */
+  &__scenes {
+    background-color: purple;
+    @include landscape-styles {
+      grid-area: 1 / 1 / 2 / 4;
+    }
+    @include portrait-styles {
+      grid-area: 1 / 1 / 2 / 4;
+    }
+    @include desktop-styles {
+      grid-area: 1 / 1 / 3 / 4;
+    }
+  }
+
+  &__constructor {
+    background-color: green;
+    @include landscape-styles {
+      grid-area: 2 / 1 / 3 / 3;
+    }
+    @include portrait-styles {
+      grid-area: 2 / 1 / 3 / 4;
+    }
+    @include desktop-styles {
+      grid-area: 1 / 1 / 3 / 2;
+    }
+  }
+
+  &__properties {
+    background-color: blue;
+    @include landscape-styles {
+      grid-area: 2 / 3 / 3 / 4;
+    }
+    @include portrait-styles {
+      grid-area: 3 / 1 / 4 / 4;
+    }
+    @include desktop-styles {
+      grid-area: 1 / 2 / 3 / 3;
+    }
+  }
+}
+
+.parent {
+  @include scene-styles;
+}
+
+// .scenes {
+//     display: grid;
+//     grid-column-gap: 0px;
+//     grid-row-gap: 0px;
+
+//     min-height: 80vh;
+
+//     /* PORTRAIT / LANDSCAPE */
+//     @media (orientation: landscape){
+//     grid-template-columns: repeat(2, 1fr) 0.4fr;
+//     grid-template-rows: 0.5fr 6fr;
+//     background-color: yellow;
+//     }
+
+//     @media (orientation: portrait){
+//     grid-template-columns: repeat(2, 1fr) 0.4fr;
+//     grid-template-rows: 0.5fr 6fr 2fr;
+//     background-color: red;
+//     }
+
+//     /* DESKTOP */
+//     @media (min-width:1200px){
+
+//         grid-template-columns: 0.2fr 1fr 0.2fr;
+//         grid-template-rows: repeat(2, 1fr);
+//     }
+
+//     /* PLACEMENT ELEMENTS GRID */
+//     &__scenes{
+//         background-color: purple;
+
+//         @media (orientation: landscape){
+//         grid-area: 1 / 1 / 2 / 4;
+//         }
+
+//         @media (orientation: portrait){
+//         grid-area: 1 / 1 / 2 / 4;
+//         }
+
+//         @media (min-width:1200px){
+//         grid-area: 1 / 1 / 3 / 4;
+//         }
+//     }
+//     &__constructor {
+//         background-color: green;
+
+//         @media (orientation: landscape){
+//         grid-area: 2 / 1 / 3 / 3;
+//         }
+
+//         @media (orientation: portrait){
+//         grid-area: 2 / 1 / 3 / 4;
+//         }
+
+//         @media (min-width:1200px ){
+//         grid-area: 1 / 1 / 3 / 2
+//         }
+//     }
+
+//     &__properties {
+//         background-color: blue;
+
+//         @media(orientation: landscape){
+//         grid-area: 2 / 3 / 3 / 4;
+//         }
+
+//         @media(orientation: portrait){
+//         grid-area: 3 / 1 / 4 / 4;
+//         }
+
+//         @media (min-width:1200px){
+//         grid-area: 1 / 2 / 3 / 3;
+//         }
+//     }
+// }
+
+// .parent {
+//     display: grid;
+//     grid-template-columns: repeat(2, 1fr) 0.4fr;
+//     grid-template-rows: 0.5fr 6fr 2fr;
+//     grid-column-gap: 0px;
+//     grid-row-gap: 0px;
+//     }
+
+//     .div1 { grid-area: 1 / 1 / 2 / 4; }
+//     .div2 { grid-area: 2 / 1 / 3 / 4; }
+//     .div3 { grid-area: 3 / 1 / 4 / 4; }

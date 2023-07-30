@@ -1,1 +1,17 @@
-@import "../variables.scss";
+@import "../../variables.scss";
+
+ul {
+  display: flex;
+  gap: 2rem;
+
+  list-style: none;
+
+  li {
+    text-decoration: none;
+
+    a {
+      color: white;
+      text-decoration: none;
+    }
+  }
+}

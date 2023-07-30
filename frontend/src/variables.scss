@@ -4,22 +4,60 @@
 $height-nav: 8vh;
 $height-footer: 20vh;
 
-
 /* ==============   COLORS  ===============*/
-$color--darkestPurple : #0C011C;
-$color--darkPurple: #2C182E;
-$color--purple: #44114D;
-$color--orange : #F97700;
-$color--green: #3F7841;
-$color--blue: #3E86BB;
-$color--red: #902B00;
-
-
+$color--darkestPurple: #0c011c;
+$color--darkPurple: #2c182e;
+$color--purple: #44114d;
+$color--orange: #f97700;
+$color--green: #3f7841;
+$color--blue: #3e86bb;
+$color--red: #902b00;
 
 /* ===============  FONTS ================*/
 
 /* Styles */
-$font-family1 : "Cinzel Decorative";
-
+$font-family1: "Cinzel Decorative";
+$font-family2: "Inika";
 
 /* Sizes */
+h1 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  margin: 0;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+h3 {
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+}
+
+h4 {
+  font-size: clamp(1rem, 2vw, 1.5rem);
+}
+
+h5 {
+  font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+}
+
+h6 {
+  font-size: clamp(0.6rem, 1vw, 1rem);
+}
+
+p {
+  font-size: clamp(1rem, 2vw, 1.4rem);
+}
+
+h1,
+h2 {
+  font-family: "Cinzel Decorative";
+}
+
+/* ATTENTION, TESTS NE PAS HESITER A SUPP SI DERANGE */
+span,
+li,
+button {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(0.8rem, 1vw, 1rem);
+}
