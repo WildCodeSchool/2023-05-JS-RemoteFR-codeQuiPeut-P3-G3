@@ -58,7 +58,7 @@ const add = (req, res) => {
   models.choices
     .insert(choices)
     .then(([result]) => {
-      res.location(`/choices/${result.insertId}`).sendStatus(201)
+      res.json(result.insertId)
     })
     .catch((err) => {
       console.error(err)
