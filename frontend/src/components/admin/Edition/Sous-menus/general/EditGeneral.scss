@@ -1,0 +1,39 @@
+@import "../../../../../variables.scss";
+
+.edition {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+    gap: 20px;
+
+    @media (min-width: 1200px) {
+      flex-direction: row;
+      justify-content: space-evenly;
+      padding: 1vw;
+    }
+
+    &__separator {
+      display: hidden;
+
+      @media (min-width: 1200px) {
+        height: 50vh;
+        width: 0.2%;
+        background-color: grey;
+      }
+    }
+
+    &__left,
+    &__right {
+      width: 100%;
+      background-color: grey;
+      height: 70vh;
+      border: 2px solid purple;
+
+      @media (min-width: 1200px) {
+        width: 45%;
+      }
+    }
+  }
+}

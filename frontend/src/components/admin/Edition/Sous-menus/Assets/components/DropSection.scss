@@ -1,0 +1,43 @@
+// DropSection.scss
+@import "../../../../../../variables.scss";
+
+.wrap-assets {
+  box-sizing: border-box;
+  padding: 0rem 2rem 0rem 2rem;
+}
+
+.title {
+  height: 40px;
+  background-color: black;
+  color: white;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px 5px 0 0;
+  border-top: 1px solid rgb(255 255 255 / 20%);
+
+  h6 {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.content {
+  background-color: #f7f7f7;
+  height: 0;
+  overflow: hidden;
+
+  &.hidden {
+    height: 0;
+    transition: height 0.3s ease-in;
+  }
+
+  &.dropped {
+    height: 55vh;
+    transition: height 0.3s ease-in-out;
+  }
+}

@@ -1,0 +1,35 @@
+@import "./variables.scss";
+
+body {
+  margin: 0;
+  padding: 0;
+  // A SUPPRIMER PLUS TARD
+  color: white;
+}
+
+#root {
+  background-color: $color--darkPurple;
+  min-height: 100vh;
+}
+
+/* ELEMENTS */
+header {
+  width: 100%;
+  height: $height-nav;
+  box-sizing: border-box;
+  border: 10px solid white;
+}
+
+main {
+  width: 100%;
+  box-sizing: border-box;
+  border: 10px solid blue;
+}
+
+footer {
+  width: 100%;
+  box-sizing: border-box;
+  height: $height-footer;
+  border: 10px solid purple;
+  background-color: green;
+}
