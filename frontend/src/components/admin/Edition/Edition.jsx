@@ -19,11 +19,12 @@ function AdminEdition() {
       <div className="edition__wrapNav">
         <NavEdition view={view} setView={setView} />
       </div>
-
-      {view === "General" && <EditGeneral />}
-      {view === "Assets" && <EditAssets />}
-      {view === "Scenes" && <EditScenes />}
-      {view === "Mindmap" && <EditMindmap />}
+      <div className="edition__wrapContent">
+        {view === "General" && <EditGeneral />}
+        {view === "Assets" && <EditAssets />}
+        {view === "Scenes" && <EditScenes />}
+        {view === "Mindmap" && <EditMindmap />}
+      </div>
     </>
   )
 }

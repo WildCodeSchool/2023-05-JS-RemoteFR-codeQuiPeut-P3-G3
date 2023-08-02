@@ -6,8 +6,11 @@
     min-height: 30px;
     max-height: 50px;
     width: 100%;
-    background-color: red;
     display: flex;
     align-items: center;
+  }
+
+  &__wrapContent{
+    padding: 1rem 2rem 2rem 2rem;
   }
 }

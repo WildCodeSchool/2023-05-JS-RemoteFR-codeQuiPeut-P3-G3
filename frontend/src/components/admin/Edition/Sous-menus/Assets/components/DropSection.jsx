@@ -2,12 +2,12 @@ import { useState } from "react"
 
 import "./DropSection.scss"
 
-function DropSection({ title }) {
-  const [dropped, setDrop] = useState(false)
+function DropSection({ title, init }) {
+  const [dropped, setDrop] = useState(init)
   return (
     <>
-      <button className="title" onClick={() => setDrop(!dropped)}>
-        <h6> {title}</h6>
+      <button className="title-drop" onClick={() => setDrop(!dropped)}>
+        <span> {title}</span>
       </button>
       <section
         className={`content ${dropped ? "dropped" : "hidden"}`}
