@@ -11,7 +11,7 @@ const ButtonStyle = styled.button`
   width: ${(props) => props.width || "65px"};
   max-width: ${(props) => props.maxWidth || "100%"};
   max-height: ${(props) => props.maxHeight || "100px"};
-  background-color: ${(props) => props.bgColor || "#007bff"};
+  background-color: ${(props) => props.backgroungColor || "#007bff"};
   color: ${(props) => props.colorText || "white"};
   border: none;
   border-radius: 5px;
@@ -37,7 +37,7 @@ function ButtonUI({
         maxWidth={maxWidth}
         maxHeight={maxHeight}
         colorText={colorText}
-        bgColor={bgColor}
+        backgroungColor={bgColor}
         onClick={onClick}
       >
         {title}
