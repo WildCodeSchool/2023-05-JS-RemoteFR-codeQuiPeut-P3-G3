@@ -1,9 +1,14 @@
+import ProfilPartieHaute from "../components/profil/ProfilPartieHaute"
 import "./Profile.scss"
 
 function Profile() {
   return (
     <>
-      <section className="avatar"></section>
+      <section className="avatar">
+        <div className="globalContainerProfil">
+          <ProfilPartieHaute />
+        </div>
+      </section>
       <section className="edit">
         <div className="container">
           <p> composant edit ici </p>
