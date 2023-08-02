@@ -12,6 +12,7 @@ $color--orange: #f97700;
 $color--green: #3f7841;
 $color--blue: #3e86bb;
 $color--red: #902b00;
+$color--gris: #F7F7F7;
 
 /* ===============  FONTS ================*/
 
@@ -57,7 +58,27 @@ h2 {
 /* ATTENTION, TESTS NE PAS HESITER A SUPP SI DERANGE */
 span,
 li,
-button {
+button,
+label {
   font-family: Arial, Helvetica, sans-serif;
   font-size: clamp(0.8rem, 1vw, 1rem);
+}
+
+$height-titles-section : 40px;
+@mixin title-blocsAdmin{
+  height: $height-titles-section;
+  background-color: black;
+  color: white;
+  width: 100%;
+  border: none;
+  border-radius: 8px 8px 0 0;
+
+  span {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
