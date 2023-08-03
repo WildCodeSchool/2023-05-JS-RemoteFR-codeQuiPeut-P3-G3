@@ -1,6 +1,6 @@
 import React from "react"
 // import avatar from "../../assets/user_ui/avatar.png"
-import avatar from "../../assets/user_ui/avatar_test.jpeg"
+import avatar from "../../assets/user_ui/avatar.png"
 import "./ProfilPartieHaute.scss"
 
 function ProfilPartieHaute() {
