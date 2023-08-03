@@ -1,36 +1,19 @@
-import { useEffect, useState, useRef } from "react"
+import { useRef, useState } from "react"
 
 import "./EditScenes.scss"
 import WidgetProperties from "./properties/widgetProperties"
 import WidgetScenes from "./scenes/widgetScenes"
 import WidgetToolbar from "./constructor/toolbar/widgetToolbar"
 import ButtonUI from "../../../../global/ButtonUI"
+import ContainerCanva from "./constructor/canva/ContainerCanva"
 
 function EditScenes() {
-  const canvasRef = useRef(null)
-  const containerCanvaRef = useRef(null)
-  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 })
-  const [sizeFound, setSizeFound] = useState(false)
+  const [addText, setAddText] = useState(false)
+  const containerRef = useRef(null)
 
-  useEffect(() => {
-    const container = containerCanvaRef.current
-    const width = container.clientWidth
-    const height = container.clientHeight
-    setContainerSize({ width, height })
-    setSizeFound(true)
-  }, [])
-
-  useEffect(() => {
-    if (sizeFound) {
-      const canvas = canvasRef.current
-      const context = canvas.getContext("2d")
-
-      // Utilisez le contexte 2D pour dessiner sur le canvas
-      // Par exemple:
-      context.fillStyle = "#FF0000"
-      context.fillRect(0, 0, containerSize.width, containerSize.height)
-    }
-  }, [sizeFound])
+  const addTextToCanvas = () => {
+    setAddText(true)
+  }
 
   return (
     <>
@@ -50,18 +33,10 @@ function EditScenes() {
             ></textarea>
           </div>
           <div className="scenes__constructor__toolbar">
-            <WidgetToolbar />
+            <WidgetToolbar onAddText={addTextToCanvas} />
           </div>
-          <div ref={containerCanvaRef} className="scenes__constructor__canva">
-            {sizeFound ? (
-              <canvas
-                ref={canvasRef}
-                width={containerSize.width}
-                height={containerSize.height}
-              />
-            ) : (
-              ""
-            )}
+          <div ref={containerRef} className="scenes__constructor__canva">
+            <ContainerCanva addText={addText} setAddText={setAddText} />
           </div>
           <div className="scenes__constructor__btn">
             <ButtonUI title={"save"} bgColor={"#3f7841"} />

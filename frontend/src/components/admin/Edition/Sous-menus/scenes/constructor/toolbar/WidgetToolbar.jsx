@@ -10,7 +10,7 @@ import imgSwitchOn from "../../../../../../../assets/user_ui/switch_on.png"
 import imgText from "../../../../../../../assets/user_ui/text.png"
 import ListDeroulante from "../../../../../../global/ListDeroulante"
 
-function WidgetToolbar() {
+function WidgetToolbar({ onAddText }) {
   const [isFight, setFight] = useState(false)
 
   return (
@@ -22,7 +22,7 @@ function WidgetToolbar() {
         <button type="button">
           <img src={imgPerson} alt="icon-person" />
         </button>
-        <button type="button">
+        <button type="button" onClick={onAddText}>
           <img src={imgText} alt="icon-text" />
         </button>
         <button type="button">
