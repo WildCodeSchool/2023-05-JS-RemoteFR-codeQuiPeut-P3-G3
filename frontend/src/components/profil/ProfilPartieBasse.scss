@@ -1,3 +1,25 @@
 .GlobalContainerPartieBasseGauche {
-    color:black
+  color: black;
+}
+.BlocNumero {
+  display: flex;
+  align-items: flex-end;
+}
+.BlocNumero:hover {
+  background-color: grey;
+}
+.PersonnalDetails {
+  margin-left: 10px;
+}
+.PaymentHistory {
+  margin-left: 10px;
+}
+.Inbox {
+  margin-left: 10px;
+}
+.ResetPassword {
+  margin-left: 10px;
+}
+.Logout {
+  margin-left: 10px;
 }
