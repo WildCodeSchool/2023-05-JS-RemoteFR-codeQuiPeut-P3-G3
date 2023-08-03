@@ -1,25 +1,50 @@
+@import '../../variables.scss';
+
+
+
+
 .GlobalContainerPartieBasseGauche {
   color: black;
-}
-.BlocNumero {
+  width: 50%;
+  height: 80%;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  justify-content: space-around;
+    .BlocNumero, .GlobalContainerWelcome{
+      display: flex;
+      align-items:flex-end;
+      font-family:"Inika";
+      font-size:1.4rem;
+      margin-left:25%;
+      width:fit-content;
+        
+    }
 }
 .BlocNumero:hover {
-  background-color: grey;
-}
-.PersonnalDetails {
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background: rgba(188, 188, 188, 0.14);
+  }
+.PersonnalDetails,.PaymentHistory,.Inbox,.ResetPassword,.Logout {
   margin-left: 10px;
 }
-.PaymentHistory {
-  margin-left: 10px;
+.GlobalContainerPartieBasseDroite{
+  color: black;
+  width: 50%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
-.Inbox {
-  margin-left: 10px;
+.GlobalContainerWelcome {
+  display: flex;
+  justify-content: space-around;
 }
-.ResetPassword {
-  margin-left: 10px;
-}
-.Logout {
-  margin-left: 10px;
+
+.GlobalContainerinfos{
+  display: flex;
+  justify-content: space-between;
+  font-family:"Inika";
+  font-size:1rem;
+  width: 80%;
+  
 }

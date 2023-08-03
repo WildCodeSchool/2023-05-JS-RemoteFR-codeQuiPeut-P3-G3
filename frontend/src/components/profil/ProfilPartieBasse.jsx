@@ -31,6 +31,42 @@ function ProfilPartieBasse() {
           <div className="Logout">Logout </div>
         </div>
       </div>
+      <div className="GlobalContainerPartieBasseDroite">
+        <div className="GlobalContainerWelcome">
+          <div className="WELCOME">Welcome,</div>
+          <div className="TestIs">Maggle</div>
+        </div>
+        <div className="GlobalContainerinfos">
+          <div className="FirstName">
+            <b> First name : </b>
+          </div>
+          <div className="TestIs"> Maggle </div>
+        </div>
+        <div className="GlobalContainerinfos">
+          <div className="LastName">
+            <b> Last name : </b>
+          </div>
+          <div className="TestIs"> Miller </div>
+        </div>
+        <div className="GlobalContainerinfos">
+          <div className="Email">
+            <b> Email : </b>
+          </div>
+          <div className="TestIs"> Maggle@gmail.com </div>
+        </div>
+        <div className="GlobalContainerinfos">
+          <div className="NickName">
+            <b> Nick name : </b>
+          </div>
+          <div className="TestIs"> SuperMaggle </div>
+        </div>
+        <div className="GlobalContainerinfos">
+          <div className="AccountRole">
+            <b> Account rôle : </b>
+          </div>
+          <div className="TestIs"> Roler </div>
+        </div>
+      </div>
     </>
   )
 }

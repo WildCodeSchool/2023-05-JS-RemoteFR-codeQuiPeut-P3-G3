@@ -19,7 +19,7 @@
 
 .edit {
   height: 100vh;
-  background-color: green;
+  background-color: $color--darkestPurple;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
@@ -29,11 +29,13 @@
   }
 
   .container {
+    display: flex;
     box-sizing: border-box;
     aspect-ratio: 42/24;
     height: auto;
     background-color: white;
     max-width: 100%;
+    border-radius: 1%;
 
     @media (min-width: 1500px) {
       max-width: 1500px;
