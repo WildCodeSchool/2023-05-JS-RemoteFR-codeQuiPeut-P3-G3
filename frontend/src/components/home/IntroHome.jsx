@@ -3,29 +3,30 @@ import DiceIntro from "../../assets/images/IntroIMG.png"
 
 const IntroHome = () => {
   return (
-    <div className="introContainer">
-      <div className="introBody">
-        <div className="introTitle">
+    <div className="intro">
+      <div className="intro__Body">
+        <div className="intro__Title">
           <h3>
-            “<span className="introWordTitle">ROLE PLAY</span>ING GAME”
+            “<span className="intro__WordTitle">ROLE PLAY</span>ING GAME”
           </h3>
         </div>
-        <div className="introDescription">
-          <p className="pDescription">
-            Discover the vastness of <span className="introWord">CHOICES</span>{" "}
-            and dive into varied{" "}
-            <span className="introWord">ENIGMA WORLDS</span>! Embody
+        <div className="intro__Description">
+          <p className="intro__pDescription">
+            Discover the vastness of{" "}
+            <span className="intro__Word">CHOICES</span> and dive into varied{" "}
+            <span className="intro__Word">ENIGMA WORLDS</span>! Embody
             extraordinary characters and become the{" "}
-            <span className="introWord">PROTAGONIST</span>, live{" "}
-            <span className="introWord">EPIC</span> adventures and take part in
-            <span className="introWord"> EXTRAORDINARY QUESTS</span>. Ready to
-            live <span className="introWord">UNFORGETTABLE EXPERIENCES</span>?
+            <span className="intro__Word">PROTAGONIST</span>, live{" "}
+            <span className="intro__Word">EPIC</span> adventures and take part
+            in
+            <span className="intro__Word"> EXTRAORDINARY QUESTS</span>. Ready to
+            live <span className="intro__Word">UNFORGETTABLE EXPERIENCES</span>?
           </p>
         </div>
       </div>
-      <div className="introImg">
-        <img src={DiceIntro} alt="dé 20 façes" className="DiceIntro1" />
-        <img src={DiceIntro} alt="dé 20 façes" className="DiceIntro2" />
+      <div className="intro__Img">
+        <img src={DiceIntro} alt="dé 20 façes" className="intro__DiceIntro1" />
+        <img src={DiceIntro} alt="dé 20 façes" className="intro__DiceIntro2" />
       </div>
     </div>
   )

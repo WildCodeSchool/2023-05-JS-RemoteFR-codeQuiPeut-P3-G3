@@ -1,56 +1,88 @@
 @import "../../variables.scss";
 
-.introContainer{
+.intro {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+
+    @media (min-width: 1300px) {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: start;
+    }
 }
 
-.introTitle {
+.intro__Title {
     font-family: $font-family1;
+    text-align: center;
+
+    @media (min-width: 1300px) {
+        text-align: start;
+    }
+
+    .intro__WordTitle {
+        font-family: $font-family1;
+        font-size: clamp(1.2rem, 2.5vw, 2rem);
+        color: #f97700;
+    }
 }
 
-.introWordTitle {
-    font-family: $font-family1;
-    font-size: clamp(1.2rem, 2.5vw, 2rem);
-    color: #f97700;
-}
-
-.introDescription {
-    width: 47rem;
+.intro__Description {
+    width: 44.625rem;
     height: 18rem;
     padding-right: 5rem;
+
+    .intro__pDescription {
+        text-align: center;
+        font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+        line-height: 3.4rem;
+        letter-spacing: 0.2rem;
+
+        @media (min-width: 1300px) {
+            text-align: start;
+        }
+    }
+
+    .intro__Word {
+        font-family: $font-family2;
+        font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+        font-weight: 700;
+        letter-spacing: 0.2rem;
+    }
+
+    @media (min-width: 1300px) {
+        font-size: 1.8rem;
+        line-height: 2.2rem;
+        letter-spacing: 0.2rem;
+        padding-left: 3rem;
+    }
 }
 
-.pDescription{
-    font-size: 1.8rem;
-    line-height: 2.2rem;
-    letter-spacing: 0.2rem;
-    padding-left: 3rem;
-}
-
-.introWord{
-    font-family: $font-family2;
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: 0.2rem;
-}
-
-.DiceIntro1 {
+.intro__DiceIntro1 {
+    position: relative;
     width: 25.41756rem;
     height: 26.38281rem;
     transform: rotate(1.953deg);
-    flex-shrink: 0;
+    z-index: 1;
 }
 
-.DiceIntro2{
+.intro__DiceIntro2 {
     position: relative;
     width: 21.49325rem;
     height: 22.30944rem;
     flex-shrink: 0;
     opacity: 0.3;
     mix-blend-mode: lighten;
-    top: -7.6rem;
-    left: -1rem;
+    top: -7.3rem;
+    left: -3.3rem;
     transform: scaleY(-1);
     rotate: 33deg;
+
+    @media (max-width: 1300px) {
+        rotate: 0deg;
+        transform: scaleY(1);
+        width: 100%;
+    }
 }
