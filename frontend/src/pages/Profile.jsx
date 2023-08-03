@@ -1,4 +1,5 @@
 import ProfilPartieHaute from "../components/profil/ProfilPartieHaute"
+import ProfilPartieBasse from "../components/profil/ProfilPartieBasse"
 import "./Profile.scss"
 
 function Profile() {
@@ -11,7 +12,7 @@ function Profile() {
       </section>
       <section className="edit">
         <div className="container">
-          <p> composant edit ici </p>
+          <ProfilPartieBasse />
         </div>
       </section>
 
