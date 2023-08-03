@@ -1,5 +1,5 @@
 import "./Home.scss"
-
+import Footer from "../components/global/Footer"
 export default function Home() {
   return (
     <>
@@ -10,11 +10,7 @@ export default function Home() {
         <section className="home__content__avis"></section>
       </main>
 
-      {/* FOOTER */}
-      <footer>
-        {/* -> Footer à ajouter ici */}
-        <h3 style={{ textAlign: "center" }}> footer </h3>
-      </footer>
+      <Footer />
     </>
   )
 }
