@@ -1,9 +1,12 @@
+import HomeParallax from "../components/home/HomeParallax"
 import "./Home.scss"
 
 export default function Home() {
   return (
     <>
-      <section className="home__hero"></section>
+      <section className="home__hero">
+        <HomeParallax />
+      </section>
       <main className="home__content">
         <section className="home__content__description"></section>
         <section className="home__content__games"></section>
