@@ -1,0 +1,56 @@
+@import "../../variables.scss";
+
+.introContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.introTitle {
+    font-family: $font-family1;
+}
+
+.introWordTitle {
+    font-family: $font-family1;
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    color: #f97700;
+}
+
+.introDescription {
+    width: 47rem;
+    height: 18rem;
+    padding-right: 5rem;
+}
+
+.pDescription{
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+    letter-spacing: 0.2rem;
+    padding-left: 3rem;
+}
+
+.introWord{
+    font-family: $font-family2;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2rem;
+}
+
+.DiceIntro1 {
+    width: 25.41756rem;
+    height: 26.38281rem;
+    transform: rotate(1.953deg);
+    flex-shrink: 0;
+}
+
+.DiceIntro2{
+    position: relative;
+    width: 21.49325rem;
+    height: 22.30944rem;
+    flex-shrink: 0;
+    opacity: 0.3;
+    mix-blend-mode: lighten;
+    top: -7.6rem;
+    left: -1rem;
+    transform: scaleY(-1);
+    rotate: 33deg;
+}
