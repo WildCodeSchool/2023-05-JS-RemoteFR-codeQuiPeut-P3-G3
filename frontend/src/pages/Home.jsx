@@ -1,6 +1,7 @@
 import "./Home.scss"
 import StarRating from "../components/home/CarouselNote"
 
+import Footer from "../components/global/Footer"
 export default function Home() {
   return (
     <>
@@ -12,9 +13,8 @@ export default function Home() {
           <StarRating />
         </section>
       </main>
-      <footer>
-        <h3 style={{ textAlign: "center" }}> footer </h3>
-      </footer>
+
+      <Footer />
     </>
   )
 }
