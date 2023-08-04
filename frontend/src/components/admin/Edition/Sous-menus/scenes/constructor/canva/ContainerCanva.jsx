@@ -1,56 +1,61 @@
-import { useRef, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { fabric } from "fabric"
 
-function ContainerCanva({ addText, setAddText }) {
-  const canvasRef = useRef(null)
+function ContainerCanva({ isAddingText, setIsAddingText }) {
+  const canvasRef = useRef(null) // Create a ref using useRef hook
+  const [startPosition, setStartPosition] = useState({ x: 0, y: 0 })
+  console.info(startPosition)
 
   useEffect(() => {
+    // Initialize the Fabric.js canvas only once on component mount
     const canvas = new fabric.Canvas(canvasRef.current, {
-      width: 700,
-      height: 700,
-      backgroundColor: "#3e86bb",
-      // Options de configuration du canvas (largeur, hauteur, etc.)
+      width: 800,
+      height: 600,
     })
 
-    // Gestion de l'ajout de texte sur le canvas
-    canvas.on("mouse:down", (event) => {
-      const { x, y } = event.pointer
-      const text = new fabric.Textbox("Votre texte", {
-        left: x,
-        top: y,
-        fontSize: 20,
-        // Autres options de style pour le texte
-      })
-
-      canvas.add(text)
-
-      // setAddText(false)
-    })
-
-    // Gestion de la modification de texte sur le canvas
-    canvas.on("object:selected", (event) => {
-      const selectedObject = event.target
-      if (selectedObject instanceof fabric.Textbox) {
-        // Gérer les actions liées à la modification du texte
-      }
-    })
-
-    canvas.on("object:scaling", (event) => {
-      const selectedObject = event.target
-      if (selectedObject instanceof fabric.Textbox) {
-        // Gérer les actions liées au redimensionnement du texte
-      }
-    })
-
-    // Gestion des événements sur le canvas (ajout de texte, modification, redimensionnement, etc.)
-    // ...
-
+    // Cleanup function to remove the Fabric.js canvas on unmount
     return () => {
-      canvas.dispose() // Nettoyage lors du démontage du composant
+      canvas.dispose()
     }
   }, [])
 
-  return <canvas ref={canvasRef} />
+  const handleCanvasMouseDown = (event) => {
+    if (isAddingText) {
+      const canvas = canvasRef.current
+      const { offsetX, offsetY } = event
+      setStartPosition({ x: offsetX, y: offsetY })
+
+      const newText = new fabric.Textbox("Your Text Here", {
+        left: offsetX,
+        top: offsetY,
+        fontSize: 20,
+        width: 200,
+      })
+
+      canvas.add(newText)
+      canvas.setActiveObject(newText)
+      canvas.renderAll()
+    }
+  }
+
+  const handleCanvasMouseUp = () => {
+    if (isAddingText) {
+      setIsAddingText(false)
+    }
+  }
+
+  return (
+    <div>
+      <canvas
+        ref={canvasRef}
+        onMouseDown={handleCanvasMouseDown}
+        onMouseUp={handleCanvasMouseUp}
+        width={800}
+        height={600}
+        style={{ border: "1px solid black" }}
+      />
+    </div>
+  )
 }
 
 export default ContainerCanva

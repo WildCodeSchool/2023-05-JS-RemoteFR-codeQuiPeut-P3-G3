@@ -3,17 +3,26 @@ import { useRef, useState } from "react"
 import "./EditScenes.scss"
 import WidgetProperties from "./properties/widgetProperties"
 import WidgetScenes from "./scenes/widgetScenes"
-import WidgetToolbar from "./constructor/toolbar/widgetToolbar"
+import WidgetToolbar from "./constructor/toolbar/WidgetToolbar"
 import ButtonUI from "../../../../global/ButtonUI"
 import ContainerCanva from "./constructor/canva/ContainerCanva"
 
 function EditScenes() {
-  const [addText, setAddText] = useState(false)
-  const containerRef = useRef(null)
+  const canvasRef = useRef(null)
+  const [isAddingText, setIsAddingText] = useState(false)
 
-  const addTextToCanvas = () => {
-    setAddText(true)
+  const handleAddTextButtonClick = () => {
+    setIsAddingText(true)
   }
+
+  // const handleDeleteTextButtonClick = () => {
+  //   const canvas = canvasRef.current;
+  //   const activeObject = canvas.getActiveObject();
+  //   if (activeObject && activeObject.type === 'textbox') {
+  //     canvas.remove(activeObject);
+  //     canvas.renderAll();
+  //   }
+  // };
 
   return (
     <>
@@ -33,15 +42,20 @@ function EditScenes() {
             ></textarea>
           </div>
           <div className="scenes__constructor__toolbar">
-            <WidgetToolbar onAddText={addTextToCanvas} />
+            <button onClick={handleAddTextButtonClick}>Add Text</button>
+            <WidgetToolbar onAddText={handleAddTextButtonClick} />
           </div>
-          <div ref={containerRef} className="scenes__constructor__canva">
-            <ContainerCanva addText={addText} setAddText={setAddText} />
+          <div ref={canvasRef} className="scenes__constructor__canva">
+            <ContainerCanva
+              canvasRef={canvasRef}
+              isAddingText={isAddingText}
+              setIsAddingText={setIsAddingText}
+            />
           </div>
           <div className="scenes__constructor__btn">
-            <ButtonUI title={"save"} bgColor={"#3f7841"} />
-            <ButtonUI title={"reset"} bgColor={"#0A0A0A"} />
-            <ButtonUI title={"delete"} bgColor={"#902B00"} />
+            <ButtonUI title={"save"} bgcolor={"#3f7841"} />
+            <ButtonUI title={"reset"} bgcolor={"#0A0A0A"} />
+            <ButtonUI title={"delete"} bgcolor={"#902B00"} />
           </div>
         </div>
         <div className="scenes__properties">

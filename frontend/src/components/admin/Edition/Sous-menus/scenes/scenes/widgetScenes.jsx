@@ -31,8 +31,8 @@ function WidgetScenes() {
         <div className="wrap-central">
           <div className="uiScenes">
             <div className="uiScenes__btns">
-              <ButtonUI title={"scene 1"} bgColor={"#3e86bb"} width={"100%"} />
-              <ButtonUI title={"scene 2"} bgColor={"#3e86bb"} width={"100%"} />
+              <ButtonUI title={"scene 1"} bgcolor={"#3e86bb"} width={"100%"} />
+              <ButtonUI title={"scene 2"} bgcolor={"#3e86bb"} width={"100%"} />
             </div>
 
             <div className="uiScenes__btnAdd">
