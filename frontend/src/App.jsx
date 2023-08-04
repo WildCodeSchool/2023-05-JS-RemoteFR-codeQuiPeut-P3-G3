@@ -1,7 +1,7 @@
 /* COMPONENTS */
 import Home from "./pages/Home"
 import Admin from "./pages/Admin"
-import NavBar from "./components/global/NavBar"
+import Navbar from "./components/global/Navbar"
 import Profile from "./pages/Profile"
 import Games from "./pages/Games"
 
@@ -17,7 +17,7 @@ function App() {
       {/* NAVBAR */}
       <header className="nav">
         {/* -> Navbar à ajouter ici */}
-        <NavBar />
+        <Navbar />
       </header>
 
       {/* MAIN CONTENT */}

@@ -43,8 +43,9 @@
     /* Element: .home__content__games et .home__content__avis */
     section {
       box-sizing: border-box;
+      min-height: 50vh;
       width: 100%;
-      border: 2px solid black;
+      background-color: white;
       max-width: 1300px;
     }
   }
