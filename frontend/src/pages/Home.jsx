@@ -1,3 +1,4 @@
+import IntroHome from "../components/home/IntroHome"
 import "./Home.scss"
 import StarRating from "../components/home/CarouselNote"
 
@@ -7,7 +8,9 @@ export default function Home() {
     <>
       <section className="home__hero"></section>
       <main className="home__content">
-        <section className="home__content__description"></section>
+        <section className="home__content__description">
+          <IntroHome />
+        </section>
         <section className="home__content__games"></section>
         <section className="home__content__avis">
           <StarRating />
