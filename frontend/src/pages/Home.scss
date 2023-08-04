@@ -37,7 +37,7 @@
     /* Element: .home__content__avis (dernier élément enfant) */
     > section:last-child {
       margin-bottom: calc(1vh + 8vw);
-      background-color: bisque;
+      // background-color: bisque;
     }
 
     /* Element: .home__content__games et .home__content__avis */
@@ -45,7 +45,7 @@
       box-sizing: border-box;
       min-height: 50vh;
       width: 100%;
-      background-color: white;
+      // background-color: white;
       max-width: 1300px;
     }
   }
