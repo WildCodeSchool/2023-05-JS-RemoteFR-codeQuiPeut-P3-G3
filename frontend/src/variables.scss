@@ -12,13 +12,13 @@ $color--orange: #f97700;
 $color--green: #3f7841;
 $color--blue: #3e86bb;
 $color--red: #902b00;
-$color--gris: #F7F7F7;
+$color--gris: #f7f7f7;
 
 /* ===============  FONTS ================*/
 
 /* Styles */
-$font-family1: "Cinzel Decorative";
-$font-family2: "Inika";
+$font-family1: 'Cinzel Decorative', cursive;
+$font-family2: 'Inika', serif;
 
 /* Sizes */
 h1 {
@@ -64,8 +64,8 @@ label {
   font-size: clamp(0.8rem, 1vw, 1rem);
 }
 
-$height-titles-section : 40px;
-@mixin title-blocsAdmin{
+$height-titles-section: 40px;
+@mixin title-blocsAdmin {
   height: $height-titles-section;
   background-color: black;
   color: white;
