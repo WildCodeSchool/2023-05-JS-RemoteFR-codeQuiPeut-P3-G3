@@ -11,7 +11,12 @@
     box-sizing: border-box;
     // border: 10px solid green;
     // background-color: purple;
-    background-image: url(../assets/images/parallax/sky.png);
+    // background-image: url(../assets/images/parallax/sky.png);%
+
+    .noParallax {
+      height: 100%;
+      width: auto;
+    }
   }
 
 

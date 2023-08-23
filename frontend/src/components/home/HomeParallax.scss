@@ -1,76 +1,81 @@
-.parallaxSection {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  padding: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+// .parallaxMain {
+//   height: 100%;
+//     width: 100%;
 
-  .moonImg {
-    mix-blend-mode: screen;
-    position: absolute;
-    top: calc(50% + #{parallaxSectionHeight + 0.5}px);
-    transition: top 0.5s ease-out;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    pointer-events: none;
-    transform: translateX(-50%);
-  }
-  .cloudsBackImg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    pointer-events: none;
-  }
-  .cloudsFrontImg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    pointer-events: none;
-    z-index: 1001;
-  }
+//   .parallaxSection {
+//     position: relative;
+//     width: 100%;
+//     height: 100%;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     overflow: hidden;
 
-  .castleImg {
-    position: absolute;
-    top: 0;
-    // left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    pointer-events: none;
+//     .moonImg {
+//       mix-blend-mode: screen;
+//       position: absolute;
+//       top: calc(50% + #{parallaxSectionHeight + 0.5}px);
+//       transition: top 0.5s ease-out;
+//       left: 50%;
+//       width: 100%;
+//       height: 100%;
+//       object-fit: cover;
+//       pointer-events: none;
+//       transform: translateX(-50%);
+//     }
+//     .cloudsBackImg {
+//       position: absolute;
+//       top: 0;
+//       left: 0;
+//       width: 100%;
+//       height: 100%;
+//       object-fit: cover;
+//       pointer-events: none;
+//     }
+//     .cloudsFrontImg {
+//       position: absolute;
+//       top: 0;
+//       left: 0;
+//       width: 100%;
+//       height: 100%;
+//       object-fit: cover;
+//       pointer-events: none;
+//       z-index: 1001;
+//     }
 
-    // position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
-    transition: top 0.5s ease-out;
-  }
-  .starsImg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    pointer-events: none;
-  }
-}
+//     .castleImg {
+//       position: absolute;
+//       top: 0;
+//       left: 0;
+//       width: 100%;
+//       height: 100%;
+//       object-fit: cover;
+//       pointer-events: none;
 
-.parallaxSection::before{
-  content: "";
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
-}
+//       &.fixed {
+//       // left: 50%;
+//       transform: translateX(-50%);
+//       top: 0;
+//       transition: top 0.5s ease-out;
+//       }
+//     }
+//     .starsImg {
+//       position: absolute;
+//       top: 0;
+//       left: 0;
+//       width: 100%;
+//       height: 100%;
+//       object-fit: cover;
+//       pointer-events: none;
+//     }
+//   }
 
+//   .parallaxSection::before{
+//     content: "";
+//     position: absolute;
+//     bottom: 0;
+//     width: 100%;
+//     height: 100%;
+//     z-index: 1000;
+//   }
+// }
