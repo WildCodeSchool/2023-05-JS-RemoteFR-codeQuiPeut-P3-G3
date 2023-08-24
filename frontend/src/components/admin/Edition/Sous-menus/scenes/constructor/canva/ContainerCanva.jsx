@@ -6,28 +6,82 @@ const ContainerCanva = ({
   setIsAddingText,
   setViewProperties,
   viewEditProperties,
+  selectedColor,
+  selectedFont,
+  selectedSize,
+  selectedAlignment,
 }) => {
   const [canvas, setCanvas] = useState("")
 
   const initCanvas = () =>
     new fabric.Canvas("myCanva", {
       height: 800,
-      width: 800,
-      backgroundColor: "pink",
+      width: 1250,
+      backgroundColor: "grey",
     })
 
-  const addRect = (canvi) => {
-    const rect = new fabric.Rect({
-      height: 280,
-      width: 200,
-      fill: "yellow",
-    })
-    canvi.add(rect)
-    canvi.renderAll()
-  }
+  useEffect(() => {
+    setCanvas(initCanvas())
+  }, [])
+
+  useEffect(() => {
+    if (isAddingText) {
+      addText(canvas)
+    }
+
+    const handleDeleteKeyPress = (event) => {
+      if (event.key === "Delete" || event.key === "Backspace") {
+        const activeObject = canvas.getActiveObject()
+
+        if (activeObject instanceof fabric.Textbox) {
+          canvas.remove(activeObject)
+          canvas.discardActiveObject()
+          canvas.renderAll()
+        }
+      }
+    }
+
+    document.addEventListener("keydown", handleDeleteKeyPress)
+
+    return () => {
+      document.removeEventListener("keydown", handleDeleteKeyPress)
+    }
+  }, [isAddingText, canvas])
+
+  useEffect(() => {
+    if (canvas) {
+      // console.log(
+      //   selectedColor +
+      //     " " +
+      //     selectedFont +
+      //     " " +
+      //     selectedSize +
+      //     " " +
+      //     selectedAlignment
+      // )
+      const activeObject = canvas.getActiveObject()
+      if (activeObject instanceof fabric.Textbox) {
+        activeObject.set("fill", selectedColor)
+        activeObject.set("fontFamily", selectedFont)
+        activeObject.set("fontSize", selectedSize)
+        activeObject.set("textAlign", selectedAlignment)
+        canvas.renderAll()
+      }
+    }
+  }, [selectedColor, selectedFont, selectedSize, selectedAlignment, canvas])
+
+  // const addRect = (canvi) => {
+  //   const rect = new fabric.Rect({
+  //     height: 280,
+  //     width: 200,
+  //     fill: "yellow",
+  //   })
+  //   canvi.add(rect)
+  //   canvi.renderAll()
+  // }
 
   const addText = (canvi) => {
-    const text = new fabric.Textbox("testText", {
+    const text = new fabric.Textbox("Le grand J", {
       height: 280,
       width: 200,
       fill: "yellow",
@@ -50,20 +104,8 @@ const ContainerCanva = ({
     setIsAddingText(false)
   }
 
-  useEffect(() => {
-    setCanvas(initCanvas())
-  }, [])
-
-  useEffect(() => {
-    if (isAddingText) {
-      addText(canvas)
-    }
-  }, [isAddingText])
-
   return (
     <>
-      <button onClick={() => addRect(canvas)}>Rectangle</button>
-      <button onClick={() => addText(canvas)}>Text</button>
       <canvas id="myCanva" />
     </>
   )

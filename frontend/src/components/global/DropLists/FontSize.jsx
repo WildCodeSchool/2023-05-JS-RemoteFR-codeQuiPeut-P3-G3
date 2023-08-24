@@ -3,22 +3,22 @@ import "./FontSize.scss"
 
 function FontSize({ setSelectedSize, selectedSize }) {
   const sizeOptions = [
-    { value: "12px", label: "12px" },
-    { value: "14px", label: "14px" },
-    { value: "16px", label: "16px" },
-    { value: "18px", label: "18px" },
-    { value: "20px", label: "20px" },
-    { value: "22px", label: "22px" },
-    { value: "24px", label: "24px" },
-    { value: "26px", label: "26px" },
-    { value: "28px", label: "28px" },
-    { value: "30px", label: "30px" },
-    { value: "32px", label: "32px" },
+    { value: "12", label: "12" },
+    { value: "14", label: "14" },
+    { value: "16", label: "16" },
+    { value: "18", label: "18" },
+    { value: "20", label: "20" },
+    { value: "22", label: "22" },
+    { value: "24", label: "24" },
+    { value: "26", label: "26" },
+    { value: "28", label: "28" },
+    { value: "30", label: "30" },
+    { value: "32", label: "32" },
     // Ajoutez plus d'options de tailles ici
   ]
 
   const handleSizeChange = (selectedOption) => {
-    setSelectedSize(selectedOption)
+    setSelectedSize(selectedOption.value)
   }
 
   return (

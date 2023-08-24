@@ -7,7 +7,17 @@ import ColorSelector from "./text-editor/ColorSelector"
 import iconTextColor from "../../../../../../assets/text_ui/colorPicker.png"
 import ButtonStandard from "../../../../../global/Buttons/ButtonStandard"
 
-function WidgetProperties({ viewEditProperties }) {
+function WidgetProperties({
+  viewEditProperties,
+  selectedColor,
+  selectedFont,
+  selectedSize,
+  selectedAlignment,
+  setSelectedFont,
+  setSelectedSize,
+  setSelectedColor,
+  setAlignment,
+}) {
   const [displayCPicker, setDisplayCPicker] = useState(false)
 
   const handleColorPicker = () => {
@@ -18,21 +28,6 @@ function WidgetProperties({ viewEditProperties }) {
     setDisplayCPicker(false)
     setSelectedColor(color)
   }
-
-  /* RECUPERATION DES PROPRIETES */
-  const [selectedColor, setSelectedColor] = useState("#FF0000")
-
-  const [selectedFont, setSelectedFont] = useState({
-    value: "Arial, sans-serif",
-    label: "Arial",
-  })
-
-  const [selectedSize, setSelectedSize] = useState({
-    value: "16px",
-    label: "16px",
-  })
-
-  const [selectedAlignment, setAlignment] = useState("text-align: center")
 
   /* JSX */
   return (

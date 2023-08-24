@@ -20,23 +20,23 @@ function TextProperties({ setAlignment }) {
       <div className="fontProps__alignment">
         <ButtonRound
           img={iconAlignLeft}
-          onClick={() => handleAlignmentClick("text-align: left")}
-          active={selectedAlignment === "text-align: left"}
+          onClick={() => handleAlignmentClick("left")}
+          active={selectedAlignment === "left"}
         />
         <ButtonRound
           img={iconAlignCenter}
-          onClick={() => handleAlignmentClick("text-align: center")}
-          active={selectedAlignment === "text-align: center"}
+          onClick={() => handleAlignmentClick("center")}
+          active={selectedAlignment === "center"}
         />
         <ButtonRound
           img={iconAlignRight}
-          onClick={() => handleAlignmentClick("text-align: right")}
-          active={selectedAlignment === "text-align: right"}
+          onClick={() => handleAlignmentClick("right")}
+          active={selectedAlignment === "right"}
         />
         <ButtonRound
           img={iconAlignJustify}
-          onClick={() => handleAlignmentClick("text-align: justify")}
-          active={selectedAlignment === "text-align: justify"}
+          onClick={() => handleAlignmentClick("justify")}
+          active={selectedAlignment === "justify"}
         />
       </div>
     </div>

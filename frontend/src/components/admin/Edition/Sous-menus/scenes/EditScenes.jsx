@@ -6,20 +6,28 @@ import WidgetScenes from "./scenes/widgetScenes"
 import WidgetToolbar from "./constructor/toolbar/WidgetToolbar"
 import ButtonUI from "../../../../global/Buttons/ButtonUI"
 import ContainerCanva from "./constructor/canva/ContainerCanva"
-import EditorRichText from "./constructor/text-toolbar/EditorRichText"
 
 function EditScenes() {
   const canvasRef = useRef(null)
   const [isAddingText, setIsAddingText] = useState(false)
   const [viewEditProperties, setViewProperties] = useState(false)
 
+  /* RECUPERATION DES PROPRIETES */
+  const [selectedColor, setSelectedColor] = useState("#FF0000")
+
+  const [selectedFont, setSelectedFont] = useState("Arial, sans-serif")
+
+  const [selectedSize, setSelectedSize] = useState(16)
+
+  const [selectedAlignment, setAlignment] = useState("text-align: center")
+
   const handleAddTextButtonClick = () => {
     setIsAddingText(!isAddingText)
   }
 
   useEffect(() => {
-    // console.log(viewEditProperties)
-  }, [viewEditProperties])
+    // console.log(selectedColor)
+  }, [selectedColor])
 
   return (
     <>
@@ -44,7 +52,6 @@ function EditScenes() {
               isAddingText={isAddingText}
             />
           </div>
-          <EditorRichText />
           <div ref={canvasRef} className="scenes__constructor__canva">
             <ContainerCanva
               canvasRef={canvasRef}
@@ -52,6 +59,11 @@ function EditScenes() {
               setIsAddingText={setIsAddingText}
               setViewProperties={setViewProperties}
               viewEditProperties={viewEditProperties}
+              selectedColor={selectedColor}
+              selectedFont={selectedFont}
+              selectedSize={selectedSize}
+              selectedAlignment={selectedAlignment}
+              setSelectedSize={setSelectedSize}
             />
             {/* <CanvasWithText /> */}
           </div>
@@ -62,7 +74,17 @@ function EditScenes() {
           </div>
         </div>
         <div className="scenes__properties">
-          <WidgetProperties viewEditProperties={viewEditProperties} />
+          <WidgetProperties
+            viewEditProperties={viewEditProperties}
+            selectedColor={selectedColor}
+            selectedFont={selectedFont}
+            selectedSize={selectedSize}
+            selectedAlignment={selectedAlignment}
+            setSelectedColor={setSelectedColor}
+            setSelectedFont={setSelectedFont}
+            setSelectedSize={setSelectedSize}
+            setAlignment={setAlignment}
+          />
         </div>
       </div>
     </>

@@ -42,7 +42,7 @@ function FontSelector({ setSelectedFont, selectedFont }) {
   ]
 
   const handleFontChange = (selectedOption) => {
-    setSelectedFont(selectedOption)
+    setSelectedFont(selectedOption.value)
   }
 
   return (
