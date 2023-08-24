@@ -18,31 +18,22 @@
 }
 
 .edit {
-  height: 100vh;
+  height: 70vh;
   background-color: $color--darkestPurple;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
 
   @media (min-width: 1200px) {
-    padding: 5rem;
+    margin-bottom: 5rem;
   }
 
   .container {
     display: flex;
     box-sizing: border-box;
-    aspect-ratio: 42/24;
-    height: auto;
+    aspect-ratio: 34/21;
     background-color: white;
     max-width: 100%;
     border-radius: 1%;
-
-    @media (min-width: 1500px) {
-      max-width: 1500px;
-    }
-
-    @media (orientation: portrait) {
-      min-height: 100vh;
-    }
   }
 }

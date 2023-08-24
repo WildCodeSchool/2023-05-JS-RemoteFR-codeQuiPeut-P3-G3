@@ -33,8 +33,9 @@ function ProfilPartieBasse() {
       </div>
       <div className="GlobalContainerPartieBasseDroite">
         <div className="GlobalContainerWelcome">
-          <div className="WELCOME">Welcome,</div>
-          <div className="TestIs">Maggle</div>
+          <div className="WELCOME">
+            Welcome, <span className="NameProfile"> Maggle</span>
+          </div>
         </div>
         <div className="GlobalContainerinfos">
           <div className="FirstName">
@@ -56,7 +57,7 @@ function ProfilPartieBasse() {
         </div>
         <div className="GlobalContainerinfos">
           <div className="NickName">
-            <b> Nick name : </b>
+            <b> Pseudo : </b>
           </div>
           <div className="TestIs"> SuperMaggle </div>
         </div>
