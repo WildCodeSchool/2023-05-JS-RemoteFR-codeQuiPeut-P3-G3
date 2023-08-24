@@ -9,9 +9,16 @@
     height: calc(100vh - $height-nav);
     width: 100%;
     box-sizing: border-box;
-    border: 10px solid green;
-    background-color: purple;
+    // border: 10px solid green;
+    // background-color: purple;
+    // background-image: url(../assets/images/parallax/sky.png);%
+
+    .noParallax {
+      height: 100%;
+      width: auto;
+    }
   }
+
 
   /* Element: .home__content */
   &__content {
@@ -32,22 +39,20 @@
     /* Element: .home__content__games (premier élément enfant) */
     > section:first-child {
       margin-top: calc(1vh + 8vw);
-      background-color: aqua;
     }
 
     /* Element: .home__content__avis (dernier élément enfant) */
     > section:last-child {
       margin-bottom: calc(1vh + 8vw);
-      background-color: bisque;
+      // background-color: bisque;
     }
 
     /* Element: .home__content__games et .home__content__avis */
     section {
       box-sizing: border-box;
-      height: 80vh;
+      min-height: 50vh;
       width: 100%;
-      border: 2px solid black;
-      background-color: white;
+      // background-color: white;
       max-width: 1300px;
     }
   }
