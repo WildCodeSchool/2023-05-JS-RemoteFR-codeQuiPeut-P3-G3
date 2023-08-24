@@ -9,9 +9,16 @@
     height: calc(100vh - $height-nav);
     width: 100%;
     box-sizing: border-box;
-    border: 10px solid green;
-    background-color: purple;
+    // border: 10px solid green;
+    // background-color: purple;
+    // background-image: url(../assets/images/parallax/sky.png);%
+
+    .noParallax {
+      height: 100%;
+      width: auto;
+    }
   }
+
 
   /* Element: .home__content */
   &__content {
