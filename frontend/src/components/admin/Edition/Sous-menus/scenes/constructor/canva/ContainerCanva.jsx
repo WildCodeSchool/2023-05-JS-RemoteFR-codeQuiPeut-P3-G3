@@ -1,60 +1,71 @@
-import { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import { fabric } from "fabric"
 
-function ContainerCanva({ isAddingText, setIsAddingText }) {
-  const canvasRef = useRef(null) // Create a ref using useRef hook
-  const [startPosition, setStartPosition] = useState({ x: 0, y: 0 })
-  console.info(startPosition)
+const ContainerCanva = ({
+  isAddingText,
+  setIsAddingText,
+  setViewProperties,
+  viewEditProperties,
+}) => {
+  const [canvas, setCanvas] = useState("")
 
-  useEffect(() => {
-    // Initialize the Fabric.js canvas only once on component mount
-    const canvas = new fabric.Canvas(canvasRef.current, {
+  const initCanvas = () =>
+    new fabric.Canvas("myCanva", {
+      height: 800,
       width: 800,
-      height: 600,
+      backgroundColor: "pink",
     })
 
-    // Cleanup function to remove the Fabric.js canvas on unmount
-    return () => {
-      canvas.dispose()
-    }
+  const addRect = (canvi) => {
+    const rect = new fabric.Rect({
+      height: 280,
+      width: 200,
+      fill: "yellow",
+    })
+    canvi.add(rect)
+    canvi.renderAll()
+  }
+
+  const addText = (canvi) => {
+    const text = new fabric.Textbox("testText", {
+      height: 280,
+      width: 200,
+      fill: "yellow",
+    })
+    canvi.add(text)
+    canvi.renderAll()
+    canvi.on("mouse:down", (options) => {
+      // console.log("test")
+    })
+    canvi.on("selection:created", (options) => {
+      // console.log(canvi._activeObject)
+      setViewProperties(true)
+    })
+
+    canvi.on("selection:cleared", (options) => {
+      // console.log("déselectionné")
+      setViewProperties(false)
+    })
+
+    setIsAddingText(false)
+  }
+
+  useEffect(() => {
+    setCanvas(initCanvas())
   }, [])
 
-  const handleCanvasMouseDown = (event) => {
+  useEffect(() => {
     if (isAddingText) {
-      const canvas = canvasRef.current
-      const { offsetX, offsetY } = event
-      setStartPosition({ x: offsetX, y: offsetY })
-
-      const newText = new fabric.Textbox("Your Text Here", {
-        left: offsetX,
-        top: offsetY,
-        fontSize: 20,
-        width: 200,
-      })
-
-      canvas.add(newText)
-      canvas.setActiveObject(newText)
-      canvas.renderAll()
+      addText(canvas)
     }
-  }
-
-  const handleCanvasMouseUp = () => {
-    if (isAddingText) {
-      setIsAddingText(false)
-    }
-  }
+  }, [isAddingText])
 
   return (
-    <div>
-      <canvas
-        ref={canvasRef}
-        onMouseDown={handleCanvasMouseDown}
-        onMouseUp={handleCanvasMouseUp}
-        width={800}
-        height={600}
-        style={{ border: "1px solid black" }}
-      />
-    </div>
+    <>
+      <button onClick={() => addRect(canvas)}>Rectangle</button>
+      <button onClick={() => addText(canvas)}>Text</button>
+      <canvas id="myCanva" />
+    </>
   )
 }
 

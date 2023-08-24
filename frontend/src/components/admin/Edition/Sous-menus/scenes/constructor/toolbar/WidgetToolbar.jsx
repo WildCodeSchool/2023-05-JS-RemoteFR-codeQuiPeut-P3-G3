@@ -10,7 +10,7 @@ import imgSwitchOn from "../../../../../../../assets/user_ui/switch_on.png"
 import imgText from "../../../../../../../assets/user_ui/text.png"
 import ListDeroulante from "../../../../../../global/ListDeroulante"
 
-function WidgetToolbar({ onAddText }) {
+function WidgetToolbar({ onAddText, isAddingText }) {
   const [isFight, setFight] = useState(false)
 
   return (
@@ -22,7 +22,11 @@ function WidgetToolbar({ onAddText }) {
         <button type="button">
           <img src={imgPerson} alt="icon-person" />
         </button>
-        <button type="button" onClick={onAddText}>
+        <button
+          type="button"
+          onClick={onAddText}
+          className={isAddingText ? "active" : "inactive"}
+        >
           <img src={imgText} alt="icon-text" />
         </button>
         <button type="button">

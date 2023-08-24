@@ -2,7 +2,7 @@ import "./widgetScenes.scss"
 
 import imgImport from "../../../../../../assets/user_ui/import.png"
 import imgExport from "../../../../../../assets/user_ui/export.png"
-import ButtonUI from "../../../../../global/ButtonUI"
+import ButtonUI from "../../../../../global/Buttons/ButtonUI"
 
 function WidgetScenes() {
   return (

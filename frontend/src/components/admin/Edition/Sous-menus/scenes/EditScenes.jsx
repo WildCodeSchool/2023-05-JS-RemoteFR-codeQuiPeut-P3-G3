@@ -1,28 +1,25 @@
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 
 import "./EditScenes.scss"
 import WidgetProperties from "./properties/widgetProperties"
 import WidgetScenes from "./scenes/widgetScenes"
 import WidgetToolbar from "./constructor/toolbar/WidgetToolbar"
-import ButtonUI from "../../../../global/ButtonUI"
+import ButtonUI from "../../../../global/Buttons/ButtonUI"
 import ContainerCanva from "./constructor/canva/ContainerCanva"
+import EditorRichText from "./constructor/text-toolbar/EditorRichText"
 
 function EditScenes() {
   const canvasRef = useRef(null)
   const [isAddingText, setIsAddingText] = useState(false)
+  const [viewEditProperties, setViewProperties] = useState(false)
 
   const handleAddTextButtonClick = () => {
-    setIsAddingText(true)
+    setIsAddingText(!isAddingText)
   }
 
-  // const handleDeleteTextButtonClick = () => {
-  //   const canvas = canvasRef.current;
-  //   const activeObject = canvas.getActiveObject();
-  //   if (activeObject && activeObject.type === 'textbox') {
-  //     canvas.remove(activeObject);
-  //     canvas.renderAll();
-  //   }
-  // };
+  useEffect(() => {
+    // console.log(viewEditProperties)
+  }, [viewEditProperties])
 
   return (
     <>
@@ -42,15 +39,21 @@ function EditScenes() {
             ></textarea>
           </div>
           <div className="scenes__constructor__toolbar">
-            <button onClick={handleAddTextButtonClick}>Add Text</button>
-            <WidgetToolbar onAddText={handleAddTextButtonClick} />
+            <WidgetToolbar
+              onAddText={handleAddTextButtonClick}
+              isAddingText={isAddingText}
+            />
           </div>
+          <EditorRichText />
           <div ref={canvasRef} className="scenes__constructor__canva">
             <ContainerCanva
               canvasRef={canvasRef}
               isAddingText={isAddingText}
               setIsAddingText={setIsAddingText}
+              setViewProperties={setViewProperties}
+              viewEditProperties={viewEditProperties}
             />
+            {/* <CanvasWithText /> */}
           </div>
           <div className="scenes__constructor__btn">
             <ButtonUI title={"save"} bgcolor={"#3f7841"} />
@@ -59,7 +62,7 @@ function EditScenes() {
           </div>
         </div>
         <div className="scenes__properties">
-          <WidgetProperties />
+          <WidgetProperties viewEditProperties={viewEditProperties} />
         </div>
       </div>
     </>
