@@ -1,0 +1,19 @@
+@import "../../../../../../../variables.scss";
+
+.fontProps{
+    margin-top: 1rem;
+
+    font-family: $font-family3;
+    
+    p{
+        font-size: 1rem;
+    }
+
+    &__alignment{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+
+}

@@ -1,6 +1,6 @@
 @import "../../variables.scss";
 
-.navbar-container{
+.navbar-container {
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -8,28 +8,26 @@
   padding: 0 1rem 0 1rem;
   align-items: center;
 
- 
-  .profile-navbar{
+  .profile-navbar {
     height: 100%;
   }
-  
-  .dropdown-navbar{
+
+  .dropdown-navbar {
     height: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
 
-    .dropbtn-navbar{
-      background-color:$color--darkestPurple;
+    .dropbtn-navbar {
+      background-color: $color--darkestPurple;
       border: none;
       color: white;
       font-size: 1.3rem;
       font-family: $font-family1;
-      
     }
 
-    .dropdown-content-navbar{
+    .dropdown-content-navbar {
       display: flex;
       flex-direction: column;
       position: absolute;
@@ -42,8 +40,6 @@
       z-index: 1;
       width: 15%;
       padding: 10px;
-    
-  
 
       a {
         color: white;
@@ -52,19 +48,19 @@
         display: block;
         font-size: 1rem;
         transition: background-color 0.3s;
-  
+
         &:hover {
           background-color: $color--darkPurple;
         }
       }
     }
-    }
+  }
 
-    .profile-navbar{
-      display: flex;
-      height: 100%;
-      align-items: center;
-    }
+  .profile-navbar {
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
   // .explore-nav{
   //   display: flex;
   //   align-items: center;
@@ -80,7 +76,7 @@
   //   }
   // }
 
-  input.search-navbar{
+  input.search-navbar {
     height: 40%;
     width: 20%;
     border-radius: 5px;
@@ -93,17 +89,26 @@
     background-position: 97%;
     background-size: 20px 20px;
   }
-  .profile-navbar{
-    img{
+  .profile-navbar {
+      height: 100%;
+      
+    .link-profil-navbar{
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+    img {
       width: auto;
       height: 80%;
       object-fit: contain;
     }
-    .left-img-navbar{
+  
+    .left-img-navbar {
       padding-right: 5px;
     }
   }
 }
+
 
 .bottom-menu {
   position: fixed;
@@ -118,22 +123,21 @@
     height: 100%;
   }
 }
-//Media queries
 
-@media screen and (max-width: 500px){
-  input.search-navbar{
+//Media queries
+@media screen and (max-width: 500px) {
+  input.search-navbar {
     display: none;
   }
 
-  .dropbtn-navbar{
+  .dropbtn-navbar {
     display: none;
   }
 
   .bottom-menu {
     display: flex;
-    
 
-    ul{
+    ul {
       display: flex;
       width: 100%;
       justify-content: space-around;
@@ -145,7 +149,7 @@
       filter: brightness(0) invert(1);
       height: 35px;
       width: 35px;
-     }
     }
   }
+}
 }
