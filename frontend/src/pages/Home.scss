@@ -12,10 +12,33 @@
     // border: 10px solid green;
     // background-color: purple;
     // background-image: url(../assets/images/parallax/sky.png);%
+    .image-container {
+      position: relative;
+      height: auto;
+      width: 100%;
+      aspect-ratio: 677.45/400;
+      .image {
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
 
-    .noParallax {
-      height: 100%;
-      width: auto;
+      .noParallaxImg {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+      }
+      .cascadeImg {
+        position: absolute;
+        height: 30%;
+        width: 100%;
+        bottom: -1px;
+        left: 0;
+        z-index: 1;
+        // filter: brightness(0) invert(1);
+      }
     }
   }
 
@@ -28,7 +51,8 @@
     align-items: center;
     box-sizing: border-box;
     gap: calc(1vh + 8vw);
-    border: 10px solid red;
+    // border: 10px solid red;
+    
 
     /* Media query pour les marges en mode desktop */
     @media (min-width: 1024px) {
