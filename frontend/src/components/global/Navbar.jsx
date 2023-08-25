@@ -37,7 +37,7 @@ function NavBar() {
         </div>
         <input type="text" placeholder="search" className="search-navbar" />
         <div className="profile-navbar">
-          <Link to="/profile">
+          <Link to="/profile" className="link-profil-navbar">
             <img src={account} alt="logo" className="left-img-navbar" />
           </Link>
           <img src={profileicon} alt="logo" className="right-img-navbar" />

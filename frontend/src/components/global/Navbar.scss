@@ -90,16 +90,25 @@
     background-size: 20px 20px;
   }
   .profile-navbar {
+      height: 100%;
+      
+    .link-profil-navbar{
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
     img {
       width: auto;
       height: 80%;
       object-fit: contain;
     }
+  
     .left-img-navbar {
       padding-right: 5px;
     }
   }
 }
+
 
 .bottom-menu {
   position: fixed;
