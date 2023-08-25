@@ -1,5 +1,5 @@
 const express = require("express")
-const { hashPassword, verifyPassword, verifyToken } = require("./auth")
+const { hashPassword } = require("./auth")
 const { validateUser } = require("./Validators/userValidator")
 const router = express.Router()
 

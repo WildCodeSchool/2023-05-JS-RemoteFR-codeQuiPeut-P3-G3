@@ -49,10 +49,8 @@ function Register() {
     axios
       .post("http://localhost:4242/signup", userData)
       .then((response) => {
-        console.log(response.data)
         // Handle success or do something with the response
         if (response.data !== undefined && response.data !== null) {
-          // Rediriger seulement si l'inscription a réussi (et l'ID est renvoyé)
           navigate("/login")
         } else {
           // Gérer le cas où l'inscription n'a pas réussi
@@ -60,8 +58,7 @@ function Register() {
       })
       .catch((error) => {
         console.error(error)
-        console.log(error.request) // Log the XMLHttpRequest object
-        console.log(error.config) // Log the Axios config
+
         // Handle error
       })
   }
@@ -123,6 +120,7 @@ function Register() {
             className="register-input"
             placeholder="Verify password"
             onChange={handleConfirmPasswordChange}
+            value={confirmPassword}
           />
         </div>
         <input
