@@ -1,7 +1,7 @@
 import React from "react"
 
 import "./PictureGeneral.scss"
-import ButtonUI from "../../../../../global/ButtonUI"
+import ButtonUI from "../../../../../global/Buttons/ButtonUI"
 
 function PictureGeneral() {
   return (
