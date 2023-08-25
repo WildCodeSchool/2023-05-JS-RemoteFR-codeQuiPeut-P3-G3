@@ -7,12 +7,25 @@
     "fix": "prettier --write . && eslint --fix --ext .jsx ."
   },
   "dependencies": {
+    "@lexical/react": "^0.12.0",
     "@vitejs/plugin-react": "^3.0.1",
     "axios": "^1.4.0",
+    "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
     "eslint-config-standard": "^17.1.0",
+    "fabric": "^5.3.0",
+    "fabricjs-react": "^1.2.0",
+    "immutable": "^4.3.2",
+    "konva": "^9.2.0",
+    "lexical": "^0.12.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
+    "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
+    "react-draft-wysiwyg": "^1.15.0",
+    "react-konva": "^18.2.10",
+    "react-select": "^5.7.4",
+    "react-web-editor": "^2.2.6",
     "vite": "^4.0.4"
   },
   "devDependencies": {
