@@ -1,5 +1,6 @@
 const express = require("express")
-
+const { hashPassword } = require("./auth")
+const { validateUser } = require("./Validators/userValidator")
 const router = express.Router()
 
 const chaptersControllers = require("./controllers/chaptersControllers")
@@ -73,6 +74,7 @@ router.get("/users/:id", usersControllers.read)
 router.post("/users", usersControllers.add)
 router.put("/users/:id", usersControllers.edit)
 router.delete("/users/:id", usersControllers.destroy)
+router.post("/signup", hashPassword, validateUser, usersControllers.add)
 
 router.get("/weapons", weaponsControllers.browse)
 router.get("/weapons/:id", weaponsControllers.read)
