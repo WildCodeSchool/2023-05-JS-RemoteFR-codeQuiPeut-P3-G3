@@ -3,8 +3,8 @@
 .popupFinder{
 
     position: fixed; 
-    width: 1200px;
-    height: 900px;
+    width: 80vw;
+    min-height: 20vh;
     background-color: white;
     border-radius: 10px;
     top: 50%; 
@@ -13,7 +13,7 @@
     box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
     z-index: 2;
 
-    &__toolbar{
+    .popupFinderToolbar{
         height: 10%;
         max-height:50px;
         background-color:rgb(204, 123, 123);
@@ -22,13 +22,12 @@
         padding: 0 2rem 0 0;
     }
 
-    &__content{
+    .popupFinderContent{
         height: 90%;
-        
     }
 }
 
-.toolbar{
+.popupFinderToolbar{
 
     &__menu{
         display:flex;
@@ -47,29 +46,38 @@
             cursor:pointer;
         }
 
+        .actif{
+            font-weight: bold;
+        }
+
+        .unselected{
+            font-weight: normal;
+            
+        }
+
         li:hover{
             font-weight: bold;
         }
     }
-
-    &__buttons{
+    &__buttonsFinder {
         height:100%;
         display:flex;
         align-items: center;
 
-        button{
+        .btnQuit{
             height:50%;
             cursor:pointer;
 
-            img{
+            .imgQuit{
                 height:100%;
             }
         }
 
-        button:hover{
+        .btnQuit:hover{
             height:55%;
         }
     }
 }
+
     
 
