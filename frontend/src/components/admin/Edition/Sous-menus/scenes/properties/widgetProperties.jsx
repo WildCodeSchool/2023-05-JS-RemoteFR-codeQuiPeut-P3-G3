@@ -35,7 +35,7 @@ function WidgetProperties({
       <div className="title-properties">
         <span>Properties</span>
       </div>
-      {viewEditProperties ? (
+      {viewEditProperties && (
         <div className="fontProps__content">
           <span> Font family</span>
           <div className="fontProps__familySelect">
@@ -60,8 +60,6 @@ function WidgetProperties({
             setAlignment={setAlignment}
           />
         </div>
-      ) : (
-        <p style={{ color: "black" }}>test</p>
       )}
     </div>
   )

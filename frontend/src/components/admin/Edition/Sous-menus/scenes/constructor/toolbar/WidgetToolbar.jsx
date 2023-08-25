@@ -9,14 +9,16 @@ import imgSwitchOff from "../../../../../../../assets/user_ui/switch_off.png"
 import imgSwitchOn from "../../../../../../../assets/user_ui/switch_on.png"
 import imgText from "../../../../../../../assets/user_ui/text.png"
 import ListDeroulante from "../../../../../../global/ListDeroulante"
+import PopupImgFinder from "../../ImageFinderPopup/PopupImgFinder"
 
 function WidgetToolbar({ onAddText, isAddingText }) {
   const [isFight, setFight] = useState(false)
+  const [viewImgFinder, setViewImgFinder] = useState(false)
 
   return (
     <div className="toolbar">
       <div className="toolbar__left">
-        <button type="button">
+        <button type="button" onClick={() => setViewImgFinder(true)}>
           <img src={imgImage} alt="icon-img" />
         </button>
         <button type="button">
@@ -45,6 +47,12 @@ function WidgetToolbar({ onAddText, isAddingText }) {
         <span> Enemy</span>
         <ListDeroulante />
       </div>
+      {viewImgFinder && (
+        <PopupImgFinder
+          viewImgFinder={viewImgFinder}
+          setViewImgFinder={setViewImgFinder}
+        />
+      )}
     </div>
   )
 }

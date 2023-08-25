@@ -50,15 +50,6 @@ const ContainerCanva = ({
 
   useEffect(() => {
     if (canvas) {
-      // console.log(
-      //   selectedColor +
-      //     " " +
-      //     selectedFont +
-      //     " " +
-      //     selectedSize +
-      //     " " +
-      //     selectedAlignment
-      // )
       const activeObject = canvas.getActiveObject()
       if (activeObject instanceof fabric.Textbox) {
         activeObject.set("fill", selectedColor)
@@ -81,7 +72,7 @@ const ContainerCanva = ({
   // }
 
   const addText = (canvi) => {
-    const text = new fabric.Textbox("Le grand J", {
+    const text = new fabric.Textbox("Texte", {
       height: 280,
       width: 200,
       fill: "yellow",
