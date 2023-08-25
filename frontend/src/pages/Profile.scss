@@ -18,15 +18,16 @@
 }
 
 .edit {
-  height: 70vh;
+  height: 100vh;
+  padding: 2rem 8rem 14rem 8rem;
   background-color: $color--darkestPurple;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
 
-  @media (min-width: 1200px) {
-    margin-bottom: 5rem;
-  }
+  // @media (min-width: 1200px) {
+  //   margin-bottom: 5rem;
+  // }
 
   .container {
     display: flex;
