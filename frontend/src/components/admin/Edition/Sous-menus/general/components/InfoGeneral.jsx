@@ -10,37 +10,47 @@ function InfoGeneral() {
         <div className="titleInfo">
           <span>Global Information</span>
           <div className="infoGeneralBody">
-            <div className="scenes__constructor__resume">
-              <label htmlFor="message">Story name :</label>
+            <div className="storyName">
+              <label htmlFor="message">Story title :</label>
               <textarea
                 id="message"
                 name="message"
                 rows="1"
-                cols="10"
+                cols="20"
                 placeholder="Enter title name"
               ></textarea>
             </div>
-            <div className="scenes__constructor__resume">
+            <div className="storyCategory">
               <label htmlFor="message">Category :</label>
               <textarea
                 id="message"
                 name="message"
                 rows="1"
-                cols="10"
+                cols="20"
                 placeholder="Select category here"
               ></textarea>
             </div>
-            <div className="scenes__constructor__resume">
+            <div className="storyPublic">
               <label htmlFor="message">Public :</label>
               <textarea
                 id="message"
                 name="message"
                 rows="1"
-                cols="10"
+                cols="20"
                 placeholder="Select public here"
               ></textarea>
             </div>
-            <div className="scenes__constructor__resume">
+            <div className="storyDescription">
+              <label htmlFor="message">Description :</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="30"
+                cols="50"
+                placeholder="Write description here"
+              ></textarea>
+            </div>
+            {/* <div className="scenes__constructor__resume">
               <label htmlFor="message">Description :</label>
               <textarea
                 id="message"
@@ -49,11 +59,11 @@ function InfoGeneral() {
                 cols="10"
                 placeholder="Write description here"
               ></textarea>
-            </div>
+            </div> */}
           </div>
           <div className="buttonInfo">
-            <ButtonUI title={"save"} bgColor={"#3f7841"} />
-            <ButtonUI title={"delete"} bgColor={"#902B00"} />
+            <ButtonUI title={"save"} bgcolor={"#3f7841"} />
+            <ButtonUI title={"delete"} bgcolor={"#902B00"} />
           </div>
         </div>
       </div>
