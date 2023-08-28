@@ -22,25 +22,21 @@
     height: 100%;
     cursor: pointer;
     outline: none;
-    
 
     img {
       height: 100%;
       object-fit: contain;
     }
-    
   }
 
-  .active{
+  &.active {
     border: 2px solid black;
     border-radius: 5px;
   }
 
-  .inactive{
+  &.inactive {
     border: none;
   }
-
- 
 
   &__left {
     display: flex;

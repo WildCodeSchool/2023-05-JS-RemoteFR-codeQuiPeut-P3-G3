@@ -90,9 +90,9 @@
     background-size: 20px 20px;
   }
   .profile-navbar {
-      height: 100%;
-      
-    .link-profil-navbar{
+    height: 100%;
+
+    .link-profil-navbar {
       height: 100%;
       display: flex;
       align-items: center;
@@ -102,13 +102,12 @@
       height: 80%;
       object-fit: contain;
     }
-  
+
     .left-img-navbar {
       padding-right: 5px;
     }
   }
 }
-
 
 .bottom-menu {
   position: fixed;
@@ -144,12 +143,12 @@
       list-style: none;
       padding: 0;
       height: 100%;
-      
-     .img-mobile-menu{
-      filter: brightness(0) invert(1);
-      height: 35px;
-      width: 35px;
+
+      .img-mobile-menu {
+        filter: brightness(0) invert(1);
+        height: 35px;
+        width: 35px;
+      }
     }
   }
-}
 }

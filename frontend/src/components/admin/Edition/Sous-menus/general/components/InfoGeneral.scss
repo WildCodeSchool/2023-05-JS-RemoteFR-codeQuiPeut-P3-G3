@@ -7,11 +7,11 @@
   grid-template-rows: 0fr 0fr 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  
+
   .titleInfo {
     @include title-blocsAdmin;
     grid-area: 1 / 1 / 2 / 2;
-    
+
     span {
       color: white;
       font-size: 0.8rem;

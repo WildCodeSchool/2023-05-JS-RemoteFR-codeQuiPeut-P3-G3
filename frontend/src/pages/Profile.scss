@@ -1,20 +1,20 @@
 @import "../variables.scss";
 
 .avatar {
-    display: flex;
-    height: 50vh;
-    background-color: $color--darkestPurple;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  height: 50vh;
+  background-color: $color--darkestPurple;
+  align-items: center;
+  justify-content: center;
 
-    .globalContainerProfil{
-      height: 60%;
-      display:flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: white;
-    }
+  .globalContainerProfil {
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+  }
 }
 
 .edit {

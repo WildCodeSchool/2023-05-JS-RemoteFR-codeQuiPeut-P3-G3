@@ -1,75 +1,70 @@
 @import "../../../../../../variables.scss";
 
-.popupFinder{
+.popupFinder {
+  position: fixed;
+  width: 1200px;
+  height: 900px;
+  background-color: white;
+  border-radius: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  z-index: 2;
 
-    position: fixed; 
-    width: 1200px;
-    height: 900px;
-    background-color: white;
-    border-radius: 10px;
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-    z-index: 2;
+  &__toolbar {
+    height: 10%;
+    max-height: 50px;
+    background-color: rgb(204, 123, 123);
+    color: white;
+    border-radius: 10px 10px 0 0px;
+    padding: 0 2rem 0 0;
+  }
 
-    &__toolbar{
-        height: 10%;
-        max-height:50px;
-        background-color:rgb(204, 123, 123);
-        color:white;
-        border-radius: 10px 10px 0 0px;
-        padding: 0 2rem 0 0;
-    }
-
-    &__content{
-        height: 90%;
-        
-    }
+  &__content {
+    height: 90%;
+  }
 }
 
-.toolbar{
+.toolbar {
+  &__menu {
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+  }
 
-    &__menu{
-        display:flex;
-        height:100%;
-        justify-content: space-between;
-    }
- 
-    &__list{
-        display:flex;
-        align-items: center;
-        gap: 2rem;
-        text-decoration: none;
-        list-style: none;
+  &__list {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    text-decoration: none;
+    list-style: none;
 
-        li{
-            cursor:pointer;
-        }
-
-        li:hover{
-            font-weight: bold;
-        }
+    li {
+      cursor: pointer;
     }
 
-    &__buttons{
-        height:100%;
-        display:flex;
-        align-items: center;
-
-        button{
-            height:50%;
-            cursor:pointer;
-
-            img{
-                height:100%;
-            }
-        }
-
-        button:hover{
-            height:55%;
-        }
+    li:hover {
+      font-weight: bold;
     }
+  }
+
+  &__buttons {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    button {
+      height: 50%;
+      cursor: pointer;
+
+      img {
+        height: 100%;
+      }
+    }
+
+    button:hover {
+      height: 55%;
+    }
+  }
 }
-    
-
