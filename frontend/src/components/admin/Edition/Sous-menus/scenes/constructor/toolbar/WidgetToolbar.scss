@@ -21,11 +21,21 @@
     align-items: center;
     height: 100%;
     cursor: pointer;
+    outline: none;
 
     img {
       height: 100%;
       object-fit: contain;
     }
+  }
+
+  &.active {
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+
+  &.inactive {
+    border: none;
   }
 
   &__left {

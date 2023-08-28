@@ -37,20 +37,34 @@ function NavBar() {
         </div>
         <input type="text" placeholder="search" className="search-navbar" />
         <div className="profile-navbar">
-          <img src={account} alt="logo" className="left-img-navbar" />
+          <Link to="/profile" className="link-profil-navbar">
+            <img src={account} alt="logo" className="left-img-navbar" />
+          </Link>
           <img src={profileicon} alt="logo" className="right-img-navbar" />
         </div>
       </div>
       <div className="bottom-menu" id="bottomMenu">
         <ul>
           <Link to="/">
-            <li>Home</li>
+            <img
+              src="./src/assets/images/icons8-accueil-50.png"
+              alt="logo-home"
+              className="img-mobile-menu"
+            />
           </Link>
           <Link to="/profile">
-            <li>Profile</li>
+            <img
+              src="./src/assets/images/icons8-manette-50.png"
+              alt="logo-games"
+              className="img-mobile-menu"
+            />
           </Link>
           <Link to="/games">
-            <li>Games</li>
+            <img
+              src="./src/assets/images/icons8-utilisateur-sexe-neutre-50.png"
+              alt="logo-utilisateur"
+              className="img-mobile-menu"
+            />
           </Link>
         </ul>
       </div>

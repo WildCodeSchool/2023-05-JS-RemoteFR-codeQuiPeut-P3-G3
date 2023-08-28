@@ -17,8 +17,9 @@ $color--gris: #f7f7f7;
 /* ===============  FONTS ================*/
 
 /* Styles */
-$font-family1: "Cinzel Decorative";
-$font-family2: "Inika";
+$font-family1: "Cinzel Decorative", cursive;
+$font-family2: "Inika", serif;
+$font-family3: "Arial", "Helvetica", sans-serif;
 
 /* Sizes */
 h1 {
@@ -60,7 +61,7 @@ span,
 li,
 button,
 label {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: $font-family3;
   font-size: clamp(0.8rem, 1vw, 1rem);
 }
 

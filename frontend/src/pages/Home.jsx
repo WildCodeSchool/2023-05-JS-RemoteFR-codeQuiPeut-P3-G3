@@ -1,12 +1,18 @@
 import React, { useState } from "react"
 import JdrCard from "../components/global/JdRcard"
+import StarRating from "../components/home/CarouselNote"
+import Footer from "../components/global/Footer"
+import IntroHome from "../components/home/IntroHome"
+import "./Home.scss"
+
 import livre from "../assets/images/Calque2.png"
 import merlin from "../assets/images/logo_merlin.png"
 import gargouille from "../assets/images/imgmalefice.png"
 import grave from "../assets/images/grave.png"
 import previous from "../assets/images/chevron-left-512.webp"
 import next from "../assets/images/chevron-right-512.webp"
-import "./Home.scss"
+import noParallaxImg from "../assets/images/parallax/castleNewSize1.png"
+import cascadeImg from "../assets/images/cascadeImg.png"
 
 const jdrCardData = [
   {
@@ -16,8 +22,7 @@ const jdrCardData = [
     jdrNameColor: "#F3AD44",
     jdrImg1: merlin,
     jdrImg2: livre,
-    jdrText:
-      "Lorem Ipsum is simply dummy text oui oui oui bla bla bla baguette de pain avec du beurre et de la confiture",
+    jdrText: "Lorem Ipsum is simply dummy text...",
     textColor: "white",
     textFont: "inika",
     jdrBgColor1: "#44114D",
@@ -32,8 +37,7 @@ const jdrCardData = [
     jdrNameColor: "#F3AD44",
     jdrImg1: gargouille,
     jdrImg2: grave,
-    jdrText:
-      "Lorem Ipsum is simply dummy text ouai izi money izi life sisi man j'adore le ski et toi t'adore le sky ?",
+    jdrText: "Lorem Ipsum is simply dummy text...",
     textColor: "white",
     textFont: "inika",
     jdrBgColor1: "#660E0E",
@@ -86,9 +90,17 @@ export default function Home() {
 
   return (
     <>
-      <section className="home__hero"></section>
+      <section className="home__hero">
+        {/* <HomeParallax /> */}
+        <div className="image-container">
+          <img className="noParallaxImg" src={noParallaxImg} alt="castle" />
+          <img className="cascadeImg" src={cascadeImg} alt="cascade" />
+        </div>
+      </section>
       <main className="home__content">
-        <section className="home__content__description"></section>
+        <section className="home__content__description">
+          <IntroHome />
+        </section>
         <section className="home__content__games">
           <div className="jdrCardApp">
             {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
@@ -105,14 +117,12 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="home__content__avis"></section>
+        <section className="home__content__avis">
+          <StarRating />
+        </section>
       </main>
 
-      {/* FOOTER */}
-      <footer>
-        {/* -> Footer à ajouter ici */}
-        <h3 style={{ textAlign: "center" }}> footer </h3>
-      </footer>
+      <Footer />
     </>
   )
 }
