@@ -1,6 +1,8 @@
 /* Home.scss */
 
 @import "../variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Josefin+Sans:wght@100;500&family=Lilita+One&family=Oswald:wght@200&family=Rubik:wght@300&family=Space+Grotesk:wght@700&family=Work+Sans:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Inika&family=Josefin+Sans:wght@100;500&family=Lilita+One&family=Oswald:wght@200&family=Rubik:wght@300&family=Space+Grotesk:wght@700&family=Work+Sans:wght@100&display=swap");
 
 /* Block: .home */
 .home {
@@ -47,8 +49,32 @@
       height: 80vh;
       width: 100%;
       border: 2px solid black;
-      background-color: white;
+      background-color: $color--darkestPurple;
       max-width: 1300px;
     }
   }
+}
+
+.jdrCardApp {
+  display: flex;
+}
+
+.pagination button img {
+  width: 40px;
+  border-radius: 25%;
+}
+
+.boutonNext {
+  position: absolute;
+  bottom: -150%;
+  right: 17%;
+  border-radius: 50%;
+
+  color: aliceblue;
+}
+.boutonPrev {
+  position: absolute;
+  left: 16%;
+  bottom: -150%;
+  border-radius: 50%;
 }
