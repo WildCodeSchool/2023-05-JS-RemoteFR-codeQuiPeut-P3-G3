@@ -11,7 +11,7 @@
   .titlePicture {
     @include title-blocsAdmin;
     grid-area: 1 / 1 / 2 / 2;
-    
+
     span {
       color: white;
       font-size: 0.8rem;
