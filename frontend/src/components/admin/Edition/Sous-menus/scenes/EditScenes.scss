@@ -109,16 +109,16 @@ $desktop-rows: repeat(2, 1fr);
       padding: 0.5rem;
       gap: 5px;
 
-      <<<<<<< HEAD ======= @media(min-width: 1550px) {
+      @media (min-width: 1550px) {
         justify-content: flex-start;
       }
 
-      >>>>>>>dev label {
+      label {
         color: black;
         font-size: 0.8rem;
       }
 
-      textArea {
+      textarea {
         resize: none;
         font-size: 0.7rem;
         border-radius: 5px;
