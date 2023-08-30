@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState } from "react"
 
 import "./EditScenes.scss"
 import WidgetProperties from "./properties/widgetProperties"
@@ -6,6 +6,7 @@ import WidgetScenes from "./scenes/widgetScenes"
 import WidgetToolbar from "./constructor/toolbar/WidgetToolbar"
 import ButtonUI from "../../../../global/Buttons/ButtonUI"
 import ContainerCanva from "./constructor/canva/ContainerCanva"
+import PopupImgFinder from "../../../../global/popups/ImageFinderPopup/PopupImgFinder"
 
 function EditScenes() {
   const canvasRef = useRef(null)
@@ -21,13 +22,13 @@ function EditScenes() {
 
   const [selectedAlignment, setAlignment] = useState("text-align: center")
 
+  /* Popup image viewer */
+  const [selectedPath, setSelectedPath] = useState("")
+  const [viewImgFinder, setViewImgFinder] = useState(false)
+
   const handleAddTextButtonClick = () => {
     setIsAddingText(!isAddingText)
   }
-
-  useEffect(() => {
-    // console.log(selectedColor)
-  }, [selectedColor])
 
   return (
     <>
@@ -49,6 +50,7 @@ function EditScenes() {
           <div className="scenes__constructor__toolbar">
             <WidgetToolbar
               onAddText={handleAddTextButtonClick}
+              setViewImgFinder={setViewImgFinder}
               isAddingText={isAddingText}
             />
           </div>
@@ -87,6 +89,14 @@ function EditScenes() {
           />
         </div>
       </div>
+      {/* Popup recherche image */}
+      {viewImgFinder && (
+        <PopupImgFinder
+          setViewImgFinder={setViewImgFinder}
+          setSelectedPath={setSelectedPath}
+          selectedPath={selectedPath}
+        />
+      )}
     </>
   )
 }

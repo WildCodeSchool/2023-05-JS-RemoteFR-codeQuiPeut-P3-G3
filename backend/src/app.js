@@ -24,6 +24,9 @@ app.use(
   })
 )
 
+/* Laisse le répertoire uploads accessible */
+app.use("/uploads", express.static("uploads"))
+
 // import and mount the API routes
 
 const router = require("./router")
@@ -58,5 +61,4 @@ if (fs.existsSync(reactIndexFile)) {
 }
 
 // ready to export
-
 module.exports = app

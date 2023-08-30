@@ -17,7 +17,7 @@ const ContainerCanva = ({
     new fabric.Canvas("myCanva", {
       height: 800,
       width: 1250,
-      backgroundColor: "grey",
+      backgroundColor: "white",
     })
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const ContainerCanva = ({
     const text = new fabric.Textbox("Texte", {
       height: 280,
       width: 200,
-      fill: "yellow",
+      fill: "black",
     })
     canvi.add(text)
     canvi.renderAll()

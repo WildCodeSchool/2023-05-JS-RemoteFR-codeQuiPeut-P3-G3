@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import "./widgetProperties.scss"
-import TextProperties from "./text-editor/textProperties"
+import TextProperties from "../../../../../global/texts-editor/textProperties"
 import FontSelector from "../../../../../global/DropLists/FontSelector"
 import FontSize from "../../../../../global/DropLists/FontSize"
-import ColorSelector from "./text-editor/ColorSelector"
+import ColorSelector from "../../../../../global/texts-editor/ColorSelector"
 import iconTextColor from "../../../../../../assets/text_ui/colorPicker.png"
 import ButtonStandard from "../../../../../global/Buttons/ButtonStandard"
 
