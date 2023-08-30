@@ -40,6 +40,8 @@ const ShopManager = require("./ShopManager")
 const StoriesManager = require("./StoriesManager")
 const UsersManager = require("./UsersManager")
 const WeaponsManager = require("./WeaponsManager")
+/* Pictures */
+const PicturesManager = require("./picturesManager")
 
 models.chapters = new ChaptersManager()
 models.chapters.setDatabase(pool)
@@ -73,6 +75,10 @@ models.users.setDatabase(pool)
 
 models.weapons = new WeaponsManager()
 models.weapons.setDatabase(pool)
+
+/* Pictures */
+models.pictures = new PicturesManager()
+models.pictures.setDatabase(pool)
 
 // bonus: use a proxy to personalize error message,
 // when asking for a non existing model

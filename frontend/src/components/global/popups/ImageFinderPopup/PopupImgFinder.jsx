@@ -2,13 +2,14 @@ import { useState } from "react"
 
 import "./PopupImgFinder.scss"
 
-import imgQuit from "../../../../../../assets/user_ui/quit_white.png"
-import CompDownload from "./Download/compDownload"
+import imgQuit from "../../../../assets/user_ui/quit_white.png"
+import CompUpload from "./Download/CompUpload"
 import CompWebSearch from "./WebSearch/compWebSearch"
 import CompLocal from "./Local/CompLocal"
 
-function PopupImgFinder({ viewImgFinder, setViewImgFinder }) {
+function PopupImgFinder({ viewImgFinder, setViewImgFinder, onClickCancel }) {
   const [viewState, setView] = useState("local")
+
   return (
     <div className="popupFinder">
       <div className="popupFinderToolbar">
@@ -21,10 +22,10 @@ function PopupImgFinder({ viewImgFinder, setViewImgFinder }) {
               Local
             </li>
             <li
-              onClick={() => setView("download")}
-              className={viewState === "download" ? "actif" : "unselected"}
+              onClick={() => setView("upload")}
+              className={viewState === "upload" ? "actif" : "unselected"}
             >
-              Download
+              Upload
             </li>
             <li
               onClick={() => setView("websearch")}
@@ -43,7 +44,9 @@ function PopupImgFinder({ viewImgFinder, setViewImgFinder }) {
 
       <div className="popupFinderContent">
         {viewState === "local" && <CompLocal />}
-        {viewState === "download" && <CompDownload />}
+        {viewState === "upload" && (
+          <CompUpload onClickCancel={() => setViewImgFinder(false)} />
+        )}
         {viewState === "webSearch" && <CompWebSearch />}
       </div>
     </div>

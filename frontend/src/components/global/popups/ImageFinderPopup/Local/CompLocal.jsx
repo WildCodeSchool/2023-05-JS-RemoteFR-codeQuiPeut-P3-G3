@@ -1,5 +1,3 @@
-import "./CompLocal.scss"
-
 function CompLocal() {
   return (
     <>

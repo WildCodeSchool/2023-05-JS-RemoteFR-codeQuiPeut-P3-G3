@@ -9,7 +9,7 @@ import imgSwitchOff from "../../../../../../../assets/user_ui/switch_off.png"
 import imgSwitchOn from "../../../../../../../assets/user_ui/switch_on.png"
 import imgText from "../../../../../../../assets/user_ui/text.png"
 import ListDeroulante from "../../../../../../global/ListDeroulante"
-import PopupImgFinder from "../../ImageFinderPopup/PopupImgFinder"
+import PopupImgFinder from "../../../../../../global/popups/ImageFinderPopup/PopupImgFinder"
 
 function WidgetToolbar({ onAddText, isAddingText }) {
   const [isFight, setFight] = useState(false)
@@ -18,20 +18,24 @@ function WidgetToolbar({ onAddText, isAddingText }) {
   return (
     <div className="toolbar">
       <div className="toolbar__left">
-        <button type="button" onClick={() => setViewImgFinder(true)}>
+        <button
+          type="button"
+          className="btn-toolbar"
+          onClick={() => setViewImgFinder(true)}
+        >
           <img src={imgImage} alt="icon-img" />
         </button>
-        <button type="button">
+        <button className="btn-toolbar" type="button">
           <img src={imgPerson} alt="icon-person" />
         </button>
         <button
           type="button"
           onClick={onAddText}
-          className={isAddingText ? "active" : "inactive"}
+          className={`btn-toolbar ${isAddingText ? "active" : "inactive"}`}
         >
           <img src={imgText} alt="icon-text" />
         </button>
-        <button type="button">
+        <button type="button" className="btn-toolbar">
           <img src={imgButton} alt="icon-button" />
         </button>
       </div>
@@ -39,6 +43,7 @@ function WidgetToolbar({ onAddText, isAddingText }) {
         <span> Fight </span>
         <button
           type="button"
+          className="btn-toolbar"
           alt="icon-switch"
           onClick={() => setFight(!isFight)}
         >
