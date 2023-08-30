@@ -2,14 +2,26 @@ import React, { useState, useEffect } from "react"
 import { fabric } from "fabric"
 
 const ContainerCanva = ({
+  /* Ajout background */
+  isAddingBackground,
+  setIsAddingBackground,
+  /* Ajout texte */
   isAddingText,
   setIsAddingText,
+  /* Ajout image */
+  setIsAddingPic,
+  isAddingPic,
+  /* Popup load image */
   setViewProperties,
   viewEditProperties,
+  /* Font properties */
   selectedColor,
   selectedFont,
   selectedSize,
   selectedAlignment,
+  /* Chemin de fichiers */
+  backgroundPath,
+  imgPath,
 }) => {
   const [canvas, setCanvas] = useState("")
 
@@ -25,10 +37,30 @@ const ContainerCanva = ({
   }, [])
 
   useEffect(() => {
+    if (canvas && backgroundPath !== "" && isAddingBackground) {
+      const backendBaseUrl = `http://localhost:4242/uploads/${backgroundPath}`
+
+      fabric.Image.fromURL(backendBaseUrl, (img) => {
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+          scaleX: canvas.width / img.width,
+          scaleY: canvas.height / img.height,
+        })
+      })
+    }
+  }, [isAddingBackground, backgroundPath, canvas])
+
+  useEffect(() => {
     if (isAddingText) {
       addText(canvas)
     }
 
+    if (isAddingPic && imgPath !== "") {
+      const pathPic = `http://localhost:4242/uploads/${imgPath}`
+      // console.log("ajout picture, valeur path : " + pathPic)
+      addImage(canvas, pathPic)
+    }
+
+    /* Suppression element */
     const handleDeleteKeyPress = (event) => {
       if (event.key === "Delete" || event.key === "Backspace") {
         const activeObject = canvas.getActiveObject()
@@ -46,8 +78,11 @@ const ContainerCanva = ({
     return () => {
       document.removeEventListener("keydown", handleDeleteKeyPress)
     }
-  }, [isAddingText, canvas])
+  }, [isAddingText, isAddingPic, imgPath, canvas])
 
+  /* ------------ PROPERTIES ---------------- */
+
+  /* Modifications de l'objet selectionné */
   useEffect(() => {
     if (canvas) {
       const activeObject = canvas.getActiveObject()
@@ -61,16 +96,9 @@ const ContainerCanva = ({
     }
   }, [selectedColor, selectedFont, selectedSize, selectedAlignment, canvas])
 
-  // const addRect = (canvi) => {
-  //   const rect = new fabric.Rect({
-  //     height: 280,
-  //     width: 200,
-  //     fill: "yellow",
-  //   })
-  //   canvi.add(rect)
-  //   canvi.renderAll()
-  // }
+  /* -------------- TEXTE ---------------- */
 
+  /* Fonction ajout de texte */
   const addText = (canvi) => {
     const text = new fabric.Textbox("Texte", {
       height: 280,
@@ -94,6 +122,29 @@ const ContainerCanva = ({
 
     setIsAddingText(false)
   }
+
+  /* -------------- IMAGES ---------------- */
+
+  /* Fonction ajout d'image */
+  const addImage = (canvi, imageUrl) => {
+    fabric.Image.fromURL(imageUrl, (img) => {
+      // img.set({ selectable: true })
+      img.scale(0.75)
+      canvi.add(img)
+      // img.bringToFront() // Amener l'image à l'avant-plan
+    })
+    canvi.renderAll()
+  }
+
+  // const addRect = (canvi) => {
+  //   const rect = new fabric.Rect({
+  //     height: 280,
+  //     width: 200,
+  //     fill: "yellow",
+  //   })
+  //   canvi.add(rect)
+  //   canvi.renderAll()
+  // }
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 
 import "./EditScenes.scss"
 import WidgetProperties from "./properties/widgetProperties"
@@ -11,6 +11,8 @@ import PopupImgFinder from "../../../../global/popups/ImageFinderPopup/PopupImgF
 function EditScenes() {
   const canvasRef = useRef(null)
   const [isAddingText, setIsAddingText] = useState(false)
+  const [isAddingPic, setIsAddingPic] = useState(false)
+  const [isAddingBackground, setIsAddingBackground] = useState(false)
   const [viewEditProperties, setViewProperties] = useState(false)
 
   /* RECUPERATION DES PROPRIETES */
@@ -25,10 +27,35 @@ function EditScenes() {
   /* Popup image viewer */
   const [selectedPath, setSelectedPath] = useState("")
   const [viewImgFinder, setViewImgFinder] = useState(false)
+  const [imgPath, setImgPath] = useState("")
+  const [backgroundPath, setBackgroundPath] = useState("")
+  console.info(backgroundPath)
 
-  const handleAddTextButtonClick = () => {
-    setIsAddingText(!isAddingText)
-  }
+  /* Actions quand quitte la popup */
+  useEffect(() => {
+    if (!viewImgFinder) {
+      setIsAddingPic(false)
+      setIsAddingBackground(false)
+      setImgPath("")
+      setBackgroundPath("")
+      setSelectedPath("")
+    }
+  }, [viewImgFinder])
+
+  /* Actions quand selection d'une image */
+  useEffect(() => {
+    if (isAddingPic || isAddingBackground) {
+      setViewImgFinder(true)
+    }
+
+    if (isAddingPic && selectedPath) {
+      setImgPath(selectedPath)
+    }
+
+    if (isAddingBackground && selectedPath) {
+      setBackgroundPath(selectedPath)
+    }
+  }, [isAddingPic, isAddingBackground, isAddingText, selectedPath])
 
   return (
     <>
@@ -49,9 +76,12 @@ function EditScenes() {
           </div>
           <div className="scenes__constructor__toolbar">
             <WidgetToolbar
-              onAddText={handleAddTextButtonClick}
-              setViewImgFinder={setViewImgFinder}
               isAddingText={isAddingText}
+              setIsAddingText={setIsAddingText}
+              isAddingBackground={isAddingBackground}
+              setIsAddingBackground={setIsAddingBackground}
+              isAddingPic={isAddingPic}
+              setIsAddingPic={setIsAddingPic}
             />
           </div>
           <div ref={canvasRef} className="scenes__constructor__canva">
@@ -59,6 +89,10 @@ function EditScenes() {
               canvasRef={canvasRef}
               isAddingText={isAddingText}
               setIsAddingText={setIsAddingText}
+              isAddingPic={isAddingPic}
+              setIsAddingPic={setIsAddingPic}
+              isAddingBackground={isAddingBackground}
+              setIsAddingBackground={setIsAddingBackground}
               setViewProperties={setViewProperties}
               viewEditProperties={viewEditProperties}
               selectedColor={selectedColor}
@@ -66,6 +100,8 @@ function EditScenes() {
               selectedSize={selectedSize}
               selectedAlignment={selectedAlignment}
               setSelectedSize={setSelectedSize}
+              backgroundPath={selectedPath}
+              imgPath={imgPath}
             />
             {/* <CanvasWithText /> */}
           </div>
