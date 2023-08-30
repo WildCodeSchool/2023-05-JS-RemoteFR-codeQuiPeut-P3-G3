@@ -88,5 +88,6 @@ router.delete("/weapons/:id", weaponsControllers.destroy)
 /* Test images files */
 router.post("/addPicture/:filename", picturesControllers.add)
 router.delete("/deletePicture/:id", picturesControllers.destroy)
+router.get("/displayAllPictures", picturesControllers.browse)
 
 module.exports = router

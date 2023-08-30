@@ -13,58 +13,66 @@ const storage = multer.diskStorage({
     const extension = mime.extension(file.mimetype)
     const originalFileName = file.originalname.split(".")[0]
     const fileName = originalFileName + "_" + uniqueSuffix + "." + extension
-
-    // Utilisez fileName pour l'appel à uploadPicture
     cb(null, fileName)
   },
 })
 
 const upload = multer({ storage }).single("image")
 
-const picturesControllers = {
+const add = [
   upload,
-
-  add: [
-    upload,
-    async (req, res, next) => {
-      try {
-        // const filePath = req.file.path
-        // console.log("file path : " + filePath)
-
-        // Utilisez fileName pour l'appel à uploadPicture
-        const fileName = req.file.filename // Ajoutez cette ligne
-        await models.pictures.uploadPicture(fileName)
-
-        res.locals.fileName = fileName // Stockez le nom de fichier dans res.locals
-        next()
-      } catch (error) {
-        console.error("Erreur lors du téléchargement de l'image :", error)
-        res
-          .status(500)
-          .json({ message: "Erreur lors du téléchargement de l'image." })
-      }
-    },
-    (req, res) => {
-      // Utilisez la valeur stockée dans res.locals.fileName
-      res.status(200).json({
-        message: "Image téléchargée avec succès.",
-        fileName: res.locals.fileName,
-      })
-    },
-  ],
-
-  destroy: async (req, res) => {
+  async (req, res, next) => {
+    // console.log("test")
     try {
-      await models.pictures.deletePicture(req.params.id)
-      res.status(200).json({ message: "Image supprimée avec succès." })
+      const fileName = req.file.filename
+      await models.pictures.uploadPicture(fileName)
+      res.locals.fileName = fileName
+      next()
     } catch (error) {
-      console.error("Erreur lors de la suppression de l'image :", error)
+      console.error("Erreur lors du téléchargement de l'image :", error)
       res
         .status(500)
-        .json({ message: "Erreur lors de la suppression de l'image." })
+        .json({ message: "Erreur lors du téléchargement de l'image." })
     }
   },
-  // ...
+  (req, res) => {
+    res.status(200).json({
+      message: "Image téléchargée avec succès.",
+      fileName: res.locals.fileName,
+    })
+  },
+]
+
+const destroy = async (req, res) => {
+  try {
+    await models.pictures.deletePicture(req.params.id)
+    res.status(200).json({ message: "Image supprimée avec succès." })
+  } catch (error) {
+    console.error("Erreur lors de la suppression de l'image :", error)
+    res
+      .status(500)
+      .json({ message: "Erreur lors de la suppression de l'image." })
+  }
+}
+
+const browse = (req, res) => {
+  models.pictures
+    .findAll()
+    .then((imageRows) => {
+      res.status(200).json({ files: imageRows })
+      // console.log("transfert ok")
+    })
+    .catch((err) => {
+      console.error(err)
+      res.sendStatus(500)
+    })
+}
+
+const picturesControllers = {
+  upload,
+  add,
+  destroy,
+  browse,
 }
 
 module.exports = picturesControllers
