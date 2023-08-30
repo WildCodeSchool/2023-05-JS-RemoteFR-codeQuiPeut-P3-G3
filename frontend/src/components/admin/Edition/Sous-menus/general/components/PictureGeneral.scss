@@ -2,11 +2,12 @@
 
 .pictureGeneral {
   height: 100%;
-  // display: grid;
-  // grid-template-columns: 1fr;
-  // grid-template-rows: 0fr 0fr 1fr;
-  // grid-column-gap: 0px;
-  // grid-row-gap: 0px;
+   // background-color: #f7f7f7;
+  background-color: rgb(197, 97, 97);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   
   .titlePicture {
     @include title-blocsAdmin;
@@ -14,7 +15,6 @@
 
     span {
       color: white;
-      font-size: 0.8rem;
     }
   }
 
@@ -42,6 +42,9 @@
 
 .pictureGeneralConstructor {
   color: black;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
 
   .titleArea {
 
@@ -56,11 +59,18 @@
 }
 
 .pictureGeneralSeparator {
-  height: 50vh;
+  height: 100%;
   width: 0.2%;
+  margin: 0px 20px;
   background-color: grey;
 }
 
+.buttonSelector {
+  color: black;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
   .buttonPictureGeneral {
     display: flex;
     flex-direction: row;

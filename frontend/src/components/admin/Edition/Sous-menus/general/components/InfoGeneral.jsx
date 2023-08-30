@@ -2,6 +2,8 @@ import React from "react"
 
 import "./InfoGeneral.scss"
 import ButtonUI from "../../../../../global/Buttons/ButtonUI"
+import CategorySelector from "../../../../../global/DropLists/CategorySelector"
+import PublicSelector from "../../../../../global/DropLists/PublicSelector"
 
 function InfoGeneral() {
   return (
@@ -22,44 +24,26 @@ function InfoGeneral() {
             </div>
             <div className="storyCategory">
               <label htmlFor="message">Category :</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="1"
-                cols="20"
-                placeholder="Select category here"
-              ></textarea>
+              <div className="jdrCategory">
+                <CategorySelector />
+              </div>
             </div>
             <div className="storyPublic">
               <label htmlFor="message">Public :</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="1"
-                cols="20"
-                placeholder="Select public here"
-              ></textarea>
+              <div className="publicSelector">
+                <PublicSelector />
+              </div>
             </div>
             <div className="storyDescription">
               <label htmlFor="message">Description :</label>
               <textarea
                 id="message"
                 name="message"
-                rows="30"
+                rows="25"
                 cols="50"
                 placeholder="Write description here"
               ></textarea>
             </div>
-            {/* <div className="scenes__constructor__resume">
-              <label htmlFor="message">Description :</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="20"
-                cols="10"
-                placeholder="Write description here"
-              ></textarea>
-            </div> */}
           </div>
           <div className="buttonInfo">
             <ButtonUI title={"save"} bgcolor={"#3f7841"} />

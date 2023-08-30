@@ -4,6 +4,9 @@ import "./PictureGeneral.scss"
 import ButtonUI from "../../../../../global/Buttons/ButtonUI"
 import jeuImg from "../../../../../../assets/images/JeuLeDestin.png"
 import editPen from "../../../../../../assets/images/EditPen.png"
+import FontSelector from "../../../../../global/DropLists/FontSelector"
+import FontSize from "../../../../../global/DropLists/FontSize"
+import FontType from "../../../../../global/DropLists/FontType"
 
 function PictureGeneral() {
   return (
@@ -23,36 +26,30 @@ function PictureGeneral() {
             </div>
             <div className="titleFontFamily">
               <label htmlFor="message">Font-family</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="1"
-                cols="20"
-                placeholder="Font-family"
-              ></textarea>
+              <FontSelector />
             </div>
             <div className="titleFontSize">
               <label htmlFor="message">Font-size</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="1"
-                cols="20"
-                placeholder="Font-size"
-              ></textarea>
+              <FontSize />
             </div>
             <div className="titleFontType">
               <label htmlFor="message">Font-type</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="1"
-                cols="20"
-                placeholder="Font-type"
-              ></textarea>
+              <FontType />
+            </div>
+            <div className="titleColor">
+              <label htmlFor="message">Title Color</label>
+            </div>
+            <div className="topBgdColor">
+              <label htmlFor="message">Top background Color</label>
+            </div>
+            <div className="topImg">
+              <label htmlFor="message">Top Image</label>
             </div>
           </div>
-          {/* <div className="pictureGeneralSeparator"></div> */}
+          <div className="pictureGeneralSeparator">
+            <div className="verticalLineSeparator"></div>
+          </div>
+
           <div className="selectionArea">
             <div className="descriptionText">
               <label htmlFor="message">Description</label>
@@ -60,34 +57,37 @@ function PictureGeneral() {
 
             <div className="descriptionFontFamily">
               <label htmlFor="message">Font-family</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="1"
-                cols="20"
-                placeholder="Font-family"
-              ></textarea>
+              <FontSelector />
             </div>
             <div className="descriptionFontSize">
               <label htmlFor="message">Font-size</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="1"
-                cols="20"
-                placeholder="Font-size"
-              ></textarea>
+              <FontSize />
             </div>
             <div className="descriptionFontType">
               <label htmlFor="message">Font-type</label>
-              <textarea
-                id="message"
-                name="message"
-                rows="1"
-                cols="20"
-                placeholder="Font-type"
-              ></textarea>
+              <FontType />
             </div>
+            <div className="textColor">
+              <label htmlFor="message">Text Color</label>
+            </div>
+            <div className="bottomBgdColor">
+              <label htmlFor="message">Bottom background Color</label>
+            </div>
+            <div className="bottomImg">
+              <label htmlFor="message">Bottom Image</label>
+            </div>
+          </div>
+        </div>
+        <div className="buttonSelector">
+          <div className="buttonImg">
+            <label htmlFor="message">Button Image</label>
+          </div>
+          <div className="buttonTextFont">
+            <label htmlFor="message">Button Text Font</label>
+            <FontSelector />
+          </div>
+          <div className="buttonTextColor">
+            <label htmlFor="message">Button Text Color</label>
           </div>
         </div>
         <div className="buttonPictureGeneral">

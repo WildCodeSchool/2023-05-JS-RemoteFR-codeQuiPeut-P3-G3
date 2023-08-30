@@ -1,1 +1,40 @@
 @import "../../../variables.scss";
+
+.adminGeneral {
+
+  .generalTable {
+  color: black;
+  margin: 10px;
+  padding: 20px;
+
+    #generalTab {
+      tr {
+        // gap: 20px;
+        th {
+          width: auto;
+          padding: 20px;
+        }
+      }
+    }
+    tbody {
+      td {
+        padding: 0px 10px;
+        text-align: center;
+      }
+    }
+  }
+
+  .tableSeparator {
+    display: flex;
+    justify-content: center;
+    .lineSeparator {
+    border-top: 1px solid #ccc;
+    margin-top: 20px;
+    width: 90%;
+    }
+  }
+
+  .generalAddButton {
+padding: 20px;
+  }
+}
