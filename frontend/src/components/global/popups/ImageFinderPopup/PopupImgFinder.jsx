@@ -7,7 +7,12 @@ import CompUpload from "./Download/CompUpload"
 import CompWebSearch from "./WebSearch/compWebSearch"
 import CompLocal from "./Local/CompLocal"
 
-function PopupImgFinder({ viewImgFinder, setViewImgFinder, onClickCancel }) {
+function PopupImgFinder({
+  setViewImgFinder,
+  onClickCancel,
+  setSelectedPath,
+  selectedPath,
+}) {
   const [viewState, setView] = useState("local")
 
   return (
@@ -43,9 +48,14 @@ function PopupImgFinder({ viewImgFinder, setViewImgFinder, onClickCancel }) {
       </div>
 
       <div className="popupFinderContent">
-        {viewState === "local" && <CompLocal />}
+        {viewState === "local" && (
+          <CompLocal setSelectedPath={setSelectedPath} />
+        )}
         {viewState === "upload" && (
-          <CompUpload onClickCancel={() => setViewImgFinder(false)} />
+          <CompUpload
+            setSelectedPath={setSelectedPath}
+            onClickCancel={() => setViewImgFinder(false)}
+          />
         )}
         {viewState === "webSearch" && <CompWebSearch />}
       </div>

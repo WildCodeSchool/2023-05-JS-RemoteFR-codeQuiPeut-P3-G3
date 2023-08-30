@@ -2,12 +2,13 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import "./CompLocal.scss"
 
-function CompLocal() {
+function CompLocal({ setSelectedPath }) {
   const [images, setImages] = useState([])
   /* Faire un .env front? */
   const backendBaseUrl = "http://localhost:4242"
 
   const handleClick = (imageId) => {
+    setSelectedPath(imageId)
     // console.log(imageId)
   }
 
