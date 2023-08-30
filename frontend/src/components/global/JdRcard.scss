@@ -1,0 +1,95 @@
+// .jdrCardGlobal {
+//   width: 600px;
+//   height: 600px;
+//   margin: 20px;
+//   display: flex;
+//   flex-wrap: wrap;
+// }
+
+.jdrImgNom {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+// .jdrBg2 {
+//   position: absolute;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-end;
+//   margin-top: auto;
+//   padding-top: 20px;
+//   width: 600px;
+// }
+
+// .jdrText {
+//   padding-left: 250px;
+//   text-align: end;
+//   width: 50%;
+//   margin-bottom: auto;
+// }
+
+// .jdrButton {
+//   align-self: flex-end;
+//   margin-top: 10px;
+//   width: 105px;
+//   height: 45px;
+//   /* Ajoutez d'autres styles de bouton ici si nécessaire */
+// }
+
+// .jdrName {
+//   color: rgb(243, 173, 68);
+//   margin-top: 50px;
+//   font-size: 35px;
+// }
+
+// .jdrImg2 img {
+//   max-width: 30px;
+//   margin-top: 20px;
+// }
+
+// .jdrImg1 img {
+//   max-width: 30px;
+// }
+
+.jdrCardGlobal {
+  border-radius: 2%;
+  margin: 15px;
+  width: 600px;
+  height: 600px;
+  position: relative;
+}
+
+.jdrBg2 {
+  width: 100%;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  z-index: 0;
+}
+
+.jdrImgTexte {
+  display: flex;
+}
+
+.jdrButton {
+  justify-content: center;
+  width: 110px;
+}
+.jdrImg2 {
+  position: absolute;
+  z-index: 999;
+  bottom: 60px;
+  left: 40px;
+}
+
+.jdrTextBouton {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  right: 10%;
+}
+
+.jdrImg1 {
+  width: 250px;
+}

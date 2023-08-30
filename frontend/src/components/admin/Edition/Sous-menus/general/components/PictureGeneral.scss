@@ -2,32 +2,36 @@
 
 .pictureGeneral {
   height: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 0fr 0fr 1fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
+   // background-color: #f7f7f7;
+  background-color: rgb(197, 97, 97);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   
   .titlePicture {
     @include title-blocsAdmin;
     grid-area: 1 / 1 / 2 / 2;
-    
+
     span {
       color: white;
-      font-size: 0.8rem;
     }
   }
 
   .jeuImgDiv {
+      margin-top: 20px;
       height: 300px;
       width: 360px;
       display: flex;
       flex-direction: row;
+      align-items: flex-start;
 
     .jeuImg {
       height: 280px;
-      width: 280px;
+      width: 100%;
       border-radius: 10px;
+      justify-content: center;
+      align-items: center;
     }
 
     .editPen {
@@ -35,4 +39,44 @@
       width: 30px;
     }
   }
+
+.pictureGeneralConstructor {
+  color: black;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+
+  .titleArea {
+
+    .titleText {
+
+    }
+  }
+
+  .selectionArea {
+    
+  }
+}
+
+.pictureGeneralSeparator {
+  height: 100%;
+  width: 0.2%;
+  margin: 0px 20px;
+  background-color: grey;
+}
+
+.buttonSelector {
+  color: black;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+  .buttonPictureGeneral {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-right: 20px;
+  }
+
 }

@@ -4,21 +4,19 @@
   @include title-blocsAdmin;
 }
 
-.fontProps{
-
-  &__content{
-    color:black;
-    padding:20px;
+.fontProps {
+  &__content {
+    color: black;
+    padding: 20px;
     // display:flex;
   }
 
-  &__familySelect{
-    margin-top:20px;
-    display:flex;
+  &__familySelect {
+    margin-top: 20px;
+    display: flex;
     justify-content: center;
     align-items: center;
-    color:black;
-    gap:10px;
+    color: black;
+    gap: 10px;
   }
 }
-
