@@ -10,6 +10,7 @@ import { Routes, Route } from "react-router-dom"
 
 /* CSS */
 import "./App.scss"
+import Shop from "./pages/Shop"
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/admin" element={<Admin />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/games" element={<Games />} />
+          <Route path="/shop" element={<Shop />} />
         </Routes>
       </main>
     </>

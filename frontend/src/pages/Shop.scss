@@ -1,0 +1,50 @@
+.Shop_OffersContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.ShopFirstOffers {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.cardShop {
+    margin: 40px;
+    padding: 15px 0px;
+}
+
+.cardShopLeft {
+        width: 18rem;
+        height: 25rem;
+}
+
+.cardShopMiddle {
+    width: 20rem;
+    height: 30rem;
+}
+
+.cardShopRigth {
+    width: 18rem;
+    height: 25rem;
+}
+
+
+
+@media screen and (min-width: 500px) {
+    .ShopFirstOffers {
+        flex-direction: row;
+    }
+}
+
+// ------------Version Desktop--------------
+
+// .ShopFirstOffers{
+//     margin: 110px;
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-around;
+// }
