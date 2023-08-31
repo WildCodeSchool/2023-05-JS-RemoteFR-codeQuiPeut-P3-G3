@@ -1,5 +1,5 @@
 import { ChromePicker } from "react-color"
-import "./ColorSelector.scss" // Définissez vos styles ici
+import "./ColorSelector.scss"
 
 function ColorSelector({ state, onClose, selectedColor, setSelectedColor }) {
   const handleColorChange = (color) => {

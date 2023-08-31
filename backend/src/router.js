@@ -15,6 +15,9 @@ const storiesControllers = require("./controllers/storiesControllers")
 const usersControllers = require("./controllers/usersControllers")
 const weaponsControllers = require("./controllers/weaponsControllers")
 
+/* test images */
+const picturesControllers = require("./controllers/picturesControllers")
+
 router.get("/chapters", chaptersControllers.browse)
 router.get("/chapters/:id", chaptersControllers.read)
 router.post("/chapters", chaptersControllers.add)
@@ -81,5 +84,10 @@ router.get("/weapons/:id", weaponsControllers.read)
 router.post("/weapons", weaponsControllers.add)
 router.put("/weapons/:id", weaponsControllers.edit)
 router.delete("/weapons/:id", weaponsControllers.destroy)
+
+/* Test images files */
+router.post("/addPicture/:filename", picturesControllers.add)
+router.delete("/deletePicture/:id", picturesControllers.destroy)
+router.get("/displayAllPictures", picturesControllers.browse)
 
 module.exports = router
