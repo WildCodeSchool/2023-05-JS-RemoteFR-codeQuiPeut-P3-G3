@@ -11,7 +11,7 @@ import NavAdmin from "../components/admin/NavAdmin"
 import "./Admin.scss"
 
 function Admin() {
-  const [selectedNav, setSelectedNav] = useState("general")
+  const [selectedNav, setSelectedNav] = useState("General")
   return (
     <>
       <section className="admin">

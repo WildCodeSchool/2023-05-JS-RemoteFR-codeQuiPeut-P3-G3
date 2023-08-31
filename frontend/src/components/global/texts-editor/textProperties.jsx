@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import "./textProperties.scss"
-import iconAlignLeft from "../../../../../../../assets/text_ui/align-left.png"
-import iconAlignRight from "../../../../../../../assets/text_ui/align-right.png"
-import iconAlignCenter from "../../../../../../../assets/text_ui/align-center.png"
-import iconAlignJustify from "../../../../../../../assets/text_ui/align-justify.png"
-import ButtonRound from "../../../../../../global/Buttons/ButtonRound"
+import iconAlignLeft from "../../../assets/text_ui/align-left.png"
+import iconAlignRight from "../../../assets/text_ui/align-right.png"
+import iconAlignCenter from "../../../assets/text_ui/align-center.png"
+import iconAlignJustify from "../../../assets/text_ui/align-justify.png"
+import ButtonRound from "../../global/Buttons/ButtonRound"
 
 function TextProperties({ setAlignment }) {
   const [selectedAlignment, setSelectedAlignment] = useState(null)

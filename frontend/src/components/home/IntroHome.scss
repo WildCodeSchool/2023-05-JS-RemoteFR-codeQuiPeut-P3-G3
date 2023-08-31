@@ -1,138 +1,125 @@
 @import "../../variables.scss";
 
-
-
 .intro {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: center;
-    height: 100%;
-    // background-color: grey;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 100%;
+  // background-color: grey;
 
-    @media (min-width: 1200px) {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        align-items: start;
-    }
+  @media (min-width: 1200px) {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: start;
+  }
 
+  &__body {
+    height: 70%;
+    width: 100%;
+  }
 
-    &__body {
-        height: 70%;
-        width: 100%;
-    }
-
-    &__Img {
-        height: 30%;
-        width: 100%;
-    }
+  &__Img {
+    height: 30%;
+    width: 100%;
+  }
 }
 
 .intro__Title {
+  font-family: $font-family1;
+  text-align: center;
+
+  @media (min-width: 1300px) {
+    text-align: start;
+  }
+
+  .intro__WordTitle {
     font-family: $font-family1;
-    text-align: center;
-
-    @media (min-width: 1300px) {
-        text-align: start;
-    }
-
-    .intro__WordTitle {
-        font-family: $font-family1;
-        font-size: clamp(1.2rem, 2.5vw, 2rem);
-        color: #f97700;
-    }
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    color: #f97700;
+  }
 }
 
 .intro__Description {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    padding: 0 1.5rem 0 1.5rem;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 1.5rem 0 1.5rem;
 
+  @media (min-width: 1300px) {
+    margin-right: 3rem;
+  }
 
-    @media (min-width : 1300px) {
-        margin-right: 3rem;
-    }
-
-
-    .intro__pDescription {
-        text-align: center;
-        font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-        line-height: 2.3rem;
-        letter-spacing: 0.2rem;
-        text-align: center;
-        max-width: 100%;
-
-        @media (min-width: 1200px) {
-            text-align: start;
-
-        }
-    }
-
-    .intro__Word {
-        font-family: $font-family2;
-        font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-        font-weight: 700;
-        letter-spacing: 0.2rem;
-    }
+  .intro__pDescription {
+    text-align: center;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    line-height: 2.3rem;
+    letter-spacing: 0.2rem;
+    text-align: center;
+    max-width: 100%;
 
     @media (min-width: 1200px) {
-        font-size: 1.8rem;
-        line-height: 2.2rem;
-        letter-spacing: 0.2rem;
-        padding-left: 3rem;
+      text-align: start;
     }
+  }
+
+  .intro__Word {
+    font-family: $font-family2;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-weight: 700;
+    letter-spacing: 0.2rem;
+  }
+
+  @media (min-width: 1200px) {
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+    letter-spacing: 0.2rem;
+    padding-left: 3rem;
+  }
 }
 
-
-
 .intro__Img {
-    display: flex;
-    width: fit-content;
-    justify-content: center;
-    align-items: center;
-    max-height: 500px;
-    box-sizing: border-box;
-    padding: 2rem;
+  display: flex;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+  max-height: 500px;
+  box-sizing: border-box;
+  padding: 2rem;
 
-    @media (min-width : 1200px) {
-        flex-direction: column;
+  @media (min-width: 1200px) {
+    flex-direction: column;
+  }
+
+  .intro__DiceIntro1 {
+    display: none;
+
+    @media (min-width: 1200px) {
+      display: flex;
+      max-height: 300px;
+      object-fit: contain;
+      position: relative;
+      transform: rotate(1.953deg);
+      z-index: 1;
     }
+  }
 
-    .intro__DiceIntro1 {
-        display: none;
+  .intro__DiceIntro2 {
+    max-height: 400px;
+    max-width: 100%;
+    object-fit: contain;
+    position: relative;
+    flex-shrink: 0;
+    opacity: 0.3;
+    mix-blend-mode: lighten;
+    rotate: 0deg;
 
-
-        @media (min-width: 1200px) {
-            display: flex;
-            max-height: 300px;
-            object-fit: contain;
-            position: relative;
-            transform: rotate(1.953deg);
-            z-index: 1;
-        }
+    @media (min-width: 1200px) {
+      transform: scaleY(-1);
+      rotate: 33deg;
+      top: -5.5rem;
+      left: -4.2rem;
     }
-
-    .intro__DiceIntro2 {
-        max-height: 400px;
-        max-width: 100%;
-        object-fit: contain;
-        position: relative;
-        flex-shrink: 0;
-        opacity: 0.3;
-        mix-blend-mode: lighten;
-        rotate: 0deg;
-
-
-
-
-        @media (min-width: 1200px) {
-
-            transform: scaleY(-1);
-            rotate: 33deg;
-            top: -5.5rem;
-            left: -4.2rem;
-        }
-    }
+  }
 }
