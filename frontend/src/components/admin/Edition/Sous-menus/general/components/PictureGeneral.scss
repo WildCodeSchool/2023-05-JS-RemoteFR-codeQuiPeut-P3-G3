@@ -5,9 +5,13 @@
    // background-color: #f7f7f7;
   background-color: rgb(197, 97, 97);
   border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+  .pictureGeneralTop {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
   
   .titlePicture {
     @include title-blocsAdmin;
@@ -70,13 +74,27 @@
   display: flex;
   flex-direction: row;
   margin-bottom: 20px;
-}
-  .buttonPictureGeneral {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: 10px;
-    padding-right: 20px;
-  }
 
+  .buttonImg {
+
+  }
+  .buttonTextFont {
+
+  }
+  .buttonTextColor {
+
+  }
 }
+}
+.buttonPictureGeneral {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 10px;
+  padding-right: 20px;
+  bottom: 0;
+  position: relative;
+}
+}
+
