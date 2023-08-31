@@ -6,10 +6,13 @@ import WidgetScenes from "./scenes/widgetScenes"
 import WidgetToolbar from "./constructor/toolbar/WidgetToolbar"
 import ButtonUI from "../../../../global/Buttons/ButtonUI"
 import ContainerCanva from "./constructor/canva/ContainerCanva"
+import PopupImgFinder from "../../../../global/popups/ImageFinderPopup/PopupImgFinder"
 
 function EditScenes() {
   const canvasRef = useRef(null)
   const [isAddingText, setIsAddingText] = useState(false)
+  const [isAddingPic, setIsAddingPic] = useState(false)
+  const [isAddingBackground, setIsAddingBackground] = useState(false)
   const [viewEditProperties, setViewProperties] = useState(false)
 
   /* RECUPERATION DES PROPRIETES */
@@ -21,13 +24,38 @@ function EditScenes() {
 
   const [selectedAlignment, setAlignment] = useState("text-align: center")
 
-  const handleAddTextButtonClick = () => {
-    setIsAddingText(!isAddingText)
-  }
+  /* Popup image viewer */
+  const [selectedPath, setSelectedPath] = useState("")
+  const [viewImgFinder, setViewImgFinder] = useState(false)
+  const [imgPath, setImgPath] = useState("")
+  const [backgroundPath, setBackgroundPath] = useState("")
+  console.info(backgroundPath)
 
+  /* Actions quand quitte la popup */
   useEffect(() => {
-    // console.log(selectedColor)
-  }, [selectedColor])
+    if (!viewImgFinder) {
+      setIsAddingPic(false)
+      setIsAddingBackground(false)
+      setImgPath("")
+      setBackgroundPath("")
+      setSelectedPath("")
+    }
+  }, [viewImgFinder])
+
+  /* Actions quand selection d'une image */
+  useEffect(() => {
+    if (isAddingPic || isAddingBackground) {
+      setViewImgFinder(true)
+    }
+
+    if (isAddingPic && selectedPath) {
+      setImgPath(selectedPath)
+    }
+
+    if (isAddingBackground && selectedPath) {
+      setBackgroundPath(selectedPath)
+    }
+  }, [isAddingPic, isAddingBackground, isAddingText, selectedPath])
 
   return (
     <>
@@ -48,8 +76,12 @@ function EditScenes() {
           </div>
           <div className="scenes__constructor__toolbar">
             <WidgetToolbar
-              onAddText={handleAddTextButtonClick}
               isAddingText={isAddingText}
+              setIsAddingText={setIsAddingText}
+              isAddingBackground={isAddingBackground}
+              setIsAddingBackground={setIsAddingBackground}
+              isAddingPic={isAddingPic}
+              setIsAddingPic={setIsAddingPic}
             />
           </div>
           <div ref={canvasRef} className="scenes__constructor__canva">
@@ -57,6 +89,10 @@ function EditScenes() {
               canvasRef={canvasRef}
               isAddingText={isAddingText}
               setIsAddingText={setIsAddingText}
+              isAddingPic={isAddingPic}
+              setIsAddingPic={setIsAddingPic}
+              isAddingBackground={isAddingBackground}
+              setIsAddingBackground={setIsAddingBackground}
               setViewProperties={setViewProperties}
               viewEditProperties={viewEditProperties}
               selectedColor={selectedColor}
@@ -64,6 +100,8 @@ function EditScenes() {
               selectedSize={selectedSize}
               selectedAlignment={selectedAlignment}
               setSelectedSize={setSelectedSize}
+              backgroundPath={selectedPath}
+              imgPath={imgPath}
             />
             {/* <CanvasWithText /> */}
           </div>
@@ -87,6 +125,14 @@ function EditScenes() {
           />
         </div>
       </div>
+      {/* Popup recherche image */}
+      {viewImgFinder && (
+        <PopupImgFinder
+          setViewImgFinder={setViewImgFinder}
+          setSelectedPath={setSelectedPath}
+          selectedPath={selectedPath}
+        />
+      )}
     </>
   )
 }

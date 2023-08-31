@@ -14,7 +14,7 @@ import next from "../assets/images/chevron-right-512.webp"
 import noParallaxImg from "../assets/images/parallax/castleNewSize1.png"
 import cascadeImg from "../assets/images/cascadeImg.png"
 
-const jdrCardData = [
+export const jdrCardData = [
   {
     id: 1,
     jdrName: "Le Déclin des Ames",
