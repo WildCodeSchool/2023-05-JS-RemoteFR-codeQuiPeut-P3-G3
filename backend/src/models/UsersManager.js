@@ -37,6 +37,23 @@ class UserManager extends AbstractManager {
       ]
     )
   }
+
+  //   register(users) {
+  //     return this.database.query(
+  //         `SELECT mail FROM ${this.table} WHERE mail = ?`,
+  //         [users.mail]
+  //     )
+  //     .then((results) => {
+  //         if (results.length > 0) {
+  //             return Promise.reject("Email already in use");
+  //         } else if (users.password !== users.confirmPassword) {
+  //             return Promise.reject("Passwords do not match");
+  //         }
+
+  //         // Si toutes les vérifications passent, effectuer l'insertion
+  //         return this.insert(users);
+  //     });
+  // }
 }
 
 module.exports = UserManager
