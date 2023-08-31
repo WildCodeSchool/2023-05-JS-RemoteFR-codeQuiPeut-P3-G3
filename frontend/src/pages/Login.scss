@@ -7,12 +7,13 @@
 
   .top-login {
     background-color: white;
-    width: 50%;
+    width: 45%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     color: black;
+    border-radius: 12px 12px 0 0;
 
     .picture-login {
       margin-top: 2.5rem;
@@ -31,13 +32,14 @@
   }
 
   .bot-login {
-    width: 50%;
+    width: 45%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 1rem 0 1rem 0;
     background-color: #2c182e;
+    border-radius: 0 0 12px 12px;
 
     .input-login {
       width: 80%;

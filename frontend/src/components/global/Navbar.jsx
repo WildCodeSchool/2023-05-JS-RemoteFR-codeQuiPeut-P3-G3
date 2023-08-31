@@ -1,6 +1,6 @@
 import "./Navbar.scss"
 import { Link } from "react-router-dom"
-import logo from "../../assets/images/logoviolet.png"
+import logo from "../../assets/images/Group 131.png"
 
 import { useState } from "react"
 
@@ -24,13 +24,19 @@ function NavBar() {
           </button>
           {isExploreOpen && (
             <div className="dropdown-content-navbar" id="myDropdown">
-              <a href="#">Link 1</a>
-              <a href="#">Link 2</a>
-              <a href="#">Link 3</a>
+              <Link to="/games">
+                <option value="">Games</option>
+              </Link>
+              <Link to="/shop">
+                <option value="">Shop</option>
+              </Link>
+              <Link to="admin">
+                <option value="">Admin</option>
+              </Link>
             </div>
           )}
         </div>
-        <input type="text" placeholder="search" className="search-navbar" />
+        <input type="text" placeholder="Search..." className="search-navbar" />
         <div className="profile-navbar">
           <Link to="/login" className="link-profil-navbar" id="login-navbar">
             <input type="button" value="Log-In" id="input-login-navbar" />

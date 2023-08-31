@@ -54,6 +54,8 @@ class UserManager extends AbstractManager {
   //         return this.insert(users);
   //     });
   // }
+
+  findByMail(users) {}
 }
 
 module.exports = UserManager
