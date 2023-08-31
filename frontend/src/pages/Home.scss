@@ -95,7 +95,7 @@
 
 .boutonNext {
   position: absolute;
-  bottom: -150%;
+  bottom: -165%;
   right: 13%;
   border-radius: 50%;
   width: 40px;
@@ -127,7 +127,7 @@
 .boutonPrev {
   position: absolute;
   left: 15%;
-  bottom: -150%;
+  bottom: -165%;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -151,4 +151,18 @@
 .boutonPrev img {
   width: 30px;
   height: 30px;
+}
+
+.allGames {
+  display: flex;
+  font-size: 30px;
+}
+
+.All {
+  margin: 25px;
+  font-size: 35px;
+  color: #f97700;
+}
+.gamezzz {
+  font-size: 35px;
 }

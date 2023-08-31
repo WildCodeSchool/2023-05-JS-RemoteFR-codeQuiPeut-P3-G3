@@ -19,27 +19,32 @@ export const jdrCardData = [
     id: 1,
     jdrName: "Le Déclin des Ames",
     jdrNameFont: "Cinzel Decorative",
-    jdrNameColor: "#F3AD44",
+    jdrNameColor: "#EBAD50",
+    jdrNameFontSize: "30px",
+    jdrNameTextStyle: "italic underline",
     jdrImg1: merlin,
     jdrImg2: livre,
-    jdrText: "Lorem Ipsum is simply dummy text...",
-    textColor: "white",
-    textFont: "inika",
+    jdrText:
+      "Your choices shape your destiny, explore the decline and become a legend.",
+    textColor: "White",
+    textFont: "cinzel decorative",
     jdrBgColor1: "#44114D",
-    jdrBgColor2: "#F8C86B",
+    jdrBgColor2: "#EBAD50",
     buttonColor: "#CF5C2B",
     buttonFont: "Inika",
   },
   {
     id: 2,
     jdrName: "MALEFICES",
+    jdrNameFontSize: "30px",
     jdrNameFont: "Inika",
     jdrNameColor: "#F3AD44",
     jdrImg1: gargouille,
     jdrImg2: grave,
-    jdrText: "Lorem Ipsum is simply dummy text...",
+    jdrText:
+      "Will you dare to unravel the enchanting mysteries of 'Malefices'?",
     textColor: "white",
-    textFont: "inika",
+    textFont: "cinzel decorative",
     jdrBgColor1: "#660E0E",
     jdrBgColor2: "#1d2327",
     buttonColor: "#AF2D2D",
@@ -48,30 +53,34 @@ export const jdrCardData = [
   {
     id: 3,
     jdrName: "Le Déclin des Ames",
+    jdrNameFontSize: "30px",
     jdrNameFont: "Cinzel Decorative",
-    jdrNameColor: "#F3AD44",
+    jdrNameColor: "#EBAD50",
     jdrImg1: merlin,
     jdrImg2: livre,
-    jdrText: "Lorem Ipsum is simply dummy text...",
+    jdrText:
+      "Your choices shape your destiny, explore the decline and become a legend.",
     textColor: "white",
-    textFont: "inika",
+    textFont: "cinzel decorative",
     jdrBgColor1: "#44114D",
-    jdrBgColor2: "#F8C86B",
+    jdrBgColor2: "#EBAD50",
     buttonColor: "#CF5C2B",
     buttonFont: "Inika",
   },
   {
     id: 4,
     jdrName: "Le Déclin des Ames",
+    jdrNameFontSize: "30px",
     jdrNameFont: "Cinzel Decorative",
-    jdrNameColor: "#F3AD44",
+    jdrNameColor: "#EBAD50",
     jdrImg1: merlin,
     jdrImg2: livre,
-    jdrText: "Lorem Ipsum is simply dummy text...",
+    jdrText:
+      "Your choices shape your destiny, explore the decline and become a legend.",
     textColor: "white",
-    textFont: "inika",
+    textFont: "cinzel decorative",
     jdrBgColor1: "#44114D",
-    jdrBgColor2: "#F8C86B",
+    jdrBgColor2: "#EBAD50",
     buttonColor: "#CF5C2B",
     buttonFont: "Inika",
   },
@@ -102,6 +111,10 @@ export default function Home() {
           <IntroHome />
         </section>
         <section className="home__content__games">
+          <div className="allGames">
+            <h1 className="All">"ALL</h1>
+            <h2 className="gamezzz">GAMES"</h2>
+          </div>
           <div className="jdrCardApp">
             {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
               <JdrCard key={jdr.id} {...jdr} />
