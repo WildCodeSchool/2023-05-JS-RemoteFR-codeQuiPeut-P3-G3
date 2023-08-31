@@ -1,0 +1,36 @@
+import Select from "react-select"
+import "./CategorySelector.scss"
+
+function CategorySelector({ selectedCategory, setSelectedCategory }) {
+  const categoryOptions = [
+    { value: "Action", label: "Action" },
+    { value: "CyberPunk", label: "CyberPunk" },
+    { value: "Fantastic", label: "Fantastic" },
+    { value: "Horror", label: "Horror" },
+    { value: "Medieval", label: "Medieval" },
+    { value: "Mythology", label: "Mythology" },
+    { value: "Post-Apocaliptic", label: "Post-Apocaliptic" },
+    { value: "Prehistoric", label: "Prehistoric" },
+    { value: "Renaissance", label: "Renaissance" },
+    { value: "Sci-fi", label: "Sci-fi" },
+    { value: "Space", label: "Space" },
+    { value: "Western", label: "Western" },
+  ]
+
+  const handleCategoryChange = (selectedOption) => {
+    setSelectedCategory(selectedOption.value)
+  }
+
+  return (
+    <div className="categorySelector">
+      <Select
+        options={categoryOptions}
+        value={selectedCategory}
+        onChange={handleCategoryChange}
+        placeholder={selectedCategory}
+      />
+    </div>
+  )
+}
+
+export default CategorySelector

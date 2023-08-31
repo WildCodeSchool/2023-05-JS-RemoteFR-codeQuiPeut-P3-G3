@@ -7,14 +7,13 @@ class UserManager extends AbstractManager {
 
   insert(users) {
     return this.database.query(
-      `insert into ${this.table} (firstname, lastname, pwd, mail, pseudo, adresse, coins, experience, actual_chapter) values (?,?,?,?,?,?,?,?,?)`,
+      `insert into ${this.table} (firstname, lastname, hashedPassword, mail, pseudo,  coins, experience, actual_chapter) values (?,?,?,?,?,?,?,?)`,
       [
         users.firstname,
         users.lastname,
-        users.pwd,
+        users.hashedPassword,
         users.mail,
         users.pseudo,
-        users.adresse,
         users.coins,
         users.experience,
         users.actual_chapter,
@@ -24,14 +23,13 @@ class UserManager extends AbstractManager {
 
   update(users) {
     return this.database.query(
-      `UPDATE ${this.table} SET firstname = ?, lastname = ?, pwd = ?, mail = ?, pseudo = ?, adresse = ?, coins = ?, experience = ?, actual_chapter = ? WHERE (id = ?)`,
+      `UPDATE ${this.table} SET firstname = ?, lastname = ?, hashedPassword = ?, mail = ?, pseudo = ?,  coins = ?, experience = ?, actual_chapter = ? WHERE (id = ?)`,
       [
         users.firstname,
         users.lastname,
-        users.pwd,
+        users.hashedPassword,
         users.mail,
         users.pseudo,
-        users.adresse,
         users.coins,
         users.experience,
         users.actual_chapter,
@@ -39,6 +37,23 @@ class UserManager extends AbstractManager {
       ]
     )
   }
+
+  //   register(users) {
+  //     return this.database.query(
+  //         `SELECT mail FROM ${this.table} WHERE mail = ?`,
+  //         [users.mail]
+  //     )
+  //     .then((results) => {
+  //         if (results.length > 0) {
+  //             return Promise.reject("Email already in use");
+  //         } else if (users.password !== users.confirmPassword) {
+  //             return Promise.reject("Passwords do not match");
+  //         }
+
+  //         // Si toutes les vérifications passent, effectuer l'insertion
+  //         return this.insert(users);
+  //     });
+  // }
 }
 
 module.exports = UserManager

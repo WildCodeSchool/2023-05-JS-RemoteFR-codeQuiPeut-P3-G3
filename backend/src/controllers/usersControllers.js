@@ -15,18 +15,22 @@ const browse = (req, res) => {
 const add = (req, res) => {
   const users = req.body
 
-  // TODO validations (length, format...)
-
   models.users
     .insert(users)
-    .then(([result]) => {
-      res.json(result.insertId)
+    .then((insertedUserId) => {
+      res.status(201).json({
+        message: "User registered successfully",
+        userId: insertedUserId,
+      })
     })
     .catch((err) => {
       console.error(err)
-      res.sendStatus(500)
+      res.status(500).json({
+        error: "An error occurred while registering the user",
+      })
     })
 }
+
 const read = (req, res) => {
   models.users
     .find(req.params.id)

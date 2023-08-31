@@ -15,12 +15,17 @@ app.use(express.json())
 
 const cors = require("cors")
 
+app.use(cors())
+
 app.use(
   cors({
     origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
     optionsSuccessStatus: 200,
   })
 )
+
+/* Laisse le répertoire uploads accessible */
+app.use("/uploads", express.static("uploads"))
 
 // import and mount the API routes
 
@@ -56,5 +61,4 @@ if (fs.existsSync(reactIndexFile)) {
 }
 
 // ready to export
-
 module.exports = app

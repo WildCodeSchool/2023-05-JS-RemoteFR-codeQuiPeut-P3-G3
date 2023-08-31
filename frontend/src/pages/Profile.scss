@@ -1,36 +1,40 @@
 @import "../variables.scss";
 
-$width: 1500px;
-
 .avatar {
+  display: flex;
   height: 50vh;
-  background-color: purple;
+  background-color: $color--darkestPurple;
+  align-items: center;
+  justify-content: center;
+
+  .globalContainerProfil {
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+  }
 }
 
 .edit {
   height: 100vh;
-  background-color: green;
+  padding: 2rem 8rem 14rem 8rem;
+  background-color: $color--darkestPurple;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
 
-  @media (min-width: 1200px) {
-    padding: 5rem;
-  }
+  // @media (min-width: 1200px) {
+  //   margin-bottom: 5rem;
+  // }
 
   .container {
+    display: flex;
     box-sizing: border-box;
-    aspect-ratio: 42/24;
-    height: auto;
+    aspect-ratio: 34/21;
     background-color: white;
     max-width: 100%;
-
-    @media (min-width: 1500px) {
-      max-width: 1500px;
-    }
-
-    @media (orientation: portrait) {
-      min-height: 100vh;
-    }
+    border-radius: 1%;
   }
 }

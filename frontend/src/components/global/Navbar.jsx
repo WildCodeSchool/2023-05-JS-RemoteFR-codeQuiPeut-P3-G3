@@ -1,8 +1,7 @@
 import "./Navbar.scss"
 import { Link } from "react-router-dom"
 import logo from "../../assets/images/logoviolet.png"
-import account from "../../assets/images/account.png"
-import profileicon from "../../assets/images/profileicon.png"
+
 import { useState } from "react"
 
 function NavBar() {
@@ -17,11 +16,7 @@ function NavBar() {
         <Link to="/">
           <input type="image" src={logo} alt="logo" className="logo-navbar" />
         </Link>
-        {/* <div className="explore-nav">
-          <select name="Explore" id="navbar-select">
-            <option value="explore">Explore</option>
-          </select>
-        </div> */}
+
         <div className="dropdown-navbar">
           <button className="dropbtn-navbar" onClick={handleDropdown}>
             Explore
@@ -37,8 +32,12 @@ function NavBar() {
         </div>
         <input type="text" placeholder="search" className="search-navbar" />
         <div className="profile-navbar">
-          <img src={account} alt="logo" className="left-img-navbar" />
-          <img src={profileicon} alt="logo" className="right-img-navbar" />
+          <Link to="/login" className="link-profil-navbar" id="login-navbar">
+            <input type="button" value="Log-In" id="input-login-navbar" />
+          </Link>
+          <Link to="/signup" className="link-profil-navbar" id="signup-navbar">
+            <input type="button" value="Sign-Up" id="input-signup-navbar" />
+          </Link>
         </div>
       </div>
       <div className="bottom-menu" id="bottomMenu">
@@ -50,14 +49,14 @@ function NavBar() {
               className="img-mobile-menu"
             />
           </Link>
-          <Link to="/profile">
+          <Link to="/game">
             <img
               src="./src/assets/images/icons8-manette-50.png"
               alt="logo-games"
               className="img-mobile-menu"
             />
           </Link>
-          <Link to="/games">
+          <Link to="/profile">
             <img
               src="./src/assets/images/icons8-utilisateur-sexe-neutre-50.png"
               alt="logo-utilisateur"
