@@ -6,6 +6,8 @@ const JdrCard = (props) => {
     jdrName,
     jdrNameFont,
     jdrNameColor,
+    jdrNameFontSize,
+    jdrNameTextStyle,
     jdrImg1,
     jdrImg2,
     jdrText,
@@ -20,6 +22,8 @@ const JdrCard = (props) => {
   const jdrNameStyle = {
     fontFamily: jdrNameFont,
     color: jdrNameColor,
+    fontSize: jdrNameFontSize,
+    fontStyle: jdrNameTextStyle,
   }
 
   const jdrBg1Style = {
