@@ -24,9 +24,10 @@ function NavBar() {
           </button>
           {isExploreOpen && (
             <div className="dropdown-content-navbar" id="myDropdown">
-              <a href="#">Link 1</a>
-              <a href="#">Link 2</a>
-              <a href="#">Link 3</a>
+              <Link to="">
+                <option value="">Games</option>
+              </Link>
+              <option value="">Shop</option>
             </div>
           )}
         </div>
