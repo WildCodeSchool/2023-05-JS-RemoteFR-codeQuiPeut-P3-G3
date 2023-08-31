@@ -1,0 +1,209 @@
+@import "../../variables.scss";
+
+// @keyframes gradientAnimation {
+//   0% {
+//     background-position: 0% 50%;
+//   }
+//   100% {
+//     background-position: 100% 50%;
+//   }
+// }
+
+// @keyframes radialAnimation {
+//   0% {
+//     background-position: 50% 0%;
+//   }
+//   100% {
+//     background-position: 50% 100%;
+//   }
+// }
+
+
+.wrap-CardShop {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  z-index: 0;
+  display: flex;
+  overflow: hidden;
+
+
+  .background_Cardshop {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    // top: 0;
+    // left: 0;
+    border-radius: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    // border-radius: 50%;
+    // background: radial-gradient(farthest-corner at top, #ff00a2, #ffcd00, #00d4ff);
+    // background-size: 200% 200%;
+    // animation: radialAnimation 5s ease infinite;
+    z-index: 1;
+    // animation: rotate 5s infinite alternate;
+    overflow: hidden;
+  }
+
+  .background_Cardshop:after {
+    content: '';
+    display: block;
+    z-index: -1;
+    position: absolute;
+
+
+    // background-size: 500% 500%;;
+    height: 800px;
+    width: 800px;
+    top: -9rem;
+    right: 0;
+    bottom: 0rem;
+    left: -12rem;
+    background-image: linear-gradient(#ff00a2, #ffcd00, #00d4ff);
+    animation: rotate-gradient linear 2s infinite;
+  }
+
+  @keyframes rotate-gradient {
+    to {
+      transform: rotate(360deg)
+    }
+  }
+
+
+
+
+  .CardShop_Global {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    // margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+    width: 98%;
+    height: 98%;
+    margin: auto;
+    background-color: #1e203a;
+    // border: 1px solid;
+    // BLOCAGE VOIR AVEC ANTOINE
+    border-radius: 15px;
+    box-sizing: border-box;
+    z-index: 3;
+
+    p {
+      font-family: $font-family2;
+    }
+  }
+
+
+}
+
+.CardShop_Content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  // gap: 5%;
+  width: 100%;
+  height: 100%;
+}
+
+.CardShop_TopSales {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.CardShop_Promotion {
+  color: #f97700;
+  position: relative;
+  display: inline-block;
+  font-size: 1.7rem;
+  font-weight: 800;
+  animation: text-size-change 2s ease-in-out infinite;
+  // overflow: hidden;
+}
+
+
+
+@keyframes text-size-change {
+
+  0%,
+  100% {
+    color: #f97700;
+  }
+
+  50% {
+    color: white;
+  }
+}
+
+.CardShop_Promotion:hover::before {
+  animation: none;
+  /* Disable the animation on hover */
+  width: 100%;
+  /* Show full gradient on hover */
+}
+
+.PriceShop {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f97700;
+  margin: 0;
+}
+
+
+.button_CardShop {
+  color: white;
+  background-color: transparent;
+  border: none;
+}
+
+.button_CardShop:active {
+  color: black;
+}
+
+.CartShopPicture {
+  height: auto;
+  width: 12%;
+}
+
+.CardShop_BlocCart,
+.CardShop_BlocItems {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  .CartShopPicture {
+    padding: 10px;
+  }
+
+  .CartShopPicture:hover{
+    transform: rotate(-10deg);
+    transition: transform 0.2s ease-in;
+  }
+}
+
+.CardShop_BlocItems {
+  .QuantityShop {
+    font-size: 4rem;
+    font-weight: 800;
+  }
+}
+
+.CardShop_TopSalesText {
+  font-size: 1.8rem;
+  font-weight: 800;
+}

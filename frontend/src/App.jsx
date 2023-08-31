@@ -12,6 +12,7 @@ import { Routes, Route } from "react-router-dom"
 
 /* CSS */
 import "./App.scss"
+import Shop from "./pages/Shop"
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/shop" element={<Shop />} />
         </Routes>
       </main>
     </>
