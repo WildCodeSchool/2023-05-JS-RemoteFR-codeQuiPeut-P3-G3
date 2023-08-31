@@ -1,6 +1,7 @@
 import "./Login.scss"
 import userpic from "../assets/images/user2.png"
 import { useState } from "react"
+import axios from "axios"
 function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -14,7 +15,8 @@ function Login() {
   }
 
   const handleSubmit = () => {
-    // TODO: Call a login function here
+    const userData = { email, password }
+    axios.post("http://localhost:4242/login", userData)
   }
 
   return (
