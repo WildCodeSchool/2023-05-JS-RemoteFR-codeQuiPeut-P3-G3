@@ -24,14 +24,19 @@ function NavBar() {
           </button>
           {isExploreOpen && (
             <div className="dropdown-content-navbar" id="myDropdown">
-              <Link to="">
+              <Link to="/games">
                 <option value="">Games</option>
               </Link>
-              <option value="">Shop</option>
+              <Link to="/shop">
+                <option value="">Shop</option>
+              </Link>
+              <Link to="admin">
+                <option value="">Admin</option>
+              </Link>
             </div>
           )}
         </div>
-        <input type="text" placeholder="search" className="search-navbar" />
+        <input type="text" placeholder="Search..." className="search-navbar" />
         <div className="profile-navbar">
           <Link to="/login" className="link-profil-navbar" id="login-navbar">
             <input type="button" value="Log-In" id="input-login-navbar" />
