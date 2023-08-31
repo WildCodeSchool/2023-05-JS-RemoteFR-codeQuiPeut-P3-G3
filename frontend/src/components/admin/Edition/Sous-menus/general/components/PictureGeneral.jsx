@@ -80,9 +80,6 @@ function PictureGeneral() {
             </div>
           </div>
           <div className="buttonSelector">
-            <div className="buttonImg">
-              <label htmlFor="message">Button Image</label>
-            </div>
             <div className="buttonTextFont">
               <label htmlFor="message">Button Text Font</label>
               <FontSelector />

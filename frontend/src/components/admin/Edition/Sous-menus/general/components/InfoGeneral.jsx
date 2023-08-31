@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useState } from "react"
+import axios from "axios"
 
 import "./InfoGeneral.scss"
 import ButtonUI from "../../../../../global/Buttons/ButtonUI"
@@ -6,6 +7,14 @@ import CategorySelector from "../../../../../global/DropLists/CategorySelector"
 import PublicSelector from "../../../../../global/DropLists/PublicSelector"
 
 function InfoGeneral() {
+  const [jdrName, setJdrName] = useState("")
+  const saveStory = async () => {
+    try {
+      await axios.post("/stories", { jdrName })
+    } catch (err) {
+      console.error(err).sendStatus(500)
+    }
+  }
   return (
     <>
       <div className="infoGeneral">
@@ -21,6 +30,8 @@ function InfoGeneral() {
               rows="1"
               cols="20"
               placeholder="Enter title name"
+              value={jdrName}
+              onChange={(e) => setJdrName(e.target.value)}
             ></textarea>
           </div>
           <div className="storyCategory">
@@ -42,12 +53,12 @@ function InfoGeneral() {
               name="message"
               rows="25"
               cols="50"
-              placeholder="Write description here"
+              placeholder="Write a short description here (less than 230 characters)"
             ></textarea>
           </div>
         </div>
         <div className="buttonInfo">
-          <ButtonUI title={"save"} bgcolor={"#3f7841"} />
+          <ButtonUI title={"save"} bgcolor={"#3f7841"} onClick={saveStory} />
           <ButtonUI title={"delete"} bgcolor={"#902B00"} />
         </div>
       </div>
