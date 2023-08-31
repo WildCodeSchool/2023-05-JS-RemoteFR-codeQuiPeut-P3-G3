@@ -1,14 +1,18 @@
 @import "./variables.scss";
+html{
+  background-color: $color--darkestPurple;
+}
 
 body {
   margin: 0;
   padding: 0;
+  height:100%;
   // A SUPPRIMER PLUS TARD
   color: white;
 }
 
 #root {
-  background-color: $color--darkestPurple;
+  // background-color: $color--darkestPurple;
   min-height: 100vh;
 }
 
@@ -23,13 +27,13 @@ header {
 main {
   width: 100%;
   box-sizing: border-box;
-  border: 10px solid blue;
+  // border: 10px solid blue;
 }
 
 footer {
   width: 100%;
   box-sizing: border-box;
   height: $height-footer;
-  border: 10px solid purple;
-  background-color: green;
+  // border: 10px solid purple;
+  // background-color: green;
 }

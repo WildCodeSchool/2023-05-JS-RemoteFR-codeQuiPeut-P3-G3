@@ -1,35 +1,56 @@
-import CardShop from "../components/shop/CardShop"
+import CardShopTest from "../components/shop/CardShopTest"
+import PaymentShop from "../components/shop/PaymentShop"
+import Footer from "../components/global/Footer"
 import "./Shop.scss"
 
 const Shop = () => {
   return (
     <div className="GlobalContainerShop">
+      <div className="titleShopOffers">
+        <h3>
+          <span className="OrangeTitle">&gt; OUR</span> OFFERS
+        </h3>
+      </div>
       <div className="Shop_OffersContainer">
-        <div className="titleShopOffers">
-          <h3> OUR OFFERS</h3>
-        </div>
         <div className="ShopFirstOffers">
           <div className="cardShop cardShopLeft">
-            <CardShop promotion=" " quantity="100" price="5" />
+            <CardShopTest
+              promotion=" "
+              quantity="100"
+              items="credits"
+              price="5 $"
+            />
           </div>
           <div className="cardShop cardShopMiddle">
-            <CardShop
+            <CardShopTest
               topSales="true"
               promotion="get 25% discount"
               quantity="1000"
-              price="25"
+              items="credits"
+              price="25 $"
             />
           </div>
           <div className="cardShop cardShopRigth">
-            <CardShop promotion="get 10% discount" quantity="500" price="20" />
+            <CardShopTest
+              promotion="get 10% discount"
+              quantity="500"
+              items="credits"
+              price="20 $"
+            />
           </div>
         </div>
-        <h3>OR</h3>
+        <h3 className="OrangeTitle">&gt; OR</h3>
         <div className="cardShop cardShopMiddle">
-          <CardShop promotion="Unlimited access" price="5" />
+          <CardShopTest
+            promotion="Unlimited access"
+            quantity="5$"
+            items="/ months"
+            price="( 50$ / Year )"
+          />
         </div>
-        <div className="Shop_PaypalContainer"></div>
+        <PaymentShop />
       </div>
+      <Footer />
     </div>
   )
 }
