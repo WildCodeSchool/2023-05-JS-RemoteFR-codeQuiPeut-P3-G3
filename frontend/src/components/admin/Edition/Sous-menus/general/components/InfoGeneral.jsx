@@ -8,6 +8,7 @@ import PublicSelector from "../../../../../global/DropLists/PublicSelector"
 
 function InfoGeneral() {
   const [jdrName, setJdrName] = useState("")
+  // const [jdrNameFont, setJdrNameFont] = useState("")
   const saveStory = async () => {
     try {
       await axios.post("/stories", { jdrName })
