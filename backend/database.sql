@@ -87,13 +87,15 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `firstname` VARCHAR(45) NOT NULL,
   `lastname` VARCHAR(45) NOT NULL,
-  `pwd` VARCHAR(100) NOT NULL,
+  `hashedPassword` VARCHAR(100) NOT NULL,
   `mail` VARCHAR(100) NOT NULL,
   `pseudo` VARCHAR(45) NOT NULL,
   `coins` INT NULL,
   `experience` INT NULL,
   `actual_chapter` INT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `pseudo_UNIQUE` (`pseudo` ASC) VISIBLE,
+  UNIQUE INDEX `mail_UNIQUE` (`mail` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -246,14 +248,6 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`consomables` (
     REFERENCES `enigmadb`.`inventory` (`idinventory` , `heroes_idheroes`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `enigmadb`.`save`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enigmadb`.`save` (
-)
 ENGINE = InnoDB;
 
 

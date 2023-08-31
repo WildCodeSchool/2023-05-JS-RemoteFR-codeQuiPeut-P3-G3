@@ -1,6 +1,6 @@
 const express = require("express")
 const { hashPassword } = require("./auth")
-const { validateUser } = require("./Validators/userValidator")
+const { validateUser } = require("./validators/userValidator")
 const router = express.Router()
 
 const chaptersControllers = require("./controllers/chaptersControllers")
