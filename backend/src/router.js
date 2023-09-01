@@ -3,6 +3,7 @@ const { hashPassword } = require("./auth")
 const { validateUser } = require("./validators/userValidator")
 const router = express.Router()
 
+const cardControllers = require("./controllers/cardControllers")
 const chaptersControllers = require("./controllers/chaptersControllers")
 const choicesControllers = require("./controllers/choicesControllers")
 const consomablesControllers = require("./controllers/consomablesControllers")
@@ -17,6 +18,12 @@ const weaponsControllers = require("./controllers/weaponsControllers")
 
 /* test images */
 const picturesControllers = require("./controllers/picturesControllers")
+
+router.get("/card", cardControllers.browse)
+router.get("/card/:id", cardControllers.read)
+router.post("/card", cardControllers.add)
+router.put("/card/:id", cardControllers.edit)
+router.delete("/card/:id", cardControllers.destroy)
 
 router.get("/chapters", chaptersControllers.browse)
 router.get("/chapters/:id", chaptersControllers.read)

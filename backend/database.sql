@@ -46,12 +46,32 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `enigmadb`.`card`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `enigmadb`.`card` (
+  `idcard` INT NOT NULL AUTO_INCREMENT,
+  `titleFontFamily` VARCHAR(100) NOT NULL,
+  `titleFontSize` INT NOT NULL,
+  `titleFontColor` VARCHAR(45) NOT NULL,
+  `topBgdColor` VARCHAR(45) NOT NULL,
+  `topBgdImg` VARCHAR(150) NOT NULL,
+  `textFontFamily` VARCHAR(100) NOT NULL,
+  `textFontColor` VARCHAR(45) NOT NULL,
+  `bottomBgdColor` VARCHAR(45) NOT NULL,
+  `bottomBgdImg` VARCHAR(150) NOT NULL,
+  `buttonTextFont` VARCHAR(45) NOT NULL,
+  `buttonTextColor` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idcard`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `enigmadb`.`stories`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enigmadb`.`stories` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NOT NULL,
-  `resume` VARCHAR(255) NOT NULL,
+  `resume` VARCHAR(230) NOT NULL,
   `creation_date` DATE NOT NULL,
   `last_update` DATE NOT NULL,
   `number_view` INT NULL,
@@ -61,12 +81,14 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`stories` (
   `heroes_idheroes` INT NOT NULL,
   `img_url` VARCHAR(150) NOT NULL,
   `category` VARCHAR(45) NOT NULL,
-  `font_family` VARCHAR(100) NULL,
   `shop_id` INT NOT NULL,
   `is_complete` TINYINT NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`, `heroes_idheroes`, `shop_id`),
+  `publicCategory` VARCHAR(45) NOT NULL,
+  `card_idcard` INT NOT NULL,
+  PRIMARY KEY (`id`, `heroes_idheroes`, `shop_id`, `card_idcard`),
   INDEX `fk_stories_heroes1_idx` (`heroes_idheroes` ASC) VISIBLE,
   INDEX `fk_stories_shop1_idx` (`shop_id` ASC) VISIBLE,
+  INDEX `fk_stories_card1_idx` (`card_idcard` ASC) VISIBLE,
   CONSTRAINT `fk_stories_heroes1`
     FOREIGN KEY (`heroes_idheroes`)
     REFERENCES `enigmadb`.`heroes` (`idheroes`)
@@ -75,6 +97,11 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`stories` (
   CONSTRAINT `fk_stories_shop1`
     FOREIGN KEY (`shop_id`)
     REFERENCES `enigmadb`.`shop` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_stories_card1`
+    FOREIGN KEY (`card_idcard`)
+    REFERENCES `enigmadb`.`card` (`idcard`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -87,15 +114,13 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `firstname` VARCHAR(45) NOT NULL,
   `lastname` VARCHAR(45) NOT NULL,
-  `hashedPassword` VARCHAR(100) NOT NULL,
+  `pwd` VARCHAR(100) NOT NULL,
   `mail` VARCHAR(100) NOT NULL,
   `pseudo` VARCHAR(45) NOT NULL,
   `coins` INT NULL,
   `experience` INT NULL,
   `actual_chapter` INT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `pseudo_UNIQUE` (`pseudo` ASC) VISIBLE,
-  UNIQUE INDEX `mail_UNIQUE` (`mail` ASC) VISIBLE)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 

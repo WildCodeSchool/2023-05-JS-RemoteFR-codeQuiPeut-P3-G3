@@ -44,7 +44,7 @@ function Login() {
           type="button"
           placeholder="submit"
           className="button-login"
-          value="S'identifier"
+          value="Log In"
           onClick={handleSubmit}
         />
       </div>
