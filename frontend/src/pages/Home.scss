@@ -32,6 +32,7 @@
         bottom: 0;
         left: 0;
       }
+
       .cascadeImg {
         position: absolute;
         height: 30%;
@@ -39,7 +40,6 @@
         bottom: -1px;
         left: 0;
         z-index: 1;
-        // filter: brightness(0) invert(1);
       }
     }
   }
