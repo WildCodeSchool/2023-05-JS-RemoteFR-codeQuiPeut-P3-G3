@@ -1,0 +1,76 @@
+@import "../variables.scss";
+
+.titleShopOffers{
+    h3{
+        font-family: $font-family1;
+        padding: 5rem 12rem;
+        font-size: 3rem;
+    }
+    .OrangeTitle{
+        color: #F97700;
+        font-size: 3rem;
+        font-family: $font-family1;
+    }
+}
+
+.Shop_OffersContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.ShopFirstOffers {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.cardShop {
+    box-sizing: border-box;
+    margin: 40px;
+    padding: 15px 0px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.cardShop:hover{
+    transform : scale(1.1);
+}
+
+.cardShopLeft {
+        width: 18rem;
+        height: 25rem;
+}
+
+.cardShopMiddle {
+    width: 23rem;
+    height: 35rem;
+}
+
+.cardShopRigth {
+    width: 18rem;
+    height: 25rem;
+}
+
+.OrangeTitle{
+    color: #F97700;
+    font-size: 3rem;
+    font-family: $font-family1;
+}
+
+
+@media screen and (min-width: 500px) {
+    .ShopFirstOffers {
+        flex-direction: row;
+    }
+}
+
+// ------------Version Desktop--------------
+
+// .ShopFirstOffers{
+//     margin: 110px;
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: space-around;
+// }

@@ -29,13 +29,13 @@ function Login() {
       <div className="bot-login">
         <input
           type="email"
-          placeholder="email"
+          placeholder="Email"
           className="input-login"
           onChange={handleEmailChange}
         />
         <input
           type="password"
-          placeholder="password"
+          placeholder="Password"
           className="input-login"
           id="password-login"
           onChange={handlePasswordChange}
@@ -44,7 +44,7 @@ function Login() {
           type="button"
           placeholder="submit"
           className="button-login"
-          value="Log In"
+          value="Log-In"
           onClick={handleSubmit}
         />
       </div>

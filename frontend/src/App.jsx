@@ -3,10 +3,10 @@ import Home from "./pages/Home"
 import Admin from "./pages/Admin"
 import Navbar from "./components/global/Navbar"
 import Profile from "./pages/Profile"
-// import Games from "./pages/Games"
+import Games from "./pages/Games"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
-
+import Shop from "./pages/Shop"
 /* PACKAGES */
 import { Routes, Route } from "react-router-dom"
 
@@ -30,6 +30,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/games" element={<Games />} />
         </Routes>
       </main>
     </>
