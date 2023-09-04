@@ -22,15 +22,38 @@ const ContainerCanva = ({
   /* Chemin de fichiers */
   backgroundPath,
   imgPath,
+  /* Sizes canva */
+  canvaHeight,
+  canvaWidth,
 }) => {
   const [canvas, setCanvas] = useState("")
 
-  const initCanvas = () =>
-    new fabric.Canvas("myCanva", {
-      height: 800,
-      width: 1250,
-      backgroundColor: "white",
+  const initCanvas = () => {
+    const newCanvas = new fabric.Canvas("myCanva", {
+      backgroundColor: "red",
     })
+
+    // const width = window.innerWidth <= 1000 ? window.innerWidth : 1000
+    // const height = window.innerHeight <= 1000 ? window.innerHeight : 1000
+
+    // newCanvas.setDimensions({ width, height })
+
+    return newCanvas
+    // const testCanva = new fabric.Canvas("myCanva", {
+    //   height: 800,
+    //   width: 1200,
+    //   backgroundColor: "white",
+    //   // backgroundColor: "red",
+    //   margin: "auto",
+    // })
+  }
+
+  useEffect(() => {
+    if (canvaHeight || canvaWidth) {
+      canvas.setDimensions({ width: canvaWidth, height: canvaHeight })
+      canvas.renderAll()
+    }
+  }, [canvaHeight, canvaWidth, canvas])
 
   useEffect(() => {
     setCanvas(initCanvas())
@@ -65,11 +88,11 @@ const ContainerCanva = ({
       if (event.key === "Delete" || event.key === "Backspace") {
         const activeObject = canvas.getActiveObject()
 
-        if (activeObject instanceof fabric.Textbox) {
-          canvas.remove(activeObject)
-          canvas.discardActiveObject()
-          canvas.renderAll()
-        }
+        // if (activeObject instanceof fabric.Textbox) {
+        canvas.remove(activeObject)
+        canvas.discardActiveObject()
+        canvas.renderAll()
+        // }
       }
     }
 
