@@ -6,6 +6,7 @@
   /* La hauteur est calculée en soustrayant la hauteur de la navigation (définie dans variables.scss) de 100vh */
   min-height: calc(100vh - $height-nav);
   box-sizing: border-box;
+  font-family: $font-family3;
 
   @media (min-width: 1960px) {
     padding: 2vh 10vh 5vh 10vh;

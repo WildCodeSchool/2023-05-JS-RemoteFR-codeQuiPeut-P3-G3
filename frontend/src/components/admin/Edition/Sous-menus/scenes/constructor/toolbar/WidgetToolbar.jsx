@@ -14,9 +14,11 @@ function WidgetToolbar({
   setIsAddingText,
   setIsAddingBackground,
   setIsAddingPic,
+  setIsAddingRect,
   isAddingText,
   isAddingBackground,
   isAddingPic,
+  isAddingRect,
 }) {
   const [isFight, setFight] = useState(false)
 
@@ -46,7 +48,11 @@ function WidgetToolbar({
         >
           <img src={imgText} alt="icon-text" />
         </button>
-        <button type="button" className="btn-toolbar">
+        <button
+          type="button"
+          onClick={() => setIsAddingRect(true)}
+          className={`btn-toolbar ${isAddingRect ? "active" : "inactive"}`}
+        >
           <img src={imgButton} alt="icon-button" />
         </button>
       </div>
