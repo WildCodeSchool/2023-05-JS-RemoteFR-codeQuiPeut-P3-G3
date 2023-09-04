@@ -53,7 +53,7 @@ const ContainerCanva = ({
 
   /* TEST */
   useEffect(() => {
-    console.log(isAddingRect)
+    // console.log(isAddingRect)
   }, [isAddingRect])
 
   /* Initialisation du canvas */
@@ -178,7 +178,7 @@ const ContainerCanva = ({
     })
 
     // Affiche les propriétés dans la console (vous pouvez les utiliser autrement)
-    console.log(objectProperties)
+    // console.log(objectProperties)
   }
 
   const addRect = (canvi) => {
