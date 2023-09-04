@@ -126,6 +126,8 @@ function EditScenes() {
               setIsAddingBackground={setIsAddingBackground}
               isAddingPic={isAddingPic}
               setIsAddingPic={setIsAddingPic}
+              setIsAddingRect={setIsAddingRect}
+              isAddingRect={isAddingRect}
             />
           </div>
           <div ref={canvasRef} className="scenes__constructor__canva">

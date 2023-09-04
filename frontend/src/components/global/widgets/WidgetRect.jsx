@@ -7,11 +7,8 @@ import "./style/widgetSettings.scss"
 /* Components */
 import ButtonStandard from "../Buttons/ButtonStandard"
 import ColorSelector from "../texts-editor/ColorSelector"
-import WidgetButtons from "./WidgetButtons"
 
 /* Images */
-import imgSwitchOff from "../../../assets/user_ui/switch_off.png"
-import imgSwitchOn from "../../../assets/user_ui/switch_on.png"
 import iconTextColor from "../../../assets/text_ui/colorPicker.png"
 import iconStroke from "../../../assets/text_ui/stroke.png"
 import iconBorder from "../../../assets/text_ui/radius.png"
@@ -28,7 +25,7 @@ function WidgetRect({
   const [displayCPickerBg, setDisplayCPickerBg] = useState(false)
   const [displayCPickerBorder, setDisplayCPickerBorder] = useState(false)
   const [extend, setExtend] = useState(false)
-  const [sceneLink, setSceneLink] = useState(false)
+  // const [sceneLink, setSceneLink] = useState(false)
 
   /* Background color select */
   const handleColorPickerBg = () => {

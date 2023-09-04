@@ -16,7 +16,7 @@ function SelectorGenerique({ selectedCategory, setSelectedCategory, options }) {
   //   { value: "Space", label: "Space" },
   //   { value: "Western", label: "Western" },
   // ]
-  console.log(options)
+  // console.log(options)
   const handleCategoryChange = (selectedOption) => {
     setSelectedCategory(selectedOption.value)
   }
