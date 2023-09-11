@@ -32,6 +32,7 @@
         bottom: 0;
         left: 0;
       }
+
       .cascadeImg {
         position: absolute;
         height: 30%;
@@ -39,7 +40,6 @@
         bottom: -1px;
         left: 0;
         z-index: 1;
-        // filter: brightness(0) invert(1);
       }
     }
   }
@@ -67,25 +67,40 @@
 
     /* Element: .home__content__avis (dernier élément enfant) */
     > section:last-child {
-      margin-bottom: calc(1vh + 8vw);
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      // margin-bottom: calc(1vh + 8vw);
+
       // background-color: bisque;
     }
 
     /* Element: .home__content__games et .home__content__avis */
-    // section {
-    //   box-sizing: border-box;
-    //   min-height: 50vh;
-    //   width: 100%;
-    //   border: 2px solid black;
-    //   background-color: $color--darkestPurple;
-    //   // background-color: white;
-    //   max-width: 1300px;
-    // }
+    section {
+      box-sizing: border-box;
+      min-height: 30vh;
+      width: 100%;
+      // border: 2px solid black;
+      background-color: $color--darkestPurple;
+      // background-color: white;
+      max-width: 1300px;
+      
+      
+    }
   }
 }
 
 .jdrCardApp {
   display: flex;
+  position: relative
+}
+
+.pagination{
+  position:absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
 
 .pagination button img {
@@ -95,17 +110,14 @@
 
 .boutonNext {
   position: absolute;
-  bottom: -165%;
-  right: 13%;
+  bottom: 50%;
+  right: -25px;
   border-radius: 50%;
   width: 40px;
   color: aliceblue;
   height: 40px;
-
   background-color: #fff;
-
   border: none;
-  border-radius: 50%;
   box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
 
   cursor: pointer;
@@ -126,8 +138,8 @@
 
 .boutonPrev {
   position: absolute;
-  left: 15%;
-  bottom: -165%;
+  left: -25px;
+  bottom: 50%;
   border-radius: 50%;
   width: 40px;
   height: 40px;

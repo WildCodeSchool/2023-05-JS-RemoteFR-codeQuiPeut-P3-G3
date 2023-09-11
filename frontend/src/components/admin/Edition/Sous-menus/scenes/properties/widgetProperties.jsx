@@ -33,34 +33,34 @@ function WidgetProperties({
   return (
     <div>
       <div className="title-properties">
-        <span>Properties</span>
+        <span>Text</span>
       </div>
-      {viewEditProperties && (
-        <div className="fontProps__content">
-          <span> Font family</span>
-          <div className="fontProps__familySelect">
-            <FontSelector
-              setSelectedFont={setSelectedFont}
-              selectedFont={selectedFont}
-            />
-            <FontSize
-              setSelectedSize={setSelectedSize}
-              selectedSize={selectedSize}
-            />
-            <ButtonStandard img={iconTextColor} onClick={handleColorPicker} />
-            <ColorSelector
-              state={displayCPicker}
-              onClose={handleCloseColorPicker}
-              selectedColor={selectedColor}
-              setSelectedColor={setSelectedColor}
-            />
-          </div>
-          <TextProperties
-            selectedAlignment={selectedAlignment}
-            setAlignment={setAlignment}
+      {/* {viewEditProperties && ( */}
+      <div className="fontProps__content">
+        <span> Font family</span>
+        <div className="fontProps__familySelect">
+          <FontSelector
+            setSelectedFont={setSelectedFont}
+            selectedFont={selectedFont}
+          />
+          <FontSize
+            setSelectedSize={setSelectedSize}
+            selectedSize={selectedSize}
+          />
+          <ButtonStandard img={iconTextColor} onClick={handleColorPicker} />
+          <ColorSelector
+            state={displayCPicker}
+            onClose={handleCloseColorPicker}
+            selectedColor={selectedColor}
+            setSelectedColor={setSelectedColor}
           />
         </div>
-      )}
+        <TextProperties
+          selectedAlignment={selectedAlignment}
+          setAlignment={setAlignment}
+        />
+      </div>
+      {/* )} */}
     </div>
   )
 }
