@@ -11,21 +11,40 @@ const hashingOptions = {
   parallelism: 1,
 }
 
+// const hashPassword = (req, res, next) => {
+//   argon2
+
+//     .hash(req.body.pwd, hashingOptions)
+
+//     .then((hashedPassword) => {
+//       req.body.hashedPassword = hashedPassword
+
+//       delete req.body.pwd
+//       next()
+//     })
+
+//     .catch((err) => {
+//       console.error(err)
+
+//       res.sendStatus(500)
+//     })
+// }
+
 const hashPassword = (req, res, next) => {
-  argon2
+  const password = req.body.pwd
+  const confirmPassword = req.body.confirmPassword
 
-    .hash(req.body.pwd, hashingOptions)
-
-    .then((hashedPassword) => {
-      req.body.hashedPassword = hashedPassword
-
-      delete req.body.pwd
+  Promise.all([
+    argon2.hash(password, hashingOptions),
+    argon2.hash(confirmPassword, hashingOptions),
+  ])
+    .then((hashedPasswords) => {
+      req.body.hashedPassword = hashedPasswords[0]
+      req.body.hashedConfirmPassword = hashedPasswords[1]
       next()
     })
-
     .catch((err) => {
       console.error(err)
-
       res.sendStatus(500)
     })
 }

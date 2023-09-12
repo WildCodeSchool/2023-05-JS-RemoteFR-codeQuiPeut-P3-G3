@@ -3,19 +3,19 @@ import userpic from "../assets/images/user2.png"
 import { useState } from "react"
 import axios from "axios"
 function Login() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [mail, setMail] = useState("")
+  const [pwd, setPwd] = useState("")
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value)
+    setMail(e.target.value)
   }
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value)
+    setPwd(e.target.value)
   }
 
   const handleSubmit = () => {
-    const userData = { email, password }
+    const userData = { mail, pwd }
     axios.post("http://localhost:4242/login", userData)
   }
 
