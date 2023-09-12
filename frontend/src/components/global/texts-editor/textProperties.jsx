@@ -16,7 +16,6 @@ function TextProperties({ setAlignment }) {
 
   return (
     <div className="fontProps">
-      <p> Alignment</p>
       <div className="fontProps__alignment">
         <ButtonRound
           img={iconAlignLeft}

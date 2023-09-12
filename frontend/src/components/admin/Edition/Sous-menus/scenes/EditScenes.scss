@@ -7,7 +7,8 @@ $landscape-rows: 0.5fr 6fr;
 $portrait-columns: repeat(2, 1fr) 0.4fr;
 $portrait-rows: 0.5fr 6fr 2fr;
 
-$desktop-columns: 200px auto 400px;
+// $desktop-columns: 200px auto 400px;
+$desktop-columns:  auto 1fr auto;
 $desktop-rows: repeat(2, 1fr);
 
 @mixin scene-styles {
@@ -46,9 +47,13 @@ $desktop-rows: repeat(2, 1fr);
 
   /* PLACEMENT ELEMENTS GRID */
   &__properties {
+    overflow:auto;
+    overflow-x:hidden;
+    min-width:400px;
     background-color: $color--gris;
     @media (orientation: landscape) {
-      grid-area: 2 / 3 / 3 / 4;
+      // grid-area: 2 / 3 / 3 / 4;
+      grid-area: 3 / 1 / 4 / 4;
     }
     @media (orientation: portrait) {
       grid-area: 3 / 1 / 4 / 4;
@@ -89,6 +94,7 @@ $desktop-rows: repeat(2, 1fr);
       background-color: $color--gris;
       border-radius: 10px 10px 0 0;
       padding: 1rem;
+
     }
 
     &__toolbar {
@@ -129,9 +135,11 @@ $desktop-rows: repeat(2, 1fr);
     }
 
     &__canva {
-      height: 80%;
+      // height:100%;
+      width:100%;
       border-radius: 10px 10px 0 0;
-      background-color: #ccc;
+      background-color: #6b3030;
+      // border: 4px solid black;
     }
 
     &__btn {
@@ -142,6 +150,9 @@ $desktop-rows: repeat(2, 1fr);
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
+      box-sizing: border-box;
+      padding:10px;
+      margin-top: 2vh;
     }
   }
 }

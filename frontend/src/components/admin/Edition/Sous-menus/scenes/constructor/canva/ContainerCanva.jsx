@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useLayoutEffect } from "react"
 import { fabric } from "fabric"
 
 const ContainerCanva = ({
@@ -8,6 +8,9 @@ const ContainerCanva = ({
   /* Ajout texte */
   isAddingText,
   setIsAddingText,
+  /* Ajout rectangle */
+  isAddingRect,
+  setIsAddingRect,
   /* Ajout image */
   setIsAddingPic,
   isAddingPic,
@@ -22,20 +25,43 @@ const ContainerCanva = ({
   /* Chemin de fichiers */
   backgroundPath,
   imgPath,
+  /* Sizes canva */
+  canvaHeight,
+  canvaWidth,
 }) => {
   const [canvas, setCanvas] = useState("")
 
-  const initCanvas = () =>
-    new fabric.Canvas("myCanva", {
-      height: 800,
-      width: 1250,
+  const initCanvas = () => {
+    const newCanvas = new fabric.Canvas("myCanva", {
       backgroundColor: "white",
     })
 
+    return newCanvas
+  }
+
+  /* Resize canva quand les valeurs calculees ont changees */
+  useLayoutEffect(() => {
+    if (canvaHeight || canvaWidth) {
+      canvas.setDimensions({
+        width: canvaWidth,
+        height: canvaHeight,
+      })
+
+      canvas.renderAll()
+    }
+  }, [canvaHeight, canvaWidth, canvas])
+
+  /* TEST */
+  useEffect(() => {
+    // console.log(isAddingRect)
+  }, [isAddingRect])
+
+  /* Initialisation du canvas */
   useEffect(() => {
     setCanvas(initCanvas())
   }, [])
 
+  /* Ajout d'un background */
   useEffect(() => {
     if (canvas && backgroundPath !== "" && isAddingBackground) {
       const backendBaseUrl = `http://localhost:4242/uploads/${backgroundPath}`
@@ -49,9 +75,14 @@ const ContainerCanva = ({
     }
   }, [isAddingBackground, backgroundPath, canvas])
 
+  /* Déclenchement ajout d'un texte, d'un image & suppression */
   useEffect(() => {
     if (isAddingText) {
       addText(canvas)
+    }
+
+    if (isAddingRect) {
+      addRect(canvas)
     }
 
     if (isAddingPic && imgPath !== "") {
@@ -65,11 +96,11 @@ const ContainerCanva = ({
       if (event.key === "Delete" || event.key === "Backspace") {
         const activeObject = canvas.getActiveObject()
 
-        if (activeObject instanceof fabric.Textbox) {
-          canvas.remove(activeObject)
-          canvas.discardActiveObject()
-          canvas.renderAll()
-        }
+        // if (activeObject instanceof fabric.Textbox) {
+        canvas.remove(activeObject)
+        canvas.discardActiveObject()
+        canvas.renderAll()
+        // }
       }
     }
 
@@ -78,7 +109,7 @@ const ContainerCanva = ({
     return () => {
       document.removeEventListener("keydown", handleDeleteKeyPress)
     }
-  }, [isAddingText, isAddingPic, imgPath, canvas])
+  }, [isAddingText, isAddingPic, isAddingRect, imgPath, canvas])
 
   /* ------------ PROPERTIES ---------------- */
 
@@ -136,19 +167,49 @@ const ContainerCanva = ({
     canvi.renderAll()
   }
 
-  // const addRect = (canvi) => {
-  //   const rect = new fabric.Rect({
-  //     height: 280,
-  //     width: 200,
-  //     fill: "yellow",
-  //   })
-  //   canvi.add(rect)
-  //   canvi.renderAll()
-  // }
+  /* ------------- RECUPERATION DES INFORMATIONS ELEMENTS ------------------------- */
+
+  const getAllObjectProperties = (canvas) => {
+    const objectProperties = {}
+
+    canvas.getObjects().forEach((object, index) => {
+      // Extraire toutes les propriétés de l'objet
+      objectProperties[`object${index + 1}`] = { ...object.toObject() }
+    })
+
+    // Affiche les propriétés dans la console (vous pouvez les utiliser autrement)
+    // console.log(objectProperties)
+  }
+
+  const addRect = (canvi) => {
+    const rect = new fabric.Rect({
+      height: 280,
+      width: 200,
+      fill: "yellow",
+    })
+
+    canvi.on("selection:created", (options) => {
+      // console.log(canvi._activeObject)
+      setViewProperties(true)
+    })
+
+    canvi.on("selection:cleared", (options) => {
+      // console.log("déselectionné")
+      setViewProperties(false)
+    })
+
+    canvi.add(rect)
+    canvi.renderAll()
+
+    setIsAddingRect(false)
+  }
 
   return (
     <>
       <canvas id="myCanva" />
+      <button onClick={() => getAllObjectProperties(canvas)} type="button">
+        Récupérer les informations des éléments
+      </button>
     </>
   )
 }
