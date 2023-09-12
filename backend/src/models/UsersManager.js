@@ -71,7 +71,6 @@ class UserManager extends AbstractManager {
       .then(([rows]) => {
         if (rows.length > 0) {
           const user = rows[0]
-          console.log(user);
           req.user = user
           next()
         } else {
