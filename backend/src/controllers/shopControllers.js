@@ -14,11 +14,11 @@ const browse = (req, res) => {
 
 const add = (req, res) => {
   const shop = req.body
-
+  console.info(shop)
   // TODO validations (length, format...)
 
   models.shop
-    .insert(shop)
+    .insert(shop.Paiement)
     .then(([result]) => {
       res.json(result.insertId)
     })

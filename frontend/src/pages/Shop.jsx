@@ -1,9 +1,18 @@
-import CardShopTest from "../components/shop/CardShopTest"
+import CardShop from "../components/shop/CardShop"
 import PaymentShop from "../components/shop/PaymentShop"
 import Footer from "../components/global/Footer"
+import axios from "axios"
 import "./Shop.scss"
 
 const Shop = () => {
+  const savePaiement = (cardId, cardShopQuantity, cardShopPrice) => {
+    const Paiement = { cardShopQuantity, cardShopPrice, cardId }
+    console.info("Paiement:", cardShopPrice)
+    console.info("Quantité :", cardShopQuantity)
+    console.info("cardId:", cardId)
+    axios.post("http://localhost:4242/shop", { Paiement })
+  }
+
   return (
     <div className="GlobalContainerShop">
       <div className="titleShopOffers">
@@ -14,38 +23,46 @@ const Shop = () => {
       <div className="Shop_OffersContainer">
         <div className="ShopFirstOffers">
           <div className="cardShop cardShopLeft">
-            <CardShopTest
+            <CardShop
+              cardId={1}
               promotion=" "
-              quantity="100"
+              cardShopQuantity={100}
               items="credits"
-              price="5 $"
+              cardShopPrice={5}
+              addPaiement={savePaiement}
             />
           </div>
           <div className="cardShop cardShopMiddle">
-            <CardShopTest
+            <CardShop
+              cardId={2}
               topSales="true"
-              promotion="get 25% discount"
-              quantity="1000"
+              promotion="get 50% discount"
+              cardShopQuantity={1000}
               items="credits"
-              price="25 $"
+              cardShopPrice={25}
+              addPaiement={savePaiement}
             />
           </div>
           <div className="cardShop cardShopRigth">
-            <CardShopTest
-              promotion="get 10% discount"
-              quantity="500"
+            <CardShop
+              cardId={3}
+              promotion="get 20% discount"
+              cardShopQuantity={500}
               items="credits"
-              price="20 $"
+              cardShopPrice={20}
+              addPaiement={savePaiement}
             />
           </div>
         </div>
         <h3 className="OrangeTitle">&gt; OR</h3>
         <div className="cardShop cardShopMiddle">
-          <CardShopTest
+          <CardShop
+            cardId="4"
             promotion="Unlimited access"
-            quantity="5$"
+            cardShopQuantity="5$"
             items="/ months"
-            price="( 50$ / Year )"
+            cardShopPrice="( 50$ / Year )"
+            addPaiement={savePaiement}
           />
         </div>
         <PaymentShop />

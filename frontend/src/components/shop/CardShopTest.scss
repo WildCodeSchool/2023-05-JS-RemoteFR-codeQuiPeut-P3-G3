@@ -18,7 +18,6 @@
 //   }
 // }
 
-
 .wrap-CardShop {
   height: 100%;
   width: 100%;
@@ -26,7 +25,6 @@
   z-index: 0;
   display: flex;
   overflow: hidden;
-
 
   .background_Cardshop {
     position: absolute;
@@ -49,11 +47,10 @@
   }
 
   .background_Cardshop:after {
-    content: '';
+    content: "";
     display: block;
     z-index: -1;
     position: absolute;
-
 
     // background-size: 500% 500%;;
     height: 800px;
@@ -68,12 +65,9 @@
 
   @keyframes rotate-gradient {
     to {
-      transform: rotate(360deg)
+      transform: rotate(360deg);
     }
   }
-
-
-
 
   .CardShop_Global {
     position: absolute;
@@ -100,8 +94,6 @@
       font-family: $font-family2;
     }
   }
-
-
 }
 
 .CardShop_Content {
@@ -131,10 +123,7 @@
   // overflow: hidden;
 }
 
-
-
 @keyframes text-size-change {
-
   0%,
   100% {
     color: #f97700;
@@ -158,7 +147,6 @@
   color: #f97700;
   margin: 0;
 }
-
 
 .button_CardShop {
   color: white;
@@ -190,7 +178,7 @@
     padding: 10px;
   }
 
-  .CartShopPicture:hover{
+  .CartShopPicture:hover {
     transform: rotate(-10deg);
     transition: transform 0.2s ease-in;
   }

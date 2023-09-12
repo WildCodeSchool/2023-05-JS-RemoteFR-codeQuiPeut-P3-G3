@@ -1,4 +1,4 @@
-import "./CardShopTest.scss"
+import "./CardShop.scss"
 import CartShop from "../../assets/images/CartShopWhite.png"
 import BuyNow from "../../assets/images/buyNow.png"
 
