@@ -50,18 +50,20 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enigmadb`.`card` (
   `idcard` INT NOT NULL AUTO_INCREMENT,
-  `titleFontFamily` VARCHAR(100) NOT NULL,
-  `titleFontSize` INT NOT NULL,
-  `titleFontColor` VARCHAR(45) NOT NULL,
-  `topBgdColor` VARCHAR(45) NOT NULL,
-  `topBgdImg` VARCHAR(150) NOT NULL,
-  `textFontFamily` VARCHAR(100) NOT NULL,
-  `textFontColor` VARCHAR(45) NOT NULL,
-  `bottomBgdColor` VARCHAR(45) NOT NULL,
-  `bottomBgdImg` VARCHAR(150) NOT NULL,
-  `buttonTextFont` VARCHAR(45) NOT NULL,
-  `buttonTextColor` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idcard`))
+  `jdrName` VARCHAR(100) NOT NULL,
+  `jdrNameFont` INT NOT NULL,
+  `jdrNameColor` VARCHAR(45) NOT NULL,
+  `jdrNameFontSize` VARCHAR(45) NOT NULL,
+  `jdrImg1` VARCHAR(150) NOT NULL,
+  `jdrImg2` VARCHAR(100) NOT NULL,
+  `jdrText` VARCHAR(80) NOT NULL,
+  `textColor` VARCHAR(45) NOT NULL,
+  `textFont` VARCHAR(150) NOT NULL,
+  `jdrBgColor1` VARCHAR(45) NOT NULL,
+  `jdrBgColor2` VARCHAR(45) NOT NULL,
+  `buttonColor` VARCHAR(45) NOT NULL,
+  `buttonFont` VARCHAR(45) NOT NULL,
+PRIMARY KEY (`idcard`))
 ENGINE = InnoDB;
 
 
