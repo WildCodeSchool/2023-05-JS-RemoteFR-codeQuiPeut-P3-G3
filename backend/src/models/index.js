@@ -29,6 +29,7 @@ pool.getConnection().catch(() => {
 
 const models = {}
 
+const CardManager = require("./CardManager")
 const ChaptersManager = require("./ChaptersManager")
 const ChoicesManager = require("./ChoicesManager")
 const ConsomablesManager = require("./ConsomablesManager")
@@ -42,6 +43,9 @@ const UsersManager = require("./UsersManager")
 const WeaponsManager = require("./WeaponsManager")
 /* Pictures */
 const PicturesManager = require("./picturesManager")
+
+models.card = new CardManager()
+models.card.setDatabase(pool)
 
 models.chapters = new ChaptersManager()
 models.chapters.setDatabase(pool)

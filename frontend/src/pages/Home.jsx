@@ -13,6 +13,7 @@ import previous from "../assets/images/chevron-left-512.webp"
 import next from "../assets/images/chevron-right-512.webp"
 import noParallaxImg from "../assets/images/parallax/castleNewSize1.png"
 import cascadeImg from "../assets/images/cascadeImg.png"
+// import HomeParallax from "../components/home/HomeParallax"
 
 export const jdrCardData = [
   {
