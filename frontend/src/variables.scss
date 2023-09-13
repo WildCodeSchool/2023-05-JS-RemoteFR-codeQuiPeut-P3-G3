@@ -68,7 +68,6 @@ label {
 
 $height-titles-section: 40px;
 
-
 @mixin title-blocsAdmin {
   height: $height-titles-section;
   background-color: black;
@@ -77,12 +76,12 @@ $height-titles-section: 40px;
   border: none;
   border-radius: 8px 8px 0 0;
   cursor: pointer;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
 
-  img{
+  img {
     max-height: 11px;
   }
 

@@ -1,14 +1,12 @@
-.sample-container{
-    position: absolute; /* Position absolue pour occuper tout l'espace de la div parent */
+.sample-container {
+  position: absolute; /* Position absolue pour occuper tout l'espace de la div parent */
   top: 0; /* Aligner en haut */
   left: 0; /* Aligner à gauche */
   width: 100%; /* Largeur maximale en fonction de la div parent */
   height: 100%;
-
 
   .sample-canvas {
     height: 100%;
     background-color: white;
   }
 }
-
