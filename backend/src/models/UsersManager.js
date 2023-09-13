@@ -65,7 +65,7 @@ class UserManager extends AbstractManager {
       })
   }
 
-  getUserByEmailAndPassToNext(users, req, next) {
+  getUserByEmailAndPassToNext(users, req, res, next) {
     return this.database
       .query("SELECT * FROM users WHERE mail = ?", [users.mail])
       .then(([rows]) => {
