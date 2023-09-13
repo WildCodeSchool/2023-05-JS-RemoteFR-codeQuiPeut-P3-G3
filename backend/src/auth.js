@@ -57,22 +57,20 @@ const verifyPassword = (req, res) => {
     .then((isVerified) => {
       if (isVerified) {
         const payload = { sub: req.user.id }
-
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
           expiresIn: "1h",
         })
         delete req.user.hashedPassword
-
-        res.send({ token, user: req.user })
+        res.status(200).send({ success: true, token, user: req.user })
       } else {
-        res.sendStatus(401)
+        return Promise.reject(new Error("Password do not match"))
       }
     })
 
     .catch((err) => {
       console.error(err)
 
-      res.sendStatus(500)
+      return Promise.reject(new Error("Password do not match"))
     })
 }
 

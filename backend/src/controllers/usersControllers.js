@@ -90,15 +90,15 @@ const findByMail = (req, res, next) => {
     .then((user) => {
       if (user) {
         // Un utilisateur a été trouvé, renvoyer une réponse appropriée
-        res.status(200).json(user) // Par exemple, renvoyer l'utilisateur trouvé
+        // res.status(200).json(user) // Par exemple, renvoyer l'utilisateur trouvé
       } else {
         // Aucun utilisateur trouvé, renvoyer une réponse appropriée (404 ici)
-        res.sendStatus(404)
+        // res.sendStatus(404)
       }
     })
     .catch((err) => {
       console.error(err)
-      res.sendStatus(500)
+      // res.sendStatus(500)
     })
 }
 module.exports = {
