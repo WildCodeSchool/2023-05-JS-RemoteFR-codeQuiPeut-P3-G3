@@ -1,5 +1,6 @@
 /* Packages */
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useEditionContext } from "../../../services/contexts/editionContext"
 
 /* Style */
 import "./style/widgetSettings.scss"
@@ -15,16 +16,54 @@ import iconBorder from "../../../assets/text_ui/radius.png"
 import imgArrowTop from "../../../assets/text_ui/arrow_top.png"
 import imgArrowBottom from "../../../assets/text_ui/arrow_bottom.png"
 
-function WidgetRect({
-  viewEditRect,
-  setSelectedColorBg,
-  setSelectedColorBorder,
-  selectedColorBg,
-  selectedColorBorder,
-}) {
+function WidgetRect({ viewEditProperties, objectSelected, setObjectSelected }) {
   const [displayCPickerBg, setDisplayCPickerBg] = useState(false)
   const [displayCPickerBorder, setDisplayCPickerBorder] = useState(false)
   const [extend, setExtend] = useState(false)
+
+  /* FROM CONTEXT */
+
+  const {
+    selectedSizeBorder,
+    selectedSizeRadius,
+    selectedColorBorder,
+    selectedColorBg,
+  } = useEditionContext()
+  const {
+    setSelectedSizeBorder,
+    setSelectedSizeRadius,
+    setSelectedColorBorder,
+    setSelectedColorBg,
+  } = useEditionContext
+
+  const { updated, setUpdated } = useEditionContext()
+
+  /* =============== */
+
+  /* Update states => context */
+  useEffect(() => {
+    const updateDataTexts = {
+      ...objectSelected.properties,
+      strokeWidth: selectedSizeBorder,
+      rx: selectedSizeRadius,
+      ry: selectedSizeRadius,
+      stroke: selectedColorBorder,
+      fill: selectedColorBg,
+    }
+
+    console.log("update context <= states : ", updateDataTexts)
+
+    setObjectSelected((prev) => ({
+      ...prev,
+      properties: updateDataTexts,
+    }))
+  }, [
+    selectedSizeBorder,
+    selectedSizeRadius,
+    selectedColorBorder,
+    selectedColorBg,
+  ])
+
   // const [sceneLink, setSceneLink] = useState(false)
 
   /* Background color select */
@@ -50,7 +89,7 @@ function WidgetRect({
   return (
     <div className="wrap-widget">
       <div className="title-properties" onClick={() => setExtend(!extend)}>
-        <span>Rectangle</span>
+        <span>Properties</span>
         {extend ? (
           <img src={imgArrowTop} alt="img-reduce" />
         ) : (
@@ -77,7 +116,7 @@ function WidgetRect({
 
               <div
                 className="previewColor"
-                style={{ backgroundColor: setSelectedColorBg }}
+                style={{ backgroundColor: selectedColorBg }}
               ></div>
             </div>
           </div>
@@ -89,7 +128,14 @@ function WidgetRect({
 
             <div className="sets">
               <ButtonStandard img={iconStroke} />
-              <input type="text" placeholder="10"></input>
+              <input
+                type="text"
+                placeholder="10"
+                onChange={(e) =>
+                  setSelectedSizeBorder(parseInt(e.target.value))
+                }
+                value={selectedSizeBorder}
+              ></input>
               <span>px</span>
             </div>
           </div>
@@ -99,7 +145,12 @@ function WidgetRect({
 
             <div className="sets">
               <ButtonStandard img={iconBorder} />
-              <input type="text" placeholder="10"></input>
+              <input
+                type="text"
+                placeholder="10"
+                onChange={(e) => setSelectedSizeRadius(e.target.value)}
+                value={selectedSizeRadius}
+              ></input>
               <span>px</span>
             </div>
           </div>

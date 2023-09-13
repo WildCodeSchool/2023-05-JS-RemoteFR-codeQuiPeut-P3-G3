@@ -12,6 +12,7 @@ import WidgetPosition from "../../../../global/widgets/WidgetPosition"
 import WidgetTexts from "../../../../global/widgets/WidgetTexts"
 import WidgetRect from "../../../../global/widgets/WidgetRect"
 import WidgetScenesLink from "../../../../global/widgets/WidgetScenesLink"
+import { useEditionContext } from "../../../../../services/contexts/editionContext.jsx"
 
 function EditScenes() {
   const canvasRef = useRef(null)
@@ -22,13 +23,15 @@ function EditScenes() {
   const [viewEditProperties, setViewProperties] = useState(false)
 
   /* RECUPERATION DES PROPRIETES */
-  const [selectedColor, setSelectedColor] = useState("#FF0000")
 
-  const [selectedFont, setSelectedFont] = useState("Arial, sans-serif")
-
-  const [selectedSize, setSelectedSize] = useState(16)
-
-  const [selectedAlignment, setAlignment] = useState("text-align: center")
+  // const [dataTexts, setDataTexts] = useState({
+  //   // fill: "#FF0000",
+  //   // fontFamily: "Arial, sans-serif",
+  //   // fontSize: 16,
+  //   // textAlign: "text-align: center",
+  // })
+  const { objectSelected, setObjectSelected } = useEditionContext()
+  // const { propsWidgetTexts, setPropsWidgetTexts } = useEditionContext()
 
   /* Popup image viewer */
   const [selectedPath, setSelectedPath] = useState("")
@@ -52,10 +55,24 @@ function EditScenes() {
     }
   }, [viewImgFinder])
 
+  /* récupération propriétés objet en cours dans context et mise à dispo */
+  // useEffect(() => {
+  //   setDataTexts((prevDataTexts) => ({
+  //     ...prevDataTexts,
+  //     ...objectSelected.properties,
+  //   }))
+  //   console.log(dataTexts)
+  // }, [objectSelected])
+
+  // useEffect(() => {
+  //   setObjectSelected((prevData) => ({
+  //     ...prevData.properties,
+  //     ...dataTexts,
+  //   }))
+  // }, [dataTexts])
+
   const calculateChildSize = () => {
     const canvasElement = canvasRef.current
-    // console.log("parent width : " + canvasElement.clientWidth)
-    // console.log("parent height: " + canvasElement.clientHeight)
 
     if (canvasElement) {
       const parentWidth = canvasElement.clientWidth - 0 // Largeur de l'élément parent
@@ -143,11 +160,6 @@ function EditScenes() {
               setIsAddingBackground={setIsAddingBackground}
               setViewProperties={setViewProperties}
               viewEditProperties={viewEditProperties}
-              selectedColor={selectedColor}
-              selectedFont={selectedFont}
-              selectedSize={selectedSize}
-              selectedAlignment={selectedAlignment}
-              setSelectedSize={setSelectedSize}
               backgroundPath={selectedPath}
               imgPath={imgPath}
               canvaWidth={canvaWidth}
@@ -176,16 +188,14 @@ function EditScenes() {
           /> */}
           <WidgetTexts
             viewEditProperties={viewEditProperties}
-            selectedColor={selectedColor}
-            selectedFont={selectedFont}
-            selectedSize={selectedSize}
-            selectedAlignment={selectedAlignment}
-            setSelectedColor={setSelectedColor}
-            setSelectedFont={setSelectedFont}
-            setSelectedSize={setSelectedSize}
-            setAlignment={setAlignment}
+            objectSelected={objectSelected}
+            setObjectSelected={setObjectSelected}
           />
-          <WidgetRect />
+          <WidgetRect
+            viewEditProperties={viewEditProperties}
+            objectSelected={objectSelected}
+            setObjectSelected={setObjectSelected}
+          />
           <WidgetScenesLink />
         </div>
       </div>
