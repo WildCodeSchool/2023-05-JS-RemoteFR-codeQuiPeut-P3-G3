@@ -2,37 +2,40 @@
 
 .pictureGeneral {
   height: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 0fr 0fr 1fr;
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
-  
-  .titlePicture {
-    @include title-blocsAdmin;
-    grid-area: 1 / 1 / 2 / 2;
-    
-    span {
-      color: white;
-      font-size: 0.8rem;
-    }
-  }
+  width: 100%;
+  background-color: #f7f7f7;
+  // background-color: rgb(197, 97, 97);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
 
-  .jeuImgDiv {
-      height: 300px;
-      width: 360px;
+  .pictureGeneralTop {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .jeuImgDiv {
+      margin-top: 20px;
+      height: 500px;
+      width: auto;
       display: flex;
       flex-direction: row;
+      align-items: flex-start;
 
-    .jeuImg {
-      height: 280px;
-      width: 280px;
-      border-radius: 10px;
-    }
+      .jeuImg {
+        height: 100%;
+        width: 100%;
+        border-radius: 10px;
+        justify-content: center;
+        align-items: center;
+      }
 
-    .editPen {
-      height: 30px;
-      width: 30px;
+      .editPen {
+        height: 40px;
+        width: 40px;
+      }
     }
   }
 }

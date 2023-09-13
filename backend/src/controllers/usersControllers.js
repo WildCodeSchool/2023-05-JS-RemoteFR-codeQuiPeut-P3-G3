@@ -15,18 +15,22 @@ const browse = (req, res) => {
 const add = (req, res) => {
   const users = req.body
 
-  // TODO validations (length, format...)
-
   models.users
-    .insert(users)
-    .then(([result]) => {
-      res.json(result.insertId)
+    .register(users)
+    .then((insertedUserId) => {
+      res.status(200).json({
+        message: "User registered successfully",
+        userId: insertedUserId,
+      })
     })
     .catch((err) => {
       console.error(err)
-      res.sendStatus(500)
+      res.status(500).json({
+        error: "An error occurred while registering the user",
+      })
     })
 }
+
 const read = (req, res) => {
   models.users
     .find(req.params.id)
@@ -80,10 +84,28 @@ const destroy = (req, res) => {
     })
 }
 
+const findByMail = (req, res, next) => {
+  models.users
+    .getUserByEmailAndPassToNext(req.body, req, res, next)
+    .then((user) => {
+      if (user) {
+        // Un utilisateur a été trouvé, renvoyer une réponse appropriée
+        // res.status(200).json(user) // Par exemple, renvoyer l'utilisateur trouvé
+      } else {
+        // Aucun utilisateur trouvé, renvoyer une réponse appropriée (404 ici)
+        // res.sendStatus(404)
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+      // res.sendStatus(500)
+    })
+}
 module.exports = {
   browse,
   add,
   read,
   edit,
   destroy,
+  findByMail,
 }

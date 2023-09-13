@@ -4,22 +4,22 @@ import fb from "../assets/images/facebook_5968764 3.png"
 import google from "../assets/images/google_300221 3.png"
 import { useState } from "react"
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 
 function Register() {
   const navigate = useNavigate()
   // States
-  const [firstname, setFirstanme] = useState("")
+  const [firstname, setFirstname] = useState("")
   const [lastname, setLastname] = useState("")
   const [mail, setMail] = useState("")
   const [pseudo, setPseudo] = useState("")
   const [pwd, setPwd] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-
+  const [error, setError] = useState("")
   // Onchange functions
 
   const handleFisrtnameChange = (event) => {
-    setFirstanme(event.target.value)
+    setFirstname(event.target.value)
   }
 
   const handleLastnameChange = (event) => {
@@ -44,7 +44,7 @@ function Register() {
   // Requete post
 
   const handleSubmit = () => {
-    const userData = { firstname, lastname, pwd, mail, pseudo }
+    const userData = { firstname, lastname, pwd, mail, pseudo, confirmPassword }
 
     axios
       .post("http://localhost:4242/signup", userData)
@@ -58,7 +58,7 @@ function Register() {
       })
       .catch((error) => {
         console.error(error)
-
+        setError("Email and pseudo must be unique and psswords must match")
         // Handle error
       })
   }
@@ -130,6 +130,10 @@ function Register() {
           value="Sign-Up"
           onClick={handleSubmit}
         />
+        {error && <div className="error-message">{error}</div>}
+        <Link to="/login" className="link-register">
+          <p className="p-link-register">Already have an account click here!</p>
+        </Link>
       </div>
     </div>
   )

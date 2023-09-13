@@ -16,7 +16,6 @@ const ButtonStyle = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 0.5rem;
 `
 
 function ButtonUI({

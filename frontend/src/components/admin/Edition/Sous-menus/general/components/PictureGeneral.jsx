@@ -1,30 +1,30 @@
 import React from "react"
+// import axios from "axios"
 
 import "./PictureGeneral.scss"
-import ButtonUI from "../../../../../global/Buttons/ButtonUI"
+import jeuImg from "../../../../../../assets/images/JeuLeDestin.png"
+import editPen from "../../../../../../assets/images/EditPen.png"
 
 function PictureGeneral() {
+  // const [jdrImg1, setJdrImg1] = useState("")
+  // const [jdrImg2, setJdrImg2] = useState("")
+
+  // const saveCard = () => {
+  //   const cardData = {
+  //     jdrImg1,
+  //     jdrImg2,
+  //   }
+  //   axios.post("http://localhost:4242/card", cardData)
+  // }
+
   return (
     <>
       <div className="pictureGeneral">
-        <div className="titlePicture">
-          <span>PictureGeneral</span>
-        </div>
-        <div className="jeuImgDiv">
-          <img
-            className="jeuImg"
-            src="../../../../../../assets/images/JeuLeDestin.png"
-            alt="jeuImg"
-          />
-          <img
-            className="editPen"
-            src="../../../../../../assets/images/EditPen.png"
-            alt="pen"
-          />
-        </div>
-        <div className="buttonPictureGeneral">
-          <ButtonUI title={"save"} bgColor={"#3f7841"} />
-          <ButtonUI title={"delete"} bgColor={"#902B00"} />
+        <div className="pictureGeneralTop">
+          <div className="jeuImgDiv">
+            <img className="jeuImg" src={jeuImg} alt="jeuImg" />
+            <img className="editPen" src={editPen} alt="pen" />
+          </div>
         </div>
       </div>
     </>

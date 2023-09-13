@@ -17,9 +17,9 @@ $color--gris: #f7f7f7;
 /* ===============  FONTS ================*/
 
 /* Styles */
-$font-family1: 'Cinzel Decorative', cursive;
-$font-family2: 'Inika', serif;
-$font-family3: 'Arial', 'Helvetica', sans-serif;
+$font-family1: "Cinzel Decorative", cursive;
+$font-family2: "Inika", serif;
+$font-family3: "Arial", "Helvetica", sans-serif;
 
 /* Sizes */
 h1 {
@@ -60,12 +60,15 @@ h2 {
 span,
 li,
 button,
+textarea,
 label {
   font-family: $font-family3;
   font-size: clamp(0.8rem, 1vw, 1rem);
 }
 
 $height-titles-section: 40px;
+
+
 @mixin title-blocsAdmin {
   height: $height-titles-section;
   background-color: black;
@@ -73,6 +76,15 @@ $height-titles-section: 40px;
   width: 100%;
   border: none;
   border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  img{
+    max-height: 11px;
+  }
 
   span {
     padding: 0;

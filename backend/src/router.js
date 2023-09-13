@@ -1,8 +1,9 @@
 const express = require("express")
-const { hashPassword } = require("./auth")
-const { validateUser } = require("./Validators/userValidator")
+const { hashPassword, verifyPassword } = require("./auth")
+const { validateUser } = require("./validators/userValidator")
 const router = express.Router()
 
+const cardControllers = require("./controllers/cardControllers")
 const chaptersControllers = require("./controllers/chaptersControllers")
 const choicesControllers = require("./controllers/choicesControllers")
 const consomablesControllers = require("./controllers/consomablesControllers")
@@ -14,6 +15,15 @@ const shopControllers = require("./controllers/shopControllers")
 const storiesControllers = require("./controllers/storiesControllers")
 const usersControllers = require("./controllers/usersControllers")
 const weaponsControllers = require("./controllers/weaponsControllers")
+
+/* test images */
+const picturesControllers = require("./controllers/picturesControllers")
+
+router.get("/card", cardControllers.browse)
+router.get("/card/:id", cardControllers.read)
+router.post("/card", cardControllers.add)
+router.put("/card/:id", cardControllers.edit)
+router.delete("/card/:id", cardControllers.destroy)
 
 router.get("/chapters", chaptersControllers.browse)
 router.get("/chapters/:id", chaptersControllers.read)
@@ -75,11 +85,17 @@ router.post("/users", usersControllers.add)
 router.put("/users/:id", usersControllers.edit)
 router.delete("/users/:id", usersControllers.destroy)
 router.post("/signup", hashPassword, validateUser, usersControllers.add)
+router.post("/login", usersControllers.findByMail, verifyPassword)
 
 router.get("/weapons", weaponsControllers.browse)
 router.get("/weapons/:id", weaponsControllers.read)
 router.post("/weapons", weaponsControllers.add)
 router.put("/weapons/:id", weaponsControllers.edit)
 router.delete("/weapons/:id", weaponsControllers.destroy)
+
+/* Test images files */
+router.post("/addPicture/:filename", picturesControllers.add)
+router.delete("/deletePicture/:id", picturesControllers.destroy)
+router.get("/displayAllPictures", picturesControllers.browse)
 
 module.exports = router

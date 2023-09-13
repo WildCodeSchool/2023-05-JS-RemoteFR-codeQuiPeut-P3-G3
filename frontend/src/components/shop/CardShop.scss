@@ -1,0 +1,55 @@
+@import "../../variables.scss";
+
+.CardShop_Global {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  background-color: #1e203a;
+  border: 1px solid;
+  // BLOCAGE VOIR AVEC ANTOINE
+  border-image: linear-gradient(45deg, #ff00a2, #ffcd00, #00d4ff);
+  border-image-slice: 1;
+  border-radius: 15px;
+}
+
+.CardShop_Content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.CardShop_TopSales {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.CardShop_Promotion {
+  color: #f97700;
+}
+
+.PriceShop {
+  color: #f97700;
+}
+
+.button_CardShop {
+  color: white;
+  background-color: transparent;
+  border: none;
+}
+
+.button_CardShop:active {
+  color: black;
+}
+
+.CartShopPicture {
+  width: 12%;
+}
