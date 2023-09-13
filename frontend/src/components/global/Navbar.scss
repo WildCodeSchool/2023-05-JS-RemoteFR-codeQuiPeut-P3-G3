@@ -83,12 +83,11 @@
     border: none;
     padding-left: 0.5rem;
     font-size: 1rem;
-    
+
     background-image: url(./src/assets/images/loupe.png);
     background-repeat: no-repeat;
     background-position: 97%;
     background-size: 20px 20px;
-    
   }
   .profile-navbar {
     height: 100%;
@@ -108,26 +107,25 @@
     .left-img-navbar {
       padding-right: 5px;
     }
-      #input-signup-navbar{
-        background-color: #ff6a3d;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        padding: .8rem 1.5rem .8rem 1.5rem;
-        cursor: pointer;
-        font-weight: bold;
-        margin-left: 1rem;
-      }
-      #input-login-navbar{
-        background-color: #9BC3FF;
-        color: black;
-        border: none;
-        border-radius: 20px;
-        padding: .8rem 1.72rem .8rem 1.72rem;
-        cursor: pointer;
-        font-weight: bold;
-        
-      }
+    #input-signup-navbar {
+      background-color: #ff6a3d;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 0.8rem 1.5rem 0.8rem 1.5rem;
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 1rem;
+    }
+    #input-login-navbar {
+      background-color: #9bc3ff;
+      color: black;
+      border: none;
+      border-radius: 20px;
+      padding: 0.8rem 1.72rem 0.8rem 1.72rem;
+      cursor: pointer;
+      font-weight: bold;
+    }
   }
 }
 

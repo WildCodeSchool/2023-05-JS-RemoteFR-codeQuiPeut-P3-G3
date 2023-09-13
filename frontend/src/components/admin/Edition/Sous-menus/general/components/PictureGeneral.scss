@@ -3,11 +3,11 @@
 .pictureGeneral {
   height: 100%;
   width: 100%;
-   background-color: #f7f7f7;
+  background-color: #f7f7f7;
   // background-color: rgb(197, 97, 97);
   border-radius: 8px;
   display: flex;
-    align-items: center;
+  align-items: center;
 
   .pictureGeneralTop {
     width: 100%;
@@ -17,12 +17,12 @@
     align-items: center;
 
     .jeuImgDiv {
-        margin-top: 20px;
-        height: 500px;
-        width: auto;
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
+      margin-top: 20px;
+      height: 500px;
+      width: auto;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
 
       .jeuImg {
         height: 100%;
