@@ -41,12 +41,12 @@ function NavBar() {
           <input type="image" src={logo} alt="logo" className="logo-navbar" />
         </Link>
 
-        <div className="dropdown-navbar">
-          <button
-            className="dropbtn-navbar"
-            onMouseEnter={handleDropdown}
-            onMouseLeave={handleDropdown2}
-          >
+        <div
+          className="dropdown-navbar"
+          onMouseEnter={handleDropdown}
+          onMouseLeave={handleDropdown2}
+        >
+          <button className="dropbtn-navbar">
             Explore
             <i className="fa fa-caret-down"></i>
           </button>
