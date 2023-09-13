@@ -1,8 +1,28 @@
 import ButtonUI from "../../global/Buttons/ButtonUI"
 import "./General.scss"
 import { jdrCardData } from "../../../pages/Home"
+import { useEffect, useState } from "react"
+import axios from "axios"
 
 function AdminGeneral() {
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    axios.get("http://localhost:4242/stories").then((response) => {
+      setData(response.data)
+      console.info(data)
+    })
+  }, [])
+
+  const handleDelete = () => {
+    axios.delete("http://localhost:4242/stories")
+  }
+
+  const handleModify = () => {}
+
+  const handleDeploy = () => {
+    axios.put("http://localhost:4242/stories")
+  }
   return (
     <>
       <div className="adminGeneral">
@@ -32,15 +52,27 @@ function AdminGeneral() {
                   <td>21/07/2023</td>
                   <td>
                     {" "}
-                    <ButtonUI title={"Deploy"} bgcolor={"#3f7841"} />
+                    <ButtonUI
+                      title={"Deploy"}
+                      bgcolor={"#3f7841"}
+                      onClick={handleDeploy}
+                    />
                   </td>
                   <td>
                     {" "}
-                    <ButtonUI title={"Modify"} bgcolor={"#3e86bb"} />
+                    <ButtonUI
+                      title={"Modify"}
+                      bgcolor={"#3e86bb"}
+                      onClick={handleModify}
+                    />
                   </td>
                   <td>
                     {" "}
-                    <ButtonUI title={"Delete"} bgcolor={"#902B00"} />
+                    <ButtonUI
+                      title={"Delete"}
+                      bgcolor={"#902B00"}
+                      onClick={handleDelete}
+                    />
                   </td>
                 </tr>
               ))}
