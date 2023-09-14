@@ -20,9 +20,9 @@ USE `enigmadb` ;
 CREATE TABLE IF NOT EXISTS `enigmadb`.`card` (
   `idcard` INT NOT NULL AUTO_INCREMENT,
   `jdrName` VARCHAR(100) NOT NULL,
-  `jdrNameFont` INT NOT NULL,
+  `jdrNameFont` VARCHAR(45) NOT NULL,
   `jdrNameColor` VARCHAR(45) NOT NULL,
-  `jdrNameFontSize` VARCHAR(45) NOT NULL,
+  `jdrNameFontSize` INT NOT NULL,
   `jdrImg1` VARCHAR(150) NOT NULL,
   `jdrImg2` VARCHAR(100) NOT NULL,
   `jdrText` VARCHAR(80) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`card` (
   `jdrBgColor2` VARCHAR(45) NOT NULL,
   `buttonImg` VARCHAR(150) NOT NULL,
   `jdrCategory` VARCHAR(45) NOT NULL,
-  `publicCategory` VARCHAR(45) NOT NULL,
+  `jdrPublic` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idcard`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
