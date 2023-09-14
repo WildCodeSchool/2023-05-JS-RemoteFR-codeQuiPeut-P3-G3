@@ -1,17 +1,44 @@
 import CardShop from "../components/shop/CardShop"
 import PaymentShop from "../components/shop/PaymentShop"
 import Footer from "../components/global/Footer"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import "./Shop.scss"
 
 const Shop = () => {
-  const savePaiement = (cardId, cardShopQuantity, cardShopPrice) => {
-    const Paiement = { cardShopQuantity, cardShopPrice, cardId }
+  const savePaiement = (cardShopId, cardShopQuantity, cardShopPrice) => {
+    // const Paiement = { cardShopQuantity, cardShopPrice, cardId }
     console.info("Paiement:", cardShopPrice)
     console.info("Quantité :", cardShopQuantity)
-    console.info("cardId:", cardId)
-    axios.post("http://localhost:4242/shop", { Paiement })
+    console.info("cardId:", cardShopId)
   }
+
+  // Envoi addToCart vers le panier BDD
+  const pushToCart = (cardShopId) => {
+    console.info(cardShopId)
+    axios.post("http://localhost:4242/shop", {
+      cardShopId,
+    })
+  }
+
+  // Récupération info Card BDD
+  const [cardInfo, setCardInfo] = useState([])
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4242/shop")
+      .then((response) => {
+        console.info(response.data)
+        setCardInfo(response.data)
+      })
+      .catch((error) => {
+        console.warn("Pouetpouet")
+        console.error(
+          "Une erreur est survenue lors de la récupération des fichiers.",
+          error
+        )
+      })
+  }, [])
 
   return (
     <div className="GlobalContainerShop">
@@ -24,45 +51,46 @@ const Shop = () => {
         <div className="ShopFirstOffers">
           <div className="cardShop cardShopLeft">
             <CardShop
-              cardId={1}
-              promotion=" "
-              cardShopQuantity={100}
-              items="credits"
-              cardShopPrice={5}
-              addPaiement={savePaiement}
+              cardShopId={cardInfo[0]?.id}
+              topSales={null}
+              promotion={cardInfo[0]?.discount}
+              cardShopQuantity={cardInfo[0]?.credit_quantity}
+              items={cardInfo[0]?.items}
+              cardShopPrice={cardInfo[0]?.price}
+              pushToCart={pushToCart}
             />
           </div>
           <div className="cardShop cardShopMiddle">
             <CardShop
-              cardId={2}
-              topSales="true"
-              promotion="get 50% discount"
-              cardShopQuantity={1000}
-              items="credits"
-              cardShopPrice={25}
-              addPaiement={savePaiement}
+              cardShopId={cardInfo[1]?.id}
+              topSales={cardInfo[1]?.best_seller}
+              promotion={`get ${cardInfo[1]?.discount}% discount`}
+              cardShopQuantity={cardInfo[1]?.credit_quantity}
+              items={cardInfo[1]?.items}
+              cardShopPrice={cardInfo[1]?.price}
+              pushToCart={pushToCart}
             />
           </div>
           <div className="cardShop cardShopRigth">
             <CardShop
-              cardId={3}
-              promotion="get 20% discount"
-              cardShopQuantity={500}
-              items="credits"
-              cardShopPrice={20}
-              addPaiement={savePaiement}
+              cardShopId={cardInfo[2]?.id}
+              promotion={`get ${cardInfo[2]?.discount}% discount`}
+              cardShopQuantity={cardInfo[2]?.credit_quantity}
+              items={cardInfo[2]?.items}
+              cardShopPrice={cardInfo[2]?.price}
+              pushToCart={pushToCart}
             />
           </div>
         </div>
         <h3 className="OrangeTitle">&gt; OR</h3>
         <div className="cardShop cardShopMiddle">
           <CardShop
-            cardId="4"
+            cardShopId={cardInfo[3]?.id}
             promotion="Unlimited access"
-            cardShopQuantity="5$"
-            items="/ months"
-            cardShopPrice="( 50$ / Year )"
-            addPaiement={savePaiement}
+            cardShopQuantity={cardInfo[3]?.credit_quantity}
+            items={cardInfo[3]?.items}
+            cardShopPrice={cardInfo[3]?.price}
+            pushToCart={pushToCart}
           />
         </div>
         <PaymentShop />

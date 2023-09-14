@@ -13,12 +13,11 @@ const browse = (req, res) => {
 }
 
 const add = (req, res) => {
-  const shop = req.body
-  console.info(shop)
+  const cardShopId = req.body.cardShopId
   // TODO validations (length, format...)
 
   models.shop
-    .insert(shop.Paiement)
+    .insert(cardShopId)
     .then(([result]) => {
       res.json(result.insertId)
     })

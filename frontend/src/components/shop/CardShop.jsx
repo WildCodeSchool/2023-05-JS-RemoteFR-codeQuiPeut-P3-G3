@@ -24,25 +24,32 @@ const CardShop = (props) => {
               {props.promotion}
             </p>
           )}
-          <div className="CardShop_BlocItems">
-            <p className="QuantityShop">{props.cardShopQuantity}</p>
-            {props.items && <p className="CardShop_Items">{props.items}</p>}
-          </div>
-          <p className="PriceShop">{props.cardShopPrice} $</p>
-          <div className="CardShop_BlocCart">
+          {/* Ternaire pour gérer la disposition de la carte */}
+          {props.cardShopId !== 3 ? (
+            <>
+              <div className="CardShop_BlocItems">
+                <p className="QuantityShop">{props.cardShopQuantity}</p>
+                {props.items && <p className="CardShop_Items">{props.items}</p>}
+              </div>
+              <p className="PriceShop">{props.cardShopPrice} $</p>
+            </>
+          ) : (
+            <>
+              <p className="PriceShop">{props.cardShopPrice} $</p>
+              <div className="CardShop_BlocItems">
+                <p className="QuantityShop">{props.cardShopQuantity}</p>
+                {props.items && <p className="CardShop_Items">{props.items}</p>}
+              </div>
+            </>
+          )}
+          <div
+            className="CardShop_BlocCart"
+            onClick={() =>
+              props.pushToCart(props.cardShopId, props.cardShopQuantity)
+            }
+          >
             <img src={CartShop} alt="test" className="CartShopPicture" />
-            <button
-              className="button_CardShop"
-              onClick={() =>
-                props.addPaiement(
-                  props.cardId,
-                  props.cardShopQuantity,
-                  props.cardShopPrice
-                )
-              }
-            >
-              Add to cart
-            </button>
+            <button className="button_CardShop">Add to cart</button>
           </div>
         </div>
       </div>

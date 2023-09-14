@@ -143,9 +143,16 @@
     padding: 10px;
   }
 
-  .CartShopPicture:hover {
-    transform: rotate(-10deg);
+  .CartShopPicture,
+  .button_CardShop {
     transition: transform 0.2s ease-in;
+  }
+
+  &:hover {
+    .CartShopPicture,
+    .button_CardShop {
+      transform: rotate(-10deg);
+    }
   }
 }
 
