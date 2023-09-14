@@ -42,8 +42,10 @@
       display:flex;
       justify-content: space-between;
       align-items: center;
-      max-height: 50px;
+      // max-height: 50px;
       box-sizing: border-box;
+
+      
 
       img{
         height:100%;
@@ -51,6 +53,11 @@
         width: auto;
         object-fit: contain;
       }
+
+      .item{
+        min-width:100px;
+      }
+
 
 
     }
@@ -133,3 +140,4 @@
     height: 100%;
   }
 }
+

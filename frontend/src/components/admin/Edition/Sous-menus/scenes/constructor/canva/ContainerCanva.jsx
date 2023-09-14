@@ -1,8 +1,8 @@
+/* eslint-disable no-restricted-syntax */
 import React, { useState, useEffect, useLayoutEffect } from "react"
 import { useEditionContext } from "../../../../../../../services/contexts/editionContext.jsx"
 import { fabric } from "fabric"
 import { v4 as uuidv4 } from "uuid"
-import { object } from "prop-types"
 
 const ContainerCanva = ({
   /* Ajout background */
@@ -32,8 +32,8 @@ const ContainerCanva = ({
   canvaHeight,
   canvaWidth,
 }) => {
-  const [canvas, setCanvas] = useState("")
-  const { tabObject, objectSelected, objects, initCanvas } = useEditionContext()
+  const { canvas, setCanvas } = useEditionContext()
+  const { tabObject, initCanvas, saved, setSave } = useEditionContext()
 
   /* Initialisation du canvas */
   useEffect(() => {
@@ -47,15 +47,9 @@ const ContainerCanva = ({
         width: canvaWidth,
         height: canvaHeight,
       })
-
       canvas.renderAll()
     }
   }, [canvaHeight, canvaWidth, canvas])
-
-  /* TEST */
-  useEffect(() => {
-    // console.log(isAddingRect)
-  }, [isAddingRect])
 
   /* Ajout d'un background */
   useEffect(() => {
@@ -71,7 +65,7 @@ const ContainerCanva = ({
     }
   }, [isAddingBackground, backgroundPath, canvas])
 
-  /* Déclenchement ajout d'un texte, d'un image & suppression */
+  /* triggers ajout / suppression */
   useEffect(() => {
     if (isAddingText) {
       addText(canvas)
@@ -92,15 +86,15 @@ const ContainerCanva = ({
       if (event.key === "Delete") {
         const activeObject = canvas.getActiveObject()
 
-        // if (activeObject instanceof fabric.Textbox) {
-
-        console.log("activeObject : ", activeObject)
-        console.log("id de l'active object : ", activeObject.id)
-        tabObject.delete(activeObject.type, activeObject.id)
-        canvas.remove(activeObject)
-        canvas.discardActiveObject()
-        canvas.renderAll()
-        // }
+        if (activeObject) {
+          // Check if activeObject exists
+          console.log("activeObject : ", activeObject)
+          console.log("id de l'active object : ", activeObject.id)
+          tabObject.delete(activeObject.type, activeObject.id)
+          canvas.remove(activeObject)
+          canvas.discardActiveObject()
+          canvas.renderAll()
+        }
       }
     }
 
@@ -116,32 +110,67 @@ const ContainerCanva = ({
   /* Modifications de l'objet selectionné */
   useEffect(() => {
     if (canvas) {
-      const activeObject = canvas.getActiveObject()
-      if (activeObject) {
-        const { key, item } = tabObject.getById(activeObject)
-        if (item) {
-          // Si vous utilisez fabric.js 3.x, utilisez activeObject.setOptions(item) au lieu de activeObject.set(item)
-          activeObject.set(item)
-          canvas.requestRenderAll() // Utilisez requestRenderAll() au lieu de renderAll() pour une meilleure performance
+      if (saved) {
+        console.log("saved : ", saved)
+        const activeObject = canvas.getActiveObject()
+        if (activeObject) {
+          const { item } = tabObject.getById(activeObject)
+          if (item) {
+            activeObject.set(item)
+            // canvas.requestRenderAll()
+            canvas.renderAll()
+            setSave(false)
+          }
         }
       }
-    }
-  }, [canvas, tabObject])
 
-  // useEffect(() => {
-  //   if (canvas && updated) {
-  //     console.log("modification dans canvas")
-  //     const activeObject = canvas.getActiveObject()
-  //     if (activeObject && updated) {
-  //       activeObject.set(objectSelected.properties)
-  //       canvas.renderAll()
-  //     }
-  //   }
-  // }, [objectSelected, canvas])
+      // canvas.on("object:modified", function (options) {
+      //   tabObject.getProperties(options.target)
+      // })
+
+      // canvas.on("selection:created", (options) => {
+      //   tabObject.getProperties(options.selected[0])
+      //   setViewProperties(true)
+      // })
+
+      // canvas.on("selection:cleared", (options) => {
+      //   setViewProperties(false)
+      //   console.log(options)
+      //   if (options) {
+      //     tabObject.resetProperties(options.target)
+      //   }
+      // })
+
+      const objectModifiedHandler = function (options) {
+        tabObject.getProperties(options.target)
+      }
+
+      const selectionCreatedHandler = function (options) {
+        tabObject.getProperties(options.selected[0])
+        setViewProperties(true)
+      }
+
+      const selectionClearedHandler = function (options) {
+        setViewProperties(false)
+        if (options) {
+          tabObject.resetProperties(options.target)
+        }
+      }
+
+      canvas.on("object:modified", objectModifiedHandler)
+      canvas.on("selection:created", selectionCreatedHandler)
+      canvas.on("selection:cleared", selectionClearedHandler)
+
+      return () => {
+        canvas.off("object:modified", objectModifiedHandler)
+        canvas.off("selection:created", selectionCreatedHandler)
+        canvas.off("selection:cleared", selectionClearedHandler)
+      }
+    }
+  }, [canvas, tabObject, saved])
 
   /* -------------- TEXTE ---------------- */
 
-  /* Fonction ajout de texte */
   const addText = (canvi) => {
     const textId = uuidv4()
     const text = new fabric.Textbox("Texte", {
@@ -154,34 +183,11 @@ const ContainerCanva = ({
     canvi.add(text)
     canvi.renderAll()
     tabObject.add(text, textId)
-
-    text.on("changed", function (options) {})
-
-    canvi.on("object:modified", function (options) {
-      tabObject.getProperties(options.target)
-    })
-
-    canvi.on("mouse:down", (options) => {
-      // console.log("test")
-    })
-    canvi.on("selection:created", (options) => {
-      tabObject.getProperties(options.selected[0])
-      setViewProperties(true)
-    })
-
-    canvi.on("selection:cleared", (options) => {
-      setViewProperties(false)
-      // console.log("selection cleaaaaaared", options)
-      // tabObject.saveProperties(options.deselected[0])
-      // tabObject.resetProperties(options)
-    })
-
     setIsAddingText(false)
   }
 
   /* -------------- IMAGES ---------------- */
 
-  /* Fonction ajout d'image */
   const addImage = (canvi, imageUrl) => {
     const imgId = uuidv4()
     fabric.Image.fromURL(imageUrl, (img) => {
@@ -191,49 +197,24 @@ const ContainerCanva = ({
       tabObject.add(img, imgId)
     })
 
-    canvi.on("selection:created", (options) => {
-      tabObject.getProperties(options.selected[0])
-      setViewProperties(true)
-    })
-
-    canvi.on("selection:cleared", (options) => {
-      setViewProperties(false)
-    })
-
     canvi.renderAll()
   }
 
   /* ------------- RECTANGLE ---------------- */
+
   const addRect = (canvi) => {
     const rectId = uuidv4()
 
     const rect = new fabric.Rect({
-      height: 280,
+      height: 200,
       width: 200,
-      fill: "yellow",
+      fill: "grey",
       id: rectId,
-    })
-
-    tabObject.add(rect, rectId)
-
-    canvi.on("object:modified", function (options) {
-      tabObject.getProperties(options.target)
-    })
-
-    /* Gestion selections */
-    canvi.on("selection:created", (options) => {
-      tabObject.getProperties(options.selected[0])
-      setViewProperties(true)
-    })
-
-    canvi.on("selection:cleared", (options) => {
-      setViewProperties(false)
-      // tabObject.resetProperties()
     })
 
     canvi.add(rect)
     canvi.renderAll()
-
+    tabObject.add(rect, rectId)
     setIsAddingRect(false)
   }
 

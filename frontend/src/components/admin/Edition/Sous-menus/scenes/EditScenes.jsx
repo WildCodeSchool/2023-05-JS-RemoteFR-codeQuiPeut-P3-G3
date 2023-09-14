@@ -24,14 +24,7 @@ function EditScenes() {
 
   /* RECUPERATION DES PROPRIETES */
 
-  // const [dataTexts, setDataTexts] = useState({
-  //   // fill: "#FF0000",
-  //   // fontFamily: "Arial, sans-serif",
-  //   // fontSize: 16,
-  //   // textAlign: "text-align: center",
-  // })
   const { objectSelected, setObjectSelected } = useEditionContext()
-  // const { propsWidgetTexts, setPropsWidgetTexts } = useEditionContext()
 
   /* Popup image viewer */
   const [selectedPath, setSelectedPath] = useState("")
@@ -55,53 +48,32 @@ function EditScenes() {
     }
   }, [viewImgFinder])
 
-  /* récupération propriétés objet en cours dans context et mise à dispo */
-  // useEffect(() => {
-  //   setDataTexts((prevDataTexts) => ({
-  //     ...prevDataTexts,
-  //     ...objectSelected.properties,
-  //   }))
-  //   console.log(dataTexts)
-  // }, [objectSelected])
-
-  // useEffect(() => {
-  //   setObjectSelected((prevData) => ({
-  //     ...prevData.properties,
-  //     ...dataTexts,
-  //   }))
-  // }, [dataTexts])
-
+  /* Calcul de la taille du canvas par rapport à parent 16/9 */
   const calculateChildSize = () => {
     const canvasElement = canvasRef.current
 
     if (canvasElement) {
-      const parentWidth = canvasElement.clientWidth - 0 // Largeur de l'élément parent
-      const childWidth = parentWidth // Largeur de l'enfant égale à la largeur du parent
-      const childHeight = (childWidth * 9) / 16 // Calcul de la hauteur enfant en respectant le ratio 16:9
+      const parentWidth = canvasElement.clientWidth - 0
+      const childWidth = parentWidth
+      const childHeight = (childWidth * 9) / 16
       canvasElement.style.height = childHeight + "px"
-      // console.log("nouvelle taille  : " + canvasElement.clientHeight)
       setCanvaWidth(childWidth)
       setCanvaHeight(childHeight)
     }
   }
 
+  /* Resize fenêtre */
   useEffect(() => {
-    // Fonction de gestion de redimensionnement de la fenêtre
     const handleResize = () => {
-      calculateChildSize() // Recalculer la taille de l'enfant lors du redimensionnement de la fenêtre
+      calculateChildSize()
     }
-
-    // Ajouter un écouteur d'événement de redimensionnement à la fenêtre
     window.addEventListener("resize", handleResize)
-
-    // Appelez calculateChildSize() lors du premier rendu
     calculateChildSize()
 
-    // Nettoyez le gestionnaire d'événements lors du démontage du composant
     return () => {
       window.removeEventListener("resize", handleResize)
     }
-  }, []) // Le tableau vide en dépendances garantit que le gestionnaire d'événements est configuré une fois lors du premier rendu.
+  }, [])
 
   /* Actions quand selection d'une image */
   useEffect(() => {
@@ -175,22 +147,15 @@ function EditScenes() {
         </div>
         <div className="scenes__properties">
           <WidgetPosition />
-          {/* <WidgetProperties
-            viewEditProperties={viewEditProperties}
-            selectedColor={selectedColor}
-            selectedFont={selectedFont}
-            selectedSize={selectedSize}
-            selectedAlignment={selectedAlignment}
-            setSelectedColor={setSelectedColor}
-            setSelectedFont={setSelectedFont}
-            setSelectedSize={setSelectedSize}
-            setAlignment={setAlignment}
-          /> */}
-          <WidgetTexts
-            viewEditProperties={viewEditProperties}
-            objectSelected={objectSelected}
-            setObjectSelected={setObjectSelected}
-          />
+
+          {objectSelected.type === "textbox" && (
+            <WidgetTexts
+              viewEditProperties={viewEditProperties}
+              objectSelected={objectSelected}
+              setObjectSelected={setObjectSelected}
+            />
+          )}
+
           <WidgetRect
             viewEditProperties={viewEditProperties}
             objectSelected={objectSelected}

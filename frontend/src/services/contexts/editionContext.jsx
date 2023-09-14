@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useState } from "react"
 import { fabric } from "fabric"
 
 const EditionContext = createContext()
@@ -21,25 +21,38 @@ export const EditionContextProvider = ({ children }) => {
     type: "",
     id: "",
     properties: {},
+    actions: {},
   })
 
   const [updated, setUpdated] = useState(false)
+  const [saved, setSave] = useState(false)
+
+  /* =================== CANVA ==================== */
+  const [canvas, setCanvas] = useState("")
 
   /* ============== STATES PROPERTIES =================== */
 
   // TEXTS
-  const [selectedColor, setSelectedColor] = useState("")
+  const [selectedColor, setSelectedColor] = useState("#FFFFFF")
   const [selectedFont, setSelectedFont] = useState("Arial, sans-serif")
   const [selectedSize, setSelectedSize] = useState(16)
   const [selectedAlignment, setAlignment] = useState("text-align: center")
 
   // RECT
-  const [selectedSizeBorder, setSelectedSizeBorder] = useState(0)
-  const [selectedSizeRadius, setSelectedSizeRadius] = useState("")
-  const [selectedColorBorder, setSelectedColorBorder] = useState("")
-  const [selectedColorBg, setSelectedColorBg] = useState("")
+  const [selectedSizeBorder, setSelectedSizeBorder] = useState(10)
+  const [selectedSizeRadius, setSelectedSizeRadius] = useState(0)
+  const [selectedColorBorder, setSelectedColorBorder] = useState("#FFFFFF")
+  const [selectedColorBg, setSelectedColorBg] = useState("#FFFFFF")
 
-  /* ================ FONCTIONS ========================== */
+  // POSITIONS
+  const [flipHoriz, setFlipHoriz] = useState()
+  const [flipVert, setFlipVert] = useState()
+  const [front, setFront] = useState()
+  const [dehind, setBehind] = useState()
+
+  // ACTIONS & SCENES
+
+  /* ================ GESTIONS STATES ET OBJETS  ========================== */
 
   /* Fonction initialisation canva */
   const initCanvas = () => {
@@ -88,6 +101,7 @@ export const EditionContextProvider = ({ children }) => {
     getProperties: (object) => {
       console.log("02 ======= GET PROPERTIES ========= ")
       setUpdated(false)
+      tabObject.resetProperties()
       setObjectSelected((prevObjectSelected) => {
         const newObject = {
           type: object.type,
@@ -97,6 +111,7 @@ export const EditionContextProvider = ({ children }) => {
         console.log("Params objet : ", newObject)
         setUpdated(true)
         updateStates(newObject)
+
         return newObject
       })
     },
@@ -121,16 +136,69 @@ export const EditionContextProvider = ({ children }) => {
     saveProperties: (objectUpdated) => {
       console.log("04 =========== SAVE PROPERTIES =========== ")
 
-      updateById(objectUpdated)
-
+      tabObject.updateById(objectUpdated)
+      setSave(true)
       // setObjects((prev) => ({}))
+    },
+
+    /* OK - update tab objet du objectSelected par id */
+    updateById: (objectUpdated) => {
+      const idToUpdate = objectSelected.id
+      const type = objectSelected.type
+      setObjects((prevObjects) => {
+        const updatedArray = prevObjects.map((item) => {
+          if (item[type] && Array.isArray(item[type])) {
+            const updatedItems = item[type].map((properties) => {
+              if (properties.id === idToUpdate) {
+                console.log("objet props : ", properties)
+                console.log("remplacé par : ", objectUpdated)
+                return {
+                  ...properties,
+                  ...objectUpdated,
+                }
+              }
+              return properties
+            })
+            item[type] = updatedItems
+          }
+          return item
+        })
+        console.log("tableau updated :", updatedArray)
+        return updatedArray
+      })
     },
     /* Reset selectedObject */
     resetProperties: (object) => {
       console.log("======= RESET PROPERTIES ========= ")
-      setObjectSelected([])
-      setUpdated(true)
+      setObjectSelected({
+        type: "",
+        id: "",
+        properties: {},
+      })
+      setUpdated(false)
+      resetStates()
     },
+
+    getAction: () => {
+      const id = objectSelected.id
+      const type = objectSelected.type
+
+      return objects
+    },
+  }
+
+  /* =============== ANNEXES =========================== */
+
+  const resetStates = () => {
+    setSelectedColor("")
+    setSelectedFont("")
+    setSelectedSize("")
+    setAlignment("")
+
+    setSelectedSizeBorder("")
+    setSelectedSizeRadius("")
+    setSelectedColorBorder("")
+    setSelectedColorBg("")
   }
 
   /* OK - Update des states */
@@ -152,10 +220,13 @@ export const EditionContextProvider = ({ children }) => {
       //   // properties
       setSelectedSizeBorder(properties.strokeWidth)
       setSelectedSizeRadius(properties.rx)
-      setSelectedColorBorder(parseInt(properties.stroke))
+      setSelectedColorBorder(properties.stroke || "#FFFFFF")
 
       if (object.type === "rect") {
         setSelectedColorBg(properties.fill)
+      }
+      if (object.type === "textbox") {
+        setSelectedColorBg(properties.backgroundColor)
       }
     }
   }
@@ -175,48 +246,13 @@ export const EditionContextProvider = ({ children }) => {
     return { index: null, type: null, error: true }
   }
 
-  const updateById = (objectUpdated) => {
-    const idToUpdate = objectSelected.id
-    const type = objectSelected.type
-    setObjects((prevObjects) => {
-      const updatedArray = prevObjects.map((item) => {
-        if (item[type] && Array.isArray(item[type])) {
-          const updatedItems = item[type].map((properties) => {
-            if (properties.id === idToUpdate) {
-              console.log("objet props : ", properties)
-              console.log("remplacé par : ", objectUpdated)
-              return {
-                ...properties,
-                ...objectUpdated,
-              }
-            }
-            return properties
-          })
-          item[type] = updatedItems
-        }
-        return item
-      })
-      console.log("tableau updated :", updatedArray)
-      return updatedArray
-    })
-  }
-
-  // Mettez à jour l'état avec le tableau mis à jour pour ce type
-  // return {
-  //   ...prevObjects,
-  //   [type]: updatedTypeArray,
-
-  // return prevObjects
-
-  // }
-
-  // useEffect(() => {
-  //   console.log("updated : ", objects)
-  // }, [objects])
-
   return (
     <EditionContext.Provider
       value={{
+        canvas,
+        setCanvas,
+        saved,
+        setSave,
         objects,
         tabObject,
         objectSelected,
@@ -246,3 +282,28 @@ export const EditionContextProvider = ({ children }) => {
     </EditionContext.Provider>
   )
 }
+
+/* Explications rapide pour un rectangle : 
+
+utilisateur clique sur le rectangle dans la toolBar, on execute addRect via un useEffect. 
+on affecte un id pour pouvoir le reconnaître et naviguer, et on le stocke dans le contexte via la variable objects
+selon son type (rect, image, textbox)
+c'est rendu sur le canva. 
+
+Maintenant si l'utilisateur clique sur le rectangle pour le modifier, il y a des listenners via un useEffect. 
+lorsque qu'il est "selection:created" on récupère l'objet en question via options.selected[0] et on execute getProperties
+pour récupérer toutes les propriétés de l'objet et le stocker dans un objet "tampon" objetSelected. 
+
+La méthode getProperties appelle "updateStates" qui va mettre à jour toutes les states reliées au widget pour pouvoir
+voir les propriétés de l'objet en cours. 
+
+Côté composants widget, lorsque les states seront mise à jour via la selection des inputs etc, 
+la méthode saveProperties. Cette méthode permets de stocker les données de la variable tampon objectSelected 
+directement dans le tableau d'objets canva. 
+
+Un fois que c'est fait, on mets à true la state save, pour que le rendu côté canva soit conditionné par le fait
+que le tableau soit bien à jour. (et on reset save)
+
+Lorsque l'objet est déselectionné, on reset la state objectSelected.  
+
+*/

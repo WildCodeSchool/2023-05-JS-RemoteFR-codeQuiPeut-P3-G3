@@ -2,8 +2,9 @@
 
 .SelectorGenerique {
   // max-width: 100px;
-  width: 150px;
+  // width: 150px;
   min-width: 50px;
+  max-height:50px;
   color: black;
   font-family: $font-family2;
 }

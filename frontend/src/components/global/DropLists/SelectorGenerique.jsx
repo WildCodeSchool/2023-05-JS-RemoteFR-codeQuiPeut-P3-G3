@@ -1,7 +1,12 @@
 import Select from "react-select"
 import "./SelectorGenerique.scss"
 
-function SelectorGenerique({ selectedCategory, setSelectedCategory, options }) {
+function SelectorGenerique({
+  selectedCategory,
+  setSelectedCategory,
+  options,
+  styles,
+}) {
   // const categoryOptions = [
   //   { value: "Action", label: "Action" },
   //   { value: "CyberPunk", label: "CyberPunk" },
@@ -28,6 +33,7 @@ function SelectorGenerique({ selectedCategory, setSelectedCategory, options }) {
         value={selectedCategory}
         onChange={handleCategoryChange}
         placeholder={selectedCategory}
+        styles={styles}
       />
     </div>
   )

@@ -32,8 +32,7 @@ function WidgetTexts({
   const { setSelectedColor, setSelectedFont, setAlignment } =
     useEditionContext()
 
-  const { tabObject, objectSelected, setObjectSelected, objects } =
-    useEditionContext()
+  const { tabObject, objectSelected } = useEditionContext()
 
   /* =============== */
 
@@ -46,25 +45,6 @@ function WidgetTexts({
     setSelectedColor(color)
   }
 
-  /* Update states => context */
-  // useEffect(() => {
-  //   const updateDataTexts = {
-  //     ...objectSelected.properties,
-  //     fontSize: selectedSize,
-  //     fill: selectedColor,
-  //     textAlign: selectedAlignment,
-  //     fontFamily: selectedFont,
-  //   }
-
-  // console.log("update context <= states : ", updateDataTexts)
-
-  // setObjectSelected((prev) => ({
-  //   ...prev,
-  //   properties: updateDataTexts,
-  // }))
-  //   tabObject.saveProperties(objectSelected)
-  // }, [selectedColor, selectedFont, selectedSize, selectedAlignment])
-
   useEffect(() => {
     if (objectSelected) {
       const updateDataTexts = {
@@ -76,26 +56,7 @@ function WidgetTexts({
       }
       tabObject.saveProperties(updateDataTexts)
     }
-  }, [objectSelected, selectedColor, selectedFont, selectedAlignment])
-
-  /* Update context => states */
-  // useEffect(() => {
-  //   if (!updated) {
-  //     if (
-  //       objectSelected &&
-  //       objectSelected.properties &&
-  //       objectSelected.type === "textbox"
-  //     ) {
-  //       console.log("update context  => states : ", objectSelected)
-  //       const properties = objectSelected.properties
-  //       setSelectedColor(properties.fill)
-  //       setSelectedFont(properties.fontFamily)
-  //       setSelectedSize(properties.fontSize)
-  //       setAlignment(properties.textAlign)
-  //     }
-  //     setUpdated(true)
-  //   }
-  // }, [objectSelected])
+  }, [selectedColor, selectedFont, selectedAlignment])
 
   /* JSX */
   return (
@@ -117,17 +78,20 @@ function WidgetTexts({
                 setSelectedFont={setSelectedFont}
                 selectedFont={selectedFont}
               />
-              {/* <FontSize
-                setSelectedSize={setSelectedSize}
-                selectedSize={selectedSize}
-              /> */}
+
               <ButtonStandard img={iconTextColor} onClick={handleColorPicker} />
-              <ColorSelector
-                state={displayCPicker}
-                onClose={handleCloseColorPicker}
-                selectedColor={selectedColor}
-                setSelectedColor={setSelectedColor}
-              />
+
+              <div
+                className="previewColor"
+                style={{ backgroundColor: selectedColor }}
+              >
+                <ColorSelector
+                  state={displayCPicker}
+                  onClose={handleCloseColorPicker}
+                  selectedColor={selectedColor}
+                  setSelectedColor={setSelectedColor}
+                />
+              </div>
             </div>
           </div>
           <div className="objectProps__section">
