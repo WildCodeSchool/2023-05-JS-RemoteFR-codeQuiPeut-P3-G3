@@ -28,7 +28,6 @@ pool.getConnection().catch(() => {
 // declare and fill models: that's where you should register your own managers
 
 const models = {}
-
 const CardManager = require("./CardManager")
 const ChaptersManager = require("./ChaptersManager")
 const ChoicesManager = require("./ChoicesManager")

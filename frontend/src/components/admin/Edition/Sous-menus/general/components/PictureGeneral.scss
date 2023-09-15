@@ -17,22 +17,13 @@
     flex-direction: row;
     background-color: aqua;
 
-    .pictureMain {
-      height: 100%;
-      width: 100%;
-      background-color: bisque;
-
-      .cardMain {
-        background-color: blueviolet;
-        display: flex;
-        flex-direction: column;
-  
-      }
-      .cardTop {
-        height: 50%;
-        background-color: cadetblue;
-        display: flex;
-        flex-direction: row;
+    .jeuImgDiv {
+      margin-top: 20px;
+      height: 500px;
+      width: auto;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
 
         .cardTopTitle {
           background-color: chocolate;
@@ -116,4 +107,4 @@
   //     }
   //   }
   // }
-}
+
