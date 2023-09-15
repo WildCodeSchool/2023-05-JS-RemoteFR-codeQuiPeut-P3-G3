@@ -44,17 +44,21 @@ function WidgetRect({ viewEditProperties, objectSelected, setObjectSelected }) {
   useEffect(() => {
     if (objectSelected) {
       if (objectSelected.type === "rect") {
-        const updateDataTexts = {
-          ...objectSelected.properties,
-          strokeWidth: selectedSizeBorder,
-          rx: selectedSizeRadius,
-          ry: selectedSizeRadius,
-          stroke: selectedColorBorder,
-          fill: selectedColorBg,
-        }
+        const updateDataTexts = { ...objectSelected }
+
+        updateDataTexts.properties.strokeWidth = selectedSizeBorder
+        updateDataTexts.properties.rx = selectedSizeRadius
+        updateDataTexts.properties.ry = selectedSizeRadius
+        updateDataTexts.properties.stroke = selectedColorBorder
+        updateDataTexts.properties.fill = selectedColorBg
+
+        console.log("widgetRect - objectSelected modified : ", updateDataTexts)
+
         tabObject.saveProperties(updateDataTexts)
       }
     }
+
+    // }
   }, [
     selectedSizeBorder,
     selectedSizeRadius,

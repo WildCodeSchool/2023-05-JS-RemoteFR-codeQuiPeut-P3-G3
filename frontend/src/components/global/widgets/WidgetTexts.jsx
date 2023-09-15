@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 /* Packages */
 import { useState, useEffect } from "react"
 import { useEditionContext } from "../../../services/contexts/editionContext"
@@ -47,14 +48,23 @@ function WidgetTexts({
 
   useEffect(() => {
     if (objectSelected) {
-      const updateDataTexts = {
-        ...objectSelected.properties,
-        fontSize: selectedSize,
-        fill: selectedColor,
-        textAlign: selectedAlignment,
-        fontFamily: selectedFont,
+      if (objectSelected.type === "textbox") {
+        console.log("widgetText - objectSelected : ", objectSelected)
+
+        // Copiez objectSelected pour ne pas le modifier directement
+        const updateDataTexts = { ...objectSelected }
+
+        // Modifiez les propriétés spécifiques de updateDataTexts
+        updateDataTexts.properties.fontSize = selectedSize
+        updateDataTexts.properties.fill = selectedColor
+        updateDataTexts.properties.textAlign = selectedAlignment
+        updateDataTexts.properties.fontFamily = selectedFont
+
+        console.log("widgetText - objectSelected modified : ", updateDataTexts)
+
+        // Enregistrez les modifications
+        tabObject.saveProperties(updateDataTexts)
       }
-      tabObject.saveProperties(updateDataTexts)
     }
   }, [selectedColor, selectedFont, selectedAlignment])
 

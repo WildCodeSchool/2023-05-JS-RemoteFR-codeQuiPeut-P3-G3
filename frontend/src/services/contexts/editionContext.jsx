@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
 import { fabric } from "fabric"
 
 const EditionContext = createContext()
@@ -10,22 +10,24 @@ export const useEditionContext = () => {
 
 export const EditionContextProvider = ({ children }) => {
   /* Liste de tous les objets scene */
-  const [objects, setObjects] = useState([
-    { textbox: [] },
-    { image: [] },
-    { rect: [] },
-  ])
+  const [objects, setObjects] = useState({
+    textbox: {},
+    image: {},
+    rect: {},
+  })
 
   /* Propriétés d'un objet selectionné */
   const [objectSelected, setObjectSelected] = useState({
     type: "",
     id: "",
-    properties: {},
-    actions: {},
+    properties: {
+      Actions: [],
+    },
+    // actions: [],
   })
 
   const [updated, setUpdated] = useState(false)
-  const [saved, setSave] = useState(false)
+  const [render, setRender] = useState(false)
 
   /* =================== CANVA ==================== */
   const [canvas, setCanvas] = useState("")
@@ -43,12 +45,6 @@ export const EditionContextProvider = ({ children }) => {
   const [selectedSizeRadius, setSelectedSizeRadius] = useState(0)
   const [selectedColorBorder, setSelectedColorBorder] = useState("#FFFFFF")
   const [selectedColorBg, setSelectedColorBg] = useState("#FFFFFF")
-
-  // POSITIONS
-  const [flipHoriz, setFlipHoriz] = useState()
-  const [flipVert, setFlipVert] = useState()
-  const [front, setFront] = useState()
-  const [dehind, setBehind] = useState()
 
   // ACTIONS & SCENES
 
@@ -69,15 +65,23 @@ export const EditionContextProvider = ({ children }) => {
       console.log("01 ======= AJOUT OBJECT ========= ")
       const newObject = newFabElem.toObject()
       newObject.id = id
-      const { index, type, error } = findIndex(newObject, newObject.type)
-      if (!error) {
-        setObjects((prevObj) => {
-          const updatedObjects = [...prevObj]
-          updatedObjects[index][type].push(newObject)
-          console.log("Ajout tab : ", updatedObjects)
-          return updatedObjects
-        })
-      }
+      newObject.Actions = []
+      const type = newObject.type
+      console.log(type)
+
+      setObjects((prevObjects) => {
+        const updatedObjects = { ...prevObjects } // Créez une copie de l'objet précédent
+
+        // Vérifiez si la propriété type existe dans l'objet updatedObjects, sinon initialisez-la à un objet vide
+        if (!updatedObjects[type]) {
+          updatedObjects[type] = {}
+        }
+
+        // Ajoutez le nouvel objet avec la clé ID au type approprié
+        updatedObjects[type][id] = newObject
+        console.log("Ajout object: ", updatedObjects)
+        return updatedObjects // Retournez le nouvel objet mis à jour
+      })
     },
     /* Suppression element */
     delete: (type, idToDelete) => {
@@ -85,105 +89,123 @@ export const EditionContextProvider = ({ children }) => {
       console.log("object to delete: ", idToDelete)
 
       setObjects((prevObjects) => {
-        const updatedArray = prevObjects.map((item) => {
-          if (item[type] && Array.isArray(item[type])) {
-            item[type] = item[type].filter((rectItem) => {
-              return rectItem.id !== idToDelete
-            })
-          }
-          return item
-        })
+        const updatedObjects = { ...prevObjects } // Créez une copie de l'objet précédent
 
-        return updatedArray
-      })
-    },
-    /* Récupération des propriétés */
-    getProperties: (object) => {
-      console.log("02 ======= GET PROPERTIES ========= ")
-      setUpdated(false)
-      tabObject.resetProperties()
-      setObjectSelected((prevObjectSelected) => {
-        const newObject = {
-          type: object.type,
-          id: object.id,
-          properties: object.toObject(),
+        // Vérifiez si la propriété type existe dans l'objet updatedObjects
+        if (updatedObjects[type] && typeof updatedObjects[type] === "object") {
+          // Supprimez l'objet avec l'ID donné du type approprié
+          delete updatedObjects[type][idToDelete]
         }
-        console.log("Params objet : ", newObject)
-        setUpdated(true)
-        updateStates(newObject)
 
-        return newObject
+        console.log("Updated objects: ", updatedObjects)
+        return updatedObjects // Retournez le nouvel objet mis à jour
       })
     },
 
     /* recherche par Id */
     getById: (activeObject) => {
       const idSearch = activeObject.id
-      console.log(activeObject)
-      for (const group of objects) {
-        for (const [key, items] of Object.entries(group)) {
-          for (const item of items) {
-            if (item.id === idSearch) {
-              return { key, item }
-            }
-          }
+
+      for (const [type, items] of Object.entries(objects)) {
+        if (items[idSearch]) {
+          // console.log(" function getById", type, items[idSearch])
+          return { type, item: items[idSearch] }
         }
       }
+
       return null
     },
 
     /* Sauvegarde dans tableau d'objets */
     saveProperties: (objectUpdated) => {
-      console.log("04 =========== SAVE PROPERTIES =========== ")
+      console.log("04 =========== SAVE TO OBJECTS  =========== ")
 
-      tabObject.updateById(objectUpdated)
-      setSave(true)
-      // setObjects((prev) => ({}))
-    },
+      const idToUpdate = objectUpdated.id
+      const type = objectUpdated.type
+      console.log("sauvegarde du ", type, " id : ", idToUpdate)
 
-    /* OK - update tab objet du objectSelected par id */
-    updateById: (objectUpdated) => {
-      const idToUpdate = objectSelected.id
-      const type = objectSelected.type
       setObjects((prevObjects) => {
-        const updatedArray = prevObjects.map((item) => {
-          if (item[type] && Array.isArray(item[type])) {
-            const updatedItems = item[type].map((properties) => {
-              if (properties.id === idToUpdate) {
-                console.log("objet props : ", properties)
-                console.log("remplacé par : ", objectUpdated)
-                return {
-                  ...properties,
-                  ...objectUpdated,
-                }
-              }
-              return properties
-            })
-            item[type] = updatedItems
+        const updatedObjects = { ...prevObjects } // Créez une copie de l'objet précédent
+
+        // Vérifiez si la propriété type existe dans l'objet updatedObjects
+        if (updatedObjects[type] && updatedObjects[type][idToUpdate]) {
+          // Mettez à jour l'objet avec les nouvelles propriétés
+          console.log("Objects updates....")
+          updatedObjects[type][idToUpdate] = {
+            ...updatedObjects[type][idToUpdate],
+            ...objectUpdated.properties,
           }
-          return item
-        })
-        console.log("tableau updated :", updatedArray)
-        return updatedArray
+        }
+
+        console.log("Updated objects: ", updatedObjects)
+        tabObject.updateObjectSelect(updatedObjects[type][idToUpdate])
+        setRender(true)
+        console.log("sauvegarde effectuée, > render ")
+        // tabObject.updateObjectSelect(objects)
+        return updatedObjects // Retournez le nouvel objet mis à jour
       })
     },
-    /* Reset selectedObject */
-    resetProperties: (object) => {
+
+    pushActions: (data) => {
+      console.log("========= PUSH ACTIONS ========== ")
+      const id = objectSelected.id
+      const type = objectSelected.type
+
+      console.log("id et type : ", id, type)
+      console.log(objects[type][id])
+      console.log("data : ", data)
+
+      const updatedActions = [...objects[type][id].Actions]
+      updatedActions.push(data)
+
+      objects[type][id].Actions = updatedActions
+
+      setObjects({ ...objects })
+    },
+
+    resetProperties: () => {
       console.log("======= RESET PROPERTIES ========= ")
       setObjectSelected({
         type: "",
         id: "",
         properties: {},
+        actions: [],
       })
       setUpdated(false)
       resetStates()
     },
 
-    getAction: () => {
-      const id = objectSelected.id
-      const type = objectSelected.type
+    updateSelectedProperties: (object) => {
+      console.log("02 ======= UPDATE FROM CANVAS ========= ")
 
-      return objects
+      setObjectSelected((prevObjectSelected) => {
+        const newObject = {
+          type: object.type,
+          id: object.id,
+          properties: object.toObject(),
+          // Actions: object.Actions,
+        }
+        console.log("Object selected updated : ", newObject)
+        updateStates(newObject)
+        tabObject.saveProperties(newObject)
+        return newObject
+      })
+    },
+
+    updateObjectSelect: (object) => {
+      console.log("02 ======= UPDATE SELECTED ========= ")
+      console.log("object à update : ", object)
+      setObjectSelected((prevObjectSelected) => {
+        const newObject = {
+          type: object.type,
+          id: object.id,
+          properties: object,
+          Actions: object.Actions,
+        }
+        console.log("Selected object updated : ", newObject)
+        // updateStates(newObject)
+        return newObject
+      })
     },
   }
 
@@ -231,29 +253,20 @@ export const EditionContextProvider = ({ children }) => {
     }
   }
 
-  /* OK - Recherche index tableau d'objet de l'obj selectionné */
-  const findIndex = (newObject, type = "") => {
-    if (type === undefined || type === null) {
-      type = newObject.type
-    }
-
-    const index = objects.findIndex((item) => Object.keys(item)[0] === type)
-
-    if (index !== -1) {
-      return { index, type, error: false }
-    }
-
-    return { index: null, type: null, error: true }
-  }
+  useEffect(() => {
+    console.log(">>> render ", objects)
+    // setRender(true)
+  }, [objects])
 
   return (
     <EditionContext.Provider
       value={{
         canvas,
         setCanvas,
-        saved,
-        setSave,
+        render,
+        setRender,
         objects,
+        setObjects,
         tabObject,
         objectSelected,
         setObjectSelected,

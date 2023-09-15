@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-syntax */
-import React, { useState, useEffect, useLayoutEffect } from "react"
+import React, { useEffect, useLayoutEffect } from "react"
 import { useEditionContext } from "../../../../../../../services/contexts/editionContext.jsx"
 import { fabric } from "fabric"
 import { v4 as uuidv4 } from "uuid"
@@ -33,7 +33,8 @@ const ContainerCanva = ({
   canvaWidth,
 }) => {
   const { canvas, setCanvas } = useEditionContext()
-  const { tabObject, initCanvas, saved, setSave } = useEditionContext()
+  const { tabObject, initCanvas, objects, render, setRender } =
+    useEditionContext()
 
   /* Initialisation du canvas */
   useEffect(() => {
@@ -110,64 +111,66 @@ const ContainerCanva = ({
   /* Modifications de l'objet selectionné */
   useEffect(() => {
     if (canvas) {
-      if (saved) {
-        console.log("saved : ", saved)
-        const activeObject = canvas.getActiveObject()
-        if (activeObject) {
-          const { item } = tabObject.getById(activeObject)
-          if (item) {
-            activeObject.set(item)
-            // canvas.requestRenderAll()
-            canvas.renderAll()
-            setSave(false)
-          }
-        }
-      }
-
-      // canvas.on("object:modified", function (options) {
-      //   tabObject.getProperties(options.target)
-      // })
-
-      // canvas.on("selection:created", (options) => {
-      //   tabObject.getProperties(options.selected[0])
-      //   setViewProperties(true)
-      // })
-
-      // canvas.on("selection:cleared", (options) => {
-      //   setViewProperties(false)
-      //   console.log(options)
-      //   if (options) {
-      //     tabObject.resetProperties(options.target)
-      //   }
-      // })
-
       const objectModifiedHandler = function (options) {
-        tabObject.getProperties(options.target)
+        console.log("objet modifié", options.target)
+        tabObject.updateSelectedProperties(options.target)
       }
 
       const selectionCreatedHandler = function (options) {
-        tabObject.getProperties(options.selected[0])
+        console.log("selection créé")
+        tabObject.updateSelectedProperties(options.selected[0])
         setViewProperties(true)
       }
 
       const selectionClearedHandler = function (options) {
+        console.log("selection clear")
         setViewProperties(false)
         if (options) {
           tabObject.resetProperties(options.target)
         }
       }
 
+      const selectionModified = function (options) {
+        console.log("selection modifiée")
+        // if (options) {
+        //   // tabObject.resetProperties(options.target)
+        //   tabObject.updateSelectedProperties(options.selected[0])
+        // }
+      }
+
       canvas.on("object:modified", objectModifiedHandler)
       canvas.on("selection:created", selectionCreatedHandler)
       canvas.on("selection:cleared", selectionClearedHandler)
+      canvas.on("selection:updated", selectionModified)
 
       return () => {
         canvas.off("object:modified", objectModifiedHandler)
         canvas.off("selection:created", selectionCreatedHandler)
         canvas.off("selection:cleared", selectionClearedHandler)
+        canvas.off("selection:updated", selectionModified)
       }
     }
-  }, [canvas, tabObject, saved])
+  }, [canvas, tabObject, objects, render])
+
+  useEffect(() => {
+    console.log("========= RENDERING ========== ")
+    if (render) {
+      console.log(">> Render...")
+      const activeObject = canvas.getActiveObject()
+      if (activeObject) {
+        const { item } = tabObject.getById(activeObject)
+        console.log("object to update.... ", item)
+        if (item) {
+          activeObject.set(item)
+          canvas.requestRenderAll()
+          // canvas.renderAll()
+
+          // tabObject.updateSelectedProperties(activeObject)
+        }
+      }
+      setRender(false)
+    }
+  }, [render, objects])
 
   /* -------------- TEXTE ---------------- */
 
@@ -178,6 +181,7 @@ const ContainerCanva = ({
       width: 200,
       fill: "black",
       id: textId,
+      Actions: [],
     })
 
     canvi.add(text)
@@ -193,6 +197,7 @@ const ContainerCanva = ({
     fabric.Image.fromURL(imageUrl, (img) => {
       img.scale(0.75)
       img.id = imgId
+      img.Actions = []
       canvi.add(img)
       tabObject.add(img, imgId)
     })
@@ -210,6 +215,7 @@ const ContainerCanva = ({
       width: 200,
       fill: "grey",
       id: rectId,
+      Actions: [],
     })
 
     canvi.add(rect)
@@ -228,9 +234,6 @@ const ContainerCanva = ({
       objectProperties[`object${index + 1}`] = { ...object.toObject() }
       console.log(objectProperties)
     })
-
-    // Affiche les propriétés dans la console (vous pouvez les utiliser autrement)
-    // console.log(objectProperties)
   }
 
   return (

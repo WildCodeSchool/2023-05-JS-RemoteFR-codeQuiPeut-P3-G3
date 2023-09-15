@@ -21,7 +21,7 @@ function WidgetPosition({ viewSceneLink }) {
   const [extend, setExtend] = useState(true)
 
   const { objectSelected, canvas } = useEditionContext()
-  const { setFlipHoriz, setFlipVert, setFront, setBehind } = useEditionContext()
+  // const { setFlipHoriz, setFlipVert, setFront, setBehind } = useEditionContext()
 
   useEffect(() => {
     if (objectSelected && objectSelected.type !== "") {

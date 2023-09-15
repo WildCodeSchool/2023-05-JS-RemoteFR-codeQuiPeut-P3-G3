@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import WidgetButtons from "./WidgetButtons"
 import "./style/ActionsType.scss"
 import { useState, useEffect } from "react"
@@ -55,26 +56,45 @@ function ActionType() {
     { value: "5", label: "5" },
   ]
 
-  const handleAction = () => {
-    if (selectedType !== "" && objectSelected) {
-      const Actions = {
-        ...objectSelected.actions,
+  const handlePushAction = () => {
+    // if (objectSelected.type !== "") {
+    //   const data = {
+    //     type: selectedType,
+    //     target: selectedTarget,
+    //     number: selectedNumber,
+    //   }
+
+    //   tabObject.pushActions(data)
+    //   resetLocalState()
+    // }
+    if (objectSelected) {
+      console.log("widgetActions - objectSelected : ", objectSelected)
+
+      const updatedObjectSelected = [...objectSelected]
+
+      console.log("memoire d'object selected : ", updatedObjectSelected)
+
+      const data = {
         type: selectedType,
         target: selectedTarget,
         number: selectedNumber,
       }
 
-      const wrapper = { Actions }
+      const currentActions = [
+        ...(updatedObjectSelected.properties.Actions || []),
+      ]
+      console.log("currentActions ", currentActions)
+      currentActions.push(data)
+      console.log("après push : ", currentActions)
+      updatedObjectSelected.properties.Actions = currentActions
 
-      tabObject.updateById(wrapper)
-      resetLocalState()
+      console.log(
+        "widget actions - objectSelected modified : ",
+        updatedObjectSelected
+      )
+
+      tabObject.saveProperties(updatedObjectSelected)
     }
-  }
-
-  const resetLocalState = () => {
-    setSelectedType("")
-    setSelectedTarget("")
-    setSelectedNumber("")
   }
 
   useEffect(() => {
@@ -118,9 +138,11 @@ function ActionType() {
           </div>
         </>
       )}
-
-      <div className="images">
-        <img src={imgPlus} alt="img-plus" onClick={handleAction} />
+      <div className="col">
+        <span> add</span>
+        <div className="images">
+          <img src={imgPlus} alt="img-plus" onClick={handlePushAction} />
+        </div>
       </div>
     </div>
   )
