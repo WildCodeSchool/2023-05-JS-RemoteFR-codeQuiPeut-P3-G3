@@ -19,7 +19,9 @@ function Admin() {
           <NavAdmin setNav={setSelectedNav} selected={selectedNav} />
         </section>
         <section className="admin__content">
-          {selectedNav === "General" && <AdminGeneral />}
+          {selectedNav === "General" && (
+            <AdminGeneral setNav={setSelectedNav} selected={selectedNav} />
+          )}
           {selectedNav === "Edition" && <AdminEdition />}
           {selectedNav === "Stats" && <AdminStats />}
         </section>

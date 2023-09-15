@@ -7,6 +7,8 @@ import Games from "./pages/Games"
 import Register from "./pages/Register"
 import Login from "./pages/Login"
 import Shop from "./pages/Shop"
+import ProtectedRoutes from "./ProtectedRoutes"
+import ProtectedUserRoute from "./ProtectedUserRoute"
 /* PACKAGES */
 import { Routes, Route } from "react-router-dom"
 
@@ -26,8 +28,12 @@ function App() {
       <main className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/admin" element={<Admin />} />
+          </Route>
+          <Route element={<ProtectedUserRoute />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
           <Route path="/signup" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/shop" element={<Shop />} />
