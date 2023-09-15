@@ -1,3 +1,116 @@
+// -------------- TEST2 ---------------
+
+// import { useEffect, useRef, useState } from "react"
+// import { gsap } from "gsap/gsap-core"
+// import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
+
+// import cloudsBack from "../../assets/images/parallax/cloudsBack1.png"
+// import cloudsFront from "../../assets/images/parallax/cloudsFront1.png"
+// import moon from "../../assets/images/parallax/moonDown2.png"
+// import castle from "../../assets/images/parallax/castle1.png"
+// import stars from "../../assets/images/parallax/stars1.png"
+
+// import "./HomeParallax.scss"
+
+// function HomeParallax() {
+//   const [background, setBackground] = useState(20)
+
+//   const parallaxSectionRef = useRef(null)
+//   const castleRef = useRef(null)
+//   const cloudsBackRef = useRef(null)
+//   const cloudsFrontRef = useRef(null)
+//   const moonRef = useRef(null)
+//   const starsRef = useRef(null)
+
+//   useEffect(() => {
+//     const ctx = gsap.context(() => {
+//       gsap.registerPlugin(ScrollTrigger)
+//       const tl = gsap.timeline({
+//         defaults: { duration: 1 },
+//         scrollTrigger: {
+//           trigger: parallaxSectionRef.current,
+//           start: "top top",
+//           end: "5000 bottom",
+//           scrub: true,
+//           pin: true,
+//           onUpdate: (self) => {
+//             setBackground(Math.ceil(self.progress * 100 + 20))
+//           },
+//         },
+//       })
+//       tl.to(
+//         castleRef.current,
+//         {
+//           y: "-=80",
+//         },
+//         0
+//       )
+//       tl.to(
+//         cloudsBackRef.current,
+//         {
+//           opacity: 0,
+//           duration: 0.5,
+//         },
+//         0
+//       )
+//       tl.to(
+//         cloudsFrontRef.current,
+//         {
+//           x: "-20%",
+//           opacity: 0,
+//         },
+//         0
+//       )
+//       tl.to(
+//         moonRef.current,
+//         {
+//           y: "+=210",
+//         },
+//         0
+//       )
+//       tl.to(
+//         starsRef.current,
+//         {
+//           top: 0,
+//         },
+//         0.5
+//       )
+//     })
+//     return () => ctx.revert()
+//   }, [])
+
+//   return (
+//     <div className="parallaxMain">
+//       <div
+//         className="parallaxBkgd"
+//         ref={parallaxSectionRef}
+//         style={{
+//           background: `linear-gradient(#0F2B9C, #673D7D ${background}%, #A74A67, #EDFC54 )`,
+//         }}
+//       >
+//         <img
+//           ref={cloudsBackRef}
+//           className="cloudsBackImg"
+//           src={cloudsBack}
+//           alt=""
+//         />
+//         <img
+//           ref={cloudsFrontRef}
+//           className="cloudsFrontImg"
+//           src={cloudsFront}
+//           alt=""
+//         />
+//         <img ref={moonRef} className="moonImg" src={moon} alt="" />
+//         <img ref={castleRef} className="castleImg" src={castle} alt="" />
+//         <img ref={starsRef} className="starsImg" src={stars} alt="" />
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default HomeParallax
+
+// --------------- TEST1 -------------
 // import React, { useEffect, useRef, useState } from "react"
 
 // import cloudsBack from "../../assets/images/parallax/cloudsBack1.png"

@@ -7,38 +7,44 @@ class CardManager extends AbstractManager {
 
   insert(card) {
     return this.database.query(
-      `insert into ${this.table} (titleFontFamily, titleFontSize, titleFontColor, topBgdColor, topBgdImg,  textFontFamily, textFontColor, bottomBgdColor, bottomBgdImg, buttonTextFont, buttonTextColor ) values (?,?,?,?,?,?,?,?,?,?,?)`,
+      `insert into ${this.table} (jdrName, jdrNameFont, jdrNameColor, jdrNameFontSize, jdrImg1, jdrImg2, jdrText, textColor, textFont, jdrBgColor1, jdrBgColor2, buttonImg, jdrCategory, jdrPublic ) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
-        card.titleFontFamily,
-        card.titleFontSize,
-        card.titleFontColor,
-        card.topBgdColor,
-        card.topBgdImg,
-        card.textFontFamily,
-        card.textFontColor,
-        card.bottomBgdColor,
-        card.bottomBgdImg,
-        card.buttonTextFont,
-        card.buttonTextColor,
+        card.jdrName,
+        card.jdrNameFont,
+        card.jdrNameColor,
+        card.jdrNameFontSize,
+        card.jdrImg1,
+        card.jdrImg2,
+        card.jdrText,
+        card.textColor,
+        card.textFont,
+        card.jdrBgColor1,
+        card.jdrBgColor2,
+        card.buttonImg,
+        card.jdrCategory,
+        card.jdrPublic,
       ]
     )
   }
 
   update(card) {
     return this.database.query(
-      `UPDATE ${this.table} SET titleFontFamily = ?, titleFontSize = ?, titleFontColor = ?, topBgdColor = ?, topBgdImg = ?,  textFontFamily = ?, textFontColor = ?, bottomBgdColor = ?, bottomBgdImg = ?, buttonTextFont = ?, buttonTextColor = ? WHERE (id = ?)`,
+      `UPDATE ${this.table} SET jdrName = ?, jdrNameFont = ?, jdrNameColor = ?, jdrNameFontSize = ?, jdrImg1 = ?, jdrImg2 = ?, jdrText = ?, textColor = ?, textFont = ?, jdrBgColor1 = ?, jdrBgColor2 = ?, buttonImg = ?, jdrCategory = ?, jdrPublic = ? WHERE (id = ?)`,
       [
-        card.titleFontFamily,
-        card.titleFontSize,
-        card.titleFontColor,
-        card.topBgdColor,
-        card.topBgdImg,
-        card.textFontFamily,
-        card.textFontColor,
-        card.bottomBgdColor,
-        card.bottomBgdImg,
-        card.buttonTextFont,
-        card.buttonTextColor,
+        card.jdrName,
+        card.jdrNameFont,
+        card.jdrNameColor,
+        card.jdrNameFontSize,
+        card.jdrImg1,
+        card.jdrImg2,
+        card.jdrText,
+        card.textColor,
+        card.textFont,
+        card.jdrBgColor1,
+        card.jdrBgColor2,
+        card.buttonImg,
+        card.jdrCategory,
+        card.jdrPublic,
         card.id,
       ]
     )
