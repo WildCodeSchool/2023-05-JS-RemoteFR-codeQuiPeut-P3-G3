@@ -2,21 +2,46 @@ import "./Login.scss"
 import userpic from "../assets/images/user2.png"
 import { useState } from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import Cookies from "js-cookie"
+
 function Login() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const navigate = useNavigate()
+  const [mail, setMail] = useState("")
+  const [pwd, setPwd] = useState("")
+  const [error, setError] = useState("")
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value)
+    setMail(e.target.value)
   }
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value)
+    setPwd(e.target.value)
   }
 
   const handleSubmit = () => {
-    const userData = { email, password }
-    axios.post("http://localhost:4242/login", userData)
+    const userData = { mail, pwd }
+    axios
+      .post("http://localhost:4242/login", userData)
+      .then((response) => {
+        if (response.data !== undefined && response.data !== null) {
+          const token = response.data.token
+          Cookies.set("authToken", token, { expires: 0.5, sameSite: "strict" })
+          Cookies.set("loggedInUser", JSON.stringify(response.data.user), {
+            sameSite: "strict",
+          })
+          Cookies.set("idUser", JSON.stringify(response.data.user.id), {
+            sameSite: "strict",
+          })
+          navigate("/")
+        } else {
+          // Gérer le cas où l'inscription n'a pas réussi
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+        setError("Email and pseudo must be unique and psswords must match")
+      })
   }
 
   return (
@@ -48,6 +73,7 @@ function Login() {
           onClick={handleSubmit}
         />
       </div>
+      <div className="error-message">{error}</div>
     </div>
   )
 }

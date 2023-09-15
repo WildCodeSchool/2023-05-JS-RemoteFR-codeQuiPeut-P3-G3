@@ -15,7 +15,7 @@ function Register() {
   const [pseudo, setPseudo] = useState("")
   const [pwd, setPwd] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
-
+  const [error, setError] = useState("")
   // Onchange functions
 
   const handleFisrtnameChange = (event) => {
@@ -58,7 +58,7 @@ function Register() {
       })
       .catch((error) => {
         console.error(error)
-
+        setError("Email and pseudo must be unique and psswords must match")
         // Handle error
       })
   }
@@ -130,6 +130,7 @@ function Register() {
           value="Sign-Up"
           onClick={handleSubmit}
         />
+        {error && <div className="error-message">{error}</div>}
         <Link to="/login" className="link-register">
           <p className="p-link-register">Already have an account click here!</p>
         </Link>

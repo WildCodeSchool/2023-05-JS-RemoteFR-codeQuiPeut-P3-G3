@@ -1,93 +1,36 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
+import axios from "axios" // Importez Axios
 import JdrCard from "../components/global/JdRcard"
 import StarRating from "../components/home/CarouselNote"
 import Footer from "../components/global/Footer"
 import IntroHome from "../components/home/IntroHome"
 import "./Home.scss"
-
-import livre from "../assets/images/Calque2.png"
-import merlin from "../assets/images/logo_merlin.png"
-import gargouille from "../assets/images/imgmalefice.png"
-import grave from "../assets/images/grave.png"
+// import livre from "../assets/images/Calque2.png"
+// import merlin from "../assets/images/logo_merlin.png"
+// import gargouille from "../assets/images/imgmalefice.png"
+// import grave from "../assets/images/grave.png"
 import previous from "../assets/images/chevron-left-512.webp"
 import next from "../assets/images/chevron-right-512.webp"
 import noParallaxImg from "../assets/images/parallax/castleNewSize1.png"
 import cascadeImg from "../assets/images/cascadeImg.png"
-
-export const jdrCardData = [
-  {
-    id: 1,
-    jdrName: "Le Déclin des Ames",
-    jdrNameFont: "Cinzel Decorative",
-    jdrNameColor: "#EBAD50",
-    jdrNameFontSize: "30px",
-    jdrNameTextStyle: "italic underline",
-    jdrImg1: merlin,
-    jdrImg2: livre,
-    jdrText:
-      "Your choices shape your destiny, explore the decline and become a legend.",
-    textColor: "White",
-    textFont: "cinzel decorative",
-    jdrBgColor1: "#44114D",
-    jdrBgColor2: "#EBAD50",
-    buttonColor: "#CF5C2B",
-    buttonFont: "Inika",
-  },
-  {
-    id: 2,
-    jdrName: "MALEFICES",
-    jdrNameFontSize: "30px",
-    jdrNameFont: "Inika",
-    jdrNameColor: "#F3AD44",
-    jdrImg1: gargouille,
-    jdrImg2: grave,
-    jdrText:
-      "Will you dare to unravel the enchanting mysteries of 'Malefices'?",
-    textColor: "white",
-    textFont: "cinzel decorative",
-    jdrBgColor1: "#660E0E",
-    jdrBgColor2: "#1d2327",
-    buttonColor: "#AF2D2D",
-    buttonFont: "Inika",
-  },
-  {
-    id: 3,
-    jdrName: "Le Déclin des Ames",
-    jdrNameFontSize: "30px",
-    jdrNameFont: "Cinzel Decorative",
-    jdrNameColor: "#EBAD50",
-    jdrImg1: merlin,
-    jdrImg2: livre,
-    jdrText:
-      "Your choices shape your destiny, explore the decline and become a legend.",
-    textColor: "white",
-    textFont: "cinzel decorative",
-    jdrBgColor1: "#44114D",
-    jdrBgColor2: "#EBAD50",
-    buttonColor: "#CF5C2B",
-    buttonFont: "Inika",
-  },
-  {
-    id: 4,
-    jdrName: "Le Déclin des Ames",
-    jdrNameFontSize: "30px",
-    jdrNameFont: "Cinzel Decorative",
-    jdrNameColor: "#EBAD50",
-    jdrImg1: merlin,
-    jdrImg2: livre,
-    jdrText:
-      "Your choices shape your destiny, explore the decline and become a legend.",
-    textColor: "white",
-    textFont: "cinzel decorative",
-    jdrBgColor1: "#44114D",
-    jdrBgColor2: "#EBAD50",
-    buttonColor: "#CF5C2B",
-    buttonFont: "Inika",
-  },
-]
+// import HomeParallax from "../components/home/HomeParallax"
 
 export default function Home() {
   const [startIndex, setStartIndex] = useState(0)
+  const [jdrCardData, setJdrCardData] = useState([])
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:4242/card")
+      // console.log(response.data)
+      setJdrCardData(response.data)
+    } catch (error) {
+      console.error("Erreur lors de la récupération des données", error)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   const handleNext = () => {
     setStartIndex((startIndex + 2) % jdrCardData.length)
@@ -100,7 +43,6 @@ export default function Home() {
   return (
     <>
       <section className="home__hero">
-        {/* <HomeParallax /> */}
         <div className="image-container">
           <img className="noParallaxImg" src={noParallaxImg} alt="castle" />
           <img className="cascadeImg" src={cascadeImg} alt="cascade" />

@@ -1,5 +1,5 @@
 const express = require("express")
-const { hashPassword } = require("./auth")
+const { hashPassword, verifyPassword } = require("./auth")
 const { validateUser } = require("./validators/userValidator")
 const router = express.Router()
 
@@ -85,6 +85,7 @@ router.post("/users", usersControllers.add)
 router.put("/users/:id", usersControllers.edit)
 router.delete("/users/:id", usersControllers.destroy)
 router.post("/signup", hashPassword, validateUser, usersControllers.add)
+router.post("/login", usersControllers.findByMail, verifyPassword)
 
 router.get("/weapons", weaponsControllers.browse)
 router.get("/weapons/:id", weaponsControllers.read)
