@@ -1,10 +1,9 @@
 import ButtonUI from "../../global/Buttons/ButtonUI"
 import "./General.scss"
-// import { jdrCardData } from "../../../pages/Home"
 import { useEffect, useState } from "react"
 import axios from "axios"
 
-function AdminGeneral() {
+function AdminGeneral({ setNav, selected }) {
   const [data, setData] = useState([])
 
   useEffect(() => {
@@ -21,7 +20,14 @@ function AdminGeneral() {
   const handleModify = () => {}
 
   const handleDeploy = () => {
-    axios.put("http://localhost:4242/stories")
+    axios
+      .put("http://localhost:4242/stories")
+      .then((response) => {
+        alert("Success")
+      })
+      .catch((error) => {
+        alert(error)
+      })
   }
   return (
     <>
@@ -81,7 +87,12 @@ function AdminGeneral() {
           <div className="lineSeparator"></div>
         </div>
         <div className="generalAddButton">
-          <ButtonUI title={"Add"} bgcolor={"#3f7841"} />
+          <ButtonUI
+            title={"Add"}
+            bgcolor={"#3f7841"}
+            className={`nav__item ${selected === "Edition" ? "active" : ""}`}
+            onClick={() => setNav("Edition")}
+          />
         </div>
       </div>
     </>
