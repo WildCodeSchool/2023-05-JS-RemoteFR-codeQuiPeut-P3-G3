@@ -209,7 +209,7 @@ function InfoGeneral() {
               <textarea
                 id="message"
                 name="message"
-                rows="1"
+                rows="3"
                 cols="20"
                 placeholder="Enter title name"
                 value={jdrName}
@@ -221,7 +221,7 @@ function InfoGeneral() {
               <textarea
                 id="message"
                 name="message"
-                rows="4"
+                rows="5"
                 cols="50"
                 placeholder="Write a short description here (less than 230 characters)"
                 value={jdrText}
@@ -322,11 +322,8 @@ function InfoGeneral() {
                     clickedElement === ".buttonBgTop" ? jdrBgColor1 : "",
                 }}
               >
-                <input
+                <div
                   className="cardTopTitle"
-                  type="text"
-                  value={jdrName && `"${jdrName}"`}
-                  placeholder="Title Goes Here"
                   onChange={(e) => setJdrName(e.target.value)}
                   onClick={applyTextFormattingToJdrName}
                   style={{
@@ -334,7 +331,9 @@ function InfoGeneral() {
                     fontSize: `${jdrNameFontSize}px`,
                     color: jdrNameColor,
                   }}
-                />
+                >
+                  {jdrName ? `"${jdrName}"` : "Title Goes Here"}
+                </div>
                 <img
                   className="cardTopImg"
                   ref={divImgTop}
@@ -346,15 +345,15 @@ function InfoGeneral() {
                 <svg
                   className="wave"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="399"
-                  height="102"
-                  viewBox="0 0 399 102"
+                  width="402"
+                  height="112"
+                  viewBox="0 0 402 112"
                   fill="none"
                 >
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
-                    d="M399 102C389.707 102 410.965 -36.5042 293.813 9.28055C0.000394461 102 5.88955e-06 102 5.88955e-06 101.912V102C5.88955e-06 102 82.3405 102 130.425 102C178.51 102 237.197 102 285.282 102C333.367 102 375.138 102 399 102Z"
+                    d="M401.198 111.581C401.198 121.174 417.91 -37.4809 298.777 8.32094C0.00046601 101.075 1.93865e-05 101.075 1.93865e-05 100.987L0.000111791 111.581C0.000111791 111.581 84.8331 111.581 133.73 111.581C182.627 111.581 241.782 111.581 290.68 111.581C339.577 111.581 376.933 111.581 401.198 111.581Z"
                     fill={jdrBgColor2}
                   />
                 </svg>
@@ -374,11 +373,8 @@ function InfoGeneral() {
                 }}
               >
                 <div className="cardBottomTextButton">
-                  <input
+                  <div
                     className="cardBottomText"
-                    type="text"
-                    value={jdrText}
-                    placeholder="Description Goes here"
                     onChange={(e) => setJdrText(e.target.value)}
                     onClick={applyTextFormattingToJdrText}
                     style={{
@@ -386,7 +382,11 @@ function InfoGeneral() {
                       fontSize: `${textFont}px`,
                       color: textColor,
                     }}
-                  />
+                  >
+                    <div className="textDescription">
+                      {jdrText ? `${jdrText}` : "Description Goes Here"}
+                    </div>
+                  </div>
                   <div className="cardButtonPlay">
                     <img
                       className="cardButtonImg"

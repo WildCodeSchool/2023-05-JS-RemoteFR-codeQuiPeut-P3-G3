@@ -4,12 +4,13 @@
 height: 100%;
 width: 100%;
 display: flex;
-flex-direction: column;
+flex-direction: row;
 flex-wrap: wrap;
-gap: 20px;
+gap: 60px;
 
   .infoGeneral {
     height: 100%;
+    width: 40%;
     background-color: #f7f7f7;
     // background-color: rgb(197, 97, 97);
     border-radius: 8px;
@@ -176,14 +177,15 @@ gap: 20px;
   // }
 
   .pictureGeneral {
-    height: 100%;
-    width: 100%;
+    height: 90%;
+    width: 50%;
     //  background-color: #f7f7f7;
     background-color: rgb(197, 97, 97);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 30px;
 
     .pictureAndPen {
       height: 500px;
@@ -263,13 +265,17 @@ gap: 20px;
 
           .cardTopTitle {
             background-color: transparent;
-            height: 40%;
-            width: 100%;
+            // height: 40%;
+            max-width: 300px;
             text-align: center;
             margin-bottom: 40px;
-            margin-left: 20px;
+            // margin-left: 10px;
             border: none;
-            overflow-wrap: break-word;
+            // overflow-wrap: break-word;
+            // white-space: pre-line;
+            // overflow: auto;
+            display: flex;
+            cursor: pointer;
           }
           .cardTopImg {
             // background-color: cornsilk;
@@ -277,7 +283,6 @@ gap: 20px;
             width: 35%;
             margin-bottom: 80px;
             z-index: 2;
-
           }
         }
 
@@ -290,7 +295,7 @@ gap: 20px;
           position: absolute;
           height: 30%;
           width: 100%;
-          bottom: 188px;
+          bottom: 163px;
           z-index: 1;
         }
           .cardBottomImg {
@@ -333,19 +338,21 @@ gap: 20px;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
+            gap: 20px;
 
             .cardBottomText {
-              height: 50%;
-              width: 70%;
+              height: 100px;
+              width: 100%;
               background-color: transparent;
               border: none;
-              // background-color: darkslategray;
               text-align: center;
               text-wrap: wrap;
               overflow-wrap: break-word;
+              z-index: 3;
 
-              input {
-                color: white;
+              .textDescription {
+                height: 100%;
+                width: 100%;
               }
             }
             .cardButtonPlay {

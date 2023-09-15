@@ -17,8 +17,8 @@ function EditGeneral() {
         <div className="edition__content__left">
           <InfoGeneral view={view} setView={setView} />
         </div>
-        {/* <div className="edition__content__separator"></div>
-        <div className="edition__content__right">
+        {/* <div className="edition__content__separator"></div> */}
+        {/* <div className="edition__content__right">
           <PictureGeneral view={view} setView={setView} />
         </div> */}
       </div>
