@@ -1,0 +1,505 @@
+[33mcommit a240f68d3ce4834cce625074fb6d8453c9bf0b93[m[33m ([m[1;36mHEAD -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m, [m[1;32m0003-08-creationContext[m[33m, [m[1;32m0003-07-paramsElementsAndExport[m[33m)[m
+Merge: 8ba3724 117c0db
+Author: AntoineElissa <antoine.elissagaray@orange.fr>
+Date:   Mon Sep 4 21:48:13 2023 +0200
+
+    Merge pull request #32 from WildCodeSchool/0003-06-buttonCanva
+    
+    0003 06 button canva
+
+[33mcommit 117c0db12053b8863f91f412388730a022636169[m[33m ([m[1;31morigin/0003-06-buttonCanva[m[33m, [m[1;32m0003-06-buttonCanva[m[33m)[m
+Merge: 8420f77 8ba3724
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Mon Sep 4 21:46:06 2023 +0200
+
+    Merge branch 'dev' into 0003-06-buttonCanva
+
+[33mcommit 8420f77ab8c843250682dab730b4660a6855bc87[m
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Mon Sep 4 21:44:00 2023 +0200
+
+    apparemment manquait containerCanva dans le git suivi
+
+[33mcommit bb098d278828e442d4fe059daaf18a1f6dc0e72a[m
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Mon Sep 4 21:42:06 2023 +0200
+
+    ajout rectangle et récupération infos elements ok
+
+[33mcommit 659cc4188210e0c47ed33c18f179258ff8ff8a1c[m
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Mon Sep 4 21:00:51 2023 +0200
+
+    reprise responsive canva, semble ok mais doit également resize elements dedans
+
+[33mcommit 8ba3724a7063ba3edd357733000fb5f270aa1141[m
+Merge: eb0394e 0c49468
+Author: catherineohrel <126101413+catherineohrel@users.noreply.github.com>
+Date:   Fri Sep 1 10:55:02 2023 +0200
+
+    Merge pull request #31 from WildCodeSchool/0003-03-adminEditionGeneral
+    
+    0003 03 admin edition general
+
+[33mcommit 0c49468b74ed67bbf306dc8a6b6c5ed2e002ba5f[m[33m ([m[1;31morigin/0003-03-adminEditionGeneral[m[33m)[m
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Fri Sep 1 10:52:23 2023 +0200
+
+    fixed ddb issues
+
+[33mcommit 2e05fbc17d7db01b62ec401fca7345dff43219c0[m
+Merge: 431340b eb0394e
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Fri Sep 1 09:56:33 2023 +0200
+
+    Merge branch 'dev' into 0003-03-adminEditionGeneral
+
+[33mcommit 431340b2d7fd7735212603becf88ed97bc9dd220[m
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Fri Sep 1 09:49:26 2023 +0200
+
+    update ddb
+
+[33mcommit eb0394e004b505d00bce29ee43ffeb0233aab3a4[m
+Merge: 68c7c03 de166c4
+Author: AntoineElissa <antoine.elissagaray@orange.fr>
+Date:   Fri Sep 1 09:46:38 2023 +0200
+
+    Merge pull request #30 from WildCodeSchool/0003-06-buttonCanva
+    
+    push de la nouvelle table gallery db enigma
+
+[33mcommit de166c4d1607cd58590d0210dcb8417ba659797a[m
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Fri Sep 1 09:42:25 2023 +0200
+
+    push de la nouvelle table gallery db enigma
+
+[33mcommit 68c7c038bfa431aaab2bfeed4d5f65e4d1068422[m
+Merge: 4c6e2d3 f9bfa5c
+Author: Ben-git01 <107700818+Ben-git01@users.noreply.github.com>
+Date:   Thu Aug 31 17:01:01 2023 +0200
+
+    Merge pull request #29 from WildCodeSchool/0006-01-authentification
+    
+    0006 01 authentification
+
+[33mcommit f9bfa5caff685fcc5c95b7159a98090c127a598f[m[33m ([m[1;31morigin/0006-01-authentification[m[33m)[m
+Author: Ben-git01 <benbakirbenjamin@orange.fr>
+Date:   Thu Aug 31 16:58:14 2023 +0200
+
+    some modification to help navigate through the site
+
+[33mcommit ed9de6ee4fd544eb87a643207eb383b13e0c34f1[m
+Author: Ben-git01 <benbakirbenjamin@orange.fr>
+Date:   Thu Aug 31 16:53:43 2023 +0200
+
+    some modification to help navigate through the site
+
+[33mcommit f38cbb625a51b42b3558d3ee6b254065bb88ab79[m
+Merge: 137937c 4c6e2d3
+Author: Ben-git01 <benbakirbenjamin@orange.fr>
+Date:   Thu Aug 31 16:13:55 2023 +0200
+
+    Merge branch 'dev' into 0006-01-authentification
+
+[33mcommit 137937cb76fef718fe42a43f1c74883bb383eb50[m
+Author: Ben-git01 <benbakirbenjamin@orange.fr>
+Date:   Thu Aug 31 16:12:50 2023 +0200
+
+    de la merde
+
+[33mcommit 4c6e2d324b907cf937050b8249cc4f62ae411c95[m
+Merge: e28557d 7d16645
+Author: AntoineElissa <antoine.elissagaray@orange.fr>
+Date:   Thu Aug 31 16:02:03 2023 +0200
+
+    Merge pull request #28 from WildCodeSchool/0003-06-buttonCanva
+    
+    retouches home
+
+[33mcommit 7d166455b5351fe181e9906aaa84403fc009750c[m
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Thu Aug 31 15:56:47 2023 +0200
+
+    retouches home
+
+[33mcommit e28557da4596a55650b9cd2d4da66fdee6c47647[m
+Merge: a715489 1c9bb55
+Author: Red <131304617+GarciaNico31@users.noreply.github.com>
+Date:   Thu Aug 31 12:48:12 2023 +0200
+
+    Merge pull request #27 from WildCodeSchool/0005-01-Shop
+    
+    0005 01 shop
+
+[33mcommit 1c9bb55e2766bdf93651c4b55ad8634b3d1995af[m[33m ([m[1;31morigin/0005-01-Shop[m[33m)[m
+Merge: 58146df a715489
+Author: Nicolas GARCIA <garcianicopro@gmail.com>
+Date:   Thu Aug 31 12:45:08 2023 +0200
+
+    Co-authored-by: AntoineElissa <AntoineElissa@users.noreply.github.com>
+
+[33mcommit 58146df9aaf52001e17a207d65517194b7fd3a49[m
+Author: Nicolas GARCIA <garcianicopro@gmail.com>
+Date:   Thu Aug 31 12:41:24 2023 +0200
+
+    final commit
+
+[33mcommit b40d6d6889cbb4e1ad3290b86b2e3238104b86fa[m
+Merge: 8e8eb24 a715489
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Thu Aug 31 12:00:38 2023 +0200
+
+    Merge branch 'dev' into 0003-03-adminEditionGeneral
+
+[33mcommit 8e8eb240e60fb119edf25c5740fa92f1f27ca488[m
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Thu Aug 31 11:56:55 2023 +0200
+
+    nouveau logo enigma
+
+[33mcommit a715489f24246ed67d330eaed838aaa5675f2330[m
+Merge: 3e0108e 850ca0d
+Author: Ben-git01 <107700818+Ben-git01@users.noreply.github.com>
+Date:   Thu Aug 31 11:55:06 2023 +0200
+
+    Merge pull request #26 from WildCodeSchool/0006-01-authentification
+    
+    0006 01 authentification
+
+[33mcommit be3e4eb576296b50656fc313b9c338eefacd9379[m
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Thu Aug 31 11:50:41 2023 +0200
+
+    nouveau logo enigma
+
+[33mcommit 850ca0d686203381f75ac9c092650bcceffe259f[m
+Merge: c06d8d0 3e0108e
+Author: Ben-git01 <benbakirbenjamin@orange.fr>
+Date:   Thu Aug 31 11:45:02 2023 +0200
+
+    fix merge conflicts
+
+[33mcommit c06d8d09276da301ea2a7df806b92f61286ffa14[m
+Author: Ben-git01 <benbakirbenjamin@orange.fr>
+Date:   Thu Aug 31 11:25:55 2023 +0200
+
+    signup and login but still some work to do
+
+[33mcommit 2a711365394ad89a0d85ba3a032509648ad6202c[m
+Author: Ben-git01 <benbakirbenjamin@orange.fr>
+Date:   Thu Aug 31 11:24:47 2023 +0200
+
+    signup and login but still some work to do
+
+[33mcommit b1e2faeda8979a51b326188538565bc66bae4033[m
+Merge: 83be88f 3e0108e
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Thu Aug 31 11:16:10 2023 +0200
+
+    Merge branch 'dev' into 0003-03-adminEditionGeneral
+
+[33mcommit 3e0108ebbe7b7268b711060bfe0c33797ecb31f2[m
+Merge: 3dbca89 72a3792
+Author: NayanN91 <132362002+NayanN91@users.noreply.github.com>
+Date:   Thu Aug 31 11:15:25 2023 +0200
+
+    Merge pull request #25 from WildCodeSchool/0001-05-CarouselCardJdR
+    
+    0001 05 carousel card jd r
+
+[33mcommit 83be88f68e5b8e516e3524904f63b25f0ff5d476[m
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Thu Aug 31 11:15:03 2023 +0200
+
+    probleme de joi resolu
+
+[33mcommit 72a3792fc71d409f479e6a8080a978412405654f[m[33m ([m[1;31morigin/0001-05-CarouselCardJdR[m[33m)[m
+Author: NayanN91 <nayan.nanouche@gmail.com>
+Date:   Thu Aug 31 11:13:25 2023 +0200
+
+    lastversiondev+caroucard
+
+[33mcommit 918f865611e53c6ed5d96c018903bc5136487bcc[m
+Merge: 4116b7e 3dbca89
+Author: NayanN91 <nayan.nanouche@gmail.com>
+Date:   Thu Aug 31 11:06:50 2023 +0200
+
+    Merge branch 'dev' into 0001-05-CarouselCardJdR
+
+[33mcommit 4116b7ebaf141dc70e49f0caab5294d6a9f4b0be[m
+Author: NayanN91 <nayan.nanouche@gmail.com>
+Date:   Thu Aug 31 11:05:39 2023 +0200
+
+    carte carou finis
+
+[33mcommit f29cfd6d45003de1e270b37bec1fa12d75189331[m
+Merge: 017c578 3dbca89
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Thu Aug 31 09:33:33 2023 +0200
+
+    Merge branch 'dev' into 0003-03-adminEditionGeneral
+
+[33mcommit 017c5783bcb211b4b7e32efb9878510f95f45be8[m
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Thu Aug 31 09:31:04 2023 +0200
+
+    logo enigma
+
+[33mcommit 3dbca89b2c3494d8aee6a53d1b859e4da927d93d[m
+Merge: a159377 943b35a
+Author: AntoineElissa <antoine.elissagaray@orange.fr>
+Date:   Thu Aug 31 00:33:36 2023 +0200
+
+    Merge pull request #23 from WildCodeSchool/0003-05-backgroundCanva
+    
+    ajout background et images ok
+
+[33mcommit 943b35acb48ff3e03684afca9fee6dac53798c10[m[33m ([m[1;31morigin/0003-05-backgroundCanva[m[33m, [m[1;32m0003-05-backgroundCanva[m[33m)[m
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Thu Aug 31 00:26:42 2023 +0200
+
+    ajout background et images ok
+
+[33mcommit a159377e2b89c68fb9aefc0d4f55debde3ff339c[m
+Merge: 4d685d4 43857fc
+Author: AntoineElissa <antoine.elissagaray@orange.fr>
+Date:   Wed Aug 30 21:26:37 2023 +0200
+
+    Merge pull request #21 from WildCodeSchool/0003-04-popupImageFinder
+    
+    0003 04 popup image finder
+
+[33mcommit 43857fccc939327d2717176e70bc86ec35ef743d[m[33m ([m[1;31morigin/0003-04-popupImageFinder[m[33m, [m[1;32m0003-04-popupImageFinder[m[33m)[m
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Wed Aug 30 21:20:01 2023 +0200
+
+    test
+
+[33mcommit 6b8f324461674d99b78db98bc504dae531fdd830[m
+Merge: 30104c5 4d685d4
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Wed Aug 30 21:09:39 2023 +0200
+
+    merge dev
+
+[33mcommit 30104c5396043e3d5f3db39988d0fe09716b642c[m
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Wed Aug 30 21:02:29 2023 +0200
+
+    ok, nettoyage et mise à dispo props selectedPath pour usage global
+
+[33mcommit 47dad31db27c7bfa32c0ce73f050912ab30f1d9f[m
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Wed Aug 30 19:52:27 2023 +0200
+
+    visualisation images locales ok
+
+[33mcommit 559b34069076dd7d94b39966dbbf111a7bca6f30[m
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Wed Aug 30 14:25:47 2023 +0200
+
+    previsualisation ok et quit btn cancel
+
+[33mcommit 4d685d4a584ff3d1ac0daad842a69f194aad081b[m
+Merge: e4d8a03 05140c7
+Author: catherineohrel <126101413+catherineohrel@users.noreply.github.com>
+Date:   Wed Aug 30 11:13:10 2023 +0200
+
+    Merge pull request #20 from WildCodeSchool/0003-03-adminEditionGeneral
+    
+    0003 03 admin edition general
+
+[33mcommit 05140c74cffcfc1871d7caef5644ced172ad5fa8[m
+Merge: ff30bf5 e4d8a03
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Wed Aug 30 11:09:21 2023 +0200
+
+    Merge branch 'dev' into 0003-03-adminEditionGeneral
+
+[33mcommit ff30bf5f5b96bc0acedc87712ab57c28d6e467b8[m
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Wed Aug 30 11:07:29 2023 +0200
+
+    listes deroulantes general general et picture general
+
+[33mcommit e4d8a03f095a175a8d8f4deb78c75911f71dd79c[m
+Merge: 3e184b9 04eddc6
+Author: NayanN91 <132362002+NayanN91@users.noreply.github.com>
+Date:   Wed Aug 30 11:03:41 2023 +0200
+
+    Merge pull request #19 from WildCodeSchool/0001-05-CarouselCardJdR
+    
+    0001 05 carousel card jd r
+
+[33mcommit 04eddc674cd296ec54120ce5ee4cc43ca1dedc8e[m
+Author: NayanN91 <nayan.nanouche@gmail.com>
+Date:   Wed Aug 30 10:57:29 2023 +0200
+
+    ouichef
+
+[33mcommit e6e5c65a0083fb845d8070582c7d9c52e07ca7b8[m
+Author: Nicolas GARCIA <garcianicopro@gmail.com>
+Date:   Wed Aug 30 09:40:46 2023 +0200
+
+    commit of day
+
+[33mcommit 7e5d546ecfcea7dc0656e8ec65caebee0f8c4ddb[m
+Author: NayanN91 <nayan.nanouche@gmail.com>
+Date:   Wed Aug 30 09:40:35 2023 +0200
+
+    ouai
+
+[33mcommit bc59acfe0eb444cc546842e341db258d7ba907b1[m
+Merge: b5eb8c3 3e184b9
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Mon Aug 28 16:14:04 2023 +0200
+
+    Merge branch 'dev' into 0003-03-adminEditionGeneral
+
+[33mcommit b5eb8c34e5f4cd0f366b0515c36b08437eae944a[m
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Mon Aug 28 16:07:45 2023 +0200
+
+    admin edition general level 2
+
+[33mcommit 3e184b977cbb8e45b342131cddbf00794fd14efc[m
+Merge: 9201d15 c9d1eac
+Author: NayanN91 <132362002+NayanN91@users.noreply.github.com>
+Date:   Mon Aug 28 15:50:45 2023 +0200
+
+    Merge pull request #17 from WildCodeSchool/0001-05-CarouselCardJdR
+    
+    0001 05 carousel card jd r
+
+[33mcommit c9d1eacf84d0f8f3a1ebabeb9cbb9e6b532d0b7b[m
+Author: NayanN91 <nayan.nanouche@gmail.com>
+Date:   Mon Aug 28 15:40:46 2023 +0200
+
+    papoush
+
+[33mcommit 099f736acb6ba5f76014ae2922cdb96460223b8c[m
+Author: NayanN91 <nayan.nanouche@gmail.com>
+Date:   Mon Aug 28 15:05:12 2023 +0200
+
+    enfin
+
+[33mcommit 11fac62dfcff39d069de5dd7f39d78565dd41800[m
+Merge: 3e12cfd 9201d15
+Author: NayanN91 <nayan.nanouche@gmail.com>
+Date:   Mon Aug 28 15:01:45 2023 +0200
+
+    sdsfsfq
+
+[33mcommit 3e12cfda7216f27328a2501b77c59515a8fc66fe[m
+Author: NayanN91 <nayan.nanouche@gmail.com>
+Date:   Mon Aug 28 14:31:37 2023 +0200
+
+    ouioui
+
+[33mcommit 2d89208eb34c6f2f57f720200664bd283b68a34a[m
+Merge: c4cd942 9201d15
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Fri Aug 25 16:48:08 2023 +0200
+
+    Merge branch 'dev' into 0003-04-popupImageFinder
+
+[33mcommit 9201d150b1756a0a77ceb62544c87a901ae2b765[m
+Merge: 39731d5 595079d
+Author: TUJAS Antoine <132048983+LeTuj@users.noreply.github.com>
+Date:   Fri Aug 25 15:37:45 2023 +0200
+
+    Merge pull request #16 from WildCodeSchool/0004-01-Profil
+    
+    0004 01 profil
+
+[33mcommit 595079d442e2163e3707df3f25813305d79eff70[m[33m ([m[1;31morigin/0004-01-Profil[m[33m)[m
+Author: ANTOINE_NAME TUJAS_NAME <antoine.tujas33@gmail.com>
+Date:   Fri Aug 25 14:22:47 2023 +0200
+
+    conflit profil
+
+[33mcommit c4cd942bfca4cecbe124bc3b862bccf4737d587e[m
+Merge: 889d754 39731d5
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Fri Aug 25 14:14:10 2023 +0200
+
+    Merge branch 'dev' into 0003-04-popupImageFinder
+
+[33mcommit 889d754bfc7cf33e6f0bcac0fd2a7c8cec503275[m
+Author: Antoine Elissagaray <antoine.elissagaray@orange.fr>
+Date:   Fri Aug 25 14:13:15 2023 +0200
+
+    ajout bouton pour importer fichier locaux
+
+[33mcommit 39731d5938eaaedec0ce9c49a13894ab5ec737df[m
+Merge: 7eac756 bd1f743
+Author: Ben-git01 <107700818+Ben-git01@users.noreply.github.com>
+Date:   Fri Aug 25 12:36:47 2023 +0200
+
+    Merge pull request #15 from WildCodeSchool/0006-01-authentification
+    
+    0006 01 authentification
+
+[33mcommit bd1f74389befce80f0cf2169a330988f792e1531[m
+Author: Ben-git01 <benbakirbenjamin@orange.fr>
+Date:   Fri Aug 25 12:34:51 2023 +0200
+
+    fix css issue
+
+[33mcommit 7ac762707498d096d651091f50aa87018eff8485[m
+Merge: 4c60c8e 7eac756
+Author: Ben-git01 <benbakirbenjamin@orange.fr>
+Date:   Fri Aug 25 12:17:29 2023 +0200
+
+    fix vscode json settings conflict
+
+[33mcommit 4c60c8e96b640affef2bacc2ec3b8d0a228de5ed[m
+Author: Ben-git01 <benbakirbenjamin@orange.fr>
+Date:   Fri Aug 25 12:14:50 2023 +0200
+
+    add signup for user and login is missing backend logic
+
+[33mcommit 33c048f219344b152ff546e3d2ac98a5124bc882[m
+Author: Ben-git01 <benbakirbenjamin@orange.fr>
+Date:   Fri Aug 25 12:13:46 2023 +0200
+
+    add signup for user and login is missing backend logic
+
+[33mcommit 7eac756a055fdc3c18c33f949670cddae25976b5[m
+Merge: a5c85a2 41c5452
+Author: Ben-git01 <107700818+Ben-git01@users.noreply.github.com>
+Date:   Fri Aug 25 12:06:50 2023 +0200
+
+    Merge pull request #14 from WildCodeSchool/0003-03-adminEditionGeneral
+    
+    0003 03 admin edition general
+
+[33mcommit 41c5452cba6260ca1f6c046b35e8684f5dce1564[m
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Fri Aug 25 11:57:36 2023 +0200
+
+    cascade image dans home
+
+[33mcommit 02207bb71fc723c9ab324aa8478cb9775d2d49e4[m
+Merge: 7be24ab a5c85a2
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Fri Aug 25 11:49:31 2023 +0200
+
+    Merge branch 'dev' into 0003-03-adminEditionGeneral
+
+[33mcommit 7be24abdc4833ca8c878611d219e29bffff91789[m
+Author: catherineohrel <catherine_ohrel@hotmail.com>
+Date:   Fri Aug 25 11:45:30 2023 +0200
+
+    cascade image dans home
+
+[33mcommit a5c85a2f7f8c1eba70e7f08ed7e920f69efe2143[m
+Merge: f0dd2ec 8912dbb
+Author: catherineohrel <126101413+catherineohrel@users.noreply.github.com>
+Date:   Fri Aug 25 11:27:05 2023 +0200
+
+    Merge pull request #13 from WildCodeSchool/0003-03-essaiKanva
+    
+    0003 03 essai kanva
