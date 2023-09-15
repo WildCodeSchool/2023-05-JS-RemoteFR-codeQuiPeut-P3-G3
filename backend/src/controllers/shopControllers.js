@@ -14,10 +14,12 @@ const browse = (req, res) => {
 
 const add = (req, res) => {
   const cardShopId = req.body.cardShopId
+
+  // PROVISOIRE
+  const idClient = 1
   // TODO validations (length, format...)
 
-  models.shop
-    .insert(cardShopId)
+  models.ShoppingCardItem.insert(cardShopId, idClient)
     .then(([result]) => {
       res.json(result.insertId)
     })
@@ -79,10 +81,24 @@ const destroy = (req, res) => {
     })
 }
 
+const getCart = (req, res) => {
+  const userId = 1
+  models.ShoppingCardItem
+    .getProducts(userId)
+    .then(([rows]) => {
+      res.send(rows)
+    })
+    .catch((err) => {
+      console.error(err)
+      res.sendStatus(500)
+    })
+}
+
 module.exports = {
   browse,
   add,
   read,
   edit,
   destroy,
+  getCart,
 }

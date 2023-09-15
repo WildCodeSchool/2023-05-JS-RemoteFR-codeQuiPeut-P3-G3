@@ -1,7 +1,32 @@
+import { useEffect, useState } from "react"
 import Payment from "../../assets/images/logoPaypal.png"
 import "./PaymentShop.scss"
+import axios from "axios"
 
 const PaymentShop = () => {
+  const [cartItems, setCartItems] = useState([])
+  const [cartItemsTotal, setCartItemsTotal] = useState([])
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4242/shop/cart")
+      .then((response) => {
+        console.info(response.data)
+        if (cartItems.length !== response.data.length) {
+          setCartItems(response.data)
+          let total = 0
+          response.data.forEach(element => {
+            total += element.price
+          });
+          setCartItemsTotal(total)
+        }
+      })
+      .catch((error) => {
+        console.warn("POUETPOUET")
+        console.error("TA MERDE ! C'est de la merde", error)
+      })
+  })
+
   return (
     <div className="Shop_PaymentContainerGlobal">
       <div className="Shop_Payment_Title_Container">
@@ -10,10 +35,18 @@ const PaymentShop = () => {
         </h3>
       </div>
       <div className="Shop_Payment_Body">
+        {/* zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz */}
         <div className="Shop_Payment_Left">
+          <ul>
+            {cartItems.map((item) => (
+              <li key={item.id}>
+                {item.credit_quantity} credits - {item.price}$
+              </li>
+            ))}
+          </ul>
           <p>
             To Pay <br />
-            <span className="BillsValues">25$</span>
+            <span className="BillsValues">{cartItemsTotal}$</span>
           </p>
         </div>
         <div className="Shop_Payment_Right">
