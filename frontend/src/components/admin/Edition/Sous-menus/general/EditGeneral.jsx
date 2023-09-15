@@ -6,7 +6,7 @@ import InfoGeneral from "./components/InfoGeneral"
 
 /* styles */
 import "./EditGeneral.scss"
-import PictureGeneral from "./components/PictureGeneral"
+// import PictureGeneral from "./components/PictureGeneral"
 
 function EditGeneral() {
   const [view, setView] = useState("General")
@@ -17,10 +17,10 @@ function EditGeneral() {
         <div className="edition__content__left">
           <InfoGeneral view={view} setView={setView} />
         </div>
-        <div className="edition__content__separator"></div>
-        <div className="edition__content__right">
+        {/* <div className="edition__content__separator"></div> */}
+        {/* <div className="edition__content__right">
           <PictureGeneral view={view} setView={setView} />
-        </div>
+        </div> */}
       </div>
     </>
   )

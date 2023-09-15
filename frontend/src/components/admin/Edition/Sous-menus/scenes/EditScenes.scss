@@ -50,6 +50,7 @@ $desktop-rows: repeat(2, 1fr);
     overflow: auto;
     overflow-x: hidden;
     min-width: 400px;
+    max-height: 80vh;
     background-color: $color--gris;
     @media (orientation: landscape) {
       // grid-area: 2 / 3 / 3 / 4;

@@ -3,18 +3,19 @@
 .pictureGeneral {
   height: 100%;
   width: 100%;
-  background-color: #f7f7f7;
-  // background-color: rgb(197, 97, 97);
+  //  background-color: #f7f7f7;
+  background-color: rgb(197, 97, 97);
   border-radius: 8px;
   display: flex;
   align-items: center;
+  justify-content: center;
 
-  .pictureGeneralTop {
-    width: 100%;
-    height: auto;
+  .pictureAndPen {
+    height: 500px;
+    width: 500px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    background-color: aqua;
 
     .jeuImgDiv {
       margin-top: 20px;
@@ -24,18 +25,86 @@
       flex-direction: row;
       align-items: flex-start;
 
-      .jeuImg {
-        height: 100%;
-        width: 100%;
-        border-radius: 10px;
-        justify-content: center;
-        align-items: center;
+        .cardTopTitle {
+          background-color: chocolate;
+          height: auto;
+          width: 50%;
+        }
+        .cardTopImg {
+          background-color: cornsilk;
+          height: auto;
+          width: 50%;
+
+        }
       }
 
-      .editPen {
-        height: 40px;
-        width: 40px;
+      .cardBottom {
+        height: 50%;
+        width: 100%;
+        background-color: darkcyan;
+        display: flex;
+        flex-direction: row;
+
+        .cardBottomImg {
+          width: 50%;
+          background-color: darkmagenta;
+        }
+
+        .cardBottomTextButton {
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .cardBottomText {
+            height: 50%;
+            width: 70%;
+            background-color: darkslategray;
+          }
+  
+          .cardBottomButton {
+            height: 50px;
+            width: 100px;
+            background-color: darkgoldenrod;
+          }
+
+        }
       }
     }
+
+    .editPen {
+      height: 40px;
+      width: 40px;
+    }
   }
-}
+
+  // .pictureGeneralTop {
+  //   width: 100%;
+  //   height: auto;
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+
+  //   .jeuImgDiv {
+  //       margin-top: 20px;
+  //       height: 500px;
+  //       width: auto;
+  //       display: flex;
+  //       flex-direction: row;
+  //       align-items: flex-start;
+
+  //     .jeuImg {
+  //       height: 100%;
+  //       width: 100%;
+  //       border-radius: 10px;
+  //       justify-content: center;
+  //       align-items: center;
+  //     }
+
+  //     .editPen {
+  //       height: 40px;
+  //       width: 40px;
+  //     }
+  //   }
+  // }
+
