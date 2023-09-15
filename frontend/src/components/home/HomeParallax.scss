@@ -1,3 +1,50 @@
+// -------------- TEST2 ---------------
+
+// .parallaxMain {
+//   height: 110vh;
+//   width: 100%;
+//   position: relative;
+
+//   .parallaxBkgd {
+//     position: absolute;
+
+//     .cloudsBackImg {
+//       right: 0;
+//       width: 20%;
+//   }
+
+//     .cloudsFrontImg {
+//       left: 0;
+//       width: 20%;
+//     }
+
+//     .moonImg {
+//       mix-blend-mode: screen;
+//       position: absolute;
+//       top: calc(50% + #{parallaxMainHeight + 0.5}px);
+//       transition: top 0.5s ease-out;
+//       left: 50%;
+//       width: 100%;
+//       height: 100%;
+//       object-fit: cover;
+//       pointer-events: none;
+//       transform: translateX(-50%);
+//     }
+
+//     .castleImg {
+
+//     }
+
+//     .starsImg {
+//       top: -550px;
+//       left: 0;
+//       width: 100%;
+//     }
+//   }
+// }
+
+// --------------- TEST1 -------------
+
 // .parallaxMain {
 //   height: 100%;
 //     width: 100%;
