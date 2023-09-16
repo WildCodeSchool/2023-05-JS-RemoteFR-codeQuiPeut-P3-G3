@@ -2,10 +2,9 @@ const fs = require("fs")
 const path = require("path")
 
 module.exports.getStory = (req, res) => {
-  const storyId = req.params.filename // Utilisez params.filename au lieu de storyId
+  const storyId = req.params.filename
   const filePath = path.join(__dirname, "../", "stories", `${storyId}.js`)
 
-  // Vérifiez si le fichier JavaScript existe
   if (fs.existsSync(filePath)) {
     const { story } = require(filePath)
     res.json(story)
