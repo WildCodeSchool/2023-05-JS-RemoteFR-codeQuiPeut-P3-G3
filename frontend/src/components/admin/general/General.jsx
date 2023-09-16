@@ -1,6 +1,8 @@
 import ButtonUI from "../../global/Buttons/ButtonUI"
 import "./General.scss"
 import { useEffect, useState } from "react"
+import { useSearchParams } from "react-router-dom"
+
 import axios from "axios"
 
 function AdminGeneral({ setNav, selected }) {
@@ -8,11 +10,25 @@ function AdminGeneral({ setNav, selected }) {
   const [displayNewStory, setDisplayNewStory] = useState(false)
   const [title, setTitle] = useState("")
   const [storyCreated, setStoryCreated] = useState(false)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   /* Recupération des stories au montage */
   useEffect(() => {
     getStories()
+    if (searchParams.has("story")) {
+      searchParams.delete("story")
+      setSearchParams(searchParams)
+    }
   }, [])
+  /* Animation quand story créee */
+  useEffect(() => {
+    if (storyCreated) {
+      setTimeout(() => {
+        setStoryCreated(false)
+        setDisplayNewStory(false)
+      }, 1500)
+    }
+  }, [storyCreated])
 
   /* Creation nouvelle story */
   const handleCreate = () => {
@@ -25,6 +41,7 @@ function AdminGeneral({ setNav, selected }) {
         if (response.status === 200) {
           setStoryCreated(true)
           getStories()
+          setTitle("")
         } else {
           console.warn(
             "La requête a réussi, mais avec un statut différent de 200."
@@ -54,31 +71,36 @@ function AdminGeneral({ setNav, selected }) {
     })
   }
 
-  /* Animation quand story créee */
-  useEffect(() => {
-    if (storyCreated) {
-      setTimeout(() => {
-        setStoryCreated(false)
-        setDisplayNewStory(false)
-      }, 1500)
-    }
-  }, [storyCreated])
-
   /* Suppression story */
-  const handleDelete = () => {
-    axios.delete("http://localhost:4242/stories")
+  const handleDelete = (deleteId) => {
+    const isSure = window.confirm("⚠️ Are you sure to delete this story?")
+
+    if (isSure) {
+      axios
+        .delete(`http://localhost:4242/stories/${deleteId}`, data)
+        .then((response) => {
+          if (response.status === 204) {
+            alert("✅ story deleted ")
+            getStories()
+          }
+        })
+        .catch((err) => console.warn(err))
+    }
   }
 
-  const handleModify = () => {}
+  const handleModify = (id) => {
+    setSearchParams({ story: id })
+    setNav("Edition")
+  }
 
   /* Deploiement story */
   const handleDeploy = (storyId, deployState) => {
     let isSure = null
 
     if (deployState) {
-      isSure = window.confirm("Are you sure to deploy your story?")
+      isSure = window.confirm("⚠️ Are you sure to deploy your story?")
     } else {
-      isSure = window.confirm("Are you sure to undeploy your story?")
+      isSure = window.confirm("⚠️ Are you sure to undeploy your story?")
     }
 
     if (isSure) {
@@ -89,7 +111,7 @@ function AdminGeneral({ setNav, selected }) {
         .put(`http://localhost:4242/deploy/${storyId}`, data)
         .then((response) => {
           if (response.status === 204) {
-            alert("Success")
+            alert("✅ Update success")
             // Appelez getStories() ici pour mettre à jour la liste des histoires après un déploiement réussi
             getStories()
           } else {
@@ -134,7 +156,7 @@ function AdminGeneral({ setNav, selected }) {
               {data.map((elem, index) => {
                 return (
                   <>
-                    <tr>
+                    <tr key={elem.id}>
                       <td style={{ textAlign: "left" }}>{elem.title}</td>
                       <td>{elem.number_view}</td>
                       <td>{elem.win_rate}</td>
@@ -155,7 +177,7 @@ function AdminGeneral({ setNav, selected }) {
                           width="85px"
                           title={"Modify"}
                           bgcolor={"#3e86bb"}
-                          onClick={handleModify}
+                          onClick={() => handleModify(elem.id)}
                         />
                       </td>
                       <td>
@@ -164,7 +186,7 @@ function AdminGeneral({ setNav, selected }) {
                           width="85px"
                           title={"Delete"}
                           bgcolor={"#902B00"}
-                          onClick={handleDelete}
+                          onClick={() => handleDelete(elem.id)}
                         />
                       </td>
                     </tr>

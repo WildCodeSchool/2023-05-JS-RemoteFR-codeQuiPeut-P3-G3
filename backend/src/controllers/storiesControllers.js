@@ -12,15 +12,17 @@ const browse = (req, res) => {
     })
 }
 
-const add = (req, res) => {
+const add = (req, res, next) => {
   const data = req.body
 
   models.stories
     .insert(data)
     .then(([result]) => {
-      res
-        .status(200)
-        .json({ message: "Histoire ajoutée avec succès", id: result.insertId })
+      req.insertId = result.insertId
+      next()
+      // res
+      //   .status(200)
+      //   .json({ message: "Histoire ajoutée avec succès", id: result.insertId })
     })
     .catch((err) => {
       console.error(err)
@@ -32,7 +34,7 @@ const add = (req, res) => {
           .json({ error: "Une histoire porte déjà le même nom." })
       }
 
-      res.status(500).json({ error: "Une erreur interne s'est produite." })
+      // res.status(500).json({ error: "Une erreur interne s'est produite." })
     })
 }
 const read = (req, res) => {
@@ -75,14 +77,15 @@ const edit = (req, res) => {
       res.sendStatus(500)
     })
 }
-const destroy = (req, res) => {
+const destroy = (req, res, next) => {
   models.stories
     .delete(req.params.id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404)
       } else {
-        res.sendStatus(204)
+        // res.sendStatus(204)
+        next()
       }
     })
     .catch((err) => {
