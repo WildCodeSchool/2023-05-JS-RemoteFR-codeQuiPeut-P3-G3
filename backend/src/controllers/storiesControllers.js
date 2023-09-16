@@ -13,18 +13,26 @@ const browse = (req, res) => {
 }
 
 const add = (req, res) => {
-  const stories = req.body
-
-  // TODO validations (length, format...)
+  const data = req.body
 
   models.stories
-    .insert(stories)
+    .insert(data)
     .then(([result]) => {
-      res.json(result.insertId)
+      res
+        .status(200)
+        .json({ message: "Histoire ajoutée avec succès", id: result.insertId })
     })
     .catch((err) => {
       console.error(err)
-      res.sendStatus(500)
+
+      // Vérifiez si l'erreur est due à un titre déjà existant
+      if (err.message === "Le titre existe déjà.") {
+        return res
+          .status(400)
+          .json({ error: "Une histoire porte déjà le même nom." })
+      }
+
+      res.status(500).json({ error: "Une erreur interne s'est produite." })
     })
 }
 const read = (req, res) => {
@@ -84,8 +92,12 @@ const destroy = (req, res) => {
 }
 
 const deploy = (req, res) => {
+  const data = req.body
+  data.id = req.params.id
+
   models.stories
-    .deploy(req.params.id)
+
+    .deploy(data)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404)

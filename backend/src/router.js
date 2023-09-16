@@ -83,7 +83,7 @@ router.get("/stories/:id/:scene?", storiesControllers.read)
 router.post("/stories", storiesControllers.add)
 router.put("/stories/:id/:scene?", storiesControllers.edit)
 router.delete("/stories/:id", storiesControllers.destroy)
-router.put("/stories/:id", storiesControllers.deploy)
+router.put("/deploy/:id", storiesControllers.deploy)
 
 router.get("/users", usersControllers.browse)
 router.get("/users/:id", usersControllers.read)
@@ -100,7 +100,6 @@ router.put("/weapons/:id", weaponsControllers.edit)
 router.delete("/weapons/:id", weaponsControllers.destroy)
 
 // Test admin route
-
 router.get("/admin", verifyToken, verifyAdminRole)
 
 /* Test images files */
