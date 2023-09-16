@@ -25,86 +25,83 @@
       flex-direction: row;
       align-items: flex-start;
 
-        .cardTopTitle {
-          background-color: chocolate;
-          height: auto;
-          width: 50%;
-        }
-        .cardTopImg {
-          background-color: cornsilk;
-          height: auto;
-          width: 50%;
-
-        }
+      .cardTopTitle {
+        background-color: chocolate;
+        height: auto;
+        width: 50%;
       }
-
-      .cardBottom {
-        height: 50%;
-        width: 100%;
-        background-color: darkcyan;
-        display: flex;
-        flex-direction: row;
-
-        .cardBottomImg {
-          width: 50%;
-          background-color: darkmagenta;
-        }
-
-        .cardBottomTextButton {
-          width: 50%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-
-          .cardBottomText {
-            height: 50%;
-            width: 70%;
-            background-color: darkslategray;
-          }
-  
-          .cardBottomButton {
-            height: 50px;
-            width: 100px;
-            background-color: darkgoldenrod;
-          }
-
-        }
+      .cardTopImg {
+        background-color: cornsilk;
+        height: auto;
+        width: 50%;
       }
     }
 
-    .editPen {
-      height: 40px;
-      width: 40px;
+    .cardBottom {
+      height: 50%;
+      width: 100%;
+      background-color: darkcyan;
+      display: flex;
+      flex-direction: row;
+
+      .cardBottomImg {
+        width: 50%;
+        background-color: darkmagenta;
+      }
+
+      .cardBottomTextButton {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .cardBottomText {
+          height: 50%;
+          width: 70%;
+          background-color: darkslategray;
+        }
+
+        .cardBottomButton {
+          height: 50px;
+          width: 100px;
+          background-color: darkgoldenrod;
+        }
+      }
     }
   }
 
-  // .pictureGeneralTop {
-  //   width: 100%;
-  //   height: auto;
-  //   display: flex;
-  //   flex-direction: column;
-  //   align-items: center;
+  .editPen {
+    height: 40px;
+    width: 40px;
+  }
+}
 
-  //   .jeuImgDiv {
-  //       margin-top: 20px;
-  //       height: 500px;
-  //       width: auto;
-  //       display: flex;
-  //       flex-direction: row;
-  //       align-items: flex-start;
+// .pictureGeneralTop {
+//   width: 100%;
+//   height: auto;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
 
-  //     .jeuImg {
-  //       height: 100%;
-  //       width: 100%;
-  //       border-radius: 10px;
-  //       justify-content: center;
-  //       align-items: center;
-  //     }
+//   .jeuImgDiv {
+//       margin-top: 20px;
+//       height: 500px;
+//       width: auto;
+//       display: flex;
+//       flex-direction: row;
+//       align-items: flex-start;
 
-  //     .editPen {
-  //       height: 40px;
-  //       width: 40px;
-  //     }
-  //   }
-  // }
+//     .jeuImg {
+//       height: 100%;
+//       width: 100%;
+//       border-radius: 10px;
+//       justify-content: center;
+//       align-items: center;
+//     }
 
+//     .editPen {
+//       height: 40px;
+//       width: 40px;
+//     }
+//   }
+// }

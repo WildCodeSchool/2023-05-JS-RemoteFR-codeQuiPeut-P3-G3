@@ -21,7 +21,7 @@ function WidgetRect({ viewEditProperties, objectSelected, setObjectSelected }) {
   const [displayCPickerBg, setDisplayCPickerBg] = useState(false)
   const [displayCPickerBorder, setDisplayCPickerBorder] = useState(false)
   const [extend, setExtend] = useState(false)
-  const { tabObject } = useEditionContext()
+  const { tabObject, objects } = useEditionContext()
 
   /* FROM CONTEXT */
 
@@ -42,20 +42,20 @@ function WidgetRect({ viewEditProperties, objectSelected, setObjectSelected }) {
 
   /* Update states => context */
   useEffect(() => {
-    if (objectSelected) {
-      if (objectSelected.type === "rect") {
-        const updateDataTexts = { ...objectSelected }
+    const { id, type } = objectSelected
 
-        updateDataTexts.properties.strokeWidth = selectedSizeBorder
-        updateDataTexts.properties.rx = selectedSizeRadius
-        updateDataTexts.properties.ry = selectedSizeRadius
-        updateDataTexts.properties.stroke = selectedColorBorder
-        updateDataTexts.properties.fill = selectedColorBg
+    if (type === "rect") {
+      const updateDataTexts = { ...objects[type][id] }
 
-        console.log("widgetRect - objectSelected modified : ", updateDataTexts)
+      updateDataTexts.strokeWidth = selectedSizeBorder
+      updateDataTexts.rx = selectedSizeRadius
+      updateDataTexts.ry = selectedSizeRadius
+      updateDataTexts.stroke = selectedColorBorder
+      updateDataTexts.fill = selectedColorBg
 
-        tabObject.saveProperties(updateDataTexts)
-      }
+      console.log("widgetRect - objectSelected modified : ", updateDataTexts)
+
+      tabObject.saveProperties(updateDataTexts)
     }
 
     // }
