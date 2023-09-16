@@ -13,6 +13,7 @@ import WidgetTexts from "../../../../global/widgets/WidgetTexts"
 import WidgetRect from "../../../../global/widgets/WidgetRect"
 import WidgetScenesLink from "../../../../global/widgets/WidgetScenesLink"
 import { useEditionContext } from "../../../../../services/contexts/editionContext.jsx"
+import { objects } from "../../../../../services/variables/objEdition"
 
 function EditScenes() {
   const canvasRef = useRef(null)
@@ -24,7 +25,8 @@ function EditScenes() {
 
   /* RECUPERATION DES PROPRIETES */
 
-  const { objectSelected, setObjectSelected } = useEditionContext()
+  const { objectSelected, setObjectSelected, exportScenes } =
+    useEditionContext()
 
   /* Popup image viewer */
   const [selectedPath, setSelectedPath] = useState("")
@@ -140,7 +142,11 @@ function EditScenes() {
             {/* <CanvasWithText /> */}
           </div>
           <div className="scenes__constructor__btn">
-            <ButtonUI title={"save"} bgcolor={"#3f7841"} />
+            <ButtonUI
+              title={"save"}
+              bgcolor={"#3f7841"}
+              onClick={() => exportScenes(objects)}
+            />
             <ButtonUI title={"reset"} bgcolor={"#0A0A0A"} />
             <ButtonUI title={"delete"} bgcolor={"#902B00"} />
           </div>

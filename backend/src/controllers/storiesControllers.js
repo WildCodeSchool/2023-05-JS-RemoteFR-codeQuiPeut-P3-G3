@@ -49,6 +49,9 @@ const edit = (req, res) => {
   // TODO validations (length, format...)
 
   stories.id = parseInt(req.params.id, 10)
+  if (req.params.scene) {
+    stories.scene = parseInt(req.params.scene, 10)
+  }
 
   models.stories
     .update(stories)

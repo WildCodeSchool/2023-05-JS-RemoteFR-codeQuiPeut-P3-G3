@@ -17,11 +17,7 @@ import imgArrowBottom from "../../../assets/text_ui/arrow_bottom.png"
 /* Images */
 import iconTextColor from "../../../assets/text_ui/colorPicker.png"
 
-function WidgetTexts({
-  viewEditProperties,
-  // setObjectSelected,
-  // objectSelected,
-}) {
+function WidgetTexts({ viewEditProperties }) {
   const [displayCPicker, setDisplayCPicker] = useState(false)
   const [extend, setExtend] = useState(true)
 
@@ -33,7 +29,7 @@ function WidgetTexts({
   const { setSelectedColor, setSelectedFont, setAlignment } =
     useEditionContext()
 
-  const { tabObject, objectSelected } = useEditionContext()
+  const { tabObject, objectSelected, objects } = useEditionContext()
 
   /* =============== */
 
@@ -46,26 +42,28 @@ function WidgetTexts({
     setSelectedColor(color)
   }
 
+  /* Update states => context */
   useEffect(() => {
-    if (objectSelected) {
-      if (objectSelected.type === "textbox") {
-        console.log("widgetText - objectSelected : ", objectSelected)
+    const { id, type } = objectSelected
 
-        // Copiez objectSelected pour ne pas le modifier directement
-        const updateDataTexts = { ...objectSelected }
+    console.log("id : ", id, "type : ", type)
 
-        // Modifiez les propriétés spécifiques de updateDataTexts
-        updateDataTexts.properties.fontSize = selectedSize
-        updateDataTexts.properties.fill = selectedColor
-        updateDataTexts.properties.textAlign = selectedAlignment
-        updateDataTexts.properties.fontFamily = selectedFont
+    if (type === "textbox") {
+      const updateDataTexts = { ...objects[type][id] }
+      console.log("widgetText - objectSelected start : ", updateDataTexts)
 
-        console.log("widgetText - objectSelected modified : ", updateDataTexts)
+      // Modifiez les propriétés spécifiques de updateDataTexts
+      updateDataTexts.fontSize = selectedSize
+      updateDataTexts.fill = selectedColor
+      updateDataTexts.textAlign = selectedAlignment
+      updateDataTexts.fontFamily = selectedFont
 
-        // Enregistrez les modifications
-        tabObject.saveProperties(updateDataTexts)
-      }
+      console.log("widgetText - objectSelected modified : ", updateDataTexts)
+
+      tabObject.saveProperties(updateDataTexts)
     }
+
+    // }
   }, [selectedColor, selectedFont, selectedAlignment])
 
   /* JSX */

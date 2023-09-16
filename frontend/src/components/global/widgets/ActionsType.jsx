@@ -12,7 +12,7 @@ function ActionType() {
 
   const [showTarget, setShowTarget] = useState(false)
 
-  const { objectSelected, tabObject } = useEditionContext()
+  const { objectSelected, tabObject, objects } = useEditionContext()
 
   const styles = {
     valueContainer: (base) => ({
@@ -20,15 +20,22 @@ function ActionType() {
       maxHeight: 20,
       fontSize: 15,
     }),
+    // Menu deroulat (partie texte)
+    menu: (base) => ({
+      ...base,
+      width: 150,
+    }),
+    // Menu deroulant (partie "box")
     menuList: (base) => ({
       ...base,
-      maxHeight: 120,
-      //   maxWidth: 130,
+      maxHeight: 150,
+      width: 150,
     }),
+    // Selecteur
     control: (base) => ({
       ...base,
       maxHeight: 15,
-      maxWidth: 100,
+      //   width: 150,
       minWidth: 80,
       alignItems: "center",
     }),
@@ -57,22 +64,10 @@ function ActionType() {
   ]
 
   const handlePushAction = () => {
-    // if (objectSelected.type !== "") {
-    //   const data = {
-    //     type: selectedType,
-    //     target: selectedTarget,
-    //     number: selectedNumber,
-    //   }
+    const { id, type } = objectSelected
 
-    //   tabObject.pushActions(data)
-    //   resetLocalState()
-    // }
-    if (objectSelected) {
-      console.log("widgetActions - objectSelected : ", objectSelected)
-
-      const updatedObjectSelected = [...objectSelected]
-
-      console.log("memoire d'object selected : ", updatedObjectSelected)
+    if (type !== "") {
+      const updateDataActions = { ...objects[type][id] }
 
       const data = {
         type: selectedType,
@@ -80,22 +75,49 @@ function ActionType() {
         number: selectedNumber,
       }
 
-      const currentActions = [
-        ...(updatedObjectSelected.properties.Actions || []),
-      ]
-      console.log("currentActions ", currentActions)
+      const currentActions = [...(updateDataActions.Actions || [])]
+
       currentActions.push(data)
-      console.log("après push : ", currentActions)
-      updatedObjectSelected.properties.Actions = currentActions
+      updateDataActions.Actions = currentActions
 
-      console.log(
-        "widget actions - objectSelected modified : ",
-        updatedObjectSelected
-      )
+      console.log("widgetActions : ", updateDataActions)
 
-      tabObject.saveProperties(updatedObjectSelected)
+      tabObject.saveProperties(updateDataActions)
     }
+
+    // }
   }
+
+  //   const handlePushAction = () => {
+  //     if (objectSelected) {
+  //       console.log("widgetActions - objectSelected : ", objectSelected)
+
+  //       const updatedObjectSelected = { ...objectSelected }
+
+  //       console.log("memoire d'object selected : ", updatedObjectSelected)
+
+  //       const data = {
+  //         type: selectedType,
+  //         target: selectedTarget,
+  //         number: selectedNumber,
+  //       }
+
+  //       const currentActions = [
+  //         ...(updatedObjectSelected.properties.Actions || []),
+  //       ]
+  //       console.log("currentActions ", currentActions)
+  //       currentActions.push(data)
+  //       console.log("après push : ", currentActions)
+  //       updatedObjectSelected.properties.Actions = currentActions
+
+  //       console.log(
+  //         "widget actions - objectSelected modified : ",
+  //         updatedObjectSelected
+  //       )
+
+  //       tabObject.saveProperties(updatedObjectSelected)
+  //     }
+  //   }
 
   useEffect(() => {
     if (selectedType === "add" || selectedType === "subs") {
