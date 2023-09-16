@@ -26,7 +26,12 @@ module.exports.getScene = (req, res) => {
 }
 
 module.exports.createStory = (req, res) => {
-  const filename = req.params.filename
+  const { insertId } = req
+  const { title } = req.body
+
+  const titleFormatted = title.trim().replace(/\s+/g, "_")
+
+  const filename = insertId + "-" + titleFormatted
   const filePath = path.join(__dirname, "../", "stories", `${filename}.js`)
 
   if (fs.existsSync(filePath)) {
@@ -65,4 +70,25 @@ module.exports.putScene = (req, res) => {
   } else {
     return res.status(400).json({ error: "Le fichier n'existe pas." })
   }
+}
+
+module.exports.deleteScene = (req, res) => {
+  const { id } = req.params
+  const folderPath = path.join(__dirname, "../", "stories")
+
+  const files = fs.readdirSync(folderPath)
+
+  // Expression régulière pour rechercher l'index exact dans le nom du fichier
+  const regex = new RegExp(`^${id}-`)
+
+  files.forEach((filename) => {
+    if (regex.test(filename)) {
+      const filePath = path.join(folderPath, filename)
+
+      // Suppression du fichier correspondant à l'index donné
+      fs.unlinkSync(filePath)
+    }
+  })
+
+  res.status(204).json({ message: "Fichiers supprimés avec succès." })
 }

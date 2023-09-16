@@ -25,6 +25,7 @@
     "react-dom": "^18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
     "react-konva": "^18.2.10",
+    "react-router-dom": "^6.16.0",
     "react-select": "^5.7.4",
     "react-web-editor": "^2.2.6",
     "vite": "^4.0.4"
