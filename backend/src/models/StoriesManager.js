@@ -49,6 +49,13 @@ class StoryManager extends AbstractManager {
       ]
     )
   }
+
+  deploy(stories) {
+    return this.database.query(
+      `UPDATE ${this.table} SET is_deploy = ? WHERE (id = ?)`,
+      [stories.is_deploy]
+    )
+  }
 }
 
 module.exports = StoryManager

@@ -56,7 +56,7 @@ const verifyPassword = (req, res) => {
 
     .then((isVerified) => {
       if (isVerified) {
-        const payload = { sub: req.user.id }
+        const payload = { sub: req.user.id, role: req.user.role }
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
           expiresIn: "1h",
         })
@@ -96,8 +96,38 @@ const verifyToken = (req, res, next) => {
     res.sendStatus(403)
   }
 }
+
+const verifyAdminRole = (req, res, next) => {
+  try {
+    // Vérifiez si le token JWT a été correctement décodé par le middleware verifyToken
+    if (!req.payload) {
+      throw new Error("Invalid token or missing payload")
+    }
+
+    // Récupérez le rôle de l'utilisateur à partir du payload du token
+    const userRole = req.payload.role
+
+    // Vérifiez si l'utilisateur a le rôle "admin" (ou le rôle approprié pour les administrateurs)
+    if (userRole === "admin") {
+      // L'utilisateur est un administrateur, autorisez l'accès
+      next()
+    } else {
+      // L'utilisateur n'a pas le rôle d'administrateur, renvoyez une erreur 403 (Accès refusé)
+      res.status(403).json({
+        message: "Not Allowed",
+      })
+    }
+  } catch (err) {
+    console.error(err)
+    res
+      .status(403)
+      .json({ message: "Erreur de vérification du rôle d'administrateur." })
+  }
+}
+
 module.exports = {
   hashPassword,
   verifyPassword,
   verifyToken,
+  verifyAdminRole,
 }

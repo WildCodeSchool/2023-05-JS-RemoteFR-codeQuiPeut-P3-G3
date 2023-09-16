@@ -1,5 +1,10 @@
 const express = require("express")
-const { hashPassword, verifyPassword } = require("./auth")
+const {
+  hashPassword,
+  verifyPassword,
+  verifyAdminRole,
+  verifyToken,
+} = require("./auth")
 const { validateUser } = require("./validators/userValidator")
 const router = express.Router()
 
@@ -78,6 +83,7 @@ router.get("/stories/:id/:scene?", storiesControllers.read)
 router.post("/stories", storiesControllers.add)
 router.put("/stories/:id/:scene?", storiesControllers.edit)
 router.delete("/stories/:id", storiesControllers.destroy)
+router.put("/stories/:id", storiesControllers.deploy)
 
 router.get("/users", usersControllers.browse)
 router.get("/users/:id", usersControllers.read)
@@ -92,6 +98,10 @@ router.get("/weapons/:id", weaponsControllers.read)
 router.post("/weapons", weaponsControllers.add)
 router.put("/weapons/:id", weaponsControllers.edit)
 router.delete("/weapons/:id", weaponsControllers.destroy)
+
+// Test admin route
+
+router.get("/admin", verifyToken, verifyAdminRole)
 
 /* Test images files */
 router.post("/addPicture/:filename", picturesControllers.add)
