@@ -143,11 +143,11 @@ $desktop-rows: repeat(2, 1fr);
     }
 
     &__btn {
-      height: 5%;
+      height: 100%;
       width: 100%;
       border-radius: 10px 10px 0 0;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
       gap: 0.5rem;
       box-sizing: border-box;

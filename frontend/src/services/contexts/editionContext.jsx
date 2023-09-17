@@ -1,13 +1,16 @@
 /* eslint-disable no-restricted-syntax */
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useState } from "react"
 import { fabric } from "fabric"
+import axios from "axios"
 
 const EditionContext = createContext()
 
+/* DEFINITION DU CANVAS */
 export const useEditionContext = () => {
   return useContext(EditionContext)
 }
 
+/* VARIABLES GLOBALES */
 export const EditionContextProvider = ({ children }) => {
   /* Liste de tous les objets scene */
   const [objects, setObjects] = useState({
@@ -26,6 +29,7 @@ export const EditionContextProvider = ({ children }) => {
     // actions: [],
   })
 
+  /* =========== STATES UPDATES  =========== */
   const [updated, setUpdated] = useState(false)
   const [render, setRender] = useState(false)
 
@@ -102,17 +106,15 @@ export const EditionContextProvider = ({ children }) => {
       })
     },
 
-    /* recherche par Id */
-    getById: (activeObject) => {
+    /* recherche par Id (render AtiveObject) */
+    getItemById: (activeObject) => {
       const idSearch = activeObject.id
 
       for (const [type, items] of Object.entries(objects)) {
         if (items[idSearch]) {
-          // console.log(" function getById", type, items[idSearch])
           return { type, item: items[idSearch] }
         }
       }
-
       return null
     },
 
@@ -120,49 +122,36 @@ export const EditionContextProvider = ({ children }) => {
     saveProperties: (objectUpdated) => {
       console.log("04 =========== SAVE TO OBJECTS  =========== ")
 
-      const idToUpdate = objectUpdated.id
-      const type = objectUpdated.type
-      console.log("sauvegarde du ", type, " id : ", idToUpdate)
+      const { id, type } = objectSelected
+      console.log(
+        "sauvegarde du ",
+        type,
+        " id : ",
+        id,
+        "value : ",
+        objectUpdated
+      )
 
       setObjects((prevObjects) => {
-        const updatedObjects = { ...prevObjects } // Créez une copie de l'objet précédent
+        const updatedObjects = { ...prevObjects }
 
-        // Vérifiez si la propriété type existe dans l'objet updatedObjects
-        if (updatedObjects[type] && updatedObjects[type][idToUpdate]) {
-          // Mettez à jour l'objet avec les nouvelles propriétés
-          console.log("Objects updates....")
-          updatedObjects[type][idToUpdate] = {
-            ...updatedObjects[type][idToUpdate],
-            ...objectUpdated.properties,
+        if (updatedObjects[type] && updatedObjects[type][id]) {
+          updatedObjects[type][id] = {
+            ...updatedObjects[type][id],
+            ...(objectUpdated.properties || objectUpdated),
           }
+
+          console.log("Updated objects: ", updatedObjects)
+
+          setRender(true)
+          console.log("sauvegarde effectuée, > render ")
         }
 
-        console.log("Updated objects: ", updatedObjects)
-        tabObject.updateObjectSelect(updatedObjects[type][idToUpdate])
-        setRender(true)
-        console.log("sauvegarde effectuée, > render ")
-        // tabObject.updateObjectSelect(objects)
-        return updatedObjects // Retournez le nouvel objet mis à jour
+        return updatedObjects
       })
     },
 
-    pushActions: (data) => {
-      console.log("========= PUSH ACTIONS ========== ")
-      const id = objectSelected.id
-      const type = objectSelected.type
-
-      console.log("id et type : ", id, type)
-      console.log(objects[type][id])
-      console.log("data : ", data)
-
-      const updatedActions = [...objects[type][id].Actions]
-      updatedActions.push(data)
-
-      objects[type][id].Actions = updatedActions
-
-      setObjects({ ...objects })
-    },
-
+    /* Reset  properties selected */
     resetProperties: () => {
       console.log("======= RESET PROPERTIES ========= ")
       setObjectSelected({
@@ -172,11 +161,13 @@ export const EditionContextProvider = ({ children }) => {
         actions: [],
       })
       setUpdated(false)
-      resetStates()
+      // resetStates()
     },
 
+    /* Update properties selected */
     updateSelectedProperties: (object) => {
       console.log("02 ======= UPDATE FROM CANVAS ========= ")
+      console.log(object)
 
       setObjectSelected((prevObjectSelected) => {
         const newObject = {
@@ -187,43 +178,27 @@ export const EditionContextProvider = ({ children }) => {
         }
         console.log("Object selected updated : ", newObject)
         updateStates(newObject)
-        tabObject.saveProperties(newObject)
-        return newObject
-      })
-    },
 
-    updateObjectSelect: (object) => {
-      console.log("02 ======= UPDATE SELECTED ========= ")
-      console.log("object à update : ", object)
-      setObjectSelected((prevObjectSelected) => {
-        const newObject = {
-          type: object.type,
-          id: object.id,
-          properties: object,
-          Actions: object.Actions,
-        }
-        console.log("Selected object updated : ", newObject)
-        // updateStates(newObject)
         return newObject
       })
     },
   }
 
-  /* =============== ANNEXES =========================== */
+  /* ============================= ANNEXES =========================== */
 
-  const resetStates = () => {
-    setSelectedColor("")
-    setSelectedFont("")
-    setSelectedSize("")
-    setAlignment("")
+  // const resetStates = () => {
+  //   setSelectedColor("")
+  //   setSelectedFont("")
+  //   setSelectedSize("")
+  //   setAlignment("")
 
-    setSelectedSizeBorder("")
-    setSelectedSizeRadius("")
-    setSelectedColorBorder("")
-    setSelectedColorBg("")
-  }
+  //   setSelectedSizeBorder("")
+  //   setSelectedSizeRadius("")
+  //   setSelectedColorBorder("")
+  //   setSelectedColorBg("")
+  // }
 
-  /* OK - Update des states */
+  /* Update des states */
   const updateStates = (object) => {
     // console.log(object)
     if (object) {
@@ -233,30 +208,63 @@ export const EditionContextProvider = ({ children }) => {
       )
       const properties = object.properties
 
-      /* ----  Commons  ---- */
       // font style
-      setSelectedColor(properties.fill)
-      setSelectedFont(properties.fontFamily)
-      setSelectedSize(properties.fontSize)
-      setAlignment(properties.textAlign)
-      //   // properties
-      setSelectedSizeBorder(properties.strokeWidth)
-      setSelectedSizeRadius(properties.rx)
-      setSelectedColorBorder(properties.stroke || "#FFFFFF")
-
-      if (object.type === "rect") {
-        setSelectedColorBg(properties.fill)
-      }
       if (object.type === "textbox") {
+        setSelectedColor(properties.fill)
+        setSelectedFont(properties.fontFamily)
+        setSelectedSize(properties.fontSize)
+        setAlignment(properties.textAlign)
         setSelectedColorBg(properties.backgroundColor)
       }
+      //   // properties
+      if (object.type === "rect" || object.type === "textbox") {
+        setSelectedSizeBorder(properties.strokeWidth)
+        setSelectedSizeRadius(properties.rx)
+        setSelectedColorBorder(properties.stroke || "#FFFFFF")
+        setSelectedColorBg(properties.fill)
+      }
+
+      const states = {
+        selectedColor,
+        selectedFont,
+        selectedSize,
+        selectedAlignment,
+        selectedSizeBorder,
+        selectedSizeRadius,
+        selectedColorBorder,
+      }
+      console.log("states : ", states)
     }
   }
 
-  useEffect(() => {
-    console.log(">>> render ", objects)
-    // setRender(true)
-  }, [objects])
+  function customJSONStringify(obj) {
+    const seen = new Set()
+
+    return JSON.stringify(obj, (key, value) => {
+      if (typeof value === "object" && value !== null) {
+        if (seen.has(value)) {
+          return "[Circular Reference]"
+        }
+        seen.add(value)
+      }
+      return value
+    })
+  }
+
+  const exportScenes = (data) => {
+    console.log(objects)
+    const dataExport = customJSONStringify(objects)
+    console.log(dataExport)
+    axios
+      .put(`http://localhost:4242/api-stories/01/2`, objects)
+      .then((response) => {
+        console.log("Réponse du serveur :", response.data)
+      })
+      .catch((error) => {
+        // Gérer les erreurs de la requête
+        console.error("Erreur de la requête :", error)
+      })
+  }
 
   return (
     <EditionContext.Provider
@@ -289,6 +297,7 @@ export const EditionContextProvider = ({ children }) => {
         setSelectedSizeRadius,
         setSelectedColorBorder,
         setSelectedColorBg,
+        exportScenes,
       }}
     >
       {children}
@@ -296,7 +305,7 @@ export const EditionContextProvider = ({ children }) => {
   )
 }
 
-/* Explications rapide pour un rectangle : 
+/* Explications rapide pour un rectangle : > A METTRE A JOUR CA A CHANGE <
 
 utilisateur clique sur le rectangle dans la toolBar, on execute addRect via un useEffect. 
 on affecte un id pour pouvoir le reconnaître et naviguer, et on le stocke dans le contexte via la variable objects

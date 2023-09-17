@@ -113,12 +113,16 @@ const ContainerCanva = ({
     if (canvas) {
       const objectModifiedHandler = function (options) {
         console.log("objet modifié", options.target)
-        tabObject.updateSelectedProperties(options.target)
+        tabObject.saveProperties(options.target)
+
+        // tabObject.updateSelectedProperties(options.target)
       }
 
       const selectionCreatedHandler = function (options) {
         console.log("selection créé")
+        tabObject.resetProperties(options.target)
         tabObject.updateSelectedProperties(options.selected[0])
+        tabObject.saveProperties(options.selected[0])
         setViewProperties(true)
       }
 
@@ -132,18 +136,28 @@ const ContainerCanva = ({
 
       const selectionModified = function (options) {
         console.log("selection modifiée")
-        // if (options) {
-        //   // tabObject.resetProperties(options.target)
-        //   tabObject.updateSelectedProperties(options.selected[0])
-        // }
+        // console.log(options)
+        // console.log(options.deselected[0])
+        // // tabObject.resetProperties(options.target)
+        // // tabObject.saveProperties(options.deselected[0])
+        // tabObject.updateSelectedProperties(options.selected[0])
       }
 
+      const objectMouseDownHandler = function (options) {
+        console.log("mousedown")
+
+        // tabObject.resetProperties(options.target)
+        // tabObject.updateSelectedProperties(options.selected[0])
+      }
+
+      canvas.on("mouse:down", objectMouseDownHandler)
       canvas.on("object:modified", objectModifiedHandler)
       canvas.on("selection:created", selectionCreatedHandler)
       canvas.on("selection:cleared", selectionClearedHandler)
       canvas.on("selection:updated", selectionModified)
 
       return () => {
+        canvas.off("mouse:down", objectMouseDownHandler)
         canvas.off("object:modified", objectModifiedHandler)
         canvas.off("selection:created", selectionCreatedHandler)
         canvas.off("selection:cleared", selectionClearedHandler)
@@ -158,7 +172,7 @@ const ContainerCanva = ({
       console.log(">> Render...")
       const activeObject = canvas.getActiveObject()
       if (activeObject) {
-        const { item } = tabObject.getById(activeObject)
+        const { item } = tabObject.getItemById(activeObject)
         console.log("object to update.... ", item)
         if (item) {
           activeObject.set(item)
