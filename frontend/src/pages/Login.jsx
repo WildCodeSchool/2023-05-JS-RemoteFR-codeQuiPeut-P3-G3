@@ -33,6 +33,7 @@ function Login() {
           Cookies.set("idUser", JSON.stringify(response.data.user.id), {
             sameSite: "strict",
           })
+
           navigate("/")
         } else {
           // Gérer le cas où l'inscription n'a pas réussi

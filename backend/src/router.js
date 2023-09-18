@@ -1,5 +1,10 @@
 const express = require("express")
-const { hashPassword, verifyPassword } = require("./auth")
+const {
+  hashPassword,
+  verifyPassword,
+  verifyAdminRole,
+  verifyToken,
+} = require("./auth")
 const { validateUser } = require("./validators/userValidator")
 const router = express.Router()
 
@@ -18,6 +23,14 @@ const weaponsControllers = require("./controllers/weaponsControllers")
 
 /* test images */
 const picturesControllers = require("./controllers/picturesControllers")
+
+const {
+  getStory,
+  getScene,
+  createStory,
+  putScene,
+  deleteScene,
+} = require("./api/controls/controllers")
 
 router.get("/card", cardControllers.browse)
 router.get("/card/:id", cardControllers.read)
@@ -74,10 +87,11 @@ router.put("/shop/:id", shopControllers.edit)
 router.delete("/shop/:id", shopControllers.destroy)
 
 router.get("/stories", storiesControllers.browse)
-router.get("/stories/:id", storiesControllers.read)
-router.post("/stories", storiesControllers.add)
-router.put("/stories/:id", storiesControllers.edit)
-router.delete("/stories/:id", storiesControllers.destroy)
+router.get("/stories/:id/:scene?", storiesControllers.read)
+router.post("/stories", storiesControllers.add, createStory)
+router.put("/stories/:id/:scene?", storiesControllers.edit)
+router.delete("/stories/:id", storiesControllers.destroy, deleteScene)
+router.put("/deploy/:id", storiesControllers.deploy)
 
 router.get("/users", usersControllers.browse)
 router.get("/users/:id", usersControllers.read)
@@ -93,9 +107,17 @@ router.post("/weapons", weaponsControllers.add)
 router.put("/weapons/:id", weaponsControllers.edit)
 router.delete("/weapons/:id", weaponsControllers.destroy)
 
+// Test admin route
+router.get("/admin", verifyToken, verifyAdminRole)
+
 /* Test images files */
 router.post("/addPicture/:filename", picturesControllers.add)
 router.delete("/deletePicture/:id", picturesControllers.destroy)
 router.get("/displayAllPictures", picturesControllers.browse)
+
+router.get("/api-stories/:filename", getStory)
+router.get("/api-stories/:filename/:scene", getScene)
+router.post("/api-stories/:filename", createStory)
+router.put("/api-stories/:filename/:scene", putScene)
 
 module.exports = router
