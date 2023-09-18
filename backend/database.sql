@@ -50,10 +50,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enigmadb`.`card` (
   `idcard` INT NOT NULL AUTO_INCREMENT,
+  `jdrGenre` VARCHAR(50) NOT NULL,
   `jdrName` VARCHAR(100) NOT NULL,
-  `jdrNameFont` INT NOT NULL,
+  `jdrNameFont` VARCHAR(100),
   `jdrNameColor` VARCHAR(45) NOT NULL,
-  `jdrNameFontSize` VARCHAR(45) NOT NULL,
+  `jdrNameFontSize` INT NOT NULL,
   `jdrImg1` VARCHAR(150) NOT NULL,
   `jdrImg2` VARCHAR(100) NOT NULL,
   `jdrText` VARCHAR(80) NOT NULL,
@@ -63,8 +64,8 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`card` (
   `jdrBgColor2` VARCHAR(45) NOT NULL,
   `buttonColor` VARCHAR(45) NOT NULL,
   `buttonFont` VARCHAR(45) NOT NULL,
-PRIMARY KEY (`idcard`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`idcard`)
+) ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------

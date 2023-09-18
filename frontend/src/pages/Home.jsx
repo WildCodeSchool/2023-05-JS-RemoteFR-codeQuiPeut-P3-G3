@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import axios from "axios" // Importez Axios
+import axios from "axios"
 import JdrCard from "../components/global/JdRcard"
 import StarRating from "../components/home/CarouselNote"
 import Footer from "../components/global/Footer"

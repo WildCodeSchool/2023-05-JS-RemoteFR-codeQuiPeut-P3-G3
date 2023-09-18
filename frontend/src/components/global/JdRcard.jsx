@@ -3,7 +3,7 @@ import "./JdRCard.scss"
 
 const JdrCard = (props) => {
   const {
-    // jdrGenre,
+    jdrGenre,
     jdrName,
     jdrNameFont,
     jdrNameColor,
@@ -80,6 +80,7 @@ const JdrCard = (props) => {
           />
         </svg>
       </div>
+      <div className="jdrCardGenre"> {jdrGenre}</div>
     </div>
   )
 }
