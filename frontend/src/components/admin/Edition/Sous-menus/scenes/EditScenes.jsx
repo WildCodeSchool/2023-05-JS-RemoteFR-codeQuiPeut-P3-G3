@@ -28,10 +28,12 @@ function EditScenes() {
     useEditionContext()
 
   /* Popup image viewer */
-  const [selectedPath, setSelectedPath] = useState("")
+  const { selectedPath, setSelectedPath } = useEditionContext()
+  const { imgPath, setImgPath } = useEditionContext()
+  const { backgroundPath, setBackgroundPath } = useEditionContext()
+
   const [viewImgFinder, setViewImgFinder] = useState(false)
-  const [imgPath, setImgPath] = useState("")
-  const [backgroundPath, setBackgroundPath] = useState("")
+
   console.info(backgroundPath)
 
   /* Taille de l'élément canva */
@@ -42,7 +44,7 @@ function EditScenes() {
   const { setIsAddingPic, setIsAddingBackground } = useEditionContext()
   const { editStatus, editSettings, deleteScene } = useEditionContext()
 
-  /* Init */
+  /* Calcul de la taille du canva */
   useEffect(() => {
     const handleResize = () => {
       calculateChildSize()
@@ -50,10 +52,6 @@ function EditScenes() {
     window.addEventListener("resize", handleResize)
     calculateChildSize()
 
-    // Recupération scene en cours
-    // if (story && scene) {
-    //   getScene(story, scene)
-    // }
     return () => {
       window.removeEventListener("resize", handleResize)
     }
@@ -61,13 +59,14 @@ function EditScenes() {
     /* récupération id scene */
   }, [])
 
+  /* Mise à jour du status d'edition (idStory, idScene, nbre scene...) */
   useEffect(() => {
     if (story && scene) {
       editSettings(story, scene)
     }
   }, [story, scene])
 
-  /* Actions quand quitte la popup */
+  /* Actions reset quand quitte la popup */
   useEffect(() => {
     if (!viewImgFinder) {
       setIsAddingPic(false)
@@ -92,7 +91,7 @@ function EditScenes() {
     }
   }
 
-  /* Actions quand selection d'une image */
+  /* Affichage popup selection d'une image */
   useEffect(() => {
     if (isAddingPic || isAddingBackground) {
       setViewImgFinder(true)

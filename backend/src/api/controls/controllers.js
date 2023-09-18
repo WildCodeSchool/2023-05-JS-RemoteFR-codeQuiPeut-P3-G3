@@ -155,6 +155,8 @@ module.exports.deleteStory = (req, res) => {
   res.status(204).json({ message: "Fichiers supprimés avec succès." })
 }
 
+/* ============================================================= */
+
 module.exports.createScene = (req, res) => {
   const { idStory } = req.params
 
@@ -171,7 +173,11 @@ module.exports.createScene = (req, res) => {
         const prevSceneContent = story.scenes[story.scenes.length - 1]
 
         story.scenes.push(prevSceneContent)
-        res.json({ status: "Scène ajoutée", indexScene: story.scenes.length })
+        res.json({
+          status: "Scène ajoutée",
+          indexScene: story.scenes.length,
+          content: story.scenes[story.scenes.length - 1],
+        })
       }
 
       // Écrire le contenu dans le fichier

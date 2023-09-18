@@ -29,7 +29,7 @@ function WidgetTexts({ viewEditProperties }) {
   const { setSelectedColor, setSelectedFont, setAlignment } =
     useEditionContext()
 
-  const { tabObject, objectSelected, objects } = useEditionContext()
+  const { tabObject, canvas } = useEditionContext()
 
   /* =============== */
 
@@ -44,24 +44,41 @@ function WidgetTexts({ viewEditProperties }) {
 
   /* Update states => context */
   useEffect(() => {
-    const { id, type } = objectSelected
+    // const { id, type } = objectSelected
 
-    console.log("id : ", id, "type : ", type)
+    // console.log("id : ", id, "type : ", type)
 
-    if (type === "textbox") {
-      const updateDataTexts = { ...objects[type][id] }
-      console.log("widgetText - objectSelected start : ", updateDataTexts)
+    // if (type === "textbox") {
+    //   const updateDataTexts = { ...objects[type][id] }
+    //   console.log("widgetText - objectSelected start : ", updateDataTexts)
 
-      // Modifiez les propriétés spécifiques de updateDataTexts
-      updateDataTexts.fontSize = selectedSize
-      updateDataTexts.fill = selectedColor
-      updateDataTexts.textAlign = selectedAlignment
-      updateDataTexts.fontFamily = selectedFont
+    // Modifiez les propriétés spécifiques de updateDataTexts
+    // updateDataTexts.fontSize = selectedSize
+    // updateDataTexts.fill = selectedColor
+    // updateDataTexts.textAlign = selectedAlignment
+    // updateDataTexts.fontFamily = selectedFont
 
-      console.log("widgetText - objectSelected modified : ", updateDataTexts)
+    // console.log("widgetText - params à modifier : ", updateDataTexts)
+    if (canvas) {
+      const activeObject = canvas.getActiveObject()
+      if (activeObject) {
+        const { item } = tabObject.getItemById(activeObject)
+        console.log("object to update.... ", item)
+        const updatedProperties = {
+          textAlign: selectedAlignment,
+          fill: selectedColor,
+          fontSize: selectedSize,
+          fontFamily: selectedFont,
+        }
 
-      tabObject.saveProperties(updateDataTexts)
+        if (item) {
+          activeObject.set(updatedProperties)
+          canvas.renderAll()
+        }
+      }
     }
+
+    // tabObject.saveProperties(updateDataTexts)
 
     // }
   }, [selectedColor, selectedFont, selectedAlignment])

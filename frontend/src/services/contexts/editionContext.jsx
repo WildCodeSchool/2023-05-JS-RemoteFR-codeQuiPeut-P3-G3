@@ -1,7 +1,8 @@
 /* eslint-disable no-restricted-syntax */
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
 import { fabric } from "fabric"
 import axios from "axios"
+import { v4 as uuidv4 } from "uuid"
 
 const EditionContext = createContext()
 
@@ -49,6 +50,11 @@ export const EditionContextProvider = ({ children }) => {
   const [selectedColorBorder, setSelectedColorBorder] = useState("#FFFFFF")
   const [selectedColorBg, setSelectedColorBg] = useState("#FFFFFF")
 
+  // BACKGROUND & IMAGES
+  const [backgroundPath, setBackgroundPath] = useState(null)
+  const [selectedPath, setSelectedPath] = useState("")
+  const [imgPath, setImgPath] = useState("")
+
   // SELECTIONS TOOLBAR
   const [isAddingText, setIsAddingText] = useState(false)
   const [isAddingPic, setIsAddingPic] = useState(false)
@@ -73,17 +79,23 @@ export const EditionContextProvider = ({ children }) => {
     return newCanvas
   }
 
+  useEffect(() => {
+    console.log("objects modifié => render")
+    tabObject.render()
+  }, [objects])
+
+  /* <<<<===================== tableau d'objets fabrics  */
   const tabObject = {
     /* Ajout d'un élément */
-    add: (newFabElem, id) => {
-      const newObject = newFabElem.toObject()
+    add: (newElem, id) => {
+      const newObject = newElem.toObject()
       newObject.id = id
       newObject.Actions = []
       const type = newObject.type
 
       setObjects((prevObjects) => {
         const updatedObjects = { ...prevObjects }
-
+        console.log(updatedObjects)
         if (!updatedObjects[type]) {
           updatedObjects[type] = {}
         }
@@ -132,13 +144,26 @@ export const EditionContextProvider = ({ children }) => {
           }
 
           console.log("Updated objects: ", updatedObjects)
-
-          setRender(true)
-          console.log("sauvegarde effectuée, > render ")
         }
 
         return updatedObjects
       })
+    },
+
+    render: () => {
+      if (canvas) {
+        console.log("========= RENDERING ========== ")
+        console.log(">> Render...")
+        const activeObject = canvas.getActiveObject()
+        if (activeObject) {
+          const { item } = tabObject.getItemById(activeObject)
+          console.log("object to update.... ", item)
+          if (item) {
+            activeObject.set(item)
+            canvas.renderAll()
+          }
+        }
+      }
     },
 
     /* Reset  properties selected */
@@ -156,7 +181,7 @@ export const EditionContextProvider = ({ children }) => {
     /* Update properties selected */
     updateSelectedProperties: (object) => {
       console.log("02 ======= UPDATE FROM CANVAS ========= ")
-      console.log(object)
+      console.info("Objet selectionné : ", object)
 
       setObjectSelected((prevObjectSelected) => {
         const newObject = {
@@ -206,6 +231,85 @@ export const EditionContextProvider = ({ children }) => {
     },
   }
 
+  /* <<<<================= Creation de nouveaux objets fabrics
+
+  /* add text */
+  const addText = (canvi) => {
+    const textId = uuidv4()
+    const text = new fabric.Textbox("Texte", {
+      height: 280,
+      width: 200,
+      fill: "black",
+      id: textId,
+      Actions: [],
+    })
+
+    canvi.add(text)
+    canvi.renderAll()
+    tabObject.add(text, textId)
+    setIsAddingText(false)
+  }
+
+  /* add rectangle */
+  const addRect = (canvi) => {
+    const rectId = uuidv4()
+
+    const rect = new fabric.Rect({
+      height: 200,
+      width: 200,
+      fill: "grey",
+      id: rectId,
+      Actions: [],
+    })
+
+    canvi.add(rect)
+    canvi.renderAll()
+    tabObject.add(rect, rectId)
+    setIsAddingRect(false)
+  }
+
+  /* add image */
+  const addImage = (canvi, imageUrl) => {
+    const imgId = uuidv4()
+    fabric.Image.fromURL(imageUrl, (img) => {
+      img.scale(0.75)
+      img.id = imgId
+      img.Actions = []
+      canvi.add(img)
+      tabObject.add(img, imgId)
+    })
+
+    canvi.renderAll()
+    setIsAddingPic(false)
+  }
+
+  const addBackground = () => {
+    if (canvas && backgroundPath !== "" && isAddingBackground) {
+      const backendBaseUrl = `http://localhost:4242/uploads/${backgroundPath}`
+
+      fabric.Image.fromURL(backendBaseUrl, (img) => {
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+          scaleX: canvas.width / img.width,
+          scaleY: canvas.height / img.height,
+        })
+      })
+      setIsAddingBackground(false)
+    }
+  }
+
+  const keyDeleteObject = () => {
+    const activeObject = canvas.getActiveObject()
+
+    if (activeObject) {
+      console.log("activeObject : ", activeObject)
+      console.log("id de l'active object : ", activeObject.id)
+      tabObject.delete(activeObject.type, activeObject.id)
+      canvas.remove(activeObject)
+      canvas.discardActiveObject()
+      canvas.renderAll()
+    }
+  }
+
   // const renderObject = (object) => {
   //   for (const textboxId in objects.textbox) {
   //     const textboxData = objects.textbox[textboxId]
@@ -250,14 +354,14 @@ export const EditionContextProvider = ({ children }) => {
     axios
       .get(`http://localhost:4242/api-stories/${idStory}/${idScene}`)
       .then((response) => {
-        console.log("Réponse du serveur :", response.data)
+        console.info("Get scene => Réponse serveur :", response.data)
         setEditStatus((prevEditStatus) => ({
           ...prevEditStatus,
           nbreScene: response.data.nbScenes,
           sceneId: response.data.id,
         }))
         console.log(response.data.scene)
-        setObjects(response.data.indexScene)
+        setObjects(response.data.scene)
         // setRender(true) (voir comment update les objets fabric pour render)
       })
       .catch((error) => {
@@ -271,11 +375,17 @@ export const EditionContextProvider = ({ children }) => {
     axios
       .post(`http://localhost:4242/api-stories/createScene/${idStory}`)
       .then((response) => {
+        console.info("Add scene => Réponse serveur :", response.data)
         setEditStatus((prevEditStatus) => ({
           ...prevEditStatus,
           sceneId: response.data.indexScene - 1,
           nbreScene: response.data.indexScene,
         }))
+        console.info(
+          "Contenu objects après reception : ",
+          response.data.content
+        )
+        setObjects(response.data.content)
         console.log(response.data.indexScene)
       })
       .catch((error) => {
@@ -310,31 +420,65 @@ export const EditionContextProvider = ({ children }) => {
   }
 
   const exportScenes = (data, idStory, idScene) => {
-    const dataExport = customJSONStringify(objects)
-    console.log(dataExport)
+    const objectsOnCanvas = canvas.getObjects()
+
+    // Créez un objet pour stocker les objets triés par type
+    const sortedObjects = {}
+
+    // Parcourez le tableau d'objets et organisez-les par type
+    objectsOnCanvas.forEach((obj) => {
+      const type = obj.type
+      if (!sortedObjects[type]) {
+        sortedObjects[type] = {}
+      }
+      sortedObjects[type][obj.id] = obj.toObject()
+    })
+
+    // Maintenant, sortedObjects contient les objets triés par type
+    console.log(sortedObjects)
+
+    const dataExport = sortedObjects
+
     axios
-      .put(`http://localhost:4242/api-stories/${idStory}/${idScene}`, objects)
+      .put(
+        `http://localhost:4242/api-stories/${idStory}/${idScene}`,
+        dataExport
+      )
       .then((response) => {
-        console.info("Réponse du serveur :", response.data)
+        console.info("Export scene => Réponse serveur :", response.data)
       })
       .catch((error) => {
         console.error("Erreur de la requête :", error)
       })
   }
 
-  function customJSONStringify(obj) {
-    const seen = new Set()
+  // function customJSONStringify(obj) {
+  //   const seen = new WeakSet()
 
-    return JSON.stringify(obj, (key, value) => {
-      if (typeof value === "object" && value !== null) {
-        if (seen.has(value)) {
-          return "[Circular Reference]"
-        }
-        seen.add(value)
-      }
-      return value
-    })
-  }
+  //   return JSON.stringify(obj, (key, value) => {
+  //     if (typeof value === "object" && value !== null) {
+  //       if (seen.has(value)) {
+  //         return // Exclut les références circulaires de la sérialisation
+  //       }
+  //       seen.add(value)
+  //     }
+  //     return value
+  //   })
+  // }
+
+  // function customJSONStringify(obj) {
+  //   const seen = new Set()
+
+  //   return JSON.stringify(obj, (key, value) => {
+  //     if (typeof value === "object" && value !== null) {
+  //       if (seen.has(value)) {
+  //         return "[Circular Reference]"
+  //       }
+  //       seen.add(value)
+  //     }
+  //     return value
+  //   })
+  // }
 
   return (
     <EditionContext.Provider
@@ -382,6 +526,17 @@ export const EditionContextProvider = ({ children }) => {
         setEditStatus,
         editStatus,
         deleteScene,
+        addRect,
+        addImage,
+        addBackground,
+        addText,
+        setBackgroundPath,
+        backgroundPath,
+        setSelectedPath,
+        selectedPath,
+        setImgPath,
+        imgPath,
+        keyDeleteObject,
       }}
     >
       {children}

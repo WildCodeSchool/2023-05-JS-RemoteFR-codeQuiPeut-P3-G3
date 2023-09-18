@@ -8,13 +8,13 @@ module.exports.story = {
   scenes: [
     {
       textbox: {
-        "fa8c25d7-3f52-44a8-b5d2-6ed5497ab234": {
+        "6cd2592b-8140-402c-972d-6e35754b74fa": {
           type: "textbox",
           version: "5.3.0",
           originX: "left",
           originY: "top",
-          left: 0,
-          top: 0,
+          left: -34.99,
+          top: 99.89,
           width: 200,
           height: 45.2,
           fill: "black",
@@ -60,40 +60,8 @@ module.exports.story = {
           pathAlign: "baseline",
           minWidth: 20,
           splitByGrapheme: false,
-          id: "fa8c25d7-3f52-44a8-b5d2-6ed5497ab234",
-          Actions: [],
         },
       },
-    },
-    {
-      textbox: {},
-      image: {},
-      rect: {},
-    },
-    {
-      textbox: {},
-      image: {},
-      rect: {},
-    },
-    {
-      textbox: {},
-      image: {},
-      rect: {},
-    },
-    {
-      textbox: {},
-      image: {},
-      rect: {},
-    },
-    {
-      textbox: {},
-      image: {},
-      rect: {},
-    },
-    {
-      textbox: {},
-      image: {},
-      rect: {},
     },
   ],
 }

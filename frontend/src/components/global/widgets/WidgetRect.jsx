@@ -21,7 +21,7 @@ function WidgetRect() {
   const [displayCPickerBg, setDisplayCPickerBg] = useState(false)
   const [displayCPickerBorder, setDisplayCPickerBorder] = useState(false)
   const [extend, setExtend] = useState(false)
-  const { tabObject, objects, objectSelected } = useEditionContext()
+  const { tabObject, objectSelected, canvas } = useEditionContext()
 
   /* FROM CONTEXT */
 
@@ -42,20 +42,39 @@ function WidgetRect() {
 
   /* Update states => context */
   useEffect(() => {
-    const { id, type } = objectSelected
+    // const { id, type } = objectSelected
 
-    if (type === "rect") {
-      const updateDataTexts = { ...objects[type][id] }
+    // if (type === "rect") {
+    //   const updateDataTexts = { ...objects[type][id] }
 
-      updateDataTexts.strokeWidth = selectedSizeBorder
-      updateDataTexts.rx = selectedSizeRadius
-      updateDataTexts.ry = selectedSizeRadius
-      updateDataTexts.stroke = selectedColorBorder
-      updateDataTexts.fill = selectedColorBg
+    //   updateDataTexts.strokeWidth = selectedSizeBorder
+    //   updateDataTexts.rx = selectedSizeRadius
+    //   updateDataTexts.ry = selectedSizeRadius
+    //   updateDataTexts.stroke = selectedColorBorder
+    //   updateDataTexts.fill = selectedColorBg
 
-      console.log("widgetRect - objectSelected modified : ", updateDataTexts)
+    //   console.log("widgetRect - objectSelected modified : ", updateDataTexts)
 
-      tabObject.saveProperties(updateDataTexts)
+    //   tabObject.saveProperties(updateDataTexts)
+    // }
+    if (canvas) {
+      const activeObject = canvas.getActiveObject()
+      if (activeObject) {
+        const { item } = tabObject.getItemById(activeObject)
+        console.log("object to update.... ", item)
+        const updatedProperties = {
+          strokeWidth: selectedSizeBorder,
+          rx: selectedSizeRadius,
+          ry: selectedSizeRadius,
+          stroke: selectedColorBorder,
+          fill: selectedColorBg,
+        }
+
+        if (item) {
+          activeObject.set(updatedProperties)
+          canvas.renderAll()
+        }
+      }
     }
 
     // }
