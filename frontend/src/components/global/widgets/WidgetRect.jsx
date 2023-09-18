@@ -17,11 +17,11 @@ import iconBorder from "../../../assets/text_ui/radius.png"
 import imgArrowTop from "../../../assets/text_ui/arrow_top.png"
 import imgArrowBottom from "../../../assets/text_ui/arrow_bottom.png"
 
-function WidgetRect({ viewEditProperties, objectSelected, setObjectSelected }) {
+function WidgetRect() {
   const [displayCPickerBg, setDisplayCPickerBg] = useState(false)
   const [displayCPickerBorder, setDisplayCPickerBorder] = useState(false)
   const [extend, setExtend] = useState(false)
-  const { tabObject, objects } = useEditionContext()
+  const { tabObject, objects, objectSelected } = useEditionContext()
 
   /* FROM CONTEXT */
 

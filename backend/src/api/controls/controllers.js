@@ -1,29 +1,67 @@
 const fs = require("fs")
 const path = require("path")
 
+/* ============================================================= */
+
+const findPath = (idStory) => {
+  // Pointe ver le dossier des stories
+  const folderPath = path.join(__dirname, "../", "stories")
+  const files = fs.readdirSync(folderPath)
+
+  const regex = new RegExp(`^${idStory}-`)
+
+  // Parcourir les fichiers pour trouver le chemin correspondant
+  for (const filename of files) {
+    if (regex.test(filename)) {
+      const filePath = path.join(folderPath, filename)
+      return filePath
+    }
+  }
+
+  return null
+}
+
+/* ============================================================= */
+
 module.exports.getStory = (req, res) => {
-  const storyId = req.params.filename
-  const filePath = path.join(__dirname, "../", "stories", `${storyId}.js`)
+  const { idStory } = req.params.filename
+
+  const filePath = findPath(idStory)
 
   if (fs.existsSync(filePath)) {
     const { story } = require(filePath)
+
     res.json(story)
   } else {
     res.status(404).json({ error: "Story not found" })
   }
 }
 
+/* ============================================================= */
+
 module.exports.getScene = (req, res) => {
-  const { filename, scene } = req.params
-  const filePath = path.join(__dirname, "../", "stories", `${filename}.js`)
+  const { idStory, idScene } = req.params
+  console.info("Get scene => id story : ", idStory, "id scene : ", idScene)
+
+  const filePath = findPath(idStory)
 
   if (fs.existsSync(filePath)) {
     const { story } = require(filePath)
-    res.json(story.scenes[scene])
+
+    if (idScene >= 0 && idScene < story.scenes.length) {
+      const scene = story.scenes[idScene]
+      res.json({ nbScenes: story.scenes.length, scene, id: idScene })
+    } else {
+      return res
+        .status(400)
+        .json({ error: "L'index de la scène est invalide." })
+    }
   } else {
     return res.status(400).json({ error: "Le fichier n'existe pas." })
   }
 }
+
+/* ============================================================= */
 
 module.exports.createStory = (req, res) => {
   const { insertId } = req
@@ -44,35 +82,59 @@ module.exports.createStory = (req, res) => {
 
   fs.writeFileSync(
     filePath,
-    `exports.module.story = ${JSON.stringify(story, null, 2)};\n`,
-    "utf-8"
+    `module.exports.story = ${JSON.stringify(story, null, 2)};\n`,
+    { encoding: "utf-8", flag: "w", EOL: "\n" }
   )
 
   return res.status(200).json({ message: "Fichier créé avec succès." })
 }
 
+/* ============================================================= */
+
 module.exports.putScene = (req, res) => {
-  const { filename, scene } = req.params
+  const { idStory, idScene } = req.params
   const sceneContent = req.body
 
-  const filePath = path.join(__dirname, "../", "stories", `${filename}.js`)
+  const filePath = findPath(idStory)
 
   if (fs.existsSync(filePath)) {
-    const { story } = require(filePath)
+    try {
+      const loadedStory = require(filePath)
+      const story = loadedStory.story
 
-    if (typeof story.scenes[scene] === "undefined") {
-      story.scenes.push(sceneContent)
-      res.send("Scène ajoutée")
-    } else {
-      story.scenes[scene] = sceneContent
-      res.send("Scène modifiée")
+      if (!story.scenes) {
+        story.scenes = []
+      }
+
+      if (typeof story.scenes[idScene] === "undefined") {
+        console.info("scene non définie")
+        story.scenes.push(sceneContent)
+        res.send("Scène ajoutée")
+      } else {
+        console.info("scene modifiée")
+        story.scenes[idScene] = sceneContent
+        res.send("Scène modifiée")
+      }
+
+      // Écrire le contenu dans le fichier
+      fs.writeFileSync(
+        filePath,
+        `module.exports.story = ${JSON.stringify(story, null, 2)};`
+      )
+    } catch (error) {
+      console.error("Erreur lors du chargement du fichier :", error)
+      return res
+        .status(500)
+        .json({ error: "Erreur lors du chargement du fichier." })
     }
   } else {
     return res.status(400).json({ error: "Le fichier n'existe pas." })
   }
 }
 
-module.exports.deleteScene = (req, res) => {
+/* ============================================================= */
+
+module.exports.deleteStory = (req, res) => {
   const { id } = req.params
   const folderPath = path.join(__dirname, "../", "stories")
 
@@ -91,4 +153,68 @@ module.exports.deleteScene = (req, res) => {
   })
 
   res.status(204).json({ message: "Fichiers supprimés avec succès." })
+}
+
+module.exports.createScene = (req, res) => {
+  const { idStory } = req.params
+
+  console.info("creation scene")
+
+  const filePath = findPath(idStory)
+
+  if (fs.existsSync(filePath)) {
+    try {
+      const loadedStory = require(filePath)
+      const story = loadedStory.story
+
+      if (story.scenes.length > 0) {
+        const prevSceneContent = story.scenes[story.scenes.length - 1]
+
+        story.scenes.push(prevSceneContent)
+        res.json({ status: "Scène ajoutée", indexScene: story.scenes.length })
+      }
+
+      // Écrire le contenu dans le fichier
+      fs.writeFileSync(
+        filePath,
+        `module.exports.story = ${JSON.stringify(story, null, 2)};`
+      )
+    } catch (error) {
+      console.error("Erreur lors du chargement du fichier :", error)
+      return res
+        .status(500)
+        .json({ error: "Erreur lors du chargement du fichier." })
+    }
+  } else {
+    return res.status(400).json({ error: "Le fichier n'existe pas." })
+  }
+}
+
+module.exports.deleteScene = (req, res, next) => {
+  const { idStory, idScene } = req.params
+
+  const filePath = findPath(idStory)
+
+  if (fs.existsSync(filePath)) {
+    try {
+      const loadedStory = require(filePath)
+      const story = loadedStory.story
+
+      if (story.scenes.length > 0) {
+        story.scenes.splice(idScene, 1)
+
+        // Écrire le contenu dans le fichier
+        fs.writeFileSync(
+          filePath,
+          `module.exports.story = ${JSON.stringify(story, null, 2)};`
+        )
+        next()
+      }
+    } catch (error) {
+      console.error("Erreur lors du chargement du fichier :", error)
+      return res.status(500).json({ error: "Erreur lors de la suppression." })
+    }
+  } else {
+    return res.status(400).json({ error: "Le fichier n'existe pas." })
+  }
 }

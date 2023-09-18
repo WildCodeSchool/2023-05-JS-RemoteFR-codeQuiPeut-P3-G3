@@ -5,26 +5,9 @@ import { fabric } from "fabric"
 import { v4 as uuidv4 } from "uuid"
 
 const ContainerCanva = ({
-  /* Ajout background */
-  isAddingBackground,
-  setIsAddingBackground,
-  /* Ajout texte */
-  isAddingText,
-  setIsAddingText,
-  /* Ajout rectangle */
-  isAddingRect,
-  setIsAddingRect,
-  /* Ajout image */
-  setIsAddingPic,
-  isAddingPic,
   /* Popup load image */
   setViewProperties,
   viewEditProperties,
-  /* Font properties */
-  selectedColor,
-  selectedFont,
-  selectedSize,
-  selectedAlignment,
   /* Chemin de fichiers */
   backgroundPath,
   imgPath,
@@ -34,6 +17,16 @@ const ContainerCanva = ({
 }) => {
   const { canvas, setCanvas } = useEditionContext()
   const { tabObject, initCanvas, objects, render, setRender } =
+    useEditionContext()
+
+  const {
+    setIsAddingPic,
+    setIsAddingBackground,
+    setIsAddingText,
+    setIsAddingRect,
+  } = useEditionContext()
+
+  const { isAddingText, isAddingRect, isAddingPic, isAddingBackground } =
     useEditionContext()
 
   /* Initialisation du canvas */
@@ -63,6 +56,7 @@ const ContainerCanva = ({
           scaleY: canvas.height / img.height,
         })
       })
+      setIsAddingBackground(false)
     }
   }, [isAddingBackground, backgroundPath, canvas])
 
@@ -217,6 +211,7 @@ const ContainerCanva = ({
     })
 
     canvi.renderAll()
+    setIsAddingPic(false)
   }
 
   /* ------------- RECTANGLE ---------------- */
