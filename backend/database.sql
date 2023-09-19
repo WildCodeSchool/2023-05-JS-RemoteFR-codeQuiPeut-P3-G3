@@ -230,6 +230,7 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`users` (
   `coins` INT NULL DEFAULT NULL,
   `experience` INT NULL DEFAULT NULL,
   `actual_chapter` INT NULL DEFAULT NULL,
+  `role` VARCHAR(45) NOT NULL DEFAULT 'user',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4

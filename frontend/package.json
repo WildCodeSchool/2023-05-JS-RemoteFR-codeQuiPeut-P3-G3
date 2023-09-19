@@ -15,6 +15,7 @@
     "eslint-config-standard": "^17.1.0",
     "fabric": "^5.3.0",
     "fabricjs-react": "^1.2.0",
+    "gsap": "^3.12.2",
     "immutable": "^4.3.2",
     "js-cookie": "^3.0.5",
     "konva": "^9.2.0",
@@ -25,6 +26,7 @@
     "react-dom": "^18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
     "react-konva": "^18.2.10",
+    "react-router-dom": "^6.16.0",
     "react-select": "^5.7.4",
     "react-web-editor": "^2.2.6",
     "vite": "^4.0.4"

@@ -13,6 +13,10 @@
           width: auto;
           padding: 20px;
         }
+
+        .th__title {
+          min-width: 200px;
+        }
       }
     }
     tbody {
@@ -35,5 +39,16 @@
 
   .generalAddButton {
     padding: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 5px;
+
+    input {
+      border-radius: 10px;
+      border: 0.2px solid #8080806b;
+      box-sizing: border-box;
+      padding-left: 10px;
+    }
   }
 }

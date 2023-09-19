@@ -1,116 +1,212 @@
-// -------------- TEST2 ---------------
+import { useEffect, useRef } from "react"
+import { gsap } from "gsap"
+import ScrollTrigger from "gsap/ScrollTrigger"
 
-// import { useEffect, useRef, useState } from "react"
-// import { gsap } from "gsap/gsap-core"
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
+// import castleDark from "../../assets/images/parallax/castleDark-01.png"
+import castleLights from "../../assets/images/parallax/castleLights.png"
+import cloudsBack from "../../assets/images/parallax/cloudsBack1.png"
+import cloudsFront from "../../assets/images/parallax/cloudsFront1.png"
+import moon from "../../assets/images/parallax/moonDown.png"
+import sky from "../../assets/images/parallax/sky1.png"
+import stars from "../../assets/images/parallax/stars1.png"
 
-// import cloudsBack from "../../assets/images/parallax/cloudsBack1.png"
-// import cloudsFront from "../../assets/images/parallax/cloudsFront1.png"
-// import moon from "../../assets/images/parallax/moonDown2.png"
-// import castle from "../../assets/images/parallax/castle1.png"
-// import stars from "../../assets/images/parallax/stars1.png"
+import "./HomeParallax.scss"
 
-// import "./HomeParallax.scss"
+gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger)
 
-// function HomeParallax() {
-//   const [background, setBackground] = useState(20)
+export default function HomeParallax() {
+  const parallaxSectionRef = useRef(null)
+  // const castleDarkRef = useRef(null)
+  const castleLightsRef = useRef(null)
+  const cloudsBackRef = useRef(null)
+  const cloudsFrontRef = useRef(null)
+  const moonRef = useRef(null)
+  const starsRef = useRef(null)
+  const skyRef = useRef(null)
 
-//   const parallaxSectionRef = useRef(null)
-//   const castleRef = useRef(null)
-//   const cloudsBackRef = useRef(null)
-//   const cloudsFrontRef = useRef(null)
-//   const moonRef = useRef(null)
-//   const starsRef = useRef(null)
+  // -------------- ScrollTrigger default settings ---------------
+  ScrollTrigger.defaults({
+    toggleActions: "play none reverse reset",
+    markers: false,
+  })
 
-//   useEffect(() => {
-//     const ctx = gsap.context(() => {
-//       gsap.registerPlugin(ScrollTrigger)
-//       const tl = gsap.timeline({
-//         defaults: { duration: 1 },
-//         scrollTrigger: {
-//           trigger: parallaxSectionRef.current,
-//           start: "top top",
-//           end: "5000 bottom",
-//           scrub: true,
-//           pin: true,
-//           onUpdate: (self) => {
-//             setBackground(Math.ceil(self.progress * 100 + 20))
-//           },
-//         },
-//       })
-//       tl.to(
-//         castleRef.current,
-//         {
-//           y: "-=80",
-//         },
-//         0
-//       )
-//       tl.to(
-//         cloudsBackRef.current,
-//         {
-//           opacity: 0,
-//           duration: 0.5,
-//         },
-//         0
-//       )
-//       tl.to(
-//         cloudsFrontRef.current,
-//         {
-//           x: "-20%",
-//           opacity: 0,
-//         },
-//         0
-//       )
-//       tl.to(
-//         moonRef.current,
-//         {
-//           y: "+=210",
-//         },
-//         0
-//       )
-//       tl.to(
-//         starsRef.current,
-//         {
-//           top: 0,
-//         },
-//         0.5
-//       )
-//     })
-//     return () => ctx.revert()
-//   }, [])
+  // TODO------------- Pin the castle image to a fixed position -----------------
+  // gsap.set(castleLightsRef, {
+  //   opacity: 0,
+  // })
 
-//   return (
-//     <div className="parallaxMain">
-//       <div
-//         className="parallaxBkgd"
-//         ref={parallaxSectionRef}
-//         style={{
-//           background: `linear-gradient(#0F2B9C, #673D7D ${background}%, #A74A67, #EDFC54 )`,
-//         }}
-//       >
-//         <img
-//           ref={cloudsBackRef}
-//           className="cloudsBackImg"
-//           src={cloudsBack}
-//           alt=""
-//         />
-//         <img
-//           ref={cloudsFrontRef}
-//           className="cloudsFrontImg"
-//           src={cloudsFront}
-//           alt=""
-//         />
-//         <img ref={moonRef} className="moonImg" src={moon} alt="" />
-//         <img ref={castleRef} className="castleImg" src={castle} alt="" />
-//         <img ref={starsRef} className="starsImg" src={stars} alt="" />
-//       </div>
-//     </div>
-//   )
-// }
+  // const tl = gsap.timeline({
+  //   scrollTrigger: {
+  //     trigger: parallaxSectionRef.current,
+  //     start: "top top",
+  //     end: "bottom top",
+  //     pin: true,
+  //     pinSpacing: false,
+  //     id: "castleLights",
+  //   },
+  // })
 
-// export default HomeParallax
+  // tl.to(castleLightsRef, { opacity: 1 })
 
-// --------------- TEST1 -------------
+  const pinCastleLights = () => {
+    gsap.to(castleLightsRef.current, {
+      scrollTrigger: {
+        trigger: parallaxSectionRef.current,
+        start: "top top",
+        end: "bottom top",
+        pin: true,
+        pinSpacing: false,
+        id: "castleDark",
+      },
+    })
+  }
+
+  useEffect(() => {
+    pinCastleLights()
+  }, [])
+
+  //  TODO------------------- Switch between castle images --------------
+  // const switchCastleImg = () => {
+  //   gsap.to(castleDarkRef.current, {
+  //     opacity: 0,
+  //     duration: 0.5,
+  //     onComplete: () => {
+  //       gsap.set(castleLightsRef.current, { opacity: 1 })
+  //     },
+  //   })
+  // }
+
+  // useEffect(() => {
+  //   ScrollTrigger.create({
+  //     trigger: parallaxSectionRef.current,
+  //     start: "top top",
+  //     end: "70% 100%",
+  //     onToggle: (self) => {
+  //       if (self.isActive) {
+  //         switchCastleImg()
+  //       }
+  //     },
+  //   })
+  // }, [])
+
+  //  TODO---------------- Move the front clouds to the left -------------------
+
+  const moveCloudsFront = () => {
+    gsap.from(cloudsFrontRef.current, {
+      x: -2000,
+      scrollTrigger: {
+        trigger: parallaxSectionRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 20,
+        duration: 10,
+        id: "cloudsFront",
+      },
+    })
+  }
+
+  useEffect(() => {
+    moveCloudsFront()
+  }, [])
+
+  //  TODO---------------- Move the back clouds to the right -------------------
+  const moveCloudsBack = () => {
+    gsap.from(cloudsBackRef.current, {
+      x: 2200,
+      scrollTrigger: {
+        trigger: parallaxSectionRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 20,
+        duration: 10,
+        id: "cloudsBack",
+      },
+    })
+  }
+
+  useEffect(() => {
+    moveCloudsBack()
+  }, [])
+
+  //  TODO---------------- Move the stars to the right -------------------
+  const moveStars = () => {
+    gsap.from(starsRef.current, {
+      y: -1000,
+      scrollTrigger: {
+        trigger: parallaxSectionRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 5,
+        duration: 5,
+        id: "stars",
+      },
+    })
+  }
+
+  useEffect(() => {
+    moveStars()
+  }, [])
+
+  //  TODO---------------- Move the moon up from behind the mountain -------------------
+  const moveMoon = () => {
+    gsap.to(moonRef.current, {
+      y: -500,
+      scrollTrigger: {
+        trigger: parallaxSectionRef.current,
+        start: "top top",
+        end: "+=500",
+        scrub: 2,
+        duration: 3,
+        id: "moon",
+      },
+    })
+  }
+
+  useEffect(() => {
+    moveMoon()
+  }, [])
+
+  // ----------------- To tell that the parallax effect is complete -----------------
+
+  return (
+    <>
+      <div className="parallaxMain">
+        <section ref={parallaxSectionRef} className="parallaxSection">
+          <img ref={skyRef} className="skyImg" src={sky} alt="" />
+          <img
+            ref={cloudsBackRef}
+            className="cloudsBackImg"
+            src={cloudsBack}
+            alt=""
+          />
+          <img
+            ref={cloudsFrontRef}
+            className="cloudsFrontImg"
+            src={cloudsFront}
+            alt=""
+          />
+          <img ref={moonRef} className="moonImg" src={moon} alt="" />
+          {/* <img
+            ref={castleDarkRef}
+            className="castleDarkImg"
+            src={castleDark}
+            alt=""
+          /> */}
+          <img
+            ref={castleLightsRef}
+            className="castleLightsImg"
+            src={castleLights}
+            alt=""
+          />
+
+          <img ref={starsRef} className="starsImg" src={stars} alt="" />
+        </section>
+      </div>
+    </>
+  )
+}
+
 // import React, { useEffect, useRef, useState } from "react"
 
 // import cloudsBack from "../../assets/images/parallax/cloudsBack1.png"

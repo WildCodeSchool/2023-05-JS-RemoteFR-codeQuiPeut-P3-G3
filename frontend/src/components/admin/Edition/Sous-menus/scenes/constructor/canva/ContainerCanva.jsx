@@ -1,81 +1,51 @@
-import React, { useState, useEffect, useLayoutEffect } from "react"
-import { fabric } from "fabric"
+/* eslint-disable no-restricted-syntax */
+import React, { useEffect, useLayoutEffect } from "react"
+import { useEditionContext } from "../../../../../../../services/contexts/editionContext.jsx"
 
 const ContainerCanva = ({
-  /* Ajout background */
-  isAddingBackground,
-  setIsAddingBackground,
-  /* Ajout texte */
-  isAddingText,
-  setIsAddingText,
-  /* Ajout rectangle */
-  isAddingRect,
-  setIsAddingRect,
-  /* Ajout image */
-  setIsAddingPic,
-  isAddingPic,
-  /* Popup load image */
   setViewProperties,
   viewEditProperties,
-  /* Font properties */
-  selectedColor,
-  selectedFont,
-  selectedSize,
-  selectedAlignment,
-  /* Chemin de fichiers */
-  backgroundPath,
-  imgPath,
-  /* Sizes canva */
   canvaHeight,
   canvaWidth,
 }) => {
-  const [canvas, setCanvas] = useState("")
+  /* <============= Variables & fonctions du contexte ================> */
 
-  const initCanvas = () => {
-    const newCanvas = new fabric.Canvas("myCanva", {
-      backgroundColor: "white",
-    })
+  // Variables canva
+  const { canvas, setCanvas } = useEditionContext()
 
-    return newCanvas
-  }
+  // Variables environnement canva
+  const { initCanvas, updateSelectedProperties, updateStates } =
+    useEditionContext()
 
-  /* Resize canva quand les valeurs calculees ont changees */
+  // Triggers getters toolbar
+  const { isAddingText, isAddingRect, isAddingPic, isAddingBackground } =
+    useEditionContext()
+
+  // Fonctions de creation d'objets fabricJS
+  const { addRect, addImage, addText, addBackground, keyDeleteObject } =
+    useEditionContext()
+
+  const { backgroundPath, imgPath, setObjectSelected } = useEditionContext()
+
+  /* <===================================================================> */
+
+  /* 01. - Initialisation du canvas */
+  useEffect(() => {
+    setCanvas(initCanvas())
+  }, [])
+
+  /* 02. - Resize canva */
   useLayoutEffect(() => {
     if (canvaHeight || canvaWidth) {
       canvas.setDimensions({
         width: canvaWidth,
         height: canvaHeight,
       })
-
       canvas.renderAll()
     }
   }, [canvaHeight, canvaWidth, canvas])
 
-  /* TEST */
-  useEffect(() => {
-    // console.log(isAddingRect)
-  }, [isAddingRect])
-
-  /* Initialisation du canvas */
-  useEffect(() => {
-    setCanvas(initCanvas())
-  }, [])
-
-  /* Ajout d'un background */
-  useEffect(() => {
-    if (canvas && backgroundPath !== "" && isAddingBackground) {
-      const backendBaseUrl = `http://localhost:4242/uploads/${backgroundPath}`
-
-      fabric.Image.fromURL(backendBaseUrl, (img) => {
-        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-          scaleX: canvas.width / img.width,
-          scaleY: canvas.height / img.height,
-        })
-      })
-    }
-  }, [isAddingBackground, backgroundPath, canvas])
-
-  /* Déclenchement ajout d'un texte, d'un image & suppression */
+  /* 03. - Ajout d'un élément */
   useEffect(() => {
     if (isAddingText) {
       addText(canvas)
@@ -87,129 +57,136 @@ const ContainerCanva = ({
 
     if (isAddingPic && imgPath !== "") {
       const pathPic = `http://localhost:4242/uploads/${imgPath}`
-      // console.log("ajout picture, valeur path : " + pathPic)
       addImage(canvas, pathPic)
     }
 
-    /* Suppression element */
-    const handleDeleteKeyPress = (event) => {
-      if (event.key === "Delete" || event.key === "Backspace") {
-        const activeObject = canvas.getActiveObject()
+    if (isAddingBackground) {
+      addBackground()
+    }
+  }, [
+    isAddingText,
+    isAddingPic,
+    isAddingRect,
+    isAddingBackground,
+    backgroundPath,
+    imgPath,
+    canvas,
+  ])
 
-        // if (activeObject instanceof fabric.Textbox) {
-        canvas.remove(activeObject)
-        canvas.discardActiveObject()
-        canvas.renderAll()
-        // }
+  /* 04. - Suppression d'un élément */
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Delete") {
+        console.log("touche supp")
+        keyDeleteObject()
       }
     }
 
-    document.addEventListener("keydown", handleDeleteKeyPress)
+    document.addEventListener("keydown", handleKeyDown)
 
     return () => {
-      document.removeEventListener("keydown", handleDeleteKeyPress)
+      document.removeEventListener("keydown", handleKeyDown)
     }
-  }, [isAddingText, isAddingPic, isAddingRect, imgPath, canvas])
+  }, [canvas])
 
-  /* ------------ PROPERTIES ---------------- */
+  /* 05. - Gestion manipulation des objets */
 
-  /* Modifications de l'objet selectionné */
+  /***********************************************/
+  /*           DELETE ALL ELEMENTS               */
+  /***********************************************/
+
+  /***********************************************/
+  /*          RENDER FROM LOAD SCENE             */
+  /***********************************************/
+  // useEffect(() => {
+  //   console.log("test")
+  //   if (objects) {
+  //     console.log(objects)
+
+  //     // Suppression de tous les éléments
+  //     if (canvas) {
+  //       canvas.clear()
+
+  //       for (const textboxId in objects.textbox) {
+  //         console.log(textboxId)
+  //         const textboxData = objects.textbox[textboxId]
+  //         const textbox = new fabric.Textbox(textboxData.text, {
+  //           left: textboxData.left,
+  //           top: textboxData.top,
+  //           width: textboxData.width,
+  //           height: textboxData.height,
+  //           fill: textboxData.fill,
+  //           fontFamily: textboxData.fontFamily,
+  //           fontSize: textboxData.fontSize,
+  //           textAlign: textboxData.textAlign,
+  //           // Ajoutez d'autres propriétés de style ici si nécessaire
+  //         })
+
+  //         canvas.add(textbox)
+  //       }
+  //     }
+  //   }
+  // }, [editStatus.sceneId])
+
   useEffect(() => {
     if (canvas) {
-      const activeObject = canvas.getActiveObject()
-      if (activeObject instanceof fabric.Textbox) {
-        activeObject.set("fill", selectedColor)
-        activeObject.set("fontFamily", selectedFont)
-        activeObject.set("fontSize", selectedSize)
-        activeObject.set("textAlign", selectedAlignment)
-        canvas.renderAll()
+      const objectModifiedHandler = function (options) {
+        console.log("objet modifié", options.target)
+        setObjectSelected({ selected: true })
+      }
+
+      const selectionCreatedHandler = function (options) {
+        console.log("selection créé")
+        updateSelectedProperties(options.selected[0])
+        updateStates(options.selected[0])
+        setViewProperties(true)
+      }
+
+      const selectionClearedHandler = function (options) {
+        setViewProperties(false)
+        setObjectSelected({ selected: false })
+      }
+
+      const selectionModified = function (options) {
+        console.log("selection modifiée")
+        updateSelectedProperties(options.selected[0])
+        updateStates(options.selected[0])
+      }
+
+      canvas.on("object:modified", objectModifiedHandler)
+      canvas.on("selection:created", selectionCreatedHandler)
+      canvas.on("selection:cleared", selectionClearedHandler)
+      canvas.on("selection:updated", selectionModified)
+
+      return () => {
+        canvas.off("object:modified", objectModifiedHandler)
+        canvas.off("selection:created", selectionCreatedHandler)
+        canvas.off("selection:cleared", selectionClearedHandler)
+        canvas.off("selection:updated", selectionModified)
       }
     }
-  }, [selectedColor, selectedFont, selectedSize, selectedAlignment, canvas])
+  }, [canvas])
 
-  /* -------------- TEXTE ---------------- */
+  /* 06. - Render */
 
-  /* Fonction ajout de texte */
-  const addText = (canvi) => {
-    const text = new fabric.Textbox("Texte", {
-      height: 280,
-      width: 200,
-      fill: "black",
-    })
-    canvi.add(text)
-    canvi.renderAll()
-    canvi.on("mouse:down", (options) => {
-      // console.log("test")
-    })
-    canvi.on("selection:created", (options) => {
-      // console.log(canvi._activeObject)
-      setViewProperties(true)
-    })
-
-    canvi.on("selection:cleared", (options) => {
-      // console.log("déselectionné")
-      setViewProperties(false)
-    })
-
-    setIsAddingText(false)
-  }
-
-  /* -------------- IMAGES ---------------- */
-
-  /* Fonction ajout d'image */
-  const addImage = (canvi, imageUrl) => {
-    fabric.Image.fromURL(imageUrl, (img) => {
-      // img.set({ selectable: true })
-      img.scale(0.75)
-      canvi.add(img)
-      // img.bringToFront() // Amener l'image à l'avant-plan
-    })
-    canvi.renderAll()
-  }
-
-  /* ------------- RECUPERATION DES INFORMATIONS ELEMENTS ------------------------- */
-
-  const getAllObjectProperties = (canvas) => {
-    const objectProperties = {}
-
-    canvas.getObjects().forEach((object, index) => {
-      // Extraire toutes les propriétés de l'objet
-      objectProperties[`object${index + 1}`] = { ...object.toObject() }
-    })
-
-    // Affiche les propriétés dans la console (vous pouvez les utiliser autrement)
-    // console.log(objectProperties)
-  }
-
-  const addRect = (canvi) => {
-    const rect = new fabric.Rect({
-      height: 280,
-      width: 200,
-      fill: "yellow",
-    })
-
-    canvi.on("selection:created", (options) => {
-      // console.log(canvi._activeObject)
-      setViewProperties(true)
-    })
-
-    canvi.on("selection:cleared", (options) => {
-      // console.log("déselectionné")
-      setViewProperties(false)
-    })
-
-    canvi.add(rect)
-    canvi.renderAll()
-
-    setIsAddingRect(false)
-  }
+  /*
+  /*
+  /*
+  /*
+  /* ================================================================= */
+  /* ================================================================= */
+  /* ==================/         RETURN        /====================== */
+  /* ================================================================= */
+  /* ================================================================= */
+  /*
+  /*
+  /*
+  /*
+  */
 
   return (
     <>
       <canvas id="myCanva" />
-      <button onClick={() => getAllObjectProperties(canvas)} type="button">
-        Récupérer les informations des éléments
-      </button>
     </>
   )
 }

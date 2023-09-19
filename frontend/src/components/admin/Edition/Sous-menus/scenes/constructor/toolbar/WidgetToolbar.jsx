@@ -9,18 +9,20 @@ import imgSwitchOff from "../../../../../../../assets/user_ui/switch_off.png"
 import imgSwitchOn from "../../../../../../../assets/user_ui/switch_on.png"
 import imgText from "../../../../../../../assets/user_ui/text.png"
 import ListDeroulante from "../../../../../../global/ListDeroulante"
+import { useEditionContext } from "../../../../../../../services/contexts/editionContext"
 
-function WidgetToolbar({
-  setIsAddingText,
-  setIsAddingBackground,
-  setIsAddingPic,
-  setIsAddingRect,
-  isAddingText,
-  isAddingBackground,
-  isAddingPic,
-  isAddingRect,
-}) {
+function WidgetToolbar() {
   const [isFight, setFight] = useState(false)
+
+  const {
+    setIsAddingPic,
+    setIsAddingBackground,
+    setIsAddingText,
+    setIsAddingRect,
+  } = useEditionContext()
+
+  const { isAddingText, isAddingRect, isAddingPic, isAddingBackground } =
+    useEditionContext()
 
   return (
     <div className="toolbar">
