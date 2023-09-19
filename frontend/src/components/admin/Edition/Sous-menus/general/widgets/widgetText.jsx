@@ -5,9 +5,9 @@ import FontSize from "../../../../../global/DropLists/FontSize"
 import ColorSelector from "../../../../../global/texts-editor/ColorSelector"
 import iconTextColor from "../../../../../../assets/text_ui/colorPicker.png"
 import ButtonStandard from "../../../../../global/Buttons/ButtonStandard"
+import "./WidgetText.scss"
 
 function widgetText({
-  viewEditProperties,
   selectedColor,
   selectedFont,
   selectedSize,
@@ -29,13 +29,16 @@ function widgetText({
   /* JSX */
   return (
     <div>
-      <div className="widgetTitle">
+      <div className="widgeTitle">
         <span>Text Formatting</span>
       </div>
-      {/* {viewEditProperties && ( */}
-      <div className="fontPropsContent">
-        <span> Font family, size and color</span>
-        <div className="fontPropsSelection">
+      <div className="fontContent">
+        <span className="formattingText">
+          TITLE: Font family, size and color<br></br>
+          TEXT: Font family and color<br></br>
+          BUTTON: Font family
+        </span>
+        <div className="fontSelection">
           <FontSelector
             setSelectedFont={setSelectedFont}
             selectedFont={selectedFont}
