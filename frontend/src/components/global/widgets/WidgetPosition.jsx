@@ -23,14 +23,6 @@ function WidgetPosition({ viewSceneLink }) {
   const { objectSelected, canvas } = useEditionContext()
   // const { setFlipHoriz, setFlipVert, setFront, setBehind } = useEditionContext()
 
-  useEffect(() => {
-    if (objectSelected && objectSelected.type !== "") {
-      setExtend(true)
-    } else {
-      setExtend(false)
-    }
-  }, [objectSelected])
-
   const handleFlipVert = () => {
     const activeObject = canvas.getActiveObject()
     if (activeObject) {
@@ -62,6 +54,14 @@ function WidgetPosition({ viewSceneLink }) {
       canvas.renderAll()
     }
   }
+
+  useEffect(() => {
+    if (objectSelected.selected) {
+      setExtend(true)
+    } else {
+      setExtend(false)
+    }
+  }, [objectSelected.selected])
 
   return (
     <div className="wrap-widget">

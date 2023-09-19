@@ -1,8 +1,9 @@
 /* eslint-disable no-restricted-syntax */
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useState } from "react"
 import { fabric } from "fabric"
 import axios from "axios"
 import { v4 as uuidv4 } from "uuid"
+import imgDelete from "../../assets/text_ui/minus.png"
 
 const EditionContext = createContext()
 
@@ -22,6 +23,7 @@ export const EditionContextProvider = ({ children }) => {
 
   /* Propriétés d'un objet selectionné */
   const [objectSelected, setObjectSelected] = useState({
+    selected: false,
     type: "",
     id: "",
     properties: {
@@ -68,6 +70,10 @@ export const EditionContextProvider = ({ children }) => {
     nbreScene: 0,
   })
 
+  const [tabElem, setTabElem] = useState([])
+
+  const [updateActions, setUpdateActions] = useState(false)
+
   /* ============================================= GESTIONS EVENEMENTS CANVAS  ========================================= */
 
   /* Fonction initialisation canva */
@@ -79,156 +85,23 @@ export const EditionContextProvider = ({ children }) => {
     return newCanvas
   }
 
-  useEffect(() => {
-    console.log("objects modifié => render")
-    tabObject.render()
-  }, [objects])
+  /* Update properties selected */
 
-  /* <<<<===================== tableau d'objets fabrics  */
-  const tabObject = {
-    /* Ajout d'un élément */
-    add: (newElem, id) => {
-      const newObject = newElem.toObject()
-      newObject.id = id
-      newObject.Actions = []
-      const type = newObject.type
+  const updateSelectedProperties = (object) => {
+    // console.log("02 ======= UPDATE FROM CANVAS ========= ")
+    // console.info("Objet selectionné : ", object)
 
-      setObjects((prevObjects) => {
-        const updatedObjects = { ...prevObjects }
-        console.log(updatedObjects)
-        if (!updatedObjects[type]) {
-          updatedObjects[type] = {}
-        }
-
-        updatedObjects[type][id] = newObject
-        return updatedObjects
-      })
-    },
-    /* Suppression element */
-    delete: (type, idToDelete) => {
-      setObjects((prevObjects) => {
-        // Copie du précédent
-        const updatedObjects = { ...prevObjects }
-
-        if (updatedObjects[type] && typeof updatedObjects[type] === "object") {
-          delete updatedObjects[type][idToDelete]
-        }
-
-        return updatedObjects
-      })
-    },
-
-    /* Recherche par Id (render AtiveObject) */
-    getItemById: (activeObject) => {
-      const idSearch = activeObject.id
-
-      for (const [type, items] of Object.entries(objects)) {
-        if (items[idSearch]) {
-          return { type, item: items[idSearch] }
-        }
+    setObjectSelected((prevObjectSelected) => {
+      const newObject = {
+        selected: true,
+        type: object.type,
+        id: object.id,
+        properties: object.toObject(),
       }
-      return null
-    },
+      // console.log("Object selected updated : ", newObject)
 
-    /* Sauvegarde dans tableau d'objets */
-    saveProperties: (objectUpdated) => {
-      const { id, type } = objectSelected
-
-      setObjects((prevObjects) => {
-        const updatedObjects = { ...prevObjects }
-
-        if (updatedObjects[type] && updatedObjects[type][id]) {
-          updatedObjects[type][id] = {
-            ...updatedObjects[type][id],
-            ...(objectUpdated.properties || objectUpdated),
-          }
-
-          console.log("Updated objects: ", updatedObjects)
-        }
-
-        return updatedObjects
-      })
-    },
-
-    render: () => {
-      if (canvas) {
-        console.log("========= RENDERING ========== ")
-        console.log(">> Render...")
-        const activeObject = canvas.getActiveObject()
-        if (activeObject) {
-          const { item } = tabObject.getItemById(activeObject)
-          console.log("object to update.... ", item)
-          if (item) {
-            activeObject.set(item)
-            canvas.renderAll()
-          }
-        }
-      }
-    },
-
-    /* Reset  properties selected */
-    resetProperties: () => {
-      console.log("======= RESET PROPERTIES ========= ")
-      setObjectSelected({
-        type: "",
-        id: "",
-        properties: {},
-        actions: [],
-      })
-      setUpdated(false)
-    },
-
-    /* Update properties selected */
-    updateSelectedProperties: (object) => {
-      console.log("02 ======= UPDATE FROM CANVAS ========= ")
-      console.info("Objet selectionné : ", object)
-
-      setObjectSelected((prevObjectSelected) => {
-        const newObject = {
-          type: object.type,
-          id: object.id,
-          properties: object.toObject(),
-        }
-        console.log("Object selected updated : ", newObject)
-        tabObject.updateStates(newObject)
-
-        return newObject
-      })
-    },
-
-    /* Update des states */
-    updateStates: (object) => {
-      if (object) {
-        const properties = object.properties
-
-        // font style
-        if (object.type === "textbox") {
-          setSelectedColor(properties.fill)
-          setSelectedFont(properties.fontFamily)
-          setSelectedSize(properties.fontSize)
-          setAlignment(properties.textAlign)
-          setSelectedColorBg(properties.backgroundColor)
-        }
-        // properties
-        if (object.type === "rect" || object.type === "textbox") {
-          setSelectedSizeBorder(properties.strokeWidth)
-          setSelectedSizeRadius(properties.rx)
-          setSelectedColorBorder(properties.stroke || "#FFFFFF")
-          setSelectedColorBg(properties.fill)
-        }
-
-        const states = {
-          selectedColor,
-          selectedFont,
-          selectedSize,
-          selectedAlignment,
-          selectedSizeBorder,
-          selectedSizeRadius,
-          selectedColorBorder,
-        }
-        console.log("states : ", states)
-      }
-    },
+      return newObject
+    })
   }
 
   /* <<<<================= Creation de nouveaux objets fabrics
@@ -246,7 +119,6 @@ export const EditionContextProvider = ({ children }) => {
 
     canvi.add(text)
     canvi.renderAll()
-    tabObject.add(text, textId)
     setIsAddingText(false)
   }
 
@@ -264,7 +136,6 @@ export const EditionContextProvider = ({ children }) => {
 
     canvi.add(rect)
     canvi.renderAll()
-    tabObject.add(rect, rectId)
     setIsAddingRect(false)
   }
 
@@ -276,7 +147,6 @@ export const EditionContextProvider = ({ children }) => {
       img.id = imgId
       img.Actions = []
       canvi.add(img)
-      tabObject.add(img, imgId)
     })
 
     canvi.renderAll()
@@ -303,31 +173,73 @@ export const EditionContextProvider = ({ children }) => {
     if (activeObject) {
       console.log("activeObject : ", activeObject)
       console.log("id de l'active object : ", activeObject.id)
-      tabObject.delete(activeObject.type, activeObject.id)
       canvas.remove(activeObject)
       canvas.discardActiveObject()
       canvas.renderAll()
     }
   }
 
-  // const renderObject = (object) => {
-  //   for (const textboxId in objects.textbox) {
-  //     const textboxData = objects.textbox[textboxId]
-  //     const textbox = new fabric.Textbox(textboxData.text, {
-  //       left: textboxData.left,
-  //       top: textboxData.top,
-  //       width: textboxData.width,
-  //       height: textboxData.height,
-  //       fill: textboxData.fill,
-  //       fontFamily: textboxData.fontFamily,
-  //       fontSize: textboxData.fontSize,
-  //       textAlign: textboxData.textAlign,
-  //       // Ajoutez d'autres propriétés de style ici si nécessaire
-  //     })
+  const updateStates = (object) => {
+    if (object) {
+      // font style
+      if (object.type === "textbox") {
+        setSelectedColor(object.fill)
+        setSelectedFont(object.fontFamily)
+        setSelectedSize(object.fontSize)
+        setAlignment(object.textAlign)
+        // setSelectedColorBg(object.backgroundColor)
+      }
+      // properties
+      if (object.type === "rect") {
+        setSelectedSizeBorder(object.strokeWidth)
+        setSelectedSizeRadius(object.rx)
+        setSelectedColorBorder(object.stroke || "#FFFFFF")
+        setSelectedColorBg(object.fill)
+      }
+    }
+  }
 
-  //     canvas.add(textbox)
-  //   }
-  // }
+  /* Récupérer actions */
+  const getActions = () => {
+    if (canvas) {
+      const activeObject = canvas.getActiveObject()
+      if (activeObject) {
+        const newTabElem = activeObject.Actions.map((elem, index) => (
+          <tr key={index}>
+            <td>{elem.type}</td>
+            <td>{elem.target}</td>
+            <td>{elem.number}</td>
+            <td>
+              <img
+                src={imgDelete}
+                alt="img-delete"
+                onClick={() => handleDelete(index)}
+              />
+            </td>
+          </tr>
+        ))
+
+        setTabElem(newTabElem)
+      }
+    }
+  }
+
+  /* Delete action */
+  const handleDelete = (index) => {
+    if (canvas) {
+      const activeObject = canvas.getActiveObject()
+      if (activeObject) {
+        const currentActions = activeObject.get("Actions")
+
+        if (currentActions && currentActions.length > index) {
+          currentActions.splice(index, 1)
+          activeObject.set({ Actions: currentActions })
+          canvas.renderAll()
+          setUpdateActions(true)
+        }
+      }
+    }
+  }
 
   /* ======= ANNEXES ====== */
 
@@ -362,14 +274,75 @@ export const EditionContextProvider = ({ children }) => {
         }))
         console.log(response.data.scene)
         setObjects(response.data.scene)
-        // setRender(true) (voir comment update les objets fabric pour render)
+        canvas.clear()
+        renderNewElements(response.data.scene)
       })
       .catch((error) => {
         // Gérer les erreurs de la requête
         console.error("Erreur de la requête :", error)
       })
+
+    // canvas.clear()
+
+    return () => {
+      renderNewElements(objects)
+    }
   }
 
+  const renderNewElements = (data) => {
+    console.log("render des elements")
+    console.log(data)
+
+    // "textbox"
+    for (const textboxId in data.textbox) {
+      const textboxData = data.textbox[textboxId]
+      const textbox = new fabric.Textbox(textboxData.text, {
+        left: textboxData.left,
+        top: textboxData.top,
+        width: textboxData.width,
+        height: textboxData.height,
+        fill: textboxData.fill,
+        fontFamily: textboxData.fontFamily,
+        fontSize: textboxData.fontSize,
+      })
+
+      canvas.add(textbox)
+    }
+
+    // Parcourez les données de "rect"
+    for (const rectId in data.rect) {
+      const rectData = data.rect[rectId]
+      const rect = new fabric.Rect({
+        left: rectData.left,
+        top: rectData.top,
+        width: rectData.width,
+        height: rectData.height,
+        fill: rectData.fill,
+        // Autres propriétés du rectangle ici
+      })
+
+      canvas.add(rect)
+    }
+
+    // Parcourez les données de "image"
+    for (const imgId in data.image) {
+      const imgData = data.image[imgId]
+      fabric.Image.fromURL(imgData.src, (img) => {
+        img.set({
+          left: imgData.left,
+          top: imgData.top,
+          width: imgData.width,
+          height: imgData.height,
+          // Autres propriétés de l'image ici
+        })
+        canvas.add(img)
+      })
+    }
+
+    canvas.renderAll()
+
+    console.log(canvas.getObjects())
+  }
   const addScene = (idStory) => {
     console.log("id story avant envoi : ", idStory)
     axios
@@ -438,7 +411,7 @@ export const EditionContextProvider = ({ children }) => {
     console.log(sortedObjects)
 
     const dataExport = sortedObjects
-
+    console.log("data exportée : ", dataExport)
     axios
       .put(
         `http://localhost:4242/api-stories/${idStory}/${idScene}`,
@@ -452,34 +425,6 @@ export const EditionContextProvider = ({ children }) => {
       })
   }
 
-  // function customJSONStringify(obj) {
-  //   const seen = new WeakSet()
-
-  //   return JSON.stringify(obj, (key, value) => {
-  //     if (typeof value === "object" && value !== null) {
-  //       if (seen.has(value)) {
-  //         return // Exclut les références circulaires de la sérialisation
-  //       }
-  //       seen.add(value)
-  //     }
-  //     return value
-  //   })
-  // }
-
-  // function customJSONStringify(obj) {
-  //   const seen = new Set()
-
-  //   return JSON.stringify(obj, (key, value) => {
-  //     if (typeof value === "object" && value !== null) {
-  //       if (seen.has(value)) {
-  //         return "[Circular Reference]"
-  //       }
-  //       seen.add(value)
-  //     }
-  //     return value
-  //   })
-  // }
-
   return (
     <EditionContext.Provider
       value={{
@@ -491,17 +436,20 @@ export const EditionContextProvider = ({ children }) => {
         addScene,
         objects,
         setObjects,
-        tabObject,
+        updateActions,
+        setUpdateActions,
         objectSelected,
         setObjectSelected,
         exportScenes,
         getScene,
         setUpdated,
         updated,
+        getActions,
         initCanvas,
         selectedColor,
         selectedFont,
         selectedSize,
+        updateStates,
         selectedAlignment,
         setSelectedColor,
         setSelectedFont,
@@ -524,6 +472,8 @@ export const EditionContextProvider = ({ children }) => {
         setIsAddingRect,
         setIsAddingBackground,
         setEditStatus,
+        setTabElem,
+        tabElem,
         editStatus,
         deleteScene,
         addRect,
@@ -537,6 +487,7 @@ export const EditionContextProvider = ({ children }) => {
         setImgPath,
         imgPath,
         keyDeleteObject,
+        updateSelectedProperties,
       }}
     >
       {children}

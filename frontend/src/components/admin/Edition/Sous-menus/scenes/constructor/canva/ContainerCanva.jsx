@@ -14,7 +14,8 @@ const ContainerCanva = ({
   const { canvas, setCanvas } = useEditionContext()
 
   // Variables environnement canva
-  const { tabObject, initCanvas, objects, render } = useEditionContext()
+  const { initCanvas, updateSelectedProperties, updateStates } =
+    useEditionContext()
 
   // Triggers getters toolbar
   const { isAddingText, isAddingRect, isAddingPic, isAddingBackground } =
@@ -24,7 +25,7 @@ const ContainerCanva = ({
   const { addRect, addImage, addText, addBackground, keyDeleteObject } =
     useEditionContext()
 
-  const { backgroundPath, imgPath } = useEditionContext()
+  const { backgroundPath, imgPath, setObjectSelected } = useEditionContext()
 
   /* <===================================================================> */
 
@@ -56,7 +57,6 @@ const ContainerCanva = ({
 
     if (isAddingPic && imgPath !== "") {
       const pathPic = `http://localhost:4242/uploads/${imgPath}`
-      // console.log("ajout picture, valeur path : " + pathPic)
       addImage(canvas, pathPic)
     }
 
@@ -132,60 +132,40 @@ const ContainerCanva = ({
     if (canvas) {
       const objectModifiedHandler = function (options) {
         console.log("objet modifié", options.target)
-
-        // tabObject.saveProperties(options.target)
-
-        // tabObject.updateSelectedProperties(options.target)
+        setObjectSelected({ selected: true })
       }
 
       const selectionCreatedHandler = function (options) {
         console.log("selection créé")
-        // tabObject.resetProperties(options.target)
-        tabObject.updateSelectedProperties(options.selected[0])
-        tabObject.saveProperties(options.selected[0])
+        updateSelectedProperties(options.selected[0])
+        updateStates(options.selected[0])
         setViewProperties(true)
-        // setRender(true)
       }
 
       const selectionClearedHandler = function (options) {
-        // console.log("selection clear")
         setViewProperties(false)
-        // if (options) {
-        //   tabObject.resetProperties(options.target)
-        // }
+        setObjectSelected({ selected: false })
       }
 
       const selectionModified = function (options) {
         console.log("selection modifiée")
-        // console.log(options)
-        // console.log(options.deselected[0])
-        // // tabObject.resetProperties(options.target)
-        // // tabObject.saveProperties(options.deselected[0])
-        // tabObject.updateSelectedProperties(options.selected[0])
+        updateSelectedProperties(options.selected[0])
+        updateStates(options.selected[0])
       }
 
-      const objectMouseDownHandler = function (options) {
-        console.log("mousedown")
-
-        // tabObject.resetProperties(options.target)
-        // tabObject.updateSelectedProperties(options.selected[0])
-      }
-
-      canvas.on("mouse:down", objectMouseDownHandler)
       canvas.on("object:modified", objectModifiedHandler)
       canvas.on("selection:created", selectionCreatedHandler)
       canvas.on("selection:cleared", selectionClearedHandler)
       canvas.on("selection:updated", selectionModified)
 
       return () => {
-        canvas.off("mouse:down", objectMouseDownHandler)
         canvas.off("object:modified", objectModifiedHandler)
         canvas.off("selection:created", selectionCreatedHandler)
         canvas.off("selection:cleared", selectionClearedHandler)
         canvas.off("selection:updated", selectionModified)
       }
     }
-  }, [canvas, tabObject, objects, render])
+  }, [canvas])
 
   /* 06. - Render */
 
