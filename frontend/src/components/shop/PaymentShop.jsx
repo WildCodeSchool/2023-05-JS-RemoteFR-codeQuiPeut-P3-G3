@@ -1,31 +1,32 @@
-import { useEffect, useState } from "react"
+// import { useEffect, useState } from "react"
 import Payment from "../../assets/images/logoPaypal.png"
 import "./PaymentShop.scss"
-import axios from "axios"
+// import axios from "axios"
 
 const PaymentShop = () => {
-  const [cartItems, setCartItems] = useState([])
-  const [cartItemsTotal, setCartItemsTotal] = useState([])
+  // const [cartItems, setCartItems] = useState([])
+  // const [cartItemsTotal, setCartItemsTotal] = useState([])
+  const cartItems = []
+  const cartItemsTotal = []
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:4242/shop/cart")
-      .then((response) => {
-        console.info(response.data)
-        if (cartItems.length !== response.data.length) {
-          setCartItems(response.data)
-          let total = 0
-          response.data.forEach(element => {
-            total += element.price
-          });
-          setCartItemsTotal(total)
-        }
-      })
-      .catch((error) => {
-        console.warn("POUETPOUET")
-        console.error("TA MERDE ! C'est de la merde", error)
-      })
-  })
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:4242/shop/cart")
+  //     .then((response) => {
+  // if (cartItems.length !== response.data.length) {
+  // setCartItems(response.data)
+  // let total = 0
+  // response.data.forEach((element) => {
+  //   total += element.price
+  // })
+  // setCartItemsTotal(total)
+  // }
+  //     })
+  //     .catch((error) => {
+  //       console.warn("POUETPOUET")
+  //       console.error("TA MERDE ! C'est de la merde", error)
+  //     })
+  // })
 
   return (
     <div className="Shop_PaymentContainerGlobal">

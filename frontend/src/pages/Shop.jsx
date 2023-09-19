@@ -6,28 +6,14 @@ import axios from "axios"
 import "./Shop.scss"
 
 const Shop = () => {
-  const savePaiement = (cardShopId, cardShopQuantity, cardShopPrice) => {
-    // const Paiement = { cardShopQuantity, cardShopPrice, cardId }
-    console.info("Paiement:", cardShopPrice)
-    console.info("Quantité :", cardShopQuantity)
-    console.info("cardId:", cardShopId)
-  }
-
-  // Envoi addToCart vers le panier BDD
-  const pushToCart = (cardShopId) => {
-    console.info(cardShopId)
-    axios.post("http://localhost:4242/shop", {
-      cardShopId,
-    })
-  }
-
-  // Récupération info Card BDD
+  // Récupération des informations des cards pour les afficher
   const [cardInfo, setCardInfo] = useState([])
 
   useEffect(() => {
     axios
       .get("http://localhost:4242/shop")
       .then((response) => {
+        console.info(`Step 0 OK \nRécupération données cards`)
         console.info(response.data)
         setCardInfo(response.data)
       })
@@ -39,6 +25,15 @@ const Shop = () => {
         )
       })
   }, [])
+
+  // Envoi card choisie à la BDD
+  const pushToCart = (cardShopId) => {
+    console.info("Step 1 OK \nRécupération idCard sélectionner")
+    console.info(cardShopId)
+    axios.put(`http://localhost:4242/shop/${cardShopId}`, {
+      cardShopId,
+    })
+  }
 
   return (
     <div className="GlobalContainerShop">

@@ -67,14 +67,13 @@ router.post("/save", saveControllers.add)
 router.put("/save/:id", saveControllers.edit)
 router.delete("/save/:id", saveControllers.destroy)
 
-router.get("/shop/cart", shopControllers.getCart)
-
 router.get("/shop", shopControllers.browse)
 router.get("/shop/:id", shopControllers.read)
 router.post("/shop", shopControllers.add)
 router.put("/shop/:id", shopControllers.edit)
 router.delete("/shop/:id", shopControllers.destroy)
 
+router.get("/shop/cart", shopControllers.getCart)
 
 router.get("/stories", storiesControllers.browse)
 router.get("/stories/:id", storiesControllers.read)
