@@ -73,19 +73,10 @@ class UserManager extends AbstractManager {
           const user = rows[0]
           req.user = user
           next()
-        } else {
-          return Promise.reject(
-            new Error("Aucun utilisateur trouvé avec cet e-mail")
-          )
         }
       })
       .catch((err) => {
         console.error(err)
-        return Promise.reject(
-          new Error(
-            "Erreur lors de la récupération des données depuis la base de données"
-          )
-        )
       })
   }
 }
