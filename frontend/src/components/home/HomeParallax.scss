@@ -1,49 +1,87 @@
-// -------------- TEST2 ---------------
+.parallaxMain {
+  height: 100%;
+    width: 100%;
 
-// .parallaxMain {
-//   height: 110vh;
-//   width: 100%;
-//   position: relative;
+  .parallaxSection {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 
-//   .parallaxBkgd {
-//     position: absolute;
+    .moonImg {
+      mix-blend-mode: screen;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      z-index: 999;
 
-//     .cloudsBackImg {
-//       right: 0;
-//       width: 20%;
-//   }
+    }
+    .cloudsBackImg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+    .cloudsFrontImg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      z-index: 1001;
+    }
 
-//     .cloudsFrontImg {
-//       left: 0;
-//       width: 20%;
-//     }
+    .castleDarkImg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      z-index: 1000;
+    }
 
-//     .moonImg {
-//       mix-blend-mode: screen;
-//       position: absolute;
-//       top: calc(50% + #{parallaxMainHeight + 0.5}px);
-//       transition: top 0.5s ease-out;
-//       left: 50%;
-//       width: 100%;
-//       height: 100%;
-//       object-fit: cover;
-//       pointer-events: none;
-//       transform: translateX(-50%);
-//     }
+    .castleLightsImg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      z-index: 1000;
+    }
 
-//     .castleImg {
+    .starsImg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      z-index: 998;
 
-//     }
+    }
+  }
+}
 
-//     .starsImg {
-//       top: -550px;
-//       left: 0;
-//       width: 100%;
-//     }
-//   }
-// }
 
-// --------------- TEST1 -------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // .parallaxMain {
 //   height: 100%;
