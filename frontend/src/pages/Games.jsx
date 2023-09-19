@@ -99,7 +99,7 @@ export default function Home() {
                 .slice(startIndex, startIndex + 2)
                 .map((jdr, index) => (
                   <React.Fragment key={jdr.id}>
-                    {jdr.jdrGenre === "fantastic" && <JdrCard {...jdr} />}
+                    {jdr.jdrCategory === "fantastic" && <JdrCard {...jdr} />}
                   </React.Fragment>
                 ))}
 
@@ -124,7 +124,7 @@ export default function Home() {
             <div className="jdrCardApp">
               {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
                 <React.Fragment key={jdr.id}>
-                  {jdr.jdrGenre === "horror" && <JdrCard {...jdr} />}
+                  {jdr.jdrCategory === "horror" && <JdrCard {...jdr} />}
                 </React.Fragment>
               ))}
 
