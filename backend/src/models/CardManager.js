@@ -7,7 +7,7 @@ class CardManager extends AbstractManager {
 
   insert(card) {
     return this.database.query(
-      `insert into ${this.table} (jdrName, jdrNameFont, jdrNameColor, jdrNameFontSize, jdrImg1, jdrImg2, jdrText, textColor, textFont, jdrBgColor1, jdrBgColor2, buttonImg, jdrCategory, jdrPublic ) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      `insert into ${this.table} (jdrName, jdrNameFont, jdrNameColor, jdrNameFontSize, jdrImg1, jdrImg2, jdrText, textColor, textFont, jdrBgColor1, jdrBgColor2, buttonColor, buttonFont, jdrCategory, jdrPublic ) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
         card.jdrGenre,
         card.jdrName,
@@ -21,7 +21,8 @@ class CardManager extends AbstractManager {
         card.textFont,
         card.jdrBgColor1,
         card.jdrBgColor2,
-        card.buttonImg,
+        card.buttonColor,
+        card.buttonFont,
         card.jdrCategory,
         card.jdrPublic,
       ]
@@ -30,7 +31,7 @@ class CardManager extends AbstractManager {
 
   update(card) {
     return this.database.query(
-      `UPDATE ${this.table} SET jdrName = ?, jdrNameFont = ?, jdrNameColor = ?, jdrNameFontSize = ?, jdrImg1 = ?, jdrImg2 = ?, jdrText = ?, textColor = ?, textFont = ?, jdrBgColor1 = ?, jdrBgColor2 = ?, buttonImg = ?, jdrCategory = ?, jdrPublic = ? WHERE (id = ?)`,
+      `UPDATE ${this.table} SET jdrName = ?, jdrNameFont = ?, jdrNameColor = ?, jdrNameFontSize = ?, jdrImg1 = ?, jdrImg2 = ?, jdrText = ?, textColor = ?, textFont = ?, jdrBgColor1 = ?, jdrBgColor2 = ?, buttonColor = ?, buttonFont = ?, jdrCategory = ?, jdrPublic = ? WHERE (id = ?)`,
       [
         card.jdrGenre,
         card.jdrName,
@@ -44,7 +45,8 @@ class CardManager extends AbstractManager {
         card.textFont,
         card.jdrBgColor1,
         card.jdrBgColor2,
-        card.buttonImg,
+        card.buttonColor,
+        card.buttonFont,
         card.jdrCategory,
         card.jdrPublic,
         card.id,

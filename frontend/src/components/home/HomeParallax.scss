@@ -1,6 +1,6 @@
 .parallaxMain {
   height: 100%;
-    width: 100%;
+  width: 100%;
 
   .parallaxSection {
     position: relative;
@@ -19,7 +19,6 @@
       object-fit: cover;
       pointer-events: none;
       z-index: 999;
-
     }
     .cloudsBackImg {
       position: absolute;
@@ -62,26 +61,9 @@
       object-fit: cover;
       pointer-events: none;
       z-index: 998;
-
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // .parallaxMain {
 //   height: 100%;
