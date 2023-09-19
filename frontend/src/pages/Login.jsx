@@ -33,14 +33,15 @@ function Login() {
           Cookies.set("idUser", JSON.stringify(response.data.user.id), {
             sameSite: "strict",
           })
+
           navigate("/")
         } else {
           // Gérer le cas où l'inscription n'a pas réussi
         }
       })
       .catch((error) => {
-        console.error(error)
-        setError("Email and pseudo must be unique and psswords must match")
+        // console.error(error)
+        setError(error.response.data.message)
       })
   }
 

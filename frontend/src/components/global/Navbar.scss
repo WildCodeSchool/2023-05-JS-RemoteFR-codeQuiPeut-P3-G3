@@ -22,6 +22,7 @@
     .dropbtn-navbar {
       background-color: $color--darkestPurple;
       border: none;
+      cursor: pointer;
       color: white;
       font-size: 1.3rem;
       font-family: inika;
@@ -60,6 +61,8 @@
     display: flex;
     height: 100%;
     align-items: center;
+    justify-content: center;
+    gap: .5rem;
   }
   // .explore-nav{
   //   display: flex;
@@ -90,19 +93,24 @@
     background-size: 20px 20px;
   }
   .profile-navbar {
-    height: 100%;
+    
 
+    .profile-navbar-img{
+      height:40px;
+      gap: .5rem;
+    }
+
+    #resize-profile-image{
+      height: 42px;
+      padding-top: 4px;
+    }
     .link-profil-navbar {
       height: 100%;
       display: flex;
       align-items: center;
       text-decoration: none;
     }
-    img {
-      width: auto;
-      height: 80%;
-      object-fit: contain;
-    }
+    
 
     .left-img-navbar {
       padding-right: 5px;
