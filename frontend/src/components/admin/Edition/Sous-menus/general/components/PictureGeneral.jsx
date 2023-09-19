@@ -1,8 +1,7 @@
 import React from "react"
 // import axios from "axios"
-
 import "./PictureGeneral.scss"
-import jeuImg from "../../../../../../assets/images/JeuLeDestin.png"
+// import jeuImg from "../../../../../../assets/images/JeuLeDestin.png"
 import editPen from "../../../../../../assets/images/EditPen.png"
 
 function PictureGeneral() {
@@ -20,13 +19,32 @@ function PictureGeneral() {
   return (
     <>
       <div className="pictureGeneral">
+        <div className="pictureAndPen">
+          <div className="pictureMain">
+            {/* <div className="cardMain"></div> */}
+            <div className="cardTop">
+              <h2 className="cardTopTitle"></h2>
+              <img className="cardTopImg" />
+            </div>
+            <div className="cardBottom">
+              <img className="cardBottomImg" />
+              <div className="cardBottomTextButton">
+                <h3 className="cardBottomText"></h3>
+                <button type="button" className="cardBottomButton"></button>
+              </div>
+            </div>
+          </div>
+          <img className="editPen" src={editPen} alt="pen" />
+        </div>
+      </div>
+      {/* <div className="pictureGeneral">
         <div className="pictureGeneralTop">
           <div className="jeuImgDiv">
             <img className="jeuImg" src={jeuImg} alt="jeuImg" />
             <img className="editPen" src={editPen} alt="pen" />
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

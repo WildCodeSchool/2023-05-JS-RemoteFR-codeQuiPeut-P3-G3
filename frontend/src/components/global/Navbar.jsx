@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom"
 import logo from "../../assets/images/Group 131.png"
 import { useState, useEffect } from "react"
 import Cookies from "js-cookie"
-import ProfileIcon from "../../assets/images/profileicon.png"
-import logout from "../../assets/images/check-out.png"
+import ProfileIcon from "../../assets/images/Ellipse 122.png"
+import logout from "../../assets/images/Vector-logout.png"
 
 function NavBar() {
   const [isExploreOpen, setIsExploreOpen] = useState(false)
@@ -72,9 +72,16 @@ function NavBar() {
               src={logout}
               alt="logo de déconnexion"
               onClick={handleLogout}
+              className="profile-navbar-img"
             />
             <Link to="/profile">
-              <img src={ProfileIcon} alt="Profile" />
+              <input
+                type="image"
+                src={ProfileIcon}
+                alt="Profile"
+                className="profile-navbar-img"
+                id="resize-profile-image"
+              />
             </Link>
           </div>
         ) : (

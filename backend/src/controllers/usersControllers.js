@@ -89,18 +89,19 @@ const findByMail = (req, res, next) => {
     .getUserByEmailAndPassToNext(req.body, req, res, next)
     .then((user) => {
       if (user) {
-        // Un utilisateur a été trouvé, renvoyer une réponse appropriée
-        // res.status(200).json(user) // Par exemple, renvoyer l'utilisateur trouvé
+        // return res.status(200).json(user)
       } else {
-        // Aucun utilisateur trouvé, renvoyer une réponse appropriée (404 ici)
-        // res.sendStatus(404)
+        // return res
+        //   .status(401)
+        //   .json({ message: "Email ou mot de passe incorrect" })
       }
     })
     .catch((err) => {
       console.error(err)
-      // res.sendStatus(500)
+      return err
     })
 }
+
 module.exports = {
   browse,
   add,

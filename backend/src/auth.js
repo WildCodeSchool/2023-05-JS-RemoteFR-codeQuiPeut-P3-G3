@@ -49,28 +49,28 @@ const hashPassword = (req, res, next) => {
     })
 }
 
-const verifyPassword = (req, res) => {
+const verifyPassword = (req, res, next) => {
   argon2
 
     .verify(req.user.hashedPassword, req.body.pwd)
 
     .then((isVerified) => {
       if (isVerified) {
-        const payload = { sub: req.user.id }
+        const payload = { sub: req.user.id, role: req.user.role }
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
           expiresIn: "1h",
         })
         delete req.user.hashedPassword
-        res.status(200).send({ success: true, token, user: req.user })
+        return res.status(200).send({ success: true, token, user: req.user })
       } else {
-        return Promise.reject(new Error("Password do not match"))
+        return res
+          .status(401)
+          .json({ message: "Email ou mot de passe incorrect" })
       }
     })
 
     .catch((err) => {
       console.error(err)
-
-      return Promise.reject(new Error("Password do not match"))
     })
 }
 
@@ -96,8 +96,38 @@ const verifyToken = (req, res, next) => {
     res.sendStatus(403)
   }
 }
+
+const verifyAdminRole = (req, res, next) => {
+  try {
+    // Vérifiez si le token JWT a été correctement décodé par le middleware verifyToken
+    if (!req.payload) {
+      throw new Error("Invalid token or missing payload")
+    }
+
+    // Récupérez le rôle de l'utilisateur à partir du payload du token
+    const userRole = req.payload.role
+
+    // Vérifiez si l'utilisateur a le rôle "admin" (ou le rôle approprié pour les administrateurs)
+    if (userRole === "admin") {
+      // L'utilisateur est un administrateur, autorisez l'accès
+      next()
+    } else {
+      // L'utilisateur n'a pas le rôle d'administrateur, renvoyez une erreur 403 (Accès refusé)
+      res.status(403).json({
+        message: "Not Allowed",
+      })
+    }
+  } catch (err) {
+    console.error(err)
+    res
+      .status(403)
+      .json({ message: "Erreur de vérification du rôle d'administrateur." })
+  }
+}
+
 module.exports = {
   hashPassword,
   verifyPassword,
   verifyToken,
+  verifyAdminRole,
 }

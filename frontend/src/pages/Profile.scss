@@ -2,7 +2,7 @@
 
 .avatar {
   display: flex;
-  height: 50vh;
+  height: 35vh;
   background-color: $color--darkestPurple;
   align-items: center;
   justify-content: center;
@@ -18,21 +18,18 @@
 }
 
 .edit {
-  height: 100vh;
-  padding: 2rem 8rem 14rem 8rem;
+  height: 98vh;
+  padding: 2rem 8rem 13rem 9rem;
   background-color: $color--darkestPurple;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
 
-  // @media (min-width: 1200px) {
-  //   margin-bottom: 5rem;
-  // }
-
   .container {
     display: flex;
     box-sizing: border-box;
-    aspect-ratio: 34/21;
+    width: 55%;
+    height: 75%;
     background-color: white;
     max-width: 100%;
     border-radius: 1%;

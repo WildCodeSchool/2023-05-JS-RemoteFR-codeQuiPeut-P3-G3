@@ -1,20 +1,17 @@
 import React from "react"
-// import avatar from "../../assets/user_ui/avatar.png"
 import avatar from "../../assets/user_ui/avatar.png"
 import "./ProfilPartieHaute.scss"
 
-function ProfilPartieHaute() {
+function ProfilPartieHaute({ pseudo }) {
   return (
     <>
       <div className="GlobalContainerPartieHaute">
         <div className="ImageProfilContainer">
-          <img src={avatar} alt="avatar" />{" "}
+          <img src={avatar} alt="avatar" />
         </div>
-
-        <div className="UserName">
-          <h2>USER NAME</h2>
+        <div className="Pseudo">
+          <h2>{pseudo}</h2>
         </div>
-        <div className="enrollmentDate"> 25/12/2000</div>
       </div>
     </>
   )
