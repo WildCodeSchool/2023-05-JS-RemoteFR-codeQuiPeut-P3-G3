@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`card` (
   `jdrBgColor1` VARCHAR(45) NOT NULL,
   `jdrBgColor2` VARCHAR(45) NOT NULL,
   `buttonImg` VARCHAR(150) NOT NULL,
-  `jdrCategory` VARCHAR(45) NOT NULL,
+  `jdrGenre` VARCHAR(45) NOT NULL,
   `jdrPublic` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idcard`))
 ENGINE = InnoDB
@@ -83,7 +83,6 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`shop` (
   `price` INT NOT NULL,
   `quantity` INT NOT NULL,
   PRIMARY KEY (`id`))
-<<<<<<< HEAD
 ENGINE = InnoDB;
 
 
@@ -108,11 +107,6 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`card` (
   `buttonFont` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idcard`)
 ) ENGINE = InnoDB;
-=======
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
->>>>>>> dev
 
 
 -- -----------------------------------------------------

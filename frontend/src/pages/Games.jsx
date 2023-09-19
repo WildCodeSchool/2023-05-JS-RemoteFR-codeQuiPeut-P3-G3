@@ -53,75 +53,92 @@ export default function Home() {
             <DropdownItem text={"All Games"} anchor={"allGamesSection"} />
             <DropdownItem text={"Fantastic"} anchor={"fantasticGamesSection"} />
             <DropdownItem text={"Horror"} anchor={"horrorGamesSection"} />
+            <DropdownItem text={"Medieval"} anchor={"medievalGamesSection"} />
+            <DropdownItem text={"Cyberpunk"} anchor={"cyberpunkGamesSection"} />
+            <DropdownItem
+              text={"Post apocalyptique"}
+              anchor={"postapoGamesSection"}
+            />
+            <DropdownItem text={"Western"} anchor={"westernGamesSection"} />
           </ul>
         </div>
       </div>
 
       <main className="home__content">
-        <section className="home__content__games" id="allGamesSection">
-          <div className="allGames">
-            <h1 className="All">"ALL</h1>
-            <h2 className="gamezzz">GAMES"</h2>
-          </div>
-          <div className="jdrCardApp">
-            {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
-              <JdrCard key={jdr.id} {...jdr} />
-            ))}
-
-            <div className="pagination">
-              <button className="boutonPrev" onClick={handlePrevious}>
-                <img src={previous} alt="" />
-              </button>
-              <button className="boutonNext" onClick={handleNext}>
-                <img src={next} alt="" />
-              </button>
+        {jdrCardData.length > 0 && (
+          <section className="home__content__games" id="allGamesSection">
+            <div className="allGames">
+              <h1 className="All">"ALL</h1>
+              <h2 className="gamezzz">GAMES"</h2>
             </div>
-          </div>
-        </section>
-        <section className="home__content__games" id="fantasticGamesSection">
-          <div className="allGames">
-            <h1 className="All">"FANTASTIC</h1>
-            <h2 className="gamezzz">GAMES"</h2>
-          </div>
-          <div className="jdrCardApp">
-            {jdrCardData.slice(startIndex, startIndex + 2).map((jdr, index) => (
-              <React.Fragment key={jdr.id}>
-                {jdr.jdrGenre === "fantastic" && <JdrCard {...jdr} />}
-              </React.Fragment>
-            ))}
+            <div className="jdrCardApp">
+              {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
+                <JdrCard key={jdr.id} {...jdr} />
+              ))}
 
-            <div className="pagination">
-              <button className="boutonPrev" onClick={handlePrevious}>
-                <img src={previous} alt="" />
-              </button>
-              <button className="boutonNext" onClick={handleNext}>
-                <img src={next} alt="" />
-              </button>
+              <div className="pagination">
+                <button className="boutonPrev" onClick={handlePrevious}>
+                  <img src={previous} alt="" />
+                </button>
+                <button className="boutonNext" onClick={handleNext}>
+                  <img src={next} alt="" />
+                </button>
+              </div>
             </div>
-          </div>
-        </section>
-        <section className="home__content__games" id="horrorGamesSection">
-          <div className="allGames">
-            <h1 className="All">"HORROR</h1>
-            <h2 className="gamezzz">GAMES"</h2>
-          </div>
-          <div className="jdrCardApp">
-            {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
-              <React.Fragment key={jdr.id}>
-                {jdr.jdrGenre === "horror" && <JdrCard {...jdr} />}
-              </React.Fragment>
-            ))}
+          </section>
+        )}
 
-            <div className="pagination">
-              <button className="boutonPrev" onClick={handlePrevious}>
-                <img src={previous} alt="" />
-              </button>
-              <button className="boutonNext" onClick={handleNext}>
-                <img src={next} alt="" />
-              </button>
+        {jdrCardData.length > 0 && (
+          <section className="home__content__games" id="fantasticGamesSection">
+            <div className="allGames">
+              <h1 className="All">"FANTASTIC</h1>
+              <h2 className="gamezzz">GAMES"</h2>
             </div>
-          </div>
-        </section>
+            <div className="jdrCardApp">
+              {jdrCardData
+                .slice(startIndex, startIndex + 2)
+                .map((jdr, index) => (
+                  <React.Fragment key={jdr.id}>
+                    {jdr.jdrGenre === "fantastic" && <JdrCard {...jdr} />}
+                  </React.Fragment>
+                ))}
+
+              <div className="pagination">
+                <button className="boutonPrev" onClick={handlePrevious}>
+                  <img src={previous} alt="" />
+                </button>
+                <button className="boutonNext" onClick={handleNext}>
+                  <img src={next} alt="" />
+                </button>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {jdrCardData.length > 0 && (
+          <section className="home__content__games" id="horrorGamesSection">
+            <div className="allGames">
+              <h1 className="All">"HORROR</h1>
+              <h2 className="gamezzz">GAMES"</h2>
+            </div>
+            <div className="jdrCardApp">
+              {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
+                <React.Fragment key={jdr.id}>
+                  {jdr.jdrGenre === "horror" && <JdrCard {...jdr} />}
+                </React.Fragment>
+              ))}
+
+              <div className="pagination">
+                <button className="boutonPrev" onClick={handlePrevious}>
+                  <img src={previous} alt="" />
+                </button>
+                <button className="boutonNext" onClick={handleNext}>
+                  <img src={next} alt="" />
+                </button>
+              </div>
+            </div>
+          </section>
+        )}
         <section className="home__content__games"></section>
       </main>
 
@@ -129,6 +146,7 @@ export default function Home() {
     </>
   )
 }
+
 function DropdownItem(props) {
   return (
     <li className="dropdownItem">
