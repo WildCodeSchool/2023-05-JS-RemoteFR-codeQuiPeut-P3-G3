@@ -93,6 +93,7 @@ module.exports.createStory = (req, res) => {
 
 module.exports.putScene = (req, res) => {
   const { idStory, idScene } = req.params
+  console.error("enregistrement de ", idStory, " scene ", idScene)
   const sceneContent = req.body
 
   const filePath = findPath(idStory)
