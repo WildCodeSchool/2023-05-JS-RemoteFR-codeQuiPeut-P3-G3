@@ -50,6 +50,7 @@ function Profile() {
             pseudo={profileData.pseudo}
             lastName={profileData.lastname}
             firstName={profileData.firstname}
+            userId={userId}
           />
           {error && <p>{error}</p>}
         </div>
