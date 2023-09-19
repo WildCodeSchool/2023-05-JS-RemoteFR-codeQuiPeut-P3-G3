@@ -6,38 +6,67 @@ import WidgetToolbar from "./constructor/toolbar/WidgetToolbar"
 import ButtonUI from "../../../../global/Buttons/ButtonUI"
 import ContainerCanva from "./constructor/canva/ContainerCanva"
 import PopupImgFinder from "../../../../global/popups/ImageFinderPopup/PopupImgFinder"
-// import WidgetSettingsRect from "../../../../global/widgets/WidgetRect"
-// import WidgetButtons from "../../../../global/widgets/WidgetButtons"
 import WidgetPosition from "../../../../global/widgets/WidgetPosition"
 import WidgetTexts from "../../../../global/widgets/WidgetTexts"
 import WidgetRect from "../../../../global/widgets/WidgetRect"
 import WidgetScenesLink from "../../../../global/widgets/WidgetScenesLink"
 import { useEditionContext } from "../../../../../services/contexts/editionContext.jsx"
+import { objects } from "../../../../../services/variables/objEdition"
+import { useLocation } from "react-router-dom"
 
 function EditScenes() {
   const canvasRef = useRef(null)
-  const [isAddingText, setIsAddingText] = useState(false)
-  const [isAddingPic, setIsAddingPic] = useState(false)
-  const [isAddingRect, setIsAddingRect] = useState(false)
-  const [isAddingBackground, setIsAddingBackground] = useState(false)
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  const story = params.get("story")
+  const scene = params.get("scene")
+
   const [viewEditProperties, setViewProperties] = useState(false)
 
   /* RECUPERATION DES PROPRIETES */
-
-  const { objectSelected, setObjectSelected } = useEditionContext()
+  const { objectSelected, setObjectSelected, exportScenes } =
+    useEditionContext()
 
   /* Popup image viewer */
-  const [selectedPath, setSelectedPath] = useState("")
+  const { selectedPath, setSelectedPath } = useEditionContext()
+  const { imgPath, setImgPath } = useEditionContext()
+  const { backgroundPath, setBackgroundPath } = useEditionContext()
+
   const [viewImgFinder, setViewImgFinder] = useState(false)
-  const [imgPath, setImgPath] = useState("")
-  const [backgroundPath, setBackgroundPath] = useState("")
+
   console.info(backgroundPath)
 
   /* Taille de l'élément canva */
   const [canvaWidth, setCanvaWidth] = useState(0)
   const [canvaHeight, setCanvaHeight] = useState(0)
 
-  /* Actions quand quitte la popup */
+  const { isAddingPic, isAddingBackground, isAddingText } = useEditionContext()
+  const { setIsAddingPic, setIsAddingBackground } = useEditionContext()
+  const { editStatus, editSettings, deleteScene } = useEditionContext()
+
+  /* Calcul de la taille du canva */
+  useEffect(() => {
+    const handleResize = () => {
+      calculateChildSize()
+    }
+    window.addEventListener("resize", handleResize)
+    calculateChildSize()
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+
+    /* récupération id scene */
+  }, [])
+
+  /* Mise à jour du status d'edition (idStory, idScene, nbre scene...) */
+  useEffect(() => {
+    if (story && scene) {
+      editSettings(story, scene)
+    }
+  }, [story, scene])
+
+  /* Actions reset quand quitte la popup */
   useEffect(() => {
     if (!viewImgFinder) {
       setIsAddingPic(false)
@@ -62,20 +91,7 @@ function EditScenes() {
     }
   }
 
-  /* Resize fenêtre */
-  useEffect(() => {
-    const handleResize = () => {
-      calculateChildSize()
-    }
-    window.addEventListener("resize", handleResize)
-    calculateChildSize()
-
-    return () => {
-      window.removeEventListener("resize", handleResize)
-    }
-  }, [])
-
-  /* Actions quand selection d'une image */
+  /* Affichage popup selection d'une image */
   useEffect(() => {
     if (isAddingPic || isAddingBackground) {
       setViewImgFinder(true)
@@ -108,28 +124,11 @@ function EditScenes() {
             ></textarea>
           </div>
           <div className="scenes__constructor__toolbar">
-            <WidgetToolbar
-              isAddingText={isAddingText}
-              setIsAddingText={setIsAddingText}
-              isAddingBackground={isAddingBackground}
-              setIsAddingBackground={setIsAddingBackground}
-              isAddingPic={isAddingPic}
-              setIsAddingPic={setIsAddingPic}
-              setIsAddingRect={setIsAddingRect}
-              isAddingRect={isAddingRect}
-            />
+            <WidgetToolbar />
           </div>
           <div ref={canvasRef} className="scenes__constructor__canva">
             <ContainerCanva
               canvasRef={canvasRef}
-              isAddingText={isAddingText}
-              setIsAddingText={setIsAddingText}
-              isAddingPic={isAddingPic}
-              setIsAddingPic={setIsAddingPic}
-              setIsAddingRect={setIsAddingRect}
-              isAddingRect={isAddingRect}
-              isAddingBackground={isAddingBackground}
-              setIsAddingBackground={setIsAddingBackground}
               setViewProperties={setViewProperties}
               viewEditProperties={viewEditProperties}
               backgroundPath={selectedPath}
@@ -140,9 +139,19 @@ function EditScenes() {
             {/* <CanvasWithText /> */}
           </div>
           <div className="scenes__constructor__btn">
-            <ButtonUI title={"save"} bgcolor={"#3f7841"} />
+            <ButtonUI
+              title={"save"}
+              bgcolor={"#3f7841"}
+              onClick={() => exportScenes(objects, story, scene)}
+            />
             <ButtonUI title={"reset"} bgcolor={"#0A0A0A"} />
-            <ButtonUI title={"delete"} bgcolor={"#902B00"} />
+            <ButtonUI
+              title={"delete"}
+              bgcolor={"#902B00"}
+              onClick={() =>
+                deleteScene(editStatus.storyId, editStatus.sceneId)
+              }
+            />
           </div>
         </div>
         <div className="scenes__properties">
@@ -156,11 +165,7 @@ function EditScenes() {
             />
           )}
 
-          <WidgetRect
-            viewEditProperties={viewEditProperties}
-            objectSelected={objectSelected}
-            setObjectSelected={setObjectSelected}
-          />
+          <WidgetRect viewEditProperties={viewEditProperties} />
           <WidgetScenesLink />
         </div>
       </div>

@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 /* Packages */
 import { useState, useEffect } from "react"
 import { useEditionContext } from "../../../services/contexts/editionContext"
@@ -17,11 +16,7 @@ import imgArrowBottom from "../../../assets/text_ui/arrow_bottom.png"
 /* Images */
 import iconTextColor from "../../../assets/text_ui/colorPicker.png"
 
-function WidgetTexts({
-  viewEditProperties,
-  // setObjectSelected,
-  // objectSelected,
-}) {
+function WidgetTexts({ viewEditProperties }) {
   const [displayCPicker, setDisplayCPicker] = useState(false)
   const [extend, setExtend] = useState(true)
 
@@ -33,7 +28,7 @@ function WidgetTexts({
   const { setSelectedColor, setSelectedFont, setAlignment } =
     useEditionContext()
 
-  const { tabObject, objectSelected } = useEditionContext()
+  const { canvas } = useEditionContext()
 
   /* =============== */
 
@@ -46,24 +41,19 @@ function WidgetTexts({
     setSelectedColor(color)
   }
 
+  /* Update states => context */
   useEffect(() => {
-    if (objectSelected) {
-      if (objectSelected.type === "textbox") {
-        console.log("widgetText - objectSelected : ", objectSelected)
-
-        // Copiez objectSelected pour ne pas le modifier directement
-        const updateDataTexts = { ...objectSelected }
-
-        // Modifiez les propriétés spécifiques de updateDataTexts
-        updateDataTexts.properties.fontSize = selectedSize
-        updateDataTexts.properties.fill = selectedColor
-        updateDataTexts.properties.textAlign = selectedAlignment
-        updateDataTexts.properties.fontFamily = selectedFont
-
-        console.log("widgetText - objectSelected modified : ", updateDataTexts)
-
-        // Enregistrez les modifications
-        tabObject.saveProperties(updateDataTexts)
+    if (canvas) {
+      const activeObject = canvas.getActiveObject()
+      if (activeObject) {
+        const updatedProperties = {
+          textAlign: selectedAlignment,
+          fill: selectedColor,
+          fontSize: selectedSize,
+          fontFamily: selectedFont,
+        }
+        activeObject.set(updatedProperties)
+        canvas.renderAll()
       }
     }
   }, [selectedColor, selectedFont, selectedAlignment])

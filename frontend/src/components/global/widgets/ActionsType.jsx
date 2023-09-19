@@ -12,7 +12,7 @@ function ActionType() {
 
   const [showTarget, setShowTarget] = useState(false)
 
-  const { objectSelected, tabObject } = useEditionContext()
+  const { canvas, setUpdateActions } = useEditionContext()
 
   const styles = {
     valueContainer: (base) => ({
@@ -20,15 +20,22 @@ function ActionType() {
       maxHeight: 20,
       fontSize: 15,
     }),
+    // Menu deroulat (partie texte)
+    menu: (base) => ({
+      ...base,
+      width: 150,
+    }),
+    // Menu deroulant (partie "box")
     menuList: (base) => ({
       ...base,
-      maxHeight: 120,
-      //   maxWidth: 130,
+      maxHeight: 150,
+      width: 150,
     }),
+    // Selecteur
     control: (base) => ({
       ...base,
       maxHeight: 15,
-      maxWidth: 100,
+      //   width: 150,
       minWidth: 80,
       alignItems: "center",
     }),
@@ -57,43 +64,29 @@ function ActionType() {
   ]
 
   const handlePushAction = () => {
-    // if (objectSelected.type !== "") {
-    //   const data = {
-    //     type: selectedType,
-    //     target: selectedTarget,
-    //     number: selectedNumber,
-    //   }
+    if (canvas) {
+      const activeObject = canvas.getActiveObject()
+      if (activeObject) {
+        // Récupérez la valeur actuelle du tableau "Actions"
+        const currentActions = activeObject.get("Actions") || []
 
-    //   tabObject.pushActions(data)
-    //   resetLocalState()
-    // }
-    if (objectSelected) {
-      console.log("widgetActions - objectSelected : ", objectSelected)
+        // Créez un nouvel objet à pousser dans le tableau
+        const newAction = {
+          type: selectedType,
+          target: selectedTarget,
+          number: selectedNumber,
+        }
 
-      const updatedObjectSelected = [...objectSelected]
+        // Ajoutez le nouvel objet au tableau
+        currentActions.push(newAction)
 
-      console.log("memoire d'object selected : ", updatedObjectSelected)
+        // Mettez à jour les propriétés de l'objet actif avec le tableau mis à jour
+        activeObject.set({ Actions: currentActions })
 
-      const data = {
-        type: selectedType,
-        target: selectedTarget,
-        number: selectedNumber,
+        // Appelez renderAll pour mettre à jour l'affichage du canvas
+        canvas.renderAll()
+        setUpdateActions(true)
       }
-
-      const currentActions = [
-        ...(updatedObjectSelected.properties.Actions || []),
-      ]
-      console.log("currentActions ", currentActions)
-      currentActions.push(data)
-      console.log("après push : ", currentActions)
-      updatedObjectSelected.properties.Actions = currentActions
-
-      console.log(
-        "widget actions - objectSelected modified : ",
-        updatedObjectSelected
-      )
-
-      tabObject.saveProperties(updatedObjectSelected)
     }
   }
 

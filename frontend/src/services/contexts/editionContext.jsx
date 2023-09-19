@@ -1,13 +1,18 @@
 /* eslint-disable no-restricted-syntax */
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useState } from "react"
 import { fabric } from "fabric"
+import axios from "axios"
+import { v4 as uuidv4 } from "uuid"
+import imgDelete from "../../assets/text_ui/minus.png"
 
 const EditionContext = createContext()
 
+/* DEFINITION DU CANVAS */
 export const useEditionContext = () => {
   return useContext(EditionContext)
 }
 
+/* VARIABLES GLOBALES */
 export const EditionContextProvider = ({ children }) => {
   /* Liste de tous les objets scene */
   const [objects, setObjects] = useState({
@@ -18,21 +23,22 @@ export const EditionContextProvider = ({ children }) => {
 
   /* Propriétés d'un objet selectionné */
   const [objectSelected, setObjectSelected] = useState({
+    selected: false,
     type: "",
     id: "",
     properties: {
       Actions: [],
     },
-    // actions: [],
   })
 
+  /* ================ STATES UPDATES  ==================== */
   const [updated, setUpdated] = useState(false)
   const [render, setRender] = useState(false)
 
-  /* =================== CANVA ==================== */
+  /* =================== CANVA =========================== */
   const [canvas, setCanvas] = useState("")
 
-  /* ============== STATES PROPERTIES =================== */
+  /* ============== STATES PROPERTIES ==================== */
 
   // TEXTS
   const [selectedColor, setSelectedColor] = useState("#FFFFFF")
@@ -46,9 +52,29 @@ export const EditionContextProvider = ({ children }) => {
   const [selectedColorBorder, setSelectedColorBorder] = useState("#FFFFFF")
   const [selectedColorBg, setSelectedColorBg] = useState("#FFFFFF")
 
-  // ACTIONS & SCENES
+  // BACKGROUND & IMAGES
+  const [backgroundPath, setBackgroundPath] = useState(null)
+  const [selectedPath, setSelectedPath] = useState("")
+  const [imgPath, setImgPath] = useState("")
 
-  /* ================ GESTIONS STATES ET OBJETS  ========================== */
+  // SELECTIONS TOOLBAR
+  const [isAddingText, setIsAddingText] = useState(false)
+  const [isAddingPic, setIsAddingPic] = useState(false)
+  const [isAddingRect, setIsAddingRect] = useState(false)
+  const [isAddingBackground, setIsAddingBackground] = useState(false)
+
+  // ACTIONS & SCENES
+  const [editStatus, setEditStatus] = useState({
+    storyId: 0,
+    sceneId: 0,
+    nbreScene: 0,
+  })
+
+  const [tabElem, setTabElem] = useState([])
+
+  const [updateActions, setUpdateActions] = useState(false)
+
+  /* ============================================= GESTIONS EVENEMENTS CANVAS  ========================================= */
 
   /* Fonction initialisation canva */
   const initCanvas = () => {
@@ -59,223 +85,371 @@ export const EditionContextProvider = ({ children }) => {
     return newCanvas
   }
 
-  const tabObject = {
-    /* Ajout d'un élément */
-    add: (newFabElem, id) => {
-      console.log("01 ======= AJOUT OBJECT ========= ")
-      const newObject = newFabElem.toObject()
-      newObject.id = id
-      newObject.Actions = []
-      const type = newObject.type
-      console.log(type)
+  /* Update properties selected */
 
-      setObjects((prevObjects) => {
-        const updatedObjects = { ...prevObjects } // Créez une copie de l'objet précédent
+  const updateSelectedProperties = (object) => {
+    // console.log("02 ======= UPDATE FROM CANVAS ========= ")
+    // console.info("Objet selectionné : ", object)
 
-        // Vérifiez si la propriété type existe dans l'objet updatedObjects, sinon initialisez-la à un objet vide
-        if (!updatedObjects[type]) {
-          updatedObjects[type] = {}
-        }
-
-        // Ajoutez le nouvel objet avec la clé ID au type approprié
-        updatedObjects[type][id] = newObject
-        console.log("Ajout object: ", updatedObjects)
-        return updatedObjects // Retournez le nouvel objet mis à jour
-      })
-    },
-    /* Suppression element */
-    delete: (type, idToDelete) => {
-      console.log("======= SUPP OBJECT ========= ")
-      console.log("object to delete: ", idToDelete)
-
-      setObjects((prevObjects) => {
-        const updatedObjects = { ...prevObjects } // Créez une copie de l'objet précédent
-
-        // Vérifiez si la propriété type existe dans l'objet updatedObjects
-        if (updatedObjects[type] && typeof updatedObjects[type] === "object") {
-          // Supprimez l'objet avec l'ID donné du type approprié
-          delete updatedObjects[type][idToDelete]
-        }
-
-        console.log("Updated objects: ", updatedObjects)
-        return updatedObjects // Retournez le nouvel objet mis à jour
-      })
-    },
-
-    /* recherche par Id */
-    getById: (activeObject) => {
-      const idSearch = activeObject.id
-
-      for (const [type, items] of Object.entries(objects)) {
-        if (items[idSearch]) {
-          // console.log(" function getById", type, items[idSearch])
-          return { type, item: items[idSearch] }
-        }
+    setObjectSelected((prevObjectSelected) => {
+      const newObject = {
+        selected: true,
+        type: object.type,
+        id: object.id,
+        properties: object.toObject(),
       }
+      // console.log("Object selected updated : ", newObject)
 
-      return null
-    },
-
-    /* Sauvegarde dans tableau d'objets */
-    saveProperties: (objectUpdated) => {
-      console.log("04 =========== SAVE TO OBJECTS  =========== ")
-
-      const idToUpdate = objectUpdated.id
-      const type = objectUpdated.type
-      console.log("sauvegarde du ", type, " id : ", idToUpdate)
-
-      setObjects((prevObjects) => {
-        const updatedObjects = { ...prevObjects } // Créez une copie de l'objet précédent
-
-        // Vérifiez si la propriété type existe dans l'objet updatedObjects
-        if (updatedObjects[type] && updatedObjects[type][idToUpdate]) {
-          // Mettez à jour l'objet avec les nouvelles propriétés
-          console.log("Objects updates....")
-          updatedObjects[type][idToUpdate] = {
-            ...updatedObjects[type][idToUpdate],
-            ...objectUpdated.properties,
-          }
-        }
-
-        console.log("Updated objects: ", updatedObjects)
-        tabObject.updateObjectSelect(updatedObjects[type][idToUpdate])
-        setRender(true)
-        console.log("sauvegarde effectuée, > render ")
-        // tabObject.updateObjectSelect(objects)
-        return updatedObjects // Retournez le nouvel objet mis à jour
-      })
-    },
-
-    pushActions: (data) => {
-      console.log("========= PUSH ACTIONS ========== ")
-      const id = objectSelected.id
-      const type = objectSelected.type
-
-      console.log("id et type : ", id, type)
-      console.log(objects[type][id])
-      console.log("data : ", data)
-
-      const updatedActions = [...objects[type][id].Actions]
-      updatedActions.push(data)
-
-      objects[type][id].Actions = updatedActions
-
-      setObjects({ ...objects })
-    },
-
-    resetProperties: () => {
-      console.log("======= RESET PROPERTIES ========= ")
-      setObjectSelected({
-        type: "",
-        id: "",
-        properties: {},
-        actions: [],
-      })
-      setUpdated(false)
-      resetStates()
-    },
-
-    updateSelectedProperties: (object) => {
-      console.log("02 ======= UPDATE FROM CANVAS ========= ")
-
-      setObjectSelected((prevObjectSelected) => {
-        const newObject = {
-          type: object.type,
-          id: object.id,
-          properties: object.toObject(),
-          // Actions: object.Actions,
-        }
-        console.log("Object selected updated : ", newObject)
-        updateStates(newObject)
-        tabObject.saveProperties(newObject)
-        return newObject
-      })
-    },
-
-    updateObjectSelect: (object) => {
-      console.log("02 ======= UPDATE SELECTED ========= ")
-      console.log("object à update : ", object)
-      setObjectSelected((prevObjectSelected) => {
-        const newObject = {
-          type: object.type,
-          id: object.id,
-          properties: object,
-          Actions: object.Actions,
-        }
-        console.log("Selected object updated : ", newObject)
-        // updateStates(newObject)
-        return newObject
-      })
-    },
+      return newObject
+    })
   }
 
-  /* =============== ANNEXES =========================== */
+  /* <<<<================= Creation de nouveaux objets fabrics
 
-  const resetStates = () => {
-    setSelectedColor("")
-    setSelectedFont("")
-    setSelectedSize("")
-    setAlignment("")
+  /* add text */
+  const addText = (canvi) => {
+    const textId = uuidv4()
+    const text = new fabric.Textbox("Texte", {
+      height: 280,
+      width: 200,
+      fill: "black",
+      id: textId,
+      Actions: [],
+    })
 
-    setSelectedSizeBorder("")
-    setSelectedSizeRadius("")
-    setSelectedColorBorder("")
-    setSelectedColorBg("")
+    canvi.add(text)
+    canvi.renderAll()
+    setIsAddingText(false)
   }
 
-  /* OK - Update des states */
+  /* add rectangle */
+  const addRect = (canvi) => {
+    const rectId = uuidv4()
+
+    const rect = new fabric.Rect({
+      height: 200,
+      width: 200,
+      fill: "grey",
+      id: rectId,
+      Actions: [],
+    })
+
+    canvi.add(rect)
+    canvi.renderAll()
+    setIsAddingRect(false)
+  }
+
+  /* add image */
+  const addImage = (canvi, imageUrl) => {
+    const imgId = uuidv4()
+    fabric.Image.fromURL(imageUrl, (img) => {
+      img.scale(0.75)
+      img.id = imgId
+      img.Actions = []
+      canvi.add(img)
+    })
+
+    canvi.renderAll()
+    setIsAddingPic(false)
+  }
+
+  const addBackground = () => {
+    if (canvas && backgroundPath !== "" && isAddingBackground) {
+      const backendBaseUrl = `http://localhost:4242/uploads/${backgroundPath}`
+
+      fabric.Image.fromURL(backendBaseUrl, (img) => {
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+          scaleX: canvas.width / img.width,
+          scaleY: canvas.height / img.height,
+        })
+      })
+      setIsAddingBackground(false)
+    }
+  }
+
+  const keyDeleteObject = () => {
+    const activeObject = canvas.getActiveObject()
+
+    if (activeObject) {
+      console.log("activeObject : ", activeObject)
+      console.log("id de l'active object : ", activeObject.id)
+      canvas.remove(activeObject)
+      canvas.discardActiveObject()
+      canvas.renderAll()
+    }
+  }
+
   const updateStates = (object) => {
-    // console.log(object)
     if (object) {
-      console.log(
-        "03 ===== UPDATE context  => states ====== : ",
-        object.properties
-      )
-      const properties = object.properties
-
-      /* ----  Commons  ---- */
       // font style
-      setSelectedColor(properties.fill)
-      setSelectedFont(properties.fontFamily)
-      setSelectedSize(properties.fontSize)
-      setAlignment(properties.textAlign)
-      //   // properties
-      setSelectedSizeBorder(properties.strokeWidth)
-      setSelectedSizeRadius(properties.rx)
-      setSelectedColorBorder(properties.stroke || "#FFFFFF")
-
-      if (object.type === "rect") {
-        setSelectedColorBg(properties.fill)
-      }
       if (object.type === "textbox") {
-        setSelectedColorBg(properties.backgroundColor)
+        setSelectedColor(object.fill)
+        setSelectedFont(object.fontFamily)
+        setSelectedSize(object.fontSize)
+        setAlignment(object.textAlign)
+        // setSelectedColorBg(object.backgroundColor)
+      }
+      // properties
+      if (object.type === "rect") {
+        setSelectedSizeBorder(object.strokeWidth)
+        setSelectedSizeRadius(object.rx)
+        setSelectedColorBorder(object.stroke || "#FFFFFF")
+        setSelectedColorBg(object.fill)
       }
     }
   }
 
-  useEffect(() => {
-    console.log(">>> render ", objects)
-    // setRender(true)
-  }, [objects])
+  /* Récupérer actions */
+  const getActions = () => {
+    if (canvas) {
+      const activeObject = canvas.getActiveObject()
+      if (activeObject) {
+        const newTabElem = activeObject.Actions.map((elem, index) => (
+          <tr key={index}>
+            <td>{elem.type}</td>
+            <td>{elem.target}</td>
+            <td>{elem.number}</td>
+            <td>
+              <img
+                src={imgDelete}
+                alt="img-delete"
+                onClick={() => handleDelete(index)}
+              />
+            </td>
+          </tr>
+        ))
+
+        setTabElem(newTabElem)
+      }
+    }
+  }
+
+  /* Delete action */
+  const handleDelete = (index) => {
+    if (canvas) {
+      const activeObject = canvas.getActiveObject()
+      if (activeObject) {
+        const currentActions = activeObject.get("Actions")
+
+        if (currentActions && currentActions.length > index) {
+          currentActions.splice(index, 1)
+          activeObject.set({ Actions: currentActions })
+          canvas.renderAll()
+          setUpdateActions(true)
+        }
+      }
+    }
+  }
+
+  /* ======= ANNEXES ====== */
+
+  // const resetStates = () => {
+  //   setSelectedColor("")
+  //   setSelectedFont("")
+  //   setSelectedSize("")
+  //   setAlignment("")
+
+  //   setSelectedSizeBorder("")
+  //   setSelectedSizeRadius("")
+  //   setSelectedColorBorder("")
+  //   setSelectedColorBg("")
+  // }
+
+  /* =================================================== REQUETES HTTP ================================================= */
+
+  const getScene = (idStory, idScene) => {
+    console.log("IMPORT SCENE")
+
+    console.log(idStory)
+    console.log(idScene)
+
+    axios
+      .get(`http://localhost:4242/api-stories/${idStory}/${idScene}`)
+      .then((response) => {
+        console.info("Get scene => Réponse serveur :", response.data)
+        setEditStatus((prevEditStatus) => ({
+          ...prevEditStatus,
+          nbreScene: response.data.nbScenes,
+          sceneId: response.data.id,
+        }))
+        console.log(response.data.scene)
+        setObjects(response.data.scene)
+        canvas.clear()
+        renderNewElements(response.data.scene)
+      })
+      .catch((error) => {
+        // Gérer les erreurs de la requête
+        console.error("Erreur de la requête :", error)
+      })
+
+    // canvas.clear()
+
+    return () => {
+      renderNewElements(objects)
+    }
+  }
+
+  const renderNewElements = (data) => {
+    console.log("render des elements")
+    console.log(data)
+
+    // "textbox"
+    for (const textboxId in data.textbox) {
+      const textboxData = data.textbox[textboxId]
+      const textbox = new fabric.Textbox(textboxData.text, {
+        left: textboxData.left,
+        top: textboxData.top,
+        width: textboxData.width,
+        height: textboxData.height,
+        fill: textboxData.fill,
+        fontFamily: textboxData.fontFamily,
+        fontSize: textboxData.fontSize,
+      })
+
+      canvas.add(textbox)
+    }
+
+    // Parcourez les données de "rect"
+    for (const rectId in data.rect) {
+      const rectData = data.rect[rectId]
+      const rect = new fabric.Rect({
+        left: rectData.left,
+        top: rectData.top,
+        width: rectData.width,
+        height: rectData.height,
+        fill: rectData.fill,
+        // Autres propriétés du rectangle ici
+      })
+
+      canvas.add(rect)
+    }
+
+    // Parcourez les données de "image"
+    for (const imgId in data.image) {
+      const imgData = data.image[imgId]
+      fabric.Image.fromURL(imgData.src, (img) => {
+        img.set({
+          left: imgData.left,
+          top: imgData.top,
+          width: imgData.width,
+          height: imgData.height,
+          // Autres propriétés de l'image ici
+        })
+        canvas.add(img)
+      })
+    }
+
+    canvas.renderAll()
+
+    console.log(canvas.getObjects())
+  }
+  const addScene = (idStory) => {
+    console.log("id story avant envoi : ", idStory)
+    axios
+      .post(`http://localhost:4242/api-stories/createScene/${idStory}`)
+      .then((response) => {
+        console.info("Add scene => Réponse serveur :", response.data)
+        setEditStatus((prevEditStatus) => ({
+          ...prevEditStatus,
+          sceneId: response.data.indexScene - 1,
+          nbreScene: response.data.indexScene,
+        }))
+        console.info(
+          "Contenu objects après reception : ",
+          response.data.content
+        )
+        setObjects(response.data.content)
+        console.log(response.data.indexScene)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const deleteScene = (idStory, idScene) => {
+    console.log(`suppression de ${idStory} scene ${idScene}`)
+    axios
+      .delete([`http://localhost:4242/api-stories/${idStory}/${idScene}`])
+      .then((response) => {
+        console.log(response)
+        setEditStatus((prevEditStatus) => ({
+          ...prevEditStatus,
+          nbreScene: response.data.nbScenes,
+          sceneId: response.data.id,
+        }))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const editSettings = (story, scene) => {
+    setEditStatus((prevEditStatus) => ({
+      ...prevEditStatus,
+      storyId: story,
+      sceneId: scene,
+    }))
+    getScene(story, scene)
+  }
+
+  const exportScenes = (data, idStory, idScene) => {
+    const objectsOnCanvas = canvas.getObjects()
+
+    // Créez un objet pour stocker les objets triés par type
+    const sortedObjects = {}
+
+    // Parcourez le tableau d'objets et organisez-les par type
+    objectsOnCanvas.forEach((obj) => {
+      const type = obj.type
+      if (!sortedObjects[type]) {
+        sortedObjects[type] = {}
+      }
+      sortedObjects[type][obj.id] = obj.toObject()
+    })
+
+    // Maintenant, sortedObjects contient les objets triés par type
+    console.log(sortedObjects)
+
+    const dataExport = sortedObjects
+    console.log("data exportée : ", dataExport)
+    axios
+      .put(
+        `http://localhost:4242/api-stories/${idStory}/${idScene}`,
+        dataExport
+      )
+      .then((response) => {
+        console.info("Export scene => Réponse serveur :", response.data)
+      })
+      .catch((error) => {
+        console.error("Erreur de la requête :", error)
+      })
+  }
 
   return (
     <EditionContext.Provider
       value={{
         canvas,
         setCanvas,
+        editSettings,
         render,
         setRender,
+        addScene,
         objects,
         setObjects,
-        tabObject,
+        updateActions,
+        setUpdateActions,
         objectSelected,
         setObjectSelected,
+        exportScenes,
+        getScene,
         setUpdated,
         updated,
+        getActions,
         initCanvas,
         selectedColor,
         selectedFont,
         selectedSize,
+        updateStates,
         selectedAlignment,
         setSelectedColor,
         setSelectedFont,
@@ -289,6 +463,31 @@ export const EditionContextProvider = ({ children }) => {
         setSelectedSizeRadius,
         setSelectedColorBorder,
         setSelectedColorBg,
+        isAddingText,
+        isAddingPic,
+        isAddingRect,
+        isAddingBackground,
+        setIsAddingText,
+        setIsAddingPic,
+        setIsAddingRect,
+        setIsAddingBackground,
+        setEditStatus,
+        setTabElem,
+        tabElem,
+        editStatus,
+        deleteScene,
+        addRect,
+        addImage,
+        addBackground,
+        addText,
+        setBackgroundPath,
+        backgroundPath,
+        setSelectedPath,
+        selectedPath,
+        setImgPath,
+        imgPath,
+        keyDeleteObject,
+        updateSelectedProperties,
       }}
     >
       {children}
@@ -296,7 +495,7 @@ export const EditionContextProvider = ({ children }) => {
   )
 }
 
-/* Explications rapide pour un rectangle : 
+/* Explications rapide pour un rectangle : > A METTRE A JOUR CA A CHANGE <
 
 utilisateur clique sur le rectangle dans la toolBar, on execute addRect via un useEffect. 
 on affecte un id pour pouvoir le reconnaître et naviguer, et on le stocke dans le contexte via la variable objects
