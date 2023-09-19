@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`card` (
   `textFont` VARCHAR(150) NOT NULL,
   `jdrBgColor1` VARCHAR(45) NOT NULL,
   `jdrBgColor2` VARCHAR(45) NOT NULL,
-  `buttonImg` VARCHAR(150) NOT NULL,
+  `buttonColor` VARCHAR(150) NOT NULL,
+  `buttonFont` VARCHAR(150) NOT NULL,
   `jdrCategory` VARCHAR(45) NOT NULL,
   `jdrPublic` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idcard`))

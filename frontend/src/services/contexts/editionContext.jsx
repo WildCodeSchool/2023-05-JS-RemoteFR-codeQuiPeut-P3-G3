@@ -4,6 +4,7 @@ import { fabric } from "fabric"
 import axios from "axios"
 import { v4 as uuidv4 } from "uuid"
 import imgDelete from "../../assets/text_ui/minus.png"
+import { useSearchParams } from "react-router-dom"
 
 const EditionContext = createContext()
 
@@ -71,6 +72,8 @@ export const EditionContextProvider = ({ children }) => {
   })
 
   const [tabElem, setTabElem] = useState([])
+
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const [updateActions, setUpdateActions] = useState(false)
 
@@ -258,10 +261,7 @@ export const EditionContextProvider = ({ children }) => {
   /* =================================================== REQUETES HTTP ================================================= */
 
   const getScene = (idStory, idScene) => {
-    console.log("IMPORT SCENE")
-
-    console.log(idStory)
-    console.log(idScene)
+    console.info("IMPORT STORY ", idStory, " SCENE ", idScene)
 
     axios
       .get(`http://localhost:4242/api-stories/${idStory}/${idScene}`)
@@ -272,7 +272,7 @@ export const EditionContextProvider = ({ children }) => {
           nbreScene: response.data.nbScenes,
           sceneId: response.data.id,
         }))
-        console.log(response.data.scene)
+        // console.log(response.data.scene)
         setObjects(response.data.scene)
         canvas.clear()
         renderNewElements(response.data.scene)
@@ -292,6 +292,8 @@ export const EditionContextProvider = ({ children }) => {
   const renderNewElements = (data) => {
     console.log("render des elements")
     console.log(data)
+
+    canvas.clear()
 
     // "textbox"
     for (const textboxId in data.textbox) {
@@ -339,6 +341,24 @@ export const EditionContextProvider = ({ children }) => {
       })
     }
 
+    const backgroundUrl = data.background
+
+    if (!backgroundUrl) {
+      canvas.backgroundColor = "white"
+    } else {
+      // Chargez l'image du fond
+      fabric.Image.fromURL(backgroundUrl, (img) => {
+        // Ajustez la mise à l'échelle pour remplir le canvas
+        img.scaleToWidth(canvas.width)
+        img.scaleToHeight(canvas.height)
+
+        // Définissez le fond sur l'image chargée
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas))
+
+        // Forcez le rendu du canvas
+        canvas.renderAll()
+      })
+    }
     canvas.renderAll()
 
     console.log(canvas.getObjects())
@@ -407,7 +427,14 @@ export const EditionContextProvider = ({ children }) => {
       sortedObjects[type][obj.id] = obj.toObject()
     })
 
-    // Maintenant, sortedObjects contient les objets triés par type
+    // Obtenir l'URL du fond s'il y en a un
+    const background = canvas.backgroundImage
+    const backgroundUrl = background ? background._element.src : null
+
+    // Ajoutez l'URL du fond à vos données exportées
+    sortedObjects.background = backgroundUrl
+
+    // Maintenant, sortedObjects contient les objets triés par type avec l'URL de fond
     console.log(sortedObjects)
 
     const dataExport = sortedObjects
@@ -435,6 +462,8 @@ export const EditionContextProvider = ({ children }) => {
         setRender,
         addScene,
         objects,
+        setSearchParams,
+        searchParams,
         setObjects,
         updateActions,
         setUpdateActions,
