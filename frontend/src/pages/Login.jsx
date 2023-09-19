@@ -40,8 +40,8 @@ function Login() {
         }
       })
       .catch((error) => {
-        console.error(error)
-        setError("Email and pseudo must be unique and psswords must match")
+        // console.error(error)
+        setError(error.response.data.message)
       })
   }
 

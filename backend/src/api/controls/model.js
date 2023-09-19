@@ -6,5 +6,5 @@ module.exports.story = {
     public: "",
   },
 
-  scenes: [],
+  scenes: [{ textbox: {}, image: {}, rect: {} }],
 }

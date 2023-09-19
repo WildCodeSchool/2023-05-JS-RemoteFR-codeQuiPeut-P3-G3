@@ -2,6 +2,8 @@
 import { createContext, useContext, useState } from "react"
 import { fabric } from "fabric"
 import axios from "axios"
+import { v4 as uuidv4 } from "uuid"
+import imgDelete from "../../assets/text_ui/minus.png"
 
 const EditionContext = createContext()
 
@@ -21,22 +23,22 @@ export const EditionContextProvider = ({ children }) => {
 
   /* Propriétés d'un objet selectionné */
   const [objectSelected, setObjectSelected] = useState({
+    selected: false,
     type: "",
     id: "",
     properties: {
       Actions: [],
     },
-    // actions: [],
   })
 
-  /* =========== STATES UPDATES  =========== */
+  /* ================ STATES UPDATES  ==================== */
   const [updated, setUpdated] = useState(false)
   const [render, setRender] = useState(false)
 
-  /* =================== CANVA ==================== */
+  /* =================== CANVA =========================== */
   const [canvas, setCanvas] = useState("")
 
-  /* ============== STATES PROPERTIES =================== */
+  /* ============== STATES PROPERTIES ==================== */
 
   // TEXTS
   const [selectedColor, setSelectedColor] = useState("#FFFFFF")
@@ -50,9 +52,29 @@ export const EditionContextProvider = ({ children }) => {
   const [selectedColorBorder, setSelectedColorBorder] = useState("#FFFFFF")
   const [selectedColorBg, setSelectedColorBg] = useState("#FFFFFF")
 
-  // ACTIONS & SCENES
+  // BACKGROUND & IMAGES
+  const [backgroundPath, setBackgroundPath] = useState(null)
+  const [selectedPath, setSelectedPath] = useState("")
+  const [imgPath, setImgPath] = useState("")
 
-  /* ================ GESTIONS STATES ET OBJETS  ========================== */
+  // SELECTIONS TOOLBAR
+  const [isAddingText, setIsAddingText] = useState(false)
+  const [isAddingPic, setIsAddingPic] = useState(false)
+  const [isAddingRect, setIsAddingRect] = useState(false)
+  const [isAddingBackground, setIsAddingBackground] = useState(false)
+
+  // ACTIONS & SCENES
+  const [editStatus, setEditStatus] = useState({
+    storyId: 0,
+    sceneId: 0,
+    nbreScene: 0,
+  })
+
+  const [tabElem, setTabElem] = useState([])
+
+  const [updateActions, setUpdateActions] = useState(false)
+
+  /* ============================================= GESTIONS EVENEMENTS CANVAS  ========================================= */
 
   /* Fonction initialisation canva */
   const initCanvas = () => {
@@ -63,128 +85,163 @@ export const EditionContextProvider = ({ children }) => {
     return newCanvas
   }
 
-  const tabObject = {
-    /* Ajout d'un élément */
-    add: (newFabElem, id) => {
-      console.log("01 ======= AJOUT OBJECT ========= ")
-      const newObject = newFabElem.toObject()
-      newObject.id = id
-      newObject.Actions = []
-      const type = newObject.type
-      console.log(type)
+  /* Update properties selected */
 
-      setObjects((prevObjects) => {
-        const updatedObjects = { ...prevObjects } // Créez une copie de l'objet précédent
+  const updateSelectedProperties = (object) => {
+    // console.log("02 ======= UPDATE FROM CANVAS ========= ")
+    // console.info("Objet selectionné : ", object)
 
-        // Vérifiez si la propriété type existe dans l'objet updatedObjects, sinon initialisez-la à un objet vide
-        if (!updatedObjects[type]) {
-          updatedObjects[type] = {}
-        }
-
-        // Ajoutez le nouvel objet avec la clé ID au type approprié
-        updatedObjects[type][id] = newObject
-        console.log("Ajout object: ", updatedObjects)
-        return updatedObjects // Retournez le nouvel objet mis à jour
-      })
-    },
-    /* Suppression element */
-    delete: (type, idToDelete) => {
-      console.log("======= SUPP OBJECT ========= ")
-      console.log("object to delete: ", idToDelete)
-
-      setObjects((prevObjects) => {
-        const updatedObjects = { ...prevObjects } // Créez une copie de l'objet précédent
-
-        // Vérifiez si la propriété type existe dans l'objet updatedObjects
-        if (updatedObjects[type] && typeof updatedObjects[type] === "object") {
-          // Supprimez l'objet avec l'ID donné du type approprié
-          delete updatedObjects[type][idToDelete]
-        }
-
-        console.log("Updated objects: ", updatedObjects)
-        return updatedObjects // Retournez le nouvel objet mis à jour
-      })
-    },
-
-    /* recherche par Id (render AtiveObject) */
-    getItemById: (activeObject) => {
-      const idSearch = activeObject.id
-
-      for (const [type, items] of Object.entries(objects)) {
-        if (items[idSearch]) {
-          return { type, item: items[idSearch] }
-        }
+    setObjectSelected((prevObjectSelected) => {
+      const newObject = {
+        selected: true,
+        type: object.type,
+        id: object.id,
+        properties: object.toObject(),
       }
-      return null
-    },
+      // console.log("Object selected updated : ", newObject)
 
-    /* Sauvegarde dans tableau d'objets */
-    saveProperties: (objectUpdated) => {
-      console.log("04 =========== SAVE TO OBJECTS  =========== ")
-
-      const { id, type } = objectSelected
-      console.log(
-        "sauvegarde du ",
-        type,
-        " id : ",
-        id,
-        "value : ",
-        objectUpdated
-      )
-
-      setObjects((prevObjects) => {
-        const updatedObjects = { ...prevObjects }
-
-        if (updatedObjects[type] && updatedObjects[type][id]) {
-          updatedObjects[type][id] = {
-            ...updatedObjects[type][id],
-            ...(objectUpdated.properties || objectUpdated),
-          }
-
-          console.log("Updated objects: ", updatedObjects)
-
-          setRender(true)
-          console.log("sauvegarde effectuée, > render ")
-        }
-
-        return updatedObjects
-      })
-    },
-
-    /* Reset  properties selected */
-    resetProperties: () => {
-      console.log("======= RESET PROPERTIES ========= ")
-      setObjectSelected({
-        type: "",
-        id: "",
-        properties: {},
-        actions: [],
-      })
-      setUpdated(false)
-      // resetStates()
-    },
-
-    /* Update properties selected */
-    updateSelectedProperties: (object) => {
-      console.log("02 ======= UPDATE FROM CANVAS ========= ")
-      console.log(object)
-
-      setObjectSelected((prevObjectSelected) => {
-        const newObject = {
-          type: object.type,
-          id: object.id,
-          properties: object.toObject(),
-          // Actions: object.Actions,
-        }
-        console.log("Object selected updated : ", newObject)
-        updateStates(newObject)
-
-        return newObject
-      })
-    },
+      return newObject
+    })
   }
 
-  /* ============================= ANNEXES =========================== */
+  /* <<<<================= Creation de nouveaux objets fabrics
+
+  /* add text */
+  const addText = (canvi) => {
+    const textId = uuidv4()
+    const text = new fabric.Textbox("Texte", {
+      height: 280,
+      width: 200,
+      fill: "black",
+      id: textId,
+      Actions: [],
+    })
+
+    canvi.add(text)
+    canvi.renderAll()
+    setIsAddingText(false)
+  }
+
+  /* add rectangle */
+  const addRect = (canvi) => {
+    const rectId = uuidv4()
+
+    const rect = new fabric.Rect({
+      height: 200,
+      width: 200,
+      fill: "grey",
+      id: rectId,
+      Actions: [],
+    })
+
+    canvi.add(rect)
+    canvi.renderAll()
+    setIsAddingRect(false)
+  }
+
+  /* add image */
+  const addImage = (canvi, imageUrl) => {
+    const imgId = uuidv4()
+    fabric.Image.fromURL(imageUrl, (img) => {
+      img.scale(0.75)
+      img.id = imgId
+      img.Actions = []
+      canvi.add(img)
+    })
+
+    canvi.renderAll()
+    setIsAddingPic(false)
+  }
+
+  const addBackground = () => {
+    if (canvas && backgroundPath !== "" && isAddingBackground) {
+      const backendBaseUrl = `http://localhost:4242/uploads/${backgroundPath}`
+
+      fabric.Image.fromURL(backendBaseUrl, (img) => {
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+          scaleX: canvas.width / img.width,
+          scaleY: canvas.height / img.height,
+        })
+      })
+      setIsAddingBackground(false)
+    }
+  }
+
+  const keyDeleteObject = () => {
+    const activeObject = canvas.getActiveObject()
+
+    if (activeObject) {
+      console.log("activeObject : ", activeObject)
+      console.log("id de l'active object : ", activeObject.id)
+      canvas.remove(activeObject)
+      canvas.discardActiveObject()
+      canvas.renderAll()
+    }
+  }
+
+  const updateStates = (object) => {
+    if (object) {
+      // font style
+      if (object.type === "textbox") {
+        setSelectedColor(object.fill)
+        setSelectedFont(object.fontFamily)
+        setSelectedSize(object.fontSize)
+        setAlignment(object.textAlign)
+        // setSelectedColorBg(object.backgroundColor)
+      }
+      // properties
+      if (object.type === "rect") {
+        setSelectedSizeBorder(object.strokeWidth)
+        setSelectedSizeRadius(object.rx)
+        setSelectedColorBorder(object.stroke || "#FFFFFF")
+        setSelectedColorBg(object.fill)
+      }
+    }
+  }
+
+  /* Récupérer actions */
+  const getActions = () => {
+    if (canvas) {
+      const activeObject = canvas.getActiveObject()
+      if (activeObject) {
+        const newTabElem = activeObject.Actions.map((elem, index) => (
+          <tr key={index}>
+            <td>{elem.type}</td>
+            <td>{elem.target}</td>
+            <td>{elem.number}</td>
+            <td>
+              <img
+                src={imgDelete}
+                alt="img-delete"
+                onClick={() => handleDelete(index)}
+              />
+            </td>
+          </tr>
+        ))
+
+        setTabElem(newTabElem)
+      }
+    }
+  }
+
+  /* Delete action */
+  const handleDelete = (index) => {
+    if (canvas) {
+      const activeObject = canvas.getActiveObject()
+      if (activeObject) {
+        const currentActions = activeObject.get("Actions")
+
+        if (currentActions && currentActions.length > index) {
+          currentActions.splice(index, 1)
+          activeObject.set({ Actions: currentActions })
+          canvas.renderAll()
+          setUpdateActions(true)
+        }
+      }
+    }
+  }
+
+  /* ======= ANNEXES ====== */
 
   // const resetStates = () => {
   //   setSelectedColor("")
@@ -198,70 +255,172 @@ export const EditionContextProvider = ({ children }) => {
   //   setSelectedColorBg("")
   // }
 
-  /* Update des states */
-  const updateStates = (object) => {
-    // console.log(object)
-    if (object) {
-      console.log(
-        "03 ===== UPDATE context  => states ====== : ",
-        object.properties
-      )
-      const properties = object.properties
+  /* =================================================== REQUETES HTTP ================================================= */
 
-      // font style
-      if (object.type === "textbox") {
-        setSelectedColor(properties.fill)
-        setSelectedFont(properties.fontFamily)
-        setSelectedSize(properties.fontSize)
-        setAlignment(properties.textAlign)
-        setSelectedColorBg(properties.backgroundColor)
-      }
-      //   // properties
-      if (object.type === "rect" || object.type === "textbox") {
-        setSelectedSizeBorder(properties.strokeWidth)
-        setSelectedSizeRadius(properties.rx)
-        setSelectedColorBorder(properties.stroke || "#FFFFFF")
-        setSelectedColorBg(properties.fill)
-      }
+  const getScene = (idStory, idScene) => {
+    console.log("IMPORT SCENE")
 
-      const states = {
-        selectedColor,
-        selectedFont,
-        selectedSize,
-        selectedAlignment,
-        selectedSizeBorder,
-        selectedSizeRadius,
-        selectedColorBorder,
-      }
-      console.log("states : ", states)
-    }
-  }
+    console.log(idStory)
+    console.log(idScene)
 
-  function customJSONStringify(obj) {
-    const seen = new Set()
-
-    return JSON.stringify(obj, (key, value) => {
-      if (typeof value === "object" && value !== null) {
-        if (seen.has(value)) {
-          return "[Circular Reference]"
-        }
-        seen.add(value)
-      }
-      return value
-    })
-  }
-
-  const exportScenes = (data) => {
-    console.log(objects)
-    const dataExport = customJSONStringify(objects)
-    console.log(dataExport)
     axios
-      .put(`http://localhost:4242/api-stories/01/2`, objects)
+      .get(`http://localhost:4242/api-stories/${idStory}/${idScene}`)
       .then((response) => {
-        console.log("Réponse du serveur :", response.data)
+        console.info("Get scene => Réponse serveur :", response.data)
+        setEditStatus((prevEditStatus) => ({
+          ...prevEditStatus,
+          nbreScene: response.data.nbScenes,
+          sceneId: response.data.id,
+        }))
+        console.log(response.data.scene)
+        setObjects(response.data.scene)
+        canvas.clear()
+        renderNewElements(response.data.scene)
       })
       .catch((error) => {
         // Gérer les erreurs de la requête
+        console.error("Erreur de la requête :", error)
+      })
+
+    // canvas.clear()
+
+    return () => {
+      renderNewElements(objects)
+    }
+  }
+
+  const renderNewElements = (data) => {
+    console.log("render des elements")
+    console.log(data)
+
+    // "textbox"
+    for (const textboxId in data.textbox) {
+      const textboxData = data.textbox[textboxId]
+      const textbox = new fabric.Textbox(textboxData.text, {
+        left: textboxData.left,
+        top: textboxData.top,
+        width: textboxData.width,
+        height: textboxData.height,
+        fill: textboxData.fill,
+        fontFamily: textboxData.fontFamily,
+        fontSize: textboxData.fontSize,
+      })
+
+      canvas.add(textbox)
+    }
+
+    // Parcourez les données de "rect"
+    for (const rectId in data.rect) {
+      const rectData = data.rect[rectId]
+      const rect = new fabric.Rect({
+        left: rectData.left,
+        top: rectData.top,
+        width: rectData.width,
+        height: rectData.height,
+        fill: rectData.fill,
+        // Autres propriétés du rectangle ici
+      })
+
+      canvas.add(rect)
+    }
+
+    // Parcourez les données de "image"
+    for (const imgId in data.image) {
+      const imgData = data.image[imgId]
+      fabric.Image.fromURL(imgData.src, (img) => {
+        img.set({
+          left: imgData.left,
+          top: imgData.top,
+          width: imgData.width,
+          height: imgData.height,
+          // Autres propriétés de l'image ici
+        })
+        canvas.add(img)
+      })
+    }
+
+    canvas.renderAll()
+
+    console.log(canvas.getObjects())
+  }
+  const addScene = (idStory) => {
+    console.log("id story avant envoi : ", idStory)
+    axios
+      .post(`http://localhost:4242/api-stories/createScene/${idStory}`)
+      .then((response) => {
+        console.info("Add scene => Réponse serveur :", response.data)
+        setEditStatus((prevEditStatus) => ({
+          ...prevEditStatus,
+          sceneId: response.data.indexScene - 1,
+          nbreScene: response.data.indexScene,
+        }))
+        console.info(
+          "Contenu objects après reception : ",
+          response.data.content
+        )
+        setObjects(response.data.content)
+        console.log(response.data.indexScene)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const deleteScene = (idStory, idScene) => {
+    console.log(`suppression de ${idStory} scene ${idScene}`)
+    axios
+      .delete([`http://localhost:4242/api-stories/${idStory}/${idScene}`])
+      .then((response) => {
+        console.log(response)
+        setEditStatus((prevEditStatus) => ({
+          ...prevEditStatus,
+          nbreScene: response.data.nbScenes,
+          sceneId: response.data.id,
+        }))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const editSettings = (story, scene) => {
+    setEditStatus((prevEditStatus) => ({
+      ...prevEditStatus,
+      storyId: story,
+      sceneId: scene,
+    }))
+    getScene(story, scene)
+  }
+
+  const exportScenes = (data, idStory, idScene) => {
+    const objectsOnCanvas = canvas.getObjects()
+
+    // Créez un objet pour stocker les objets triés par type
+    const sortedObjects = {}
+
+    // Parcourez le tableau d'objets et organisez-les par type
+    objectsOnCanvas.forEach((obj) => {
+      const type = obj.type
+      if (!sortedObjects[type]) {
+        sortedObjects[type] = {}
+      }
+      sortedObjects[type][obj.id] = obj.toObject()
+    })
+
+    // Maintenant, sortedObjects contient les objets triés par type
+    console.log(sortedObjects)
+
+    const dataExport = sortedObjects
+    console.log("data exportée : ", dataExport)
+    axios
+      .put(
+        `http://localhost:4242/api-stories/${idStory}/${idScene}`,
+        dataExport
+      )
+      .then((response) => {
+        console.info("Export scene => Réponse serveur :", response.data)
+      })
+      .catch((error) => {
         console.error("Erreur de la requête :", error)
       })
   }
@@ -271,19 +430,26 @@ export const EditionContextProvider = ({ children }) => {
       value={{
         canvas,
         setCanvas,
+        editSettings,
         render,
         setRender,
+        addScene,
         objects,
         setObjects,
-        tabObject,
+        updateActions,
+        setUpdateActions,
         objectSelected,
         setObjectSelected,
+        exportScenes,
+        getScene,
         setUpdated,
         updated,
+        getActions,
         initCanvas,
         selectedColor,
         selectedFont,
         selectedSize,
+        updateStates,
         selectedAlignment,
         setSelectedColor,
         setSelectedFont,
@@ -297,7 +463,31 @@ export const EditionContextProvider = ({ children }) => {
         setSelectedSizeRadius,
         setSelectedColorBorder,
         setSelectedColorBg,
-        exportScenes,
+        isAddingText,
+        isAddingPic,
+        isAddingRect,
+        isAddingBackground,
+        setIsAddingText,
+        setIsAddingPic,
+        setIsAddingRect,
+        setIsAddingBackground,
+        setEditStatus,
+        setTabElem,
+        tabElem,
+        editStatus,
+        deleteScene,
+        addRect,
+        addImage,
+        addBackground,
+        addText,
+        setBackgroundPath,
+        backgroundPath,
+        setSelectedPath,
+        selectedPath,
+        setImgPath,
+        imgPath,
+        keyDeleteObject,
+        updateSelectedProperties,
       }}
     >
       {children}
