@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 /* Packages */
 import { useState, useEffect } from "react"
 import { useEditionContext } from "../../../services/contexts/editionContext"
@@ -21,7 +20,7 @@ function WidgetRect() {
   const [displayCPickerBg, setDisplayCPickerBg] = useState(false)
   const [displayCPickerBorder, setDisplayCPickerBorder] = useState(false)
   const [extend, setExtend] = useState(false)
-  const { tabObject, objects, objectSelected } = useEditionContext()
+  const { objectSelected, canvas } = useEditionContext()
 
   /* FROM CONTEXT */
 
@@ -40,26 +39,25 @@ function WidgetRect() {
 
   /* =============== */
 
-  /* Update states => context */
   useEffect(() => {
-    const { id, type } = objectSelected
+    if (canvas) {
+      const activeObject = canvas.getActiveObject()
+      if (activeObject) {
+        const updatedProperties = {
+          strokeWidth: selectedSizeBorder,
+          rx: selectedSizeRadius,
+          ry: selectedSizeRadius,
+          stroke: selectedColorBorder,
+          fill: selectedColorBg,
+        }
 
-    if (type === "rect") {
-      const updateDataTexts = { ...objects[type][id] }
-
-      updateDataTexts.strokeWidth = selectedSizeBorder
-      updateDataTexts.rx = selectedSizeRadius
-      updateDataTexts.ry = selectedSizeRadius
-      updateDataTexts.stroke = selectedColorBorder
-      updateDataTexts.fill = selectedColorBg
-
-      console.log("widgetRect - objectSelected modified : ", updateDataTexts)
-
-      tabObject.saveProperties(updateDataTexts)
+        // Mettez à jour les propriétés de l'objet actif
+        activeObject.set(updatedProperties)
+        canvas.renderAll()
+      }
     }
-
-    // }
   }, [
+    canvas,
     selectedSizeBorder,
     selectedSizeRadius,
     selectedColorBorder,
