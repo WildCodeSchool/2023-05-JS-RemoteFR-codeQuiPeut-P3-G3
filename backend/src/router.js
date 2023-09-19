@@ -25,11 +25,12 @@ const weaponsControllers = require("./controllers/weaponsControllers")
 const picturesControllers = require("./controllers/picturesControllers")
 
 const {
-  getStory,
   getScene,
   createStory,
   putScene,
   deleteScene,
+  createScene,
+  deleteStory,
 } = require("./api/controls/controllers")
 
 router.get("/card", cardControllers.browse)
@@ -90,7 +91,7 @@ router.get("/stories", storiesControllers.browse)
 router.get("/stories/:id/:scene?", storiesControllers.read)
 router.post("/stories", storiesControllers.add, createStory)
 router.put("/stories/:id/:scene?", storiesControllers.edit)
-router.delete("/stories/:id", storiesControllers.destroy, deleteScene)
+router.delete("/stories/:id", storiesControllers.destroy, deleteStory)
 router.put("/deploy/:id", storiesControllers.deploy)
 
 router.get("/users", usersControllers.browse)
@@ -115,9 +116,11 @@ router.post("/addPicture/:filename", picturesControllers.add)
 router.delete("/deletePicture/:id", picturesControllers.destroy)
 router.get("/displayAllPictures", picturesControllers.browse)
 
-router.get("/api-stories/:filename", getStory)
-router.get("/api-stories/:filename/:scene", getScene)
+// router.get("/api-stories/:idStory/:idScene", getStory)
+router.get("/api-stories/:idStory/:idScene", getScene)
 router.post("/api-stories/:filename", createStory)
-router.put("/api-stories/:filename/:scene", putScene)
+router.post("/api-stories/createScene/:idStory", createScene)
+router.put("/api-stories/:idStory/:idScene", putScene)
+router.delete("/api-stories/:idStory/:idScene", deleteScene, getScene)
 
 module.exports = router

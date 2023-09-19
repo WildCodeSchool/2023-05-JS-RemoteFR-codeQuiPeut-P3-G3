@@ -19,7 +19,12 @@ function AdminGeneral({ setNav, selected }) {
       searchParams.delete("story")
       setSearchParams(searchParams)
     }
+    if (searchParams.has("scene")) {
+      searchParams.delete("story")
+      setSearchParams(searchParams)
+    }
   }, [])
+
   /* Animation quand story créee */
   useEffect(() => {
     if (storyCreated) {
@@ -89,7 +94,8 @@ function AdminGeneral({ setNav, selected }) {
   }
 
   const handleModify = (id) => {
-    setSearchParams({ story: id })
+    setSearchParams({ story: id, scene: 0 })
+
     setNav("Edition")
   }
 

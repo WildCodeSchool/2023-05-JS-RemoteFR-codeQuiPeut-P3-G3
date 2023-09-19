@@ -49,7 +49,7 @@ const hashPassword = (req, res, next) => {
     })
 }
 
-const verifyPassword = (req, res) => {
+const verifyPassword = (req, res, next) => {
   argon2
 
     .verify(req.user.hashedPassword, req.body.pwd)
@@ -61,16 +61,16 @@ const verifyPassword = (req, res) => {
           expiresIn: "1h",
         })
         delete req.user.hashedPassword
-        res.status(200).send({ success: true, token, user: req.user })
+        return res.status(200).send({ success: true, token, user: req.user })
       } else {
-        return Promise.reject(new Error("Password do not match"))
+        return res
+          .status(401)
+          .json({ message: "Email ou mot de passe incorrect" })
       }
     })
 
     .catch((err) => {
       console.error(err)
-
-      return Promise.reject(new Error("Password do not match"))
     })
 }
 

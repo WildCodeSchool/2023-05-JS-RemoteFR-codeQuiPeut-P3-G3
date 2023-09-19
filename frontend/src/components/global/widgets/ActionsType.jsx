@@ -12,7 +12,7 @@ function ActionType() {
 
   const [showTarget, setShowTarget] = useState(false)
 
-  const { objectSelected, tabObject, objects } = useEditionContext()
+  const { canvas, setUpdateActions } = useEditionContext()
 
   const styles = {
     valueContainer: (base) => ({
@@ -64,60 +64,31 @@ function ActionType() {
   ]
 
   const handlePushAction = () => {
-    const { id, type } = objectSelected
+    if (canvas) {
+      const activeObject = canvas.getActiveObject()
+      if (activeObject) {
+        // Récupérez la valeur actuelle du tableau "Actions"
+        const currentActions = activeObject.get("Actions") || []
 
-    if (type !== "") {
-      const updateDataActions = { ...objects[type][id] }
+        // Créez un nouvel objet à pousser dans le tableau
+        const newAction = {
+          type: selectedType,
+          target: selectedTarget,
+          number: selectedNumber,
+        }
 
-      const data = {
-        type: selectedType,
-        target: selectedTarget,
-        number: selectedNumber,
+        // Ajoutez le nouvel objet au tableau
+        currentActions.push(newAction)
+
+        // Mettez à jour les propriétés de l'objet actif avec le tableau mis à jour
+        activeObject.set({ Actions: currentActions })
+
+        // Appelez renderAll pour mettre à jour l'affichage du canvas
+        canvas.renderAll()
+        setUpdateActions(true)
       }
-
-      const currentActions = [...(updateDataActions.Actions || [])]
-
-      currentActions.push(data)
-      updateDataActions.Actions = currentActions
-
-      console.log("widgetActions : ", updateDataActions)
-
-      tabObject.saveProperties(updateDataActions)
     }
-
-    // }
   }
-
-  //   const handlePushAction = () => {
-  //     if (objectSelected) {
-  //       console.log("widgetActions - objectSelected : ", objectSelected)
-
-  //       const updatedObjectSelected = { ...objectSelected }
-
-  //       console.log("memoire d'object selected : ", updatedObjectSelected)
-
-  //       const data = {
-  //         type: selectedType,
-  //         target: selectedTarget,
-  //         number: selectedNumber,
-  //       }
-
-  //       const currentActions = [
-  //         ...(updatedObjectSelected.properties.Actions || []),
-  //       ]
-  //       console.log("currentActions ", currentActions)
-  //       currentActions.push(data)
-  //       console.log("après push : ", currentActions)
-  //       updatedObjectSelected.properties.Actions = currentActions
-
-  //       console.log(
-  //         "widget actions - objectSelected modified : ",
-  //         updatedObjectSelected
-  //       )
-
-  //       tabObject.saveProperties(updatedObjectSelected)
-  //     }
-  //   }
 
   useEffect(() => {
     if (selectedType === "add" || selectedType === "subs") {
