@@ -13,8 +13,6 @@ const Shop = () => {
     axios
       .get("http://localhost:4242/shop")
       .then((response) => {
-        console.info(`Step 0 OK \nRécupération données cards`)
-        console.info(response.data)
         setCardInfo(response.data)
       })
       .catch((error) => {

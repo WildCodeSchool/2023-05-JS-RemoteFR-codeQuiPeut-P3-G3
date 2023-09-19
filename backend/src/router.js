@@ -87,7 +87,7 @@ router.post("/shop", shopControllers.add)
 router.put("/shop/:id", shopControllers.edit)
 router.delete("/shop/:id", shopControllers.destroy)
 
-router.get("/shop/cart", shopControllers.getCart)
+router.get("/shopping_card_item", shopControllers.getTotalCart)
 
 router.get("/stories", storiesControllers.browse)
 router.get("/stories/:id/:scene?", storiesControllers.read)

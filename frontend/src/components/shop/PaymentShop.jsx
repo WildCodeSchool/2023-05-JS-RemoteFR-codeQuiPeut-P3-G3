@@ -1,32 +1,126 @@
-// import { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Payment from "../../assets/images/logoPaypal.png"
 import "./PaymentShop.scss"
-// import axios from "axios"
+import axios from "axios"
 
-const PaymentShop = () => {
-  // const [cartItems, setCartItems] = useState([])
-  // const [cartItemsTotal, setCartItemsTotal] = useState([])
-  const cartItems = []
-  const cartItemsTotal = []
+const PaymentShop = (props) => {
+  const [cartItems, setCartItems] = useState([])
+  const [cartItemsTotal, setCartItemsTotal] = useState(0)
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:4242/shop/cart")
-  //     .then((response) => {
-  // if (cartItems.length !== response.data.length) {
-  // setCartItems(response.data)
-  // let total = 0
-  // response.data.forEach((element) => {
-  //   total += element.price
-  // })
-  // setCartItemsTotal(total)
-  // }
-  //     })
-  //     .catch((error) => {
-  //       console.warn("POUETPOUET")
-  //       console.error("TA MERDE ! C'est de la merde", error)
-  //     })
-  // })
+  useEffect(() => {
+    // Effectuez une requête pour récupérer les produits de la table shopping_card_item depuis votre API
+    axios
+      .get("http://localhost:4242/shopping_card_item")
+      .then((response) => {
+        // Récupérez les données des produits
+        const items = response.data
+
+        // Mettez à jour l'état des produits
+        console.info(cartItemsTotal)
+        setCartItems(items)
+
+        // Calculez le total du prix en additionnant les prix de chaque produit
+        const total = items.reduce((acc, item) => acc + item.price, 0)
+        setCartItemsTotal(total)
+      })
+      .catch((error) => {
+        console.error(
+          "Une erreur est survenue lors de la récupération des produits.",
+          error
+        )
+      })
+  }, [])
+
+  // Récupération info cards
+
+  const [cardInfo, setCardInfo] = useState([])
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4242/shop")
+      .then((response) => {
+        setCardInfo(response.data)
+      })
+      .catch((error) => {
+        console.warn("Pouetpouet")
+        console.error(
+          "Une erreur est survenue lors de la récupération des fichiers.",
+          error
+        )
+      })
+  }, [])
+
+  // Calcul du total des prix
+  let totalPrice = 0
+
+  // Ajoutez les prix à totalPrice
+  cartItems.forEach((item) => {
+    totalPrice += cardInfo[item.shop_credit_item_id - 1]?.price
+  })
+
+  const [cardNumber, setCardNumber] = useState("")
+  const [expirationMonth, setExpirationMonth] = useState("")
+  const [expirationYear, setExpirationYear] = useState("")
+  const [cvc, setCvc] = useState("")
+
+  // Fonction de validation pour n'accepter que des chiffres
+  const handleCardNumberChange = (e) => {
+    let input = e.target.value
+
+    // Supprime tous les caractères non numériques
+    input = input.replace(/\D/g, "")
+
+    // Ajoute des espaces après chaque groupe de quatre chiffres
+    input = input.replace(/(\d{4})(?=\d)/g, "$1 ")
+
+    if (input.length > 19) {
+      input = input.slice(0, 16)
+    }
+
+    setCardNumber(input)
+  }
+
+  const handleCvcChange = (e) => {
+    let input = e.target.value
+
+    // Utilisez une expression régulière pour vérifier que l'entrée contient uniquement des chiffres
+    input = input.replace(/\D/g, "") // Supprime les caractères non numériques
+
+    // Limite la longueur de la saisie à 3 chiffres
+    if (input.length > 3) {
+      input = input.slice(0, 3)
+    }
+
+    setCvc(input)
+  }
+
+  // Fonction de gestionnaire d'événements pour le bouton "Pay Now"
+  const handlePayNowClick = (props) => {
+    // Collectez toutes les informations dont vous avez besoin
+    const paymentData = {
+      cardNumber,
+      expirationMonth,
+      expirationYear,
+      cvc,
+    }
+
+    console.info(paymentData)
+
+    // Vous pouvez ici envoyer ces données au serveur ou effectuer d'autres actions nécessaires
+    // Par exemple, vous pouvez utiliser Axios pour effectuer une requête POST au serveur
+    // axios.post("/votre/url/de/serveur", paymentData)
+    //   .then((response) => {
+    //     // Gérer la réponse du serveur si nécessaire
+    //   })
+    //   .catch((error) => {
+    //     // Gérer les erreurs si nécessaire
+    //   });
+
+    setCardNumber("")
+    setExpirationMonth("")
+    setExpirationYear("")
+    setCvc("")
+  }
 
   return (
     <div className="Shop_PaymentContainerGlobal">
@@ -36,18 +130,18 @@ const PaymentShop = () => {
         </h3>
       </div>
       <div className="Shop_Payment_Body">
-        {/* zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz */}
         <div className="Shop_Payment_Left">
-          <ul>
+          <ul className="cart-items-list">
             {cartItems.map((item) => (
-              <li key={item.id}>
-                {item.credit_quantity} credits - {item.price}$
+              <li key={item.id} className="cart-item">
+                {cardInfo[item.shop_credit_item_id - 1]?.credit_quantity}{" "}
+                crédits - {cardInfo[item.shop_credit_item_id - 1]?.price} $
               </li>
             ))}
           </ul>
           <p>
             To Pay <br />
-            <span className="BillsValues">{cartItemsTotal}$</span>
+            <span className="BillsValues">{totalPrice} $</span>
           </p>
         </div>
         <div className="Shop_Payment_Right">
@@ -64,7 +158,12 @@ const PaymentShop = () => {
               <div className="Shop_Payment_Cat1">
                 <label>
                   Card Number
-                  <input type="text" placeholder="1234 5678 9012 3456" />
+                  <input
+                    type="tel"
+                    placeholder="1234 5678 9012 3456"
+                    value={cardNumber}
+                    onChange={handleCardNumberChange}
+                  />
                 </label>
               </div>
               <div className="Shop_Payment_Cat2">
@@ -110,11 +209,21 @@ const PaymentShop = () => {
               <div className="Shop_Payment_Cat3">
                 <label>
                   CVC/CW
-                  <input type="text" placeholder="123" />
+                  <input
+                    type="tel"
+                    placeholder="123"
+                    value={cvc}
+                    onChange={handleCvcChange}
+                  />
                 </label>
               </div>
               <div className="Shop_Payment_Cat4">
-                <button className="Payment_ButtonPay">Pay Now</button>
+                <button
+                  className="Payment_ButtonPay"
+                  onClick={handlePayNowClick}
+                >
+                  Pay Now
+                </button>
                 <div className="Payment_Separator"></div>
                 <p>or select other payment method</p>
                 <img src={Payment} alt="Logo Payment" className="PayPal_Logo" />

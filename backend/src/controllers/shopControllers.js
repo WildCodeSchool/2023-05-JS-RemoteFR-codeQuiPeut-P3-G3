@@ -111,9 +111,8 @@ const destroy = (req, res) => {
     })
 }
 
-const getCart = (req, res) => {
-  const userId = 1
-  models.ShoppingCardItem.getProducts(userId)
+const getTotalCart = (req, res) => {
+  models.ShoppingCardItem.findAll()
     .then(([rows]) => {
       res.send(rows)
     })
@@ -129,5 +128,5 @@ module.exports = {
   read,
   edit,
   destroy,
-  getCart,
+  getTotalCart,
 }
