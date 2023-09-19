@@ -61,7 +61,7 @@
     height: 100%;
     align-items: center;
     justify-content: center;
-    gap: .5rem;
+    gap: 0.5rem;
   }
   // .explore-nav{
   //   display: flex;
@@ -92,14 +92,12 @@
     background-size: 20px 20px;
   }
   .profile-navbar {
-    
-
-    .profile-navbar-img{
-      height:40px;
-      gap: .5rem;
+    .profile-navbar-img {
+      height: 40px;
+      gap: 0.5rem;
     }
 
-    #resize-profile-image{
+    #resize-profile-image {
       height: 42px;
       padding-top: 4px;
     }
@@ -109,7 +107,6 @@
       align-items: center;
       text-decoration: none;
     }
-    
 
     .left-img-navbar {
       padding-right: 5px;

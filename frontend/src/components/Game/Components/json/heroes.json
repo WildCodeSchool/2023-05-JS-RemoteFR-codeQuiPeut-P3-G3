@@ -1,0 +1,42 @@
+[
+  {
+    "class": "barbare",
+    "name": "Barbare",
+    "heal": 4,
+    "maxHeal": 4,
+    "money": 100,
+    "equipped": {
+      "weapons": [1]
+    },
+    "inventory": {
+      "weapons": [],
+      "items": []
+    },
+    "skills": {
+      "agility": 30,
+      "strength": 50,
+      "intelligence": 35,
+      "resistance": 40
+    }
+  },
+  {
+    "class": "knight",
+    "name": "Chevaleresse",
+    "heal": 5,
+    "maxHeal": 5,
+    "money": 100,
+    "equipped": {
+      "weapons": []
+    },
+    "inventory": {
+      "weapons": [1, 2],
+      "items": []
+    },
+    "skills": {
+      "agility": 40,
+      "strength": 35,
+      "intelligence": 40,
+      "resistance": 50
+    }
+  }
+]

@@ -9,11 +9,12 @@ import { useEditionContext } from "../../../../../../services/contexts/editionCo
 
 function WidgetScenes() {
   const { editStatus, addScene } = useEditionContext()
-
-  const { getScene } = useEditionContext()
+  const { getScene, setSearchParams, editSettings } = useEditionContext()
 
   const handleClickScene = (idScene) => {
     getScene(editStatus.storyId, idScene)
+    setSearchParams({ story: editStatus.storyId, scene: idScene })
+    editSettings(editStatus.storyId, idScene)
   }
 
   const [boutons, setBoutons] = useState([])
