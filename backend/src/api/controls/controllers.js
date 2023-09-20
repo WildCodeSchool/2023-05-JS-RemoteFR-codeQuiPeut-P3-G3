@@ -225,3 +225,25 @@ module.exports.deleteScene = (req, res, next) => {
     return res.status(400).json({ error: "Le fichier n'existe pas." })
   }
 }
+
+module.exports.getHero = (req, res) => {
+  const { idStory, idScene } = req.params
+  console.info("Get scene => id story : ", idStory, "id scene : ", idScene)
+
+  const filePath = findPath(idStory)
+
+  if (fs.existsSync(filePath)) {
+    const { story } = require(filePath)
+
+    if (idScene >= 0 && idScene < story.scenes.length) {
+      const scene = story.scenes[idScene]
+      res.json({ nbScenes: story.scenes.length, scene, id: idScene })
+    } else {
+      return res
+        .status(400)
+        .json({ error: "L'index de la scène est invalide." })
+    }
+  } else {
+    return res.status(400).json({ error: "Le fichier n'existe pas." })
+  }
+}
