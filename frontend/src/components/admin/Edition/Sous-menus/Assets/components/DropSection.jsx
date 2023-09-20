@@ -2,7 +2,7 @@ import { useState } from "react"
 
 import "./DropSection.scss"
 
-function DropSection({ title, init, Composant: Composant }) {
+function DropSection({ title, init, Composant }) {
   const [dropped, setDrop] = useState(init)
   return (
     <>

@@ -47,14 +47,14 @@ function CharacterSettings() {
     },
   })
 
-  const checkAllElements = (obj) => {
-    // const allValuesDefined = Object.values(heroTemplate).every((value) => {
-    //   return value !== "" && value !== undefined
-    // })
+  // const checkAllElements = (obj) => {
+  //   // const allValuesDefined = Object.values(heroTemplate).every((value) => {
+  //   //   return value !== "" && value !== undefined
+  //   // })
 
-    // return allValuesDefined
-    return true
-  }
+  //   // return allValuesDefined
+  //   return true
+  // }
 
   useEffect(() => {
     if (story && scene) {
@@ -69,7 +69,6 @@ function CharacterSettings() {
   }, [editStatus.storyId])
 
   const apiGetHeroes = (storyId) => {
-    console.log("get heroessz")
     axios
       .get(`http://localhost:4242/api-heroes/${storyId}`)
       .then((res) => {
@@ -83,9 +82,6 @@ function CharacterSettings() {
     axios
       .put(`http://localhost:4242/api-heroes/${editStatus.storyId}`, data)
       .then((results) => {
-        console.log("Prev Hero Array:", hero)
-        console.log("New Hero Data:", results.data.content)
-
         setHero((prev) => {
           const newHeroArray = [...prev]
           newHeroArray.push(results.data.content)
@@ -98,43 +94,40 @@ function CharacterSettings() {
   }
 
   const apiDeleteHero = (idHero) => {
-    console.log(idHero)
     axios
       .delete(
         `http://localhost:4242/api-heroes/${editStatus.storyId}/${idHero}`
       )
       .then((res) => {
-        console.log(res)
         if (res.status === 200) {
           alert("hero supprimé avec succés")
-          console.log(res.data)
           setHero(res.data)
         }
       })
   }
 
-  const save = () => {
-    const valid = checkAllElements(heroTemplate)
-    if (valid) {
-      setHero((prev) => {
-        const newHeroArray = [...prev]
-        newHeroArray.push(heroTemplate)
-        return newHeroArray
-      })
-    } else {
-      alert("Fill all the fields")
-    }
-  }
+  // const save = () => {
+  //   const valid = checkAllElements(heroTemplate)
+  //   if (valid) {
+  //     setHero((prev) => {
+  //       const newHeroArray = [...prev]
+  //       newHeroArray.push(heroTemplate)
+  //       return newHeroArray
+  //     })
+  //   } else {
+  //     alert("Fill all the fields")
+  //   }
+  // }
 
-  const handleDelete = (index) => {
-    if (index !== undefined && index !== null) {
-      setHero((prev) => {
-        const newHeroArray = [...prev]
-        newHeroArray.splice(index, 1)
-        return newHeroArray
-      })
-    }
-  }
+  // const handleDelete = (index) => {
+  //   if (index !== undefined && index !== null) {
+  //     setHero((prev) => {
+  //       const newHeroArray = [...prev]
+  //       newHeroArray.splice(index, 1)
+  //       return newHeroArray
+  //     })
+  //   }
+  // }
 
   return (
     <>

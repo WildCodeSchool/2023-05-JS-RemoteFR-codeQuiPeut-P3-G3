@@ -64,9 +64,6 @@ export const EditionContextProvider = ({ children }) => {
   const [isAddingRect, setIsAddingRect] = useState(false)
   const [isAddingBackground, setIsAddingBackground] = useState(false)
 
-  // PERSONNAGES HEROS
-  const [hero, setHero] = useState([])
-
   // ACTIONS & SCENES
   const [editStatus, setEditStatus] = useState({
     storyId: 0,
@@ -532,8 +529,6 @@ export const EditionContextProvider = ({ children }) => {
         imgPath,
         keyDeleteObject,
         updateSelectedProperties,
-        setHero,
-        hero,
       }}
     >
       {children}

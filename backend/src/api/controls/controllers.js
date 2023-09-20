@@ -233,21 +233,17 @@ module.exports.deleteScene = (req, res, next) => {
 /* ============================================================= */
 
 module.exports.addHero = (req, res) => {
-  console.log("execution add Hero, requete : ")
   const { idStory } = req.params
   const data = req.body
-  console.log(idStory)
 
   console.info("creation scene")
 
   const filePath = findPath(idStory)
-  console.log(filePath)
 
   if (fs.existsSync(filePath)) {
     try {
       const loadedStory = require(filePath)
       const story = loadedStory.story
-      console.log("ici")
 
       //
       if (!story.heroes) {
@@ -281,7 +277,6 @@ module.exports.addHero = (req, res) => {
 
 module.exports.deleteHero = (req, res, next) => {
   const { idStory, idHero } = req.params
-  console.log("delete l'id : ", idHero)
   const filePath = findPath(idStory)
 
   if (fs.existsSync(filePath)) {
@@ -290,7 +285,6 @@ module.exports.deleteHero = (req, res, next) => {
       const story = loadedStory.story
 
       if (story.heroes.length > 0) {
-        console.log("splice en cours", story.heroes)
         story.heroes.splice(idHero, 1)
 
         // Écrire le contenu dans le fichier
@@ -298,7 +292,6 @@ module.exports.deleteHero = (req, res, next) => {
           filePath,
           `module.exports.story = ${JSON.stringify(story, null, 2)};`
         )
-        console.log("next")
         next()
       }
     } catch (error) {
@@ -314,7 +307,6 @@ module.exports.deleteHero = (req, res, next) => {
 
 module.exports.getHeroes = (req, res) => {
   const { idStory } = req.params
-  console.log(idStory)
   console.info("Get hero => id story : ")
 
   const filePath = findPath(idStory)
@@ -322,7 +314,6 @@ module.exports.getHeroes = (req, res) => {
   if (fs.existsSync(filePath)) {
     const loadedStory = require(filePath)
     const heroes = loadedStory.story.heroes
-    console.log(heroes)
     return res.status(200).json(heroes)
   } else {
     return res.status(400).json({

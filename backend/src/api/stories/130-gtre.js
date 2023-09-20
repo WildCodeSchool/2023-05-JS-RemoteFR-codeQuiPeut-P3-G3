@@ -1,85 +1,85 @@
 module.exports.story = {
-  "global": {
-    "description": "",
-    "name": "",
-    "category": "",
-    "public": ""
+  global: {
+    description: "",
+    name: "",
+    category: "",
+    public: "",
   },
-  "scenes": [
+  scenes: [
     {
-      "textbox": {},
-      "image": {},
-      "rect": {}
-    }
+      textbox: {},
+      image: {},
+      rect: {},
+    },
   ],
-  "heroes": [
+  heroes: [
     {
-      "class": "",
-      "img": "",
-      "name": "sdertfh",
-      "heal": 4,
-      "maxHeal": 4,
-      "money": 100,
-      "unit": "",
-      "equipped": {
-        "weapons": []
+      class: "",
+      img: "",
+      name: "sdertfh",
+      heal: 4,
+      maxHeal: 4,
+      money: 100,
+      unit: "",
+      equipped: {
+        weapons: [],
       },
-      "inventory": {
-        "weapons": [],
-        "items": []
+      inventory: {
+        weapons: [],
+        items: [],
       },
-      "skills": {
-        "agility": 0,
-        "strength": 0,
-        "intelligence": 0,
-        "resistance": 0
-      }
+      skills: {
+        agility: 0,
+        strength: 0,
+        intelligence: 0,
+        resistance: 0,
+      },
     },
     {
-      "class": "",
-      "img": "",
-      "name": "zef",
-      "heal": 4,
-      "maxHeal": 4,
-      "money": 100,
-      "unit": "",
-      "equipped": {
-        "weapons": []
+      class: "",
+      img: "",
+      name: "zef",
+      heal: 4,
+      maxHeal: 4,
+      money: 100,
+      unit: "",
+      equipped: {
+        weapons: [],
       },
-      "inventory": {
-        "weapons": [],
-        "items": []
+      inventory: {
+        weapons: [],
+        items: [],
       },
-      "skills": {
-        "agility": 0,
-        "strength": 0,
-        "intelligence": 0,
-        "resistance": 0
-      }
+      skills: {
+        agility: 0,
+        strength: 0,
+        intelligence: 0,
+        resistance: 0,
+      },
     },
     {
-      "class": "",
-      "img": "",
-      "name": "zef",
-      "heal": 4,
-      "maxHeal": 4,
-      "money": 100,
-      "unit": "",
-      "equipped": {
-        "weapons": []
+      class: "",
+      img: "",
+      name: "zef",
+      heal: 4,
+      maxHeal: 4,
+      money: 100,
+      unit: "",
+      equipped: {
+        weapons: [],
       },
-      "inventory": {
-        "weapons": [],
-        "items": []
+      inventory: {
+        weapons: [],
+        items: [],
       },
-      "skills": {
-        "agility": 0,
-        "strength": 0,
-        "intelligence": 0,
-        "resistance": 0
-      }
-    }
+      skills: {
+        agility: 0,
+        strength: 0,
+        intelligence: 0,
+        resistance: 0,
+      },
+    },
   ],
-  "weapons": [],
-  "consumables": []
-};
+  weapons: [],
+  consumables: [],
+}
