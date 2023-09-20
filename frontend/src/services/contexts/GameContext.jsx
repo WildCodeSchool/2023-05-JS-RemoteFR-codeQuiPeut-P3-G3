@@ -18,6 +18,8 @@ const StyledText = styled.div`
   top: ${(props) => props.textProperties.top}px;
   height: ${(props) => props.textProperties.height}px;
   width: ${(props) => props.textProperties.width}px;
+  cursor: ${(props) => props.textProperties.cursor};
+  z-index: 1;
 `
 
 const StyledRect = styled.div`
@@ -31,6 +33,19 @@ const StyledRect = styled.div`
   top: ${(props) => props.rectProperties.top}px;
   height: ${(props) => props.rectProperties.height}px;
   width: ${(props) => props.rectProperties.width}px;
+  cursor: ${(props) => props.rectProperties.cursor};
+  z-index: 1;
+`
+
+const StyledImg = styled.img`
+  position: absolute;
+  left: ${(props) => props.imgProperties.left}px;
+  top: ${(props) => props.imgProperties.top}px;
+  height: ${(props) => props.imgProperties.height}px;
+  width: ${(props) => props.imgProperties.width}px;
+  content: url("${(props) => props.imgProperties.src}");
+  cursor: ${(props) => props.imgProperties.cursor};
+  z-index: 1;
 `
 
 export const GameContextProvider = ({ children }) => {
@@ -41,6 +56,11 @@ export const GameContextProvider = ({ children }) => {
 
   const [sceneContent, setSceneContent] = useState({})
   const [sceneLoaded, setSceneLoaded] = useState(false)
+
+  const [texts, setTexts] = useState([])
+  const [rects, setRects] = useState([])
+  const [imgs, setImgs] = useState([])
+  const [background, setBackground] = useState("")
 
   const getScene = (idStory, idScene) => {
     console.info("IMPORT STORY ", idStory, " SCENE ", idScene)
@@ -64,27 +84,60 @@ export const GameContextProvider = ({ children }) => {
       })
   }
 
-  const creationTextes = () => {
+  const gestionActions = (actions) => {
+    const nbActions = actions.length
+
+    if (nbActions > 0) {
+      for (const elem of actions) {
+        switch (elem.type) {
+          case "add":
+            add(actions.target, actions.number)
+            break
+
+          case "subs":
+            // Logique pour l'action "subs"
+            break
+
+          case "shop":
+            // Logique pour l'action "shop"
+            break
+
+          case "fight":
+            // Logique pour l'action "fight"
+            break
+
+          default:
+            // Logique pour d'autres types d'action (si nécessaire)
+            break
+        }
+      }
+    }
+  }
+
+  const creationTextes = (object) => {
+    console.log("creation de textes")
     const textComponents = []
 
-    for (const key in sceneContent.textbox) {
-      // eslint-disable-next-line no-prototype-builtins
-      if (sceneContent.textbox.hasOwnProperty(key)) {
-        const elem = sceneContent.textbox[key]
+    for (const key in object) {
+      if (Object.prototype.hasOwnProperty.call(object, key)) {
+        const elem = object[key]
 
         const textProperties = {
-          fontFamily: elem.fontFamily,
-          fontSize: elem.fontSize,
-          fill: elem.fill,
-          left: elem.left,
-          top: elem.top,
-          height: elem.height,
-          width: elem.width,
+          fontFamily: elem.obj.fontFamily,
+          fontSize: elem.obj.fontSize,
+          fill: elem.obj.fill,
+          left: elem.obj.left,
+          top: elem.obj.top,
+          height: elem.obj.height * elem.obj.scaleY,
+          width: elem.obj.width * elem.obj.scaleX,
+          cursor: elem.Actions.length > 0 && "pointer",
         }
+
+        gestionActions(elem.Actions)
 
         textComponents.push(
           <StyledText key={key} textProperties={textProperties}>
-            {elem.text}
+            {elem.obj.text}
           </StyledText>
         )
       }
@@ -93,39 +146,72 @@ export const GameContextProvider = ({ children }) => {
     return textComponents
   }
 
-  const creationRects = () => {
-    const textComponents = []
+  const creationRects = (object) => {
+    const rectComponents = []
 
-    for (const key in sceneContent.rect) {
-      // eslint-disable-next-line no-prototype-builtins
-      if (sceneContent.rect.hasOwnProperty(key)) {
-        const elem = sceneContent.rect[key]
+    for (const key in object) {
+      if (Object.prototype.hasOwnProperty.call(object, key)) {
+        const elem = object[key]
+        console.log("elements : ", elem)
 
         const rectProperties = {
-          strokeWidth: elem.strokeWidth,
-          strokeColor: elem.stroke,
-          borderRadius: elem.rx,
-          fill: elem.fill,
-          left: elem.left,
-          top: elem.top,
-          height: elem.height,
-          width: elem.width,
+          strokeWidth: elem.obj.strokeWidth,
+          strokeColor: elem.obj.stroke,
+          borderRadius: elem.obj.rx,
+          fill: elem.obj.fill,
+          left: elem.obj.left,
+          top: elem.obj.top,
+          height: elem.obj.height * elem.obj.scaleY,
+          width: elem.obj.width * elem.obj.scaleX,
+          cursor: elem.Actions.length > 0 && "pointer",
         }
+        console.log("propriétés rectangle : ", rectProperties)
 
-        textComponents.push(
-          <StyledRect key={key} rectProperties={rectProperties}>
-            {elem.text}
-          </StyledRect>
+        gestionActions(elem.Actions)
+
+        rectComponents.push(
+          <StyledRect
+            key={key}
+            rectProperties={rectProperties}
+            onClick={() => gestionActions(elem.Actions)}
+          ></StyledRect>
         )
       }
     }
 
-    return textComponents
+    return rectComponents
   }
 
-  const creationImg = () => {
-    // ... (votre code pour la création d'images)
+  const creationImg = (object) => {
+    const imgComponents = []
+
+    for (const key in object) {
+      if (Object.prototype.hasOwnProperty.call(object, key)) {
+        const elem = object[key]
+
+        const imgProperties = {
+          left: elem.obj.left,
+          top: elem.obj.top,
+          height: elem.obj.height * elem.obj.scaleY,
+          width: elem.obj.width * elem.obj.scaleX,
+          src: elem.obj.src,
+          cursor: elem.Actions.length > 0 && "pointer",
+        }
+
+        imgComponents.push(
+          <StyledImg key={key} imgProperties={imgProperties}></StyledImg>
+        )
+      }
+    }
+
+    return imgComponents
   }
+
+  const add = (type, number) => {
+    console.log("execution add : ", type, number)
+  }
+
+  const substract = (type, number) => {}
 
   return (
     <GameContext.Provider
@@ -138,6 +224,14 @@ export const GameContextProvider = ({ children }) => {
         creationImg,
         setSceneLoaded,
         sceneLoaded,
+        setTexts,
+        setRects,
+        setImgs,
+        setBackground,
+        texts,
+        rects,
+        imgs,
+        background,
       }}
     >
       {children}

@@ -85,6 +85,7 @@ function ActionType() {
 
         // Appelez renderAll pour mettre à jour l'affichage du canvas
         canvas.renderAll()
+        console.log("actions pushées : ", currentActions)
         setUpdateActions(true)
       }
     }
