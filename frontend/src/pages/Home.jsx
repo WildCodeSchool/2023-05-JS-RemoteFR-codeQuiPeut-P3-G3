@@ -50,34 +50,36 @@ export default function Home() {
         </div>
       </section>
       <section></section>
-      <main className="home__content">
-        <section className="home__content__description">
-          <IntroHome />
-        </section>
-        <section className="home__content__games">
-          <div className="allGames">
-            <h1 className="All">"ALL</h1>
-            <h2 className="gamezzz">GAMES"</h2>
-          </div>
-          <div className="jdrCardApp">
-            {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
-              <JdrCard key={jdr.id} {...jdr} />
-            ))}
-
-            <div className="pagination">
-              <button className="boutonPrev" onClick={handlePrevious}>
-                <img src={previous} alt="" />
-              </button>
-              <button className="boutonNext" onClick={handleNext}>
-                <img src={next} alt="" />
-              </button>
+      <section className="belowParallax">
+        <main className="home__content">
+          <section className="home__content__description">
+            <IntroHome />
+          </section>
+          <section className="home__content__games">
+            <div className="allGames">
+              <h1 className="All">"ALL</h1>
+              <h2 className="gamezzz">GAMES"</h2>
             </div>
-          </div>
-        </section>
-        <section className="home__content__avis">
-          <StarRating />
-        </section>
-      </main>
+            <div className="jdrCardApp">
+              {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
+                <JdrCard key={jdr.id} {...jdr} />
+              ))}
+
+              <div className="pagination">
+                <button className="boutonPrev" onClick={handlePrevious}>
+                  <img src={previous} alt="" />
+                </button>
+                <button className="boutonNext" onClick={handleNext}>
+                  <img src={next} alt="" />
+                </button>
+              </div>
+            </div>
+          </section>
+          <section className="home__content__avis">
+            <StarRating />
+          </section>
+        </main>
+      </section>
 
       <Footer />
     </>

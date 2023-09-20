@@ -18,16 +18,16 @@
       height: 100%;
       object-fit: cover;
       pointer-events: none;
-      z-index: 999;
+      z-index: 998;
 
     }
-    .cloudsBackImg {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-    }
+    // .cloudsBackImg {
+    //   position: absolute;
+    //   width: 100%;
+    //   height: 100%;
+    //   object-fit: cover;
+    //   pointer-events: none;
+    // }
     .cloudsFrontImg {
       position: absolute;
       width: 100%;
@@ -37,14 +37,14 @@
       z-index: 1001;
     }
 
-    .castleDarkImg {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-      z-index: 1000;
-    }
+    // .castleDarkImg {
+    //   position: absolute;
+    //   width: 100%;
+    //   height: 100%;
+    //   object-fit: cover;
+    //   pointer-events: none;
+    //   z-index: 999;
+    // }
 
     .castleLightsImg {
       position: absolute;
@@ -52,6 +52,8 @@
       height: 100%;
       object-fit: cover;
       pointer-events: none;
+      // visibility: hidden;
+      // opacity: 0;
       z-index: 1000;
     }
 
@@ -61,7 +63,7 @@
       height: 100%;
       object-fit: cover;
       pointer-events: none;
-      z-index: 998;
+      z-index: 997;
 
     }
   }
