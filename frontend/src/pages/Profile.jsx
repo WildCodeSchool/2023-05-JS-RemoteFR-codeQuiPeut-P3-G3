@@ -46,11 +46,12 @@ function Profile() {
         <div className="container">
           <ProfilPartieBasse
             welcome={profileData.firstname}
-            email={profileData.mail}
+            mail={profileData.mail}
             pseudo={profileData.pseudo}
-            lastName={profileData.lastname}
-            firstName={profileData.firstname}
+            lastname={profileData.lastname}
+            firstname={profileData.firstname}
             userId={userId}
+            hashedPassword={profileData.hashedPassword}
           />
           {error && <p>{error}</p>}
         </div>

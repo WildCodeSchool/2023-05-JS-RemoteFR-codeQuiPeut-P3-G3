@@ -79,5 +79,12 @@ class UserManager extends AbstractManager {
         console.error(err)
       })
   }
+
+  updateProfile(users) {
+    return this.database.query(
+      `UPDATE ${this.table} SET firstname = ?, lastname = ?, mail = ?, pseudo = ?, WHERE (id = ?)`,
+      [users.firstname, users.lastname, users.mail, users.pseudo, users.id]
+    )
+  }
 }
 module.exports = UserManager
