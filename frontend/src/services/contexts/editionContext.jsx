@@ -64,6 +64,32 @@ export const EditionContextProvider = ({ children }) => {
   const [isAddingRect, setIsAddingRect] = useState(false)
   const [isAddingBackground, setIsAddingBackground] = useState(false)
 
+  // PERSONNAGES HEROS
+  const [hero, setHero] = useState([
+    {
+      class: "",
+      img: "",
+      name: "",
+      heal: 4,
+      maxHeal: 4,
+      money: 100,
+      unit: "",
+      equipped: {
+        weapons: [],
+      },
+      inventory: {
+        weapons: [],
+        items: [],
+      },
+      skills: {
+        agility: 0,
+        strength: 0,
+        intelligence: 0,
+        resistance: 0,
+      },
+    },
+  ])
+
   // ACTIONS & SCENES
   const [editStatus, setEditStatus] = useState({
     storyId: 0,
@@ -298,14 +324,16 @@ export const EditionContextProvider = ({ children }) => {
     // "textbox"
     for (const textboxId in data.textbox) {
       const textboxData = data.textbox[textboxId]
-      const textbox = new fabric.Textbox(textboxData.text, {
-        left: textboxData.left,
-        top: textboxData.top,
-        width: textboxData.width,
-        height: textboxData.height,
-        fill: textboxData.fill,
-        fontFamily: textboxData.fontFamily,
-        fontSize: textboxData.fontSize,
+      const textbox = new fabric.Textbox(textboxData.obj.text, {
+        left: textboxData.obj.left,
+        top: textboxData.obj.top,
+        width: textboxData.obj.width,
+        height: textboxData.obj.height,
+        fill: textboxData.obj.fill,
+        fontFamily: textboxData.obj.fontFamily,
+        fontSize: textboxData.obj.fontSize,
+        id: textboxData.id,
+        Actions: textboxData.Actions,
       })
 
       canvas.add(textbox)
@@ -320,6 +348,7 @@ export const EditionContextProvider = ({ children }) => {
         width: rectData.width,
         height: rectData.height,
         fill: rectData.fill,
+        id: rectData.id,
         // Autres propriétés du rectangle ici
       })
 
@@ -335,6 +364,7 @@ export const EditionContextProvider = ({ children }) => {
           top: imgData.top,
           width: imgData.width,
           height: imgData.height,
+          id: imgData.id,
           // Autres propriétés de l'image ici
         })
         canvas.add(img)
@@ -414,17 +444,24 @@ export const EditionContextProvider = ({ children }) => {
 
   const exportScenes = (data, idStory, idScene) => {
     const objectsOnCanvas = canvas.getObjects()
-
+    console.log(objectsOnCanvas)
     // Créez un objet pour stocker les objets triés par type
     const sortedObjects = {}
 
     // Parcourez le tableau d'objets et organisez-les par type
     objectsOnCanvas.forEach((obj) => {
+      console.log(obj)
       const type = obj.type
       if (!sortedObjects[type]) {
         sortedObjects[type] = {}
       }
-      sortedObjects[type][obj.id] = obj.toObject()
+
+      // sortedObjects[type][obj.id] = obj
+      sortedObjects[type][obj.id] = {
+        obj: obj,
+        Actions: obj.Actions,
+        id: obj.id,
+      }
     })
 
     // Obtenir l'URL du fond s'il y en a un
@@ -435,7 +472,7 @@ export const EditionContextProvider = ({ children }) => {
     sortedObjects.background = backgroundUrl
 
     // Maintenant, sortedObjects contient les objets triés par type avec l'URL de fond
-    console.log(sortedObjects)
+    console.log("objet arrangé : ", sortedObjects)
 
     const dataExport = sortedObjects
     console.log("data exportée : ", dataExport)
@@ -517,6 +554,8 @@ export const EditionContextProvider = ({ children }) => {
         imgPath,
         keyDeleteObject,
         updateSelectedProperties,
+        setHero,
+        hero,
       }}
     >
       {children}

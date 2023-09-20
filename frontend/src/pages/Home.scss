@@ -19,6 +19,7 @@
       height: auto;
       width: 100%;
       aspect-ratio: 677.45/400;
+      z-index:-1;
       .image {
         display: block;
         height: 100%;
@@ -52,6 +53,8 @@
     align-items: center;
     box-sizing: border-box;
     gap: calc(1vh + 8vw);
+    background-color: #0c011c;
+
     // border: 10px solid red;
 
     /* Media query pour les marges en mode desktop */
