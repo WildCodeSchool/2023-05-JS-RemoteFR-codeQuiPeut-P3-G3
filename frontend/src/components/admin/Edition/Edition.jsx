@@ -23,7 +23,7 @@ function AdminEdition() {
         {view === "General" && <EditGeneral />}
         {view === "Assets" && <EditAssets />}
         {view === "Scenes" && <EditScenes />}
-        {view === "Mindmap" && <EditMindmap />}
+        {/* {view === "Mindmap" && <EditMindmap />} */}
       </div>
     </>
   )

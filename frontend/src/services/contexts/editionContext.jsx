@@ -65,30 +65,7 @@ export const EditionContextProvider = ({ children }) => {
   const [isAddingBackground, setIsAddingBackground] = useState(false)
 
   // PERSONNAGES HEROS
-  const [hero, setHero] = useState([
-    {
-      class: "",
-      img: "",
-      name: "",
-      heal: 4,
-      maxHeal: 4,
-      money: 100,
-      unit: "",
-      equipped: {
-        weapons: [],
-      },
-      inventory: {
-        weapons: [],
-        items: [],
-      },
-      skills: {
-        agility: 0,
-        strength: 0,
-        intelligence: 0,
-        resistance: 0,
-      },
-    },
-  ])
+  const [hero, setHero] = useState([])
 
   // ACTIONS & SCENES
   const [editStatus, setEditStatus] = useState({
@@ -458,6 +435,7 @@ export const EditionContextProvider = ({ children }) => {
 
       // sortedObjects[type][obj.id] = obj
       sortedObjects[type][obj.id] = {
+        // eslint-disable-next-line object-shorthand
         obj: obj,
         Actions: obj.Actions,
         id: obj.id,
