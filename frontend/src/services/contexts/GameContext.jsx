@@ -47,6 +47,7 @@ const StyledImg = styled.img`
   cursor: ${(props) => props.imgProperties.cursor};
   z-index: 1;
 `
+/* ============================================================= */
 
 export const GameContextProvider = ({ children }) => {
   const [actualScene, setActualScene] = useState({
@@ -61,6 +62,8 @@ export const GameContextProvider = ({ children }) => {
   const [rects, setRects] = useState([])
   const [imgs, setImgs] = useState([])
   const [background, setBackground] = useState("")
+
+  /* ============================================================= */
 
   const getScene = (idStory, idScene) => {
     console.info("IMPORT STORY ", idStory, " SCENE ", idScene)
@@ -83,6 +86,8 @@ export const GameContextProvider = ({ children }) => {
         console.error("Erreur de la requête :", error)
       })
   }
+
+  /* ============================================================= */
 
   const gestionActions = (actions) => {
     const nbActions = actions.length
@@ -114,8 +119,10 @@ export const GameContextProvider = ({ children }) => {
     }
   }
 
+  /* ============================================================= */
+
   const creationTextes = (object) => {
-    console.log("creation de textes")
+    console.info("creation de textes")
     const textComponents = []
 
     for (const key in object) {
@@ -146,13 +153,14 @@ export const GameContextProvider = ({ children }) => {
     return textComponents
   }
 
+  /* ============================================================= */
+
   const creationRects = (object) => {
     const rectComponents = []
 
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
         const elem = object[key]
-        console.log("elements : ", elem)
 
         const rectProperties = {
           strokeWidth: elem.obj.strokeWidth,
@@ -165,7 +173,6 @@ export const GameContextProvider = ({ children }) => {
           width: elem.obj.width * elem.obj.scaleX,
           cursor: elem.Actions.length > 0 && "pointer",
         }
-        console.log("propriétés rectangle : ", rectProperties)
 
         gestionActions(elem.Actions)
 
@@ -181,6 +188,8 @@ export const GameContextProvider = ({ children }) => {
 
     return rectComponents
   }
+
+  /* ============================================================= */
 
   const creationImg = (object) => {
     const imgComponents = []
@@ -207,11 +216,15 @@ export const GameContextProvider = ({ children }) => {
     return imgComponents
   }
 
+  /* ============================================================= */
+
   const add = (type, number) => {
-    console.log("execution add : ", type, number)
+    console.info("execution add : ", type, number)
   }
 
-  const substract = (type, number) => {}
+  // const substract = (type, number) => {
+  //   console.info("substract")
+  // }
 
   return (
     <GameContext.Provider
