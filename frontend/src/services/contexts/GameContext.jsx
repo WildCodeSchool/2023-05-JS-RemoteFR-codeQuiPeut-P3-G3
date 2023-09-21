@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import axios from "axios"
 import React, { createContext, useContext, useState } from "react"
+import { useLocation, useSearchParams } from "react-router-dom"
 
 const GameContext = createContext()
 
@@ -14,12 +15,12 @@ const StyledText = styled.div`
   font-family: ${(props) => props.textProperties.fontFamily};
   font-size: ${(props) => props.textProperties.fontSize}px;
   color: ${(props) => props.textProperties.fill};
-  left: ${(props) => props.textProperties.left}px;
-  top: ${(props) => props.textProperties.top}px;
+  left: ${(props) => props.textProperties.left}%;
+  top: ${(props) => props.textProperties.top}%;
   height: ${(props) => props.textProperties.height}px;
   width: ${(props) => props.textProperties.width}px;
   cursor: ${(props) => props.textProperties.cursor};
-  z-index: 1;
+  z-index: 3;
 `
 
 const StyledRect = styled.div`
@@ -29,24 +30,25 @@ const StyledRect = styled.div`
   border-width: ${(props) => props.rectProperties.strokeWidth}px;
   border-radius: ${(props) => props.rectProperties.borderRadius}px;
   background-color: ${(props) => props.rectProperties.fill || "none"};
-  left: ${(props) => props.rectProperties.left}px;
-  top: ${(props) => props.rectProperties.top}px;
+  left: ${(props) => props.rectProperties.left}%;
+  top: ${(props) => props.rectProperties.top}%;
   height: ${(props) => props.rectProperties.height}px;
   width: ${(props) => props.rectProperties.width}px;
   cursor: ${(props) => props.rectProperties.cursor};
-  z-index: 1;
+  z-index: 2;
 `
 
 const StyledImg = styled.img`
   position: absolute;
-  left: ${(props) => props.imgProperties.left}px;
-  top: ${(props) => props.imgProperties.top}px;
+  left: ${(props) => props.imgProperties.left}%;
+  top: ${(props) => props.imgProperties.top}%;
   height: ${(props) => props.imgProperties.height}px;
   width: ${(props) => props.imgProperties.width}px;
   content: url("${(props) => props.imgProperties.src}");
   cursor: ${(props) => props.imgProperties.cursor};
   z-index: 1;
 `
+/* ============================================================= */
 
 export const GameContextProvider = ({ children }) => {
   const [actualScene, setActualScene] = useState({
@@ -56,14 +58,21 @@ export const GameContextProvider = ({ children }) => {
 
   const [sceneContent, setSceneContent] = useState({})
   const [sceneLoaded, setSceneLoaded] = useState(false)
+  const [sceneSettings, setSceneSettings] = useState({
+    sceneId: "",
+    storyId: "",
+  })
 
   const [texts, setTexts] = useState([])
   const [rects, setRects] = useState([])
   const [imgs, setImgs] = useState([])
   const [background, setBackground] = useState("")
-  // state du hero
-  // eslint-disable-next-line no-unused-vars
+  const [changeScene, setChangeScene] = useState(false)
   const [hero, setHero] = useState([])
+  const [searchParams, setSearchParams] = useSearchParams()
+  const location = useLocation()
+
+  /* ============================================================= */
 
   const getScene = (idStory, idScene) => {
     console.info("IMPORT STORY ", idStory, " SCENE ", idScene)
@@ -129,30 +138,66 @@ export const GameContextProvider = ({ children }) => {
     }
   }
 
+  const gestionLinks = (link) => {
+    setChangeScene(true)
+    setSearchParams({ story: sceneSettings.storyId, scene: link })
+  }
+
+  const handleClick = (elem) => {
+    if (elem && elem.Actions) {
+      // Vérifier si elem et elem.Actions sont définis
+      // Gestion des actions
+      const actions = elem.Actions
+
+      if (actions.length > 0) {
+        gestionActions(elem.Actions)
+      }
+      // Gestion des links
+      if (elem.link !== "") {
+        gestionLinks(elem.link)
+      }
+    }
+  }
+  /* ============================================================= */
+
   const creationTextes = (object) => {
-    // console.log("creation de textes")
+    console.info("creation de textes")
     const textComponents = []
 
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
         const elem = object[key]
+        const actions = elem.Actions || []
+
+        const scaleX = elem.obj.scaleX || 1
+        const scaleY = elem.obj.scaleY || 1
 
         const textProperties = {
           fontFamily: elem.obj.fontFamily,
           fontSize: elem.obj.fontSize,
           fill: elem.obj.fill,
-          left: elem.obj.left,
-          top: elem.obj.top,
-          height: elem.obj.height * elem.obj.scaleY,
-          width: elem.obj.width * elem.obj.scaleX,
-          cursor: elem.Actions.length > 0 && "pointer",
+          left: elem.pos.percX,
+          top: elem.pos.percY,
+          height: elem.obj.height * elem.obj.scaleX,
+          width: elem.obj.width * elem.obj.scaleY,
+          cursor: actions > 0 ? "pointer" : "default",
         }
 
-        gestionActions(elem.Actions)
+        const textScaleTransform = `scale(${scaleX}, ${scaleY})`
+
+        const textStyles = {
+          transform: textScaleTransform,
+          transformOrigin: "top left",
+          fontSize: elem.obj.fontSize,
+        }
 
         textComponents.push(
-          <StyledText key={key} textProperties={textProperties}>
-            {elem.obj.text}
+          <StyledText
+            key={key}
+            textProperties={textProperties}
+            onClick={() => handleClick(elem)}
+          >
+            <div style={textStyles}>{elem.obj.text}</div>
           </StyledText>
         )
       }
@@ -161,34 +206,33 @@ export const GameContextProvider = ({ children }) => {
     return textComponents
   }
 
+  /* ============================================================= */
+
   const creationRects = (object) => {
     const rectComponents = []
 
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
         const elem = object[key]
-        // console.log("elements : ", elem)
+        const actions = elem.Actions || []
 
         const rectProperties = {
           strokeWidth: elem.obj.strokeWidth,
           strokeColor: elem.obj.stroke,
           borderRadius: elem.obj.rx,
           fill: elem.obj.fill,
-          left: elem.obj.left,
-          top: elem.obj.top,
+          left: elem.pos.percX,
+          top: elem.pos.percY,
           height: elem.obj.height * elem.obj.scaleY,
           width: elem.obj.width * elem.obj.scaleX,
-          cursor: elem.Actions.length > 0 && "pointer",
+          cursor: actions > 0 ? "pointer" : "default",
         }
-        // console.log("propriétés rectangle : ", rectProperties)
-
-        gestionActions(elem.Actions)
 
         rectComponents.push(
           <StyledRect
             key={key}
             rectProperties={rectProperties}
-            onClick={() => gestionActions(elem.Actions)}
+            onClick={() => handleClick(elem)}
           ></StyledRect>
         )
       }
@@ -197,24 +241,31 @@ export const GameContextProvider = ({ children }) => {
     return rectComponents
   }
 
+  /* ============================================================= */
+
   const creationImg = (object) => {
     const imgComponents = []
 
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
         const elem = object[key]
+        const actions = elem.Actions || []
 
         const imgProperties = {
-          left: elem.obj.left,
-          top: elem.obj.top,
+          left: elem.pos.percX,
+          top: elem.pos.percY,
           height: elem.obj.height * elem.obj.scaleY,
           width: elem.obj.width * elem.obj.scaleX,
           src: elem.obj.src,
-          cursor: elem.Actions.length > 0 && "pointer",
+          cursor: actions > 0 ? "pointer" : "default",
         }
 
         imgComponents.push(
-          <StyledImg key={key} imgProperties={imgProperties}></StyledImg>
+          <StyledImg
+            key={key}
+            imgProperties={imgProperties}
+            onClick={() => handleClick(elem)}
+          ></StyledImg>
         )
       }
     }
@@ -222,12 +273,25 @@ export const GameContextProvider = ({ children }) => {
     return imgComponents
   }
 
+  /* ============================================================= */
+
   const add = (type, number) => {
-    // console.log("execution add : ", type, number)
+    console.info("execution add : ", type, number)
   }
 
-  // eslint-disable-next-line no-unused-vars
-  const substract = (type, number) => {}
+  /* ============================================================= */
+
+  const getSceneUrl = () => {
+    const params = new URLSearchParams(location.search)
+    const storyId = params.get("story")
+    const sceneId = params.get("scene")
+
+    return { storyId, sceneId }
+  }
+
+  // const substract = (type, number) => {
+  //   console.info("substract")
+  // }
 
   return (
     <GameContext.Provider
@@ -249,6 +313,12 @@ export const GameContextProvider = ({ children }) => {
         rects,
         imgs,
         background,
+        setChangeScene,
+        changeScene,
+        getSceneUrl,
+        setSearchParams,
+        searchParams,
+        setSceneSettings,
       }}
     >
       {children}

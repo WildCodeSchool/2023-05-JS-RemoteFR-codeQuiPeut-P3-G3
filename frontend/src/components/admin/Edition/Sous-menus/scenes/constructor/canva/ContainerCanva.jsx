@@ -134,7 +134,7 @@ const ContainerCanva = ({
     if (canvas) {
       const objectModifiedHandler = function (options) {
         console.log("objet modifié", options.target)
-        setObjectSelected({ selected: true })
+        // setObjectSelected({ selected: true })
       }
 
       const selectionCreatedHandler = function (options) {

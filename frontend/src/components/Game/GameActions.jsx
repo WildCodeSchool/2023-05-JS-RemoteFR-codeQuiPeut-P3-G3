@@ -11,16 +11,45 @@ function GameActions() {
   const { sceneLoaded, setSceneLoaded } = useGameContext()
   const { texts, rects, imgs, background } = useGameContext()
   const { setTexts, setRects, setImgs, setBackground } = useGameContext()
+  const { changeScene, setChangeScene, setSceneSettings } = useGameContext()
+  const { getSceneUrl } = useGameContext()
 
+  /* Initialisation */
   useEffect(() => {
     setSceneLoaded(false)
-    getScene(128, 0)
+    const { storyId, sceneId } = getSceneUrl()
+    setSceneSettings({ storyId, sceneId })
+    getScene(storyId, sceneId)
   }, [])
+
+  /* Detection changement de scene */
+  useEffect(() => {
+    setSceneLoaded(false)
+    const loadScene = async () => {
+      if (changeScene) {
+        const { storyId, sceneId } = getSceneUrl()
+        setSceneSettings({ storyId, sceneId })
+
+        // Call getScene and wait for the response
+        try {
+          const response = await getScene(storyId, sceneId)
+
+          console.info(response)
+          setSceneLoaded(true)
+          setChangeScene(false)
+        } catch (error) {
+          // Handle any errors that occur during getScene
+          console.error("Error fetching scene:", error)
+        }
+      }
+    }
+
+    loadScene()
+  }, [changeScene])
 
   useEffect(() => {
     // if (sceneContent.textbox && sceneContent.textbox.length > 0) {
     if (sceneLoaded) {
-      // console.log("scene loaded ! ")
       setBackground(sceneContent.background)
       setTexts(creationTextes(sceneContent.textbox))
       setRects(creationRects(sceneContent.rect))
@@ -28,9 +57,7 @@ function GameActions() {
     }
   }, [sceneLoaded])
 
-  useEffect(() => {
-    // console.log("background: ", background)
-  }, [background])
+  /* ============================================================= */
 
   return (
     <>

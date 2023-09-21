@@ -18,7 +18,11 @@
   }
 
   &.dropped {
-    height: 55vh;
+    min-height: 55vh;
+    height: auto;
+    box-sizing: border-box;
+    padding: 4rem;
     transition: height 0.3s ease-in-out;
+    // overflow:scroll;
   }
 }
