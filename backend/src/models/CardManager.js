@@ -9,7 +9,6 @@ class CardManager extends AbstractManager {
     return this.database.query(
       `insert into ${this.table} (jdrName, jdrNameFont, jdrNameColor, jdrNameFontSize, jdrImg1, jdrImg2, jdrText, textColor, textFont, jdrBgColor1, jdrBgColor2, buttonColor, buttonFont, jdrCategory, jdrPublic ) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [
-        card.jdrGenre,
         card.jdrName,
         card.jdrNameFont,
         card.jdrNameColor,
@@ -33,7 +32,6 @@ class CardManager extends AbstractManager {
     return this.database.query(
       `UPDATE ${this.table} SET jdrName = ?, jdrNameFont = ?, jdrNameColor = ?, jdrNameFontSize = ?, jdrImg1 = ?, jdrImg2 = ?, jdrText = ?, textColor = ?, textFont = ?, jdrBgColor1 = ?, jdrBgColor2 = ?, buttonColor = ?, buttonFont = ?, jdrCategory = ?, jdrPublic = ? WHERE (id = ?)`,
       [
-        card.jdrGenre,
         card.jdrName,
         card.jdrNameFont,
         card.jdrNameColor,

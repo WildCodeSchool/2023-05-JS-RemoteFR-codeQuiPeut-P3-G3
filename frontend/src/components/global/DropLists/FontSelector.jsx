@@ -3,6 +3,8 @@ import "./FontSelector.scss"
 
 function FontSelector({ setSelectedFont, selectedFont }) {
   const fontOptions = [
+    { value: "Cinzel Decorative", label: "Cinzel" },
+    { value: "Inika", label: "Inika" },
     { value: "Arial, sans-serif", label: "Arial" },
     { value: "Helvetica, sans-serif", label: "Helvetica" },
     { value: "Times New Roman, serif", label: "Times New Roman" },

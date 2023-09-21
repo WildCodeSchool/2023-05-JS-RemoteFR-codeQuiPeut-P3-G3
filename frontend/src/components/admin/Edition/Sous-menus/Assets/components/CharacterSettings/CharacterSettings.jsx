@@ -37,7 +37,7 @@ function CharacterSettings() {
   })
 
   useEffect(() => {
-    console.log(hero)
+    // console.log(hero)
   }, [hero])
 
   const checkAllElements = (obj) => {

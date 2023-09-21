@@ -48,13 +48,22 @@ const JdrCard = (props) => {
           "{jdrName}"
         </div>
 
-        <img className="jdrImg1" src={jdrImg1} alt="img1" />
+        <img
+          className="jdrImg1"
+          src={`http://localhost:4242/uploads/${jdrImg1}`}
+          alt="img1"
+        />
       </div>
 
       {/* <div className="jdrBg2" style={jdrBg2Style}> */}
 
       <div className="jdrImgTexte">
-        <img className="jdrImg2" src={jdrImg2} alt="img2" />
+        <img
+          className="jdrImg2"
+          src={`http://localhost:4242/uploads/${jdrImg2}`}
+          alt="img2"
+        />
+
         <div className="jdrTextBouton">
           <div className="jdrText" style={textStyle}>
             {jdrText}

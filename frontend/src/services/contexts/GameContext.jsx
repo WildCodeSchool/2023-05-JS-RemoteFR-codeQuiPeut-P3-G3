@@ -115,7 +115,7 @@ export const GameContextProvider = ({ children }) => {
   }
 
   const creationTextes = (object) => {
-    console.log("creation de textes")
+    // console.log("creation de textes")
     const textComponents = []
 
     for (const key in object) {
@@ -152,7 +152,7 @@ export const GameContextProvider = ({ children }) => {
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
         const elem = object[key]
-        console.log("elements : ", elem)
+        // console.log("elements : ", elem)
 
         const rectProperties = {
           strokeWidth: elem.obj.strokeWidth,
@@ -165,7 +165,7 @@ export const GameContextProvider = ({ children }) => {
           width: elem.obj.width * elem.obj.scaleX,
           cursor: elem.Actions.length > 0 && "pointer",
         }
-        console.log("propriétés rectangle : ", rectProperties)
+        // console.log("propriétés rectangle : ", rectProperties)
 
         gestionActions(elem.Actions)
 
@@ -208,10 +208,10 @@ export const GameContextProvider = ({ children }) => {
   }
 
   const add = (type, number) => {
-    console.log("execution add : ", type, number)
+    // console.log("execution add : ", type, number)
   }
 
-  const substract = (type, number) => {}
+  // const substract = (type, number) => {}
 
   return (
     <GameContext.Provider

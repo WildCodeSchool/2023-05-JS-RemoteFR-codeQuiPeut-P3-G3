@@ -99,7 +99,7 @@ export default function Home() {
                 .slice(startIndex, startIndex + 2)
                 .map((jdr, index) => (
                   <React.Fragment key={jdr.id}>
-                    {jdr.jdrCategory === "fantastic" && <JdrCard {...jdr} />}
+                    {jdr.jdrCategory === "Fantastic" && <JdrCard {...jdr} />}
                   </React.Fragment>
                 ))}
 
@@ -124,7 +124,31 @@ export default function Home() {
             <div className="jdrCardApp">
               {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
                 <React.Fragment key={jdr.id}>
-                  {jdr.jdrCategory === "horror" && <JdrCard {...jdr} />}
+                  {jdr.jdrCategory === "Horror" && <JdrCard {...jdr} />}
+                </React.Fragment>
+              ))}
+
+              <div className="pagination">
+                <button className="boutonPrev" onClick={handlePrevious}>
+                  <img src={previous} alt="" />
+                </button>
+                <button className="boutonNext" onClick={handleNext}>
+                  <img src={next} alt="" />
+                </button>
+              </div>
+            </div>
+          </section>
+        )}
+        {jdrCardData.length > 0 && (
+          <section className="home__content__games" id="westernGamesSection">
+            <div className="allGames">
+              <h1 className="All">"WESTERN</h1>
+              <h2 className="gamezzz">GAMES"</h2>
+            </div>
+            <div className="jdrCardApp">
+              {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
+                <React.Fragment key={jdr.id}>
+                  {jdr.jdrCategory === "Western" && <JdrCard {...jdr} />}
                 </React.Fragment>
               ))}
 

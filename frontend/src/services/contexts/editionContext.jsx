@@ -458,7 +458,7 @@ export const EditionContextProvider = ({ children }) => {
 
       // sortedObjects[type][obj.id] = obj
       sortedObjects[type][obj.id] = {
-        obj: obj,
+        obj,
         Actions: obj.Actions,
         id: obj.id,
       }
