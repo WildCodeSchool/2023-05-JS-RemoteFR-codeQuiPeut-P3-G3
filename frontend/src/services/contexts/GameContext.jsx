@@ -99,11 +99,12 @@ export const GameContextProvider = ({ children }) => {
 
   // Test de la requete hero
   const getHero = (idStory) => {
+    // console.log("appel de get hero avec id ", idStory)
     axios
       .get(`http://localhost:4242/api-heroes/${idStory}`)
       .then((response) => {
-        // console.log(response)
-        setHero(response.data.hero)
+        // console.log("réponse des heroes : ", response.data)
+        setHero(response.data)
       })
       .catch((error) => {
         console.error("Erreur lors de la récupération du héros :", error)
@@ -321,6 +322,8 @@ export const GameContextProvider = ({ children }) => {
         setSearchParams,
         searchParams,
         setSceneSettings,
+        hero,
+        setHero,
       }}
     >
       {children}

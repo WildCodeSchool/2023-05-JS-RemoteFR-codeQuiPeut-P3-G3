@@ -3,7 +3,10 @@ import { GameContextProvider } from "../services/contexts/GameContext"
 import GameActions from "../components/Game/GameActions"
 import SelectHeroes from "../components/Game/SelectHeroes"
 import GameHeaderHud from "../components/Game/GameHeaderHud/GameHeaderHud"
+import { useState } from "react"
+
 function Game() {
+  const [initGame, setInitGame] = useState(true)
   return (
     <>
       <GameContextProvider>
@@ -17,8 +20,11 @@ function Game() {
           </header>
           <section className="game__content">
             <div className="canva">
-              <GameActions />
-              <SelectHeroes />
+              {initGame ? (
+                <SelectHeroes setInit={setInitGame} />
+              ) : (
+                <GameActions />
+              )}
             </div>
           </section>
         </div>

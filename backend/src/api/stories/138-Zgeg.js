@@ -149,10 +149,10 @@ module.exports.story = {
   ],
   heroes: [
     {
-      class: "zgeg",
+      class: "paladin",
       img: "",
-      name: "ben",
-      heal: "4",
+      name: "bob",
+      heal: 4,
       maxHeal: 4,
       money: 100,
       unit: "dollar",
@@ -164,8 +164,32 @@ module.exports.story = {
         items: [],
       },
       skills: {
-        resistance: "",
-        agility: "",
+        strength: "12",
+        agility: "12",
+        intelligence: "12",
+        resistance: "12",
+      },
+    },
+    {
+      class: "drood",
+      img: "account_1695285567128.png",
+      name: "Mich",
+      heal: "4",
+      maxHeal: 4,
+      money: "100",
+      unit: "dollar",
+      equipped: {
+        weapons: [],
+      },
+      inventory: {
+        weapons: [],
+        items: [],
+      },
+      skills: {
+        agility: "15",
+        strength: "15",
+        intelligence: "15",
+        resistance: "15",
       },
     },
   ],
