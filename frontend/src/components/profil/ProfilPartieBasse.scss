@@ -19,6 +19,7 @@
     width: fit-content;
   }
 }
+
 .BlocNumero:hover {
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
   background: rgba(188, 188, 188, 0.14);
@@ -31,19 +32,20 @@
 
 .GlobalContainerPartieBasseDroite {
   color: black;
-  width: 40%;
-  height: 75%;
+  width: 50%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   margin-block: auto;
-  margin-bottom: 10%;
-  margin-left: 5%;
+  // margin-bottom: 10%;
+  // margin-left: 5%;
 }
 
 .WelcomeContainer {
   display: flex;
   align-items: center;
+  height: 50px;
 }
 
 .Pen {
@@ -55,9 +57,54 @@
   font-size: clamp(1.5rem, 2vw, 2.5rem);
 }
 
+.container-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-bottom: 10%;
+  width: 85%;
+  height: auto;
+}
+
 .PseudoText {
   color: black;
   font-size: clamp(1.5rem, 2vw, 2.5rem);
   font-weight: normal;
   font-family: "Inika", serif;
+}
+
+.input-style {
+  border: 1px solid #ccc;
+  padding: 6px;
+  border-radius: 5px;
+  width: 85%;
+  margin-bottom: 10px;
+}
+
+p strong {
+  font-family: "Inika", serif;
+  font-size: clamp(1rem, 1.2vw, 1.4rem);
+}
+
+.button-saveandcancel {
+  display: flex;
+  justify-content: center;
+  height: auto;
+  width: 85%;
+  gap: 10px;
+}
+
+.button-saveandcancel button {
+  padding: 10px;
+  justify-content: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+}
+
+.label-bold {
+  font-weight: bold;
+  font-family: "Inika", serif;
+  font-size: clamp(1rem, 1.2vw, 1.4rem);
 }

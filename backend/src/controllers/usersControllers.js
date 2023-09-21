@@ -102,6 +102,28 @@ const findByMail = (req, res, next) => {
     })
 }
 
+const editProfile = (req, res) => {
+  const users = req.body
+
+  // TODO validations (length, format...)
+
+  users.id = parseInt(req.params.id, 10)
+
+  models.users
+    .update(users)
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
+        res.sendStatus(404)
+      } else {
+        res.sendStatus(204)
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+      res.sendStatus(500)
+    })
+}
+
 module.exports = {
   browse,
   add,
@@ -109,4 +131,5 @@ module.exports = {
   edit,
   destroy,
   findByMail,
+  editProfile,
 }
