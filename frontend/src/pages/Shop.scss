@@ -2,14 +2,19 @@
 
 .titleShopOffers {
   h3 {
+    display: flex;
     font-family: $font-family1;
     padding: 5rem 12rem;
     font-size: 3rem;
+    color:white;
+    font-weight: 700;
   }
   .OrangeTitle {
     color: #f97700;
     font-size: 3rem;
+    font-weight: 700;
     font-family: $font-family1;
+
   }
 }
 
@@ -56,6 +61,7 @@
 .OrangeTitle {
   color: #f97700;
   font-size: 3rem;
+  font-weight: 700;
   font-family: $font-family1;
 }
 

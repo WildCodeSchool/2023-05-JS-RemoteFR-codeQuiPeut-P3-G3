@@ -6,12 +6,16 @@
 
 .Shop_Payment_Title_Container {
   h3 {
+    display: flex;
     font-family: $font-family1;
     font-size: 3rem;
+    color: white;
+    font-weight: 700;
   }
 
   .OrangeTitle {
     color: #f97700;
+    font-weight: 700;
   }
 }
 
@@ -39,7 +43,7 @@
 
     .cart-item {
       margin-bottom: 50px;
-
+      color: white;
       a {
         color: red;
         cursor: pointer;
@@ -50,7 +54,6 @@
   .BillsValues {
     font-size: 50px;
     font-weight: 700;
-    // margin-top: 14;
     text-align: center;
   }
 }

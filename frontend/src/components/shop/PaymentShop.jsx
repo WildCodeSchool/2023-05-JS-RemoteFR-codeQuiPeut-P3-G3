@@ -4,6 +4,9 @@ import "./PaymentShop.scss"
 import axios from "axios"
 
 const PaymentShop = (props) => {
+  const [monthPayments, setMonthPayments] = useState("Month")
+  const [yearPayments, setYearPayments] = useState("Year")
+
   // ------------------ Fonnction call lors activ paynow
   const removeItemsFromCart = () => {
     // Envoie une requête DELETE au serveur pour supprimer les éléments du panier
@@ -15,10 +18,13 @@ const PaymentShop = (props) => {
             // Les champs sont valides, vous pouvez effectuer le paiement ici
             // ...
             // Suppression réussie, réinitialisez les champs de saisie et effectuez d'autres actions si nécessaire
-            setCardNumber("")
+            setCardNumber("test")
+            setMonthPayments("Month")
+            setYearPayments("Year")
             setCartItems([])
             setCvc("")
             alert("✅  Commande validée ! ")
+            window.location.reload()
           } else {
             // La suppression a échoué, gérez l'erreur ici si nécessaire
           }
@@ -200,7 +206,7 @@ const PaymentShop = (props) => {
                   <div className="expiration-inputs">
                     <select className="expiration-select">
                       <option value="" disabled selected>
-                        Month
+                        {monthPayments}
                       </option>
                       <option value="01">01 - January</option>
                       <option value="02">02 - February</option>
@@ -218,7 +224,7 @@ const PaymentShop = (props) => {
                     <span>/</span>
                     <select className="expiration-select">
                       <option value="" disabled selected>
-                        Year
+                        {yearPayments}
                       </option>
                       <option value="23">2023</option>
                       <option value="24">2024</option>
