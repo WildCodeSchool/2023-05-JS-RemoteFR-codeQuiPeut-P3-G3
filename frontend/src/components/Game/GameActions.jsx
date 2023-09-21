@@ -16,8 +16,11 @@ function GameActions() {
 
   /* Initialisation */
   useEffect(() => {
+    // console.log("Page game Actions")
     setSceneLoaded(false)
-    const { storyId, sceneId } = getSceneUrl()
+    // const { storyId, sceneId } = getSceneUrl()
+    const storyId = 138
+    const sceneId = 0
     setSceneSettings({ storyId, sceneId })
     getScene(storyId, sceneId)
   }, [])
@@ -50,6 +53,7 @@ function GameActions() {
   useEffect(() => {
     // if (sceneContent.textbox && sceneContent.textbox.length > 0) {
     if (sceneLoaded) {
+      // console.log("scene loaded ! ")
       setBackground(sceneContent.background)
       setTexts(creationTextes(sceneContent.textbox))
       setRects(creationRects(sceneContent.rect))
@@ -57,7 +61,9 @@ function GameActions() {
     }
   }, [sceneLoaded])
 
-  /* ============================================================= */
+  useEffect(() => {
+    // console.log("background: ", background)
+  }, [background])
 
   return (
     <>

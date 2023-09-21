@@ -1,1 +1,226 @@
+/* Games.scss */
+
 @import "../variables.scss";
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Josefin+Sans:wght@100;500&family=Lilita+One&family=Oswald:wght@200&family=Rubik:wght@300&family=Space+Grotesk:wght@700&family=Work+Sans:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative&family=Inika&family=Josefin+Sans:wght@100;500&family=Lilita+One&family=Oswald:wght@200&family=Rubik:wght@300&family=Space+Grotesk:wght@700&family=Work+Sans:wght@100&display=swap");
+
+/* Block: .home */
+.home {
+  /* Element: .home__content */
+  &__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    gap: calc(1vh + 8vw);
+    // border: 10px solid red;
+
+    /* Media query pour les marges en mode desktop */
+    @media (min-width: 1024px) {
+      padding-left: 5vh;
+      padding-right: 5vh;
+    }
+
+    /* Element: .home__content__games (premier élément enfant) */
+    // > section:first-child {
+    //   margin-top: calc(1vh + 8vw);
+    // }
+
+    // /* Element: .home__content__avis (dernier élément enfant) */
+    // > section:last-child {
+    //   display: flex;
+    //   align-items: center;
+    //   justify-content: center;
+    //   // margin-bottom: calc(1vh + 8vw);
+
+    //   // background-color: bisque;
+    // }
+
+    /* Element: .home__content__games et .home__content__avis */
+    section {
+      box-sizing: border-box;
+      min-height: 30vh;
+      width: 100%;
+      // border: 2px solid black;
+      background-color: $color--darkestPurple;
+      // background-color: white;
+      max-width: 1300px;
+    }
+  }
+}
+
+.jdrCardApp {
+  display: flex;
+  position: relative;
+}
+
+.pagination {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.pagination button img {
+  width: 40px;
+  border-radius: 25%;
+}
+
+.boutonNext {
+  position: absolute;
+  bottom: 50%;
+  right: -25px;
+  border-radius: 50%;
+  width: 40px;
+  color: aliceblue;
+  height: 40px;
+  background-color: #fff;
+  border: none;
+  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
+
+  cursor: pointer;
+  position: absolute;
+  transform: translate(-50%, 0);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+}
+
+.boutonNext img {
+  width: 30px;
+  height: 30px;
+}
+
+.boutonPrev {
+  position: absolute;
+  left: -25px;
+  bottom: 50%;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
+
+  cursor: pointer;
+  position: absolute;
+  transform: translate(-50%, 0);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+}
+
+.boutonPrev img {
+  width: 30px;
+  height: 30px;
+}
+
+.allGames {
+  display: flex;
+  font-size: 30px;
+  margin: 20px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.All {
+  margin: 25px;
+  font-size: 35px;
+  color: #f97700;
+}
+.gamezzz {
+  font-size: 35px;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: var(--speed) ease;
+}
+
+.dropdown-menu.inactive {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+  transition: var(--speed) ease;
+}
+
+ul {
+  list-style: none;
+  color: black;
+}
+
+a {
+  text-decoration: none;
+}
+
+.dropdown-menu {
+  margin-left: 400px;
+
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 10px 20px;
+  width: 200px;
+}
+
+.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  right: 20px;
+  height: 20px;
+  width: 20px;
+  background: var(--secondary-bg);
+  transform: rotate(45deg);
+}
+
+h3 {
+  text-align: center;
+
+  padding: 20px 0;
+  font-weight: 500;
+  color: black;
+
+  margin-top: -10px;
+  font-family: "Inika";
+}
+
+.menu-trigger button {
+  height: 35px;
+  margin-top: 120px;
+  margin-left: 172px;
+  font-family: "Inika";
+  background-color: #fff;
+  color: black;
+  width: 100px;
+}
+
+.menu-trigger {
+  display: flex;
+}
+
+.gamesh1 {
+  font-family: "Inika";
+  margin-top: 80px;
+  margin-left: 30px;
+}
+
+.type {
+  display: flex;
+  justify-content: center;
+}
+
+.menu-container {
+  margin-left: 150px;
+}

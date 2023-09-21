@@ -15,7 +15,6 @@ import axios from "axios"
 function CharacterSettings() {
   const [displayPopupImg, setDisplayPopupImg] = useState(false)
   const [selectedPathCharacter, setSelectedPathCharacter] = useState(null)
-  // PERSONNAGES HEROS
   const [hero, setHero] = useState([])
   const { editSettings, editStatus } = useEditionContext()
 
@@ -48,25 +47,37 @@ function CharacterSettings() {
   })
 
   // const checkAllElements = (obj) => {
-  //   // const allValuesDefined = Object.values(heroTemplate).every((value) => {
-  //   //   return value !== "" && value !== undefined
-  //   // })
+  //   const allValuesDefined = Object.values(obj).every((value) => {
+  //     return value !== "" && value !== undefined
+  //   })
 
-  //   // return allValuesDefined
-  //   return true
+  //   return allValuesDefined
   // }
+
+  useEffect(() => {
+    if (selectedPathCharacter !== "") {
+      setHeroTemplate((prev) => ({
+        ...prev,
+        img: selectedPathCharacter,
+      }))
+    }
+  }, [selectedPathCharacter])
 
   useEffect(() => {
     if (story && scene) {
       editSettings(story, scene)
     }
-  }, [story, scene])
+  }, [scene, story])
 
   useEffect(() => {
     if (editStatus.storyId) {
       apiGetHeroes(editStatus.storyId)
     }
   }, [editStatus.storyId])
+
+  useEffect(() => {
+    // console.log(heroTemplate.skills)
+  }, [heroTemplate.skills])
 
   const apiGetHeroes = (storyId) => {
     axios
@@ -79,6 +90,7 @@ function CharacterSettings() {
 
   const apiSetHeroes = () => {
     const data = heroTemplate
+    // console.log(heroTemplate)
     axios
       .put(`http://localhost:4242/api-heroes/${editStatus.storyId}`, data)
       .then((results) => {
@@ -100,34 +112,11 @@ function CharacterSettings() {
       )
       .then((res) => {
         if (res.status === 200) {
-          alert("hero supprimé avec succés")
+          alert("Hero deleted successfully")
           setHero(res.data)
         }
       })
   }
-
-  // const save = () => {
-  //   const valid = checkAllElements(heroTemplate)
-  //   if (valid) {
-  //     setHero((prev) => {
-  //       const newHeroArray = [...prev]
-  //       newHeroArray.push(heroTemplate)
-  //       return newHeroArray
-  //     })
-  //   } else {
-  //     alert("Fill all the fields")
-  //   }
-  // }
-
-  // const handleDelete = (index) => {
-  //   if (index !== undefined && index !== null) {
-  //     setHero((prev) => {
-  //       const newHeroArray = [...prev]
-  //       newHeroArray.splice(index, 1)
-  //       return newHeroArray
-  //     })
-  //   }
-  // }
 
   return (
     <>
@@ -145,22 +134,22 @@ function CharacterSettings() {
                     <b>Class :</b> {elem.class}
                   </p>
                   <p>
-                    <b>Life :</b> {elem.life}
+                    <b>Life :</b> {elem.heal}
                   </p>
                   <p>
                     <b>Money :</b> {elem.money}
                   </p>
                   <p>
-                    <b>Agility :</b> {elem.agility}
+                    <b>Agility :</b> {elem.skills.agility}
                   </p>
                   <p>
-                    <b>Strength :</b> {elem.strength}
+                    <b>Strength :</b> {elem.skills.strength}
                   </p>
                   <p>
-                    <b>Intelligence :</b> {elem.intelligence}
+                    <b>Intelligence :</b> {elem.skills.intelligence}
                   </p>
                   <p>
-                    <b>Resistance :</b> {elem.resistance}
+                    <b>Resistance :</b> {elem.skills.resistance}
                   </p>
 
                   <ButtonUI
@@ -174,7 +163,7 @@ function CharacterSettings() {
           })}
       </div>
       <div className="wrapCharacter">
-        <h4> Create new hero </h4>
+        <h4> Create a new hero </h4>
         <div className="wrapCharacter__cards">
           <section className="characterInfo">
             <div className="select__picture">
@@ -189,7 +178,7 @@ function CharacterSettings() {
                       : defaultImg
                   }
                   alt="imgCharacter"
-                />{" "}
+                />
               </button>
               {displayPopupImg && (
                 <PopupImgFinder
@@ -242,7 +231,7 @@ function CharacterSettings() {
 
             <div className="selectBloc">
               <div className="blocText">
-                <label htmlFor="Life">Nombre vies</label>
+                <label htmlFor="Life">Number of lives</label>
                 <input
                   type="text"
                   id="Life"
@@ -348,7 +337,7 @@ function CharacterSettings() {
                       setHeroTemplate((prev) => ({
                         ...prev,
                         skills: {
-                          ...prev.strength,
+                          ...prev.skills,
                           strength: e.target.value,
                         },
                       }))
@@ -369,7 +358,7 @@ function CharacterSettings() {
                       setHeroTemplate((prev) => ({
                         ...prev,
                         skills: {
-                          ...prev.intelligence,
+                          ...prev.skills,
                           intelligence: e.target.value,
                         },
                       }))
@@ -389,7 +378,7 @@ function CharacterSettings() {
                       setHeroTemplate((prev) => ({
                         ...prev,
                         skills: {
-                          ...prev.resistance,
+                          ...prev.skills,
                           resistance: e.target.value,
                         },
                       }))

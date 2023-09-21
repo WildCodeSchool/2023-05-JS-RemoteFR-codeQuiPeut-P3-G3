@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import axios from "axios"
 import React, { createContext, useContext, useState } from "react"
-import { useLocation, useSearchParams } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
 
 const GameContext = createContext()
 
@@ -71,7 +71,7 @@ export const GameContextProvider = ({ children }) => {
   // eslint-disable-next-line no-unused-vars
   const [hero, setHero] = useState([])
   const [searchParams, setSearchParams] = useSearchParams()
-  const location = useLocation()
+  // const location = useLocation()
 
   /* ============================================================= */
 
@@ -99,11 +99,12 @@ export const GameContextProvider = ({ children }) => {
 
   // Test de la requete hero
   const getHero = (idStory) => {
+    // console.log("appel de get hero avec id ", idStory)
     axios
       .get(`http://localhost:4242/api-heroes/${idStory}`)
       .then((response) => {
-        // console.log(response)
-        setHero(response.data.hero)
+        // console.log("réponse des heroes : ", response.data)
+        setHero(response.data)
       })
       .catch((error) => {
         console.error("Erreur lors de la récupération du héros :", error)
@@ -163,7 +164,7 @@ export const GameContextProvider = ({ children }) => {
   /* ============================================================= */
 
   const creationTextes = (object) => {
-    console.info("creation de textes")
+    // console.log("creation de textes")
     const textComponents = []
 
     for (const key in object) {
@@ -216,7 +217,7 @@ export const GameContextProvider = ({ children }) => {
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
         const elem = object[key]
-        const actions = elem.Actions || []
+        // console.log("elements : ", elem)
 
         const rectProperties = {
           strokeWidth: elem.obj.strokeWidth,
@@ -227,7 +228,7 @@ export const GameContextProvider = ({ children }) => {
           top: elem.pos.percY,
           height: elem.obj.height * elem.obj.scaleY,
           width: elem.obj.width * elem.obj.scaleX,
-          cursor: actions > 0 ? "pointer" : "default",
+          // cursor: actions > 0 ? "pointer" : "default",
         }
 
         rectComponents.push(
@@ -278,22 +279,10 @@ export const GameContextProvider = ({ children }) => {
   /* ============================================================= */
 
   const add = (type, number) => {
-    console.info("execution add : ", type, number)
+    // console.log("execution add : ", type, number)
   }
 
-  /* ============================================================= */
-
-  const getSceneUrl = () => {
-    const params = new URLSearchParams(location.search)
-    const storyId = params.get("story")
-    const sceneId = params.get("scene")
-
-    return { storyId, sceneId }
-  }
-
-  // const substract = (type, number) => {
-  //   console.info("substract")
-  // }
+  // const substract = (type, number) => {}
 
   return (
     <GameContext.Provider
@@ -317,10 +306,12 @@ export const GameContextProvider = ({ children }) => {
         background,
         setChangeScene,
         changeScene,
-        getSceneUrl,
+        // getSceneUrl,
         setSearchParams,
         searchParams,
         setSceneSettings,
+        hero,
+        setHero,
       }}
     >
       {children}
