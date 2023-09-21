@@ -2,18 +2,19 @@
 import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import ColorSelector from "../../../../../global/texts-editor/ColorSelector"
-import ButtonStandard from "../../../../../global/Buttons/ButtonStandard"
-import iconTextColor from "../../../../../../assets/text_ui/colorPicker.png"
+// import ButtonStandard from "../../../../../global/Buttons/ButtonStandard"
+// import iconTextColor from "../../../../../../assets/text_ui/colorPicker.png"
 
 import "./InfoGeneral.scss"
 import ButtonUI from "../../../../../global/Buttons/ButtonUI"
 import CategorySelector from "../../../../../global/DropLists/CategorySelector"
 import PublicSelector from "../../../../../global/DropLists/PublicSelector"
-import WidgetProperties from "../../scenes/properties/widgetProperties"
 import PopupImgFinder from "../../../../../global/popups/ImageFinderPopup/PopupImgFinder"
+import imgDefault from "../../../../../../assets/images/imgIcon.png"
+import WidgetText from "../widgets/widgetText"
 
 function InfoGeneral() {
-  const [jdrName, setJdrName] = useState(null)
+  const [jdrName, setJdrName] = useState()
   const [jdrNameFont, setJdrNameFont] = useState("Arial, sans-serif")
   const [jdrNameColor, setJdrNameColor] = useState("#FFFFFF")
   const [jdrNameFontSize, setJdrNameFontSize] = useState(16)
@@ -24,7 +25,8 @@ function InfoGeneral() {
   const [textFont, setTextFont] = useState("Arial, sans-serif")
   const [jdrBgColor1, setJdrBgColor1] = useState("#0C011C")
   const [jdrBgColor2, setJdrBgColor2] = useState("#F8C86B")
-  const [buttonImg, setButtonImg] = useState("")
+  const [buttonColor, setButtonColor] = useState("#0C011C")
+  const [buttonFont, setButtonFont] = useState("Arial, sans-serif")
   const [jdrPublic, setJdrPublic] = useState("")
   const [jdrCategory, setJdrCategory] = useState("")
   const [viewEditProperties, setViewEditProperties] = useState(true)
@@ -48,28 +50,34 @@ function InfoGeneral() {
   const applyTextFormattingToJdrText = () => {
     const textElement = document.querySelector(".cardBottomText")
     textElement.style.fontFamily = selectedFont
-    textElement.style.fontSize = `${selectedSize}px`
     textElement.style.color = selectedColor
     setTextFont(selectedFont)
     setTextColor(selectedColor)
   }
-  useEffect(() => {
-    // console.log("jdrName change ! ", jdrName)
-    // console.log("jdrNameFont change ! ", jdrNameFont)
-    // console.log("jdrNameColor change ! ", jdrNameColor)
-    // console.log("jdrNameFontSize change ! ", jdrNameFontSize)
-    // console.log("jdrText change ! ", jdrText)
-    // console.log("textFont change ! ", textFont)
-    // console.log("textColor change ! ", textColor)
-  }, [
-    jdrName,
-    jdrNameFont,
-    jdrNameColor,
-    jdrNameFontSize,
-    jdrText,
-    textFont,
-    textColor,
-  ])
+  const applyTextFormattingToButtonFont = () => {
+    const textElement = document.querySelector(".cardBottomText")
+    textElement.style.fontFamily = selectedFont
+    setButtonFont(selectedFont)
+    setButtonColor(selectedColor)
+  }
+
+  // useEffect(() => {
+  //   console.log("jdrName change ! ", jdrName)
+  //   console.log("jdrNameFont change ! ", jdrNameFont)
+  //   console.log("jdrNameColor change ! ", jdrNameColor)
+  //   console.log("jdrNameFontSize change ! ", jdrNameFontSize)
+  //   console.log("jdrText change ! ", jdrText)
+  //   console.log("textFont change ! ", textFont)
+  //   console.log("textColor change ! ", textColor)
+  // }, [
+  //   jdrName,
+  //   jdrNameFont,
+  //   jdrNameColor,
+  //   jdrNameFontSize,
+  //   jdrText,
+  //   textFont,
+  //   textColor,
+  // ])
 
   // --------------- COLOR FORMATTING ------------------
 
@@ -78,10 +86,11 @@ function InfoGeneral() {
 
   const divCardTop = useRef(null)
   const divCardBottom = useRef(null)
+  const divCardButton = useRef(null)
 
-  const handleColorPicker = () => {
-    setDisplayCPicker(true)
-  }
+  // const handleColorPicker = () => {
+  //   setDisplayCPicker(true)
+  // }
   const handleCloseColorPicker = (color) => {
     setDisplayCPicker(false)
     setSelectedColor(color)
@@ -101,6 +110,11 @@ function InfoGeneral() {
     setDisplayCPicker(true)
   }
 
+  const handleButtonBackgroundColorChange = () => {
+    setClickedElement("buttonBgButton")
+    setDisplayCPicker(true)
+  }
+
   useEffect(() => {
     if (clickedElement === "buttonBgTop") {
       divCardTop.current.style.backgroundColor = selectedColor
@@ -110,6 +124,10 @@ function InfoGeneral() {
       divCardBottom.current.style.backgroundColor = selectedColor
       updateBackgroundColor(setJdrBgColor2, selectedColor)
     }
+    if (clickedElement === "buttonBgButton") {
+      divCardButton.current.style.backgroundColor = selectedColor
+      updateBackgroundColor(setButtonColor, selectedColor)
+    }
   }, [selectedColor])
 
   // --------------- IMAGE FORMATTING ------------------
@@ -118,13 +136,11 @@ function InfoGeneral() {
   const [viewImgFinder, setViewImgFinder] = useState(false)
   const [imgPathBottom, setImgPathBottom] = useState("")
   const [imgPathTop, setImgPathTop] = useState("")
-  const [imgPathButton, setImgPathButton] = useState("")
 
   const [isAddingPic, setIsAddingPic] = useState(false)
 
   const divImgTop = useRef(null)
   const divImgBottom = useRef(null)
-  const divImgButton = useRef(null)
 
   const handleImg = (className) => {
     setIsAddingPic(true)
@@ -149,11 +165,6 @@ function InfoGeneral() {
         setImgPathTop(selectedPath)
         setJdrImg1(selectedPath)
       }
-
-      if (clickedElement === "buttonImgButton") {
-        setImgPathButton(selectedPath)
-        setButtonImg(selectedPath)
-      }
     }
   }, [selectedPath])
 
@@ -172,7 +183,8 @@ function InfoGeneral() {
       textFont,
       jdrBgColor1,
       jdrBgColor2,
-      buttonImg,
+      buttonFont,
+      buttonColor,
       jdrCategory,
       jdrPublic,
     }
@@ -228,16 +240,19 @@ function InfoGeneral() {
                 onChange={(e) => setJdrText(e.target.value)}
               ></textarea>
             </div>
+            <h8 className="explainFormatting">
+              Click on the text you want to format
+            </h8>
             <div className="cardGeneralTop">
               <div className="generalConstructorTop">
-                <WidgetProperties
+                <WidgetText
                   viewEditProperties={viewEditProperties}
                   selectedColor={selectedColor}
                   selectedFont={selectedFont}
                   selectedSize={jdrNameFontSize}
-                  setSelectedColor={setSelectedColor}
                   setSelectedFont={setSelectedFont}
                   setSelectedSize={setJdrNameFontSize}
+                  setSelectedColor={setSelectedColor}
                 />
               </div>
               <div className="topRight">
@@ -251,12 +266,7 @@ function InfoGeneral() {
                   )}
                 </div>
                 <div className="topBgColor">
-                  {/* <span>Pick a Background Color</span> */}
                   <div className="topBgColorSelector"></div>
-                  <ButtonStandard
-                    img={iconTextColor}
-                    onClick={handleColorPicker}
-                  />
                   <ColorSelector
                     state={displayCPicker}
                     onClose={handleCloseColorPicker}
@@ -306,10 +316,10 @@ function InfoGeneral() {
                   className="buttonImgBottom"
                 />
                 <ButtonUI
-                  onClick={() => handleImg("buttonImgButton")}
-                  title={"Button Image"}
+                  onClick={handleButtonBackgroundColorChange}
+                  title={"Button Color"}
                   bgcolor={"#0C011C"}
-                  className="buttonImgButton"
+                  className="buttonBgButton"
                 />
               </div>
             </div>
@@ -337,7 +347,11 @@ function InfoGeneral() {
                 <img
                   className="cardTopImg"
                   ref={divImgTop}
-                  src={`http://localhost:4242/uploads/${imgPathTop}`}
+                  src={
+                    imgPathTop
+                      ? `http://localhost:4242/uploads/${imgPathTop}`
+                      : imgDefault
+                  }
                   alt="image top"
                 />
               </div>
@@ -360,7 +374,11 @@ function InfoGeneral() {
                 <img
                   className="cardBottomImg"
                   ref={divImgBottom}
-                  src={`http://localhost:4242/uploads/${imgPathBottom}`}
+                  src={
+                    imgPathBottom
+                      ? `http://localhost:4242/uploads/${imgPathBottom}`
+                      : imgDefault
+                  }
                   alt="image bottom"
                 />
               </div>
@@ -387,20 +405,31 @@ function InfoGeneral() {
                     {jdrText ? `${jdrText}` : "Description Goes Here"}
                     {/* </div> */}
                   </div>
-                  <div className="cardButtonPlay">
-                    <img
-                      className="cardButtonImg"
-                      ref={divImgButton}
-                      src={`http://localhost:4242/uploads/${imgPathButton}`}
-                      alt="image button"
-                    />
-                    <h4 className="buttonText">Play</h4>
+                  <div
+                    className="cardButtonPlay"
+                    ref={divCardButton}
+                    style={{
+                      backgroundColor:
+                        clickedElement === ".buttonBgButton"
+                          ? buttonColor
+                          : "#000000",
+                    }}
+                  >
+                    <h4
+                      className="buttonText"
+                      ref={divCardButton}
+                      onClick={applyTextFormattingToButtonFont}
+                      style={{
+                        fontFamily: buttonFont,
+                        fontSize: `${buttonFont}px`,
+                      }}
+                    >
+                      Play
+                    </h4>
                   </div>
-                  {/* </button> */}
                 </div>
               </div>
             </div>
-            {/* <img className="editPen" src={editPen} alt="pen" /> */}
           </div>
         </div>
       </div>

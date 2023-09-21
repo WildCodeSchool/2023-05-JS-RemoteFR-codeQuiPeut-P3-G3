@@ -16,10 +16,18 @@ import ActionType from "./ActionsType"
 
 import { useEditionContext } from "../../../services/contexts/editionContext"
 import { stylesDLAdminActions } from "../DropLists/stylesDropList"
+import { useLocation } from "react-router-dom"
 
 function WidgetScenesLink() {
   const [linkView, setLinkView] = useState(false)
   const [extend, setExtend] = useState(true)
+  const [data, setData] = useState({})
+  const [selectedLink, setSelectedLink] = useState(null)
+
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  const story = params.get("story")
+  const scene = params.get("scene")
 
   const {
     objectSelected,
@@ -27,6 +35,9 @@ function WidgetScenesLink() {
     setUpdateActions,
     tabElem,
     getActions,
+    editStatus,
+    editSettings,
+    canvas,
   } = useEditionContext()
 
   /* Update visue actions */
@@ -39,6 +50,10 @@ function WidgetScenesLink() {
   }, [updateActions])
 
   useEffect(() => {
+    editSettings(story, scene)
+  }, [story, scene])
+
+  useEffect(() => {
     if (objectSelected.selected) {
       setExtend(true)
     } else {
@@ -46,10 +61,50 @@ function WidgetScenesLink() {
     }
   }, [objectSelected.selected])
 
+  useEffect(() => {
+    if (editStatus.nbreScene > 0) {
+      const items = []
+
+      for (let i = 0; i < editStatus.nbreScene; i++) {
+        items.push({ value: i.toString(), label: `scene ${i}` })
+      }
+
+      // Update the data state with the new items
+      setData(items)
+    }
+  }, [editStatus.nbreScene])
+
+  /* Sauvegarde link scene */
+  useEffect(() => {
+    if (selectedLink !== null) {
+      if (canvas) {
+        const activeObject = canvas.getActiveObject()
+
+        if (activeObject) {
+          activeObject.set({ Link: selectedLink })
+          canvas.renderAll()
+        }
+      }
+    }
+  }, [selectedLink])
+
+  useEffect(() => {
+    if (!linkView) {
+      setSelectedLink("")
+    }
+  }, [linkView])
+
+  useEffect(() => {
+    if (objectSelected.link !== null) {
+      setSelectedLink(objectSelected.link)
+      setLinkView(true)
+    }
+  }, [objectSelected])
+
   return (
     <div className="wrap-widget">
       <div className="title-properties" onClick={() => setExtend(!extend)}>
-        <span>Scenes link</span>
+        <span>Actions</span>
         {extend ? (
           <img src={imgArrowTop} alt="img-reduce" />
         ) : (
@@ -80,7 +135,12 @@ function WidgetScenesLink() {
                 <span className="item"> Scene to link </span>
 
                 <div className="sets">
-                  <WidgetButtons styles={stylesDLAdminActions} />
+                  <WidgetButtons
+                    styles={stylesDLAdminActions}
+                    data={data}
+                    selected={selectedLink}
+                    setter={setSelectedLink}
+                  />
                 </div>
               </div>
             </>

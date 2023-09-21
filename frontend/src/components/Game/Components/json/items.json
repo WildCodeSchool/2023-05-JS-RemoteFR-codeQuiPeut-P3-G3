@@ -1,0 +1,122 @@
+[
+  [
+    [
+      {
+        "id": 1,
+        "name": "Épée de débutante",
+        "image": "../assets/img/items/weapons/sword1.svg",
+        "description": "Un début modeste",
+        "damage": 10,
+        "shop": {
+          "buyPrice": 100,
+          "sellPrice": 50
+        }
+      },
+      {
+        "id": 2,
+        "name": "Épée de combat",
+        "image": "assets/img/items/weapons/sword2.svg",
+        "description": "Coupe aussi le saucisson",
+        "damage": 30,
+        "shop": {
+          "buyPrice": 300,
+          "sellPrice": 150
+        }
+      },
+      {
+        "id": 3,
+        "name": "Épée de guerrière",
+        "image": "assets/img/items/weapons/sword3.svg",
+        "description": "Tranchante comme un bâton hyper-méga aiguisé",
+        "damage": 50,
+        "shop": {
+          "buyPrice": 500,
+          "sellPrice": 250
+        }
+      }
+    ],
+    [
+      {
+        "id": 1,
+        "name": "Hâche de débutante",
+        "image": "assets/img/items/weapons/axe1.svg",
+        "description": "Une super hache",
+        "damage": 10,
+        "shop": {
+          "buyPrice": 100,
+          "sellPrice": 50
+        }
+      },
+      {
+        "id": 2,
+        "name": "Hâche de combat",
+        "image": "assets/img/items/weapons/axe2.svg",
+        "description": "Coupe aussi le saucisson",
+        "damage": 30,
+        "shop": {
+          "buyPrice": 300,
+          "sellPrice": 150
+        }
+      },
+      {
+        "id": 3,
+        "name": "Hâche de guerrière",
+        "image": "assets/img/items/weapons/axe3.svg",
+        "description": "Tranchante comme un bâton hyper-méga aiguisé",
+        "damage": 50,
+        "shop": {
+          "buyPrice": 500,
+          "sellPrice": 250
+        }
+      }
+    ]
+  ],
+  [
+    {
+      "id": 1,
+      "name": "Potion de vie",
+      "image": "assets/img/items/potion.svg",
+      "description": "Un début modeste",
+      "shop": {
+        "buyPrice": 200,
+        "sellPrice": 100
+      }
+    },
+    {
+      "id": 2,
+      "name": "Carte de visite Karvagma Inc.",
+      "image": "assets/img/items/businessCard.png",
+      "description": "Ouh... elle est chaude..."
+    },
+    {
+      "id": 3,
+      "name": "Champignons",
+      "image": "assets/img/items/shroom.svg",
+      "description": "De très beaux champignons"
+    },
+    {
+      "id": 4,
+      "name": "Salade",
+      "image": "assets/img/items/salad.svg",
+      "description": "Qu'est-ce qui est petit et vert ?"
+    },
+    {
+      "id": 5,
+      "name": "Monsieur Propre",
+      "image": "assets/img/items/monsieurPropre.svg",
+      "description": "Nettoie à défaut de faire peur"
+    },
+    {
+      "id": 6,
+      "name": "Canard de l'Apocalypse",
+      "image": "assets/img/items/canardApocalypse.svg",
+      "description": "Il fait un coin coin pas net"
+    },
+    {
+      "id": 7,
+      "name": "Patator",
+      "image": "assets/img/items/patator.svg",
+      "description": "L'arme ultime"
+    }
+  ]
+]

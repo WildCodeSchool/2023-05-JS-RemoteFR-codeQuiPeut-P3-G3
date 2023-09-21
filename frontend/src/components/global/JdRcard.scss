@@ -116,9 +116,9 @@
 }
 .jdrButton {
   position: relative;
-  background-color: rgb(230, 34, 77);
+  background-color: rgb(181, 178, 179);
   border-radius: 5px;
-  box-shadow: rgb(121, 18, 55) 0px 4px 0px 0px;
+  box-shadow: rgb(181, 178, 179) 0px 4px 0px 0px;
   padding: 15px;
   background-repeat: no-repeat;
   box-sizing: border-box;
@@ -147,4 +147,9 @@
 
 .jdrButton:hover::before {
   width: 100%;
+}
+
+.jdrCardGenre {
+  display: none;
+  visibility: hidden;
 }

@@ -19,6 +19,7 @@
       height: auto;
       width: 100%;
       aspect-ratio: 677.45/400;
+      z-index: -1;
       .image {
         display: block;
         height: 100%;
@@ -52,6 +53,8 @@
     align-items: center;
     box-sizing: border-box;
     gap: calc(1vh + 8vw);
+    background-color: #0c011c;
+
     // border: 10px solid red;
 
     /* Media query pour les marges en mode desktop */
@@ -60,7 +63,7 @@
       padding-right: 5vh;
     }
 
-    /* Element: .home__content__games (premier élément enfant) */
+    /* Element: .home__content__description (premier élément enfant) */
     > section:first-child {
       margin-top: calc(1vh + 8vw);
     }
@@ -71,7 +74,6 @@
       align-items: center;
       justify-content: center;
       // margin-bottom: calc(1vh + 8vw);
-
       // background-color: bisque;
     }
 

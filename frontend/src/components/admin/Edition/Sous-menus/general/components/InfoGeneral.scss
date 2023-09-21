@@ -102,7 +102,10 @@
 
       .cardGeneralTop {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        align-items: flex-start;
+        width: 100%;
+        height: 50%;
 
         .generalConstructorTop {
           height: 220px;
@@ -112,6 +115,7 @@
           border-color: $color--purple;
           margin-left: auto;
           margin-right: auto;
+          text-align: center;
         }
 
         .topRight {
@@ -268,13 +272,13 @@
           border-bottom-right-radius: 4px;
 
           .cardBottomTextButton {
-            height: 70%;
+            height: 80%;
             width: 50%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
+            gap: 30px;
 
             .cardBottomText {
               height: 100px;
@@ -291,13 +295,10 @@
             .cardButtonPlay {
               position: relative;
               display: inline-block;
-
-              .cardButtonImg {
-                height: 50px;
-                width: 100px;
-                position: relative;
-                z-index: 0;
-              }
+              border-radius: 4px;
+              height: 50px;
+              width: 100px;
+              cursor: pointer;
 
               .buttonText {
                 position: absolute;
