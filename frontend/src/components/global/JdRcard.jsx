@@ -18,6 +18,7 @@ const JdrCard = (props) => {
     jdrBgColor2,
     buttonColor,
     buttonFont,
+    handleClick,
   } = props
 
   const jdrNameStyle = {
@@ -68,7 +69,11 @@ const JdrCard = (props) => {
           <div className="jdrText" style={textStyle}>
             {jdrText}
           </div>
-          <button className="jdrButton" style={buttonStyle}>
+          <button
+            className="jdrButton"
+            style={buttonStyle}
+            onClick={handleClick}
+          >
             Play
           </button>
         </div>
