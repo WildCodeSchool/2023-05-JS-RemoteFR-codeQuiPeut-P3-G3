@@ -90,6 +90,9 @@ router.post("/shop", shopControllers.add)
 router.put("/shop/:id", shopControllers.edit)
 router.delete("/shop/:id", shopControllers.destroy)
 
+router.get("/shopping_card_item", shopControllers.getTotalCart)
+router.delete("/shopping_card_item/removeAll", shopControllers.deleteAll)
+
 router.get("/stories", storiesControllers.browse)
 router.get("/stories/:id/:scene?", storiesControllers.read)
 // router.post("/stories", storiesControllers.add, createStory)

@@ -38,6 +38,7 @@ const InventoryManager = require("./InventoryManager")
 const SaveManager = require("./SaveManager")
 const ShopManager = require("./ShopManager")
 const StoriesManager = require("./StoriesManager")
+const ShoppingCardItemManager = require("./ShoppingCardItemManager")
 const UsersManager = require("./UsersManager")
 const WeaponsManager = require("./WeaponsManager")
 /* Pictures */
@@ -69,6 +70,9 @@ models.save.setDatabase(pool)
 
 models.shop = new ShopManager()
 models.shop.setDatabase(pool)
+
+models.ShoppingCardItem = new ShoppingCardItemManager()
+models.ShoppingCardItem.setDatabase(pool)
 
 models.stories = new StoriesManager()
 models.stories.setDatabase(pool)

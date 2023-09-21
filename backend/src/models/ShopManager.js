@@ -2,7 +2,7 @@ const AbstractManager = require("./AbstractManager")
 
 class ShopManager extends AbstractManager {
   constructor() {
-    super({ table: "shop" })
+    super({ table: "shop_credit_item" })
   }
 
   insert(shop) {

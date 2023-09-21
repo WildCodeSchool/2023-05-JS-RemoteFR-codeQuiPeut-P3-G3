@@ -35,7 +35,7 @@ function InfoGeneral() {
   // ------------ TEXT FORMATTING -------------------
 
   const [selectedFont, setSelectedFont] = useState("Arial, sans-serif")
-  const [selectedSize, setSelectedSize] = useState(32)
+  const [selectedSize, setSelectedSize] = useState(16)
   const [selectedColor, setSelectedColor] = useState("#FFFFFF")
 
   const applyTextFormattingToJdrName = () => {
@@ -446,9 +446,9 @@ function InfoGeneral() {
                       color: textColor,
                     }}
                   >
-                    <div className="textDescription">
-                      {jdrText ? `${jdrText}` : "Description Goes Here"}
-                    </div>
+                    {/* <div className="textDescription"> */}
+                    {jdrText ? `${jdrText}` : "Description Goes Here"}
+                    {/* </div> */}
                   </div>
                   <div
                     className="cardButtonPlay"

@@ -64,6 +64,7 @@ const edit = (req, res) => {
       res.sendStatus(500)
     })
 }
+
 const destroy = (req, res) => {
   models.save
     .delete(req.params.id)
