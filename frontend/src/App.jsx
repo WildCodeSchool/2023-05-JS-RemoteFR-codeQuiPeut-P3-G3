@@ -21,7 +21,7 @@ function App() {
 
   // Fonction pour déterminer si le Navbar doit être affiché
   const shouldShowNavbar = () => {
-    return location.pathname !== "/Game"
+    return location.pathname !== "/game" && location.pathname !== "/Game"
   }
 
   return (

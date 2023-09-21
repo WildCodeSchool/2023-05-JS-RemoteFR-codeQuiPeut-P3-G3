@@ -68,7 +68,8 @@ export const GameContextProvider = ({ children }) => {
   const [imgs, setImgs] = useState([])
   const [background, setBackground] = useState("")
   const [changeScene, setChangeScene] = useState(false)
-
+  // eslint-disable-next-line no-unused-vars
+  const [hero, setHero] = useState([])
   const [searchParams, setSearchParams] = useSearchParams()
   // const location = useLocation()
 
@@ -96,7 +97,19 @@ export const GameContextProvider = ({ children }) => {
       })
   }
 
-  /* ============================================================= */
+  // Test de la requete hero
+  const getHero = (idStory) => {
+    // console.log("appel de get hero avec id ", idStory)
+    axios
+      .get(`http://localhost:4242/api-heroes/${idStory}`)
+      .then((response) => {
+        // console.log("réponse des heroes : ", response.data)
+        setHero(response.data)
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération du héros :", error)
+      })
+  }
 
   const gestionActions = (actions) => {
     const nbActions = actions.length
@@ -275,6 +288,7 @@ export const GameContextProvider = ({ children }) => {
     <GameContext.Provider
       value={{
         getScene,
+        getHero,
         sceneContent,
         actualScene,
         creationTextes,
@@ -296,6 +310,8 @@ export const GameContextProvider = ({ children }) => {
         setSearchParams,
         searchParams,
         setSceneSettings,
+        hero,
+        setHero,
       }}
     >
       {children}

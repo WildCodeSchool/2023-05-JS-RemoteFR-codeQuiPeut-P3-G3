@@ -5,6 +5,9 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
 -- Schema enigmadb
 -- -----------------------------------------------------
 
@@ -30,8 +33,7 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`card` (
   `textFont` VARCHAR(150) NOT NULL,
   `jdrBgColor1` VARCHAR(45) NOT NULL,
   `jdrBgColor2` VARCHAR(45) NOT NULL,
-  `buttonColor` VARCHAR(150) NOT NULL,
-  `buttonFont` VARCHAR(150) NOT NULL,
+  `buttonImg` VARCHAR(150) NOT NULL,
   `jdrCategory` VARCHAR(45) NOT NULL,
   `jdrPublic` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idcard`))
@@ -55,93 +57,29 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `enigmadb`.`heroes`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enigmadb`.`heroes` (
-  `idheroes` INT NOT NULL AUTO_INCREMENT,
-  `class` VARCHAR(45) NULL DEFAULT NULL,
-  `name` VARCHAR(45) NULL DEFAULT NULL,
-  `health` INT NULL DEFAULT NULL,
-  `max_health` INT NULL DEFAULT NULL,
-  `money` INT NULL DEFAULT NULL,
-  `weapon` VARCHAR(45) NULL DEFAULT NULL,
-  `strength` INT NULL DEFAULT NULL,
-  `resistance` INT NULL DEFAULT NULL,
-  `img_hero` VARCHAR(150) NULL DEFAULT NULL,
-  PRIMARY KEY (`idheroes`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `enigmadb`.`shop`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enigmadb`.`shop` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `type` INT NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
-  `price` INT NOT NULL,
-  `quantity` INT NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `enigmadb`.`card`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enigmadb`.`card` (
-  `idcard` INT NOT NULL AUTO_INCREMENT,
-  `jdrGenre` VARCHAR(50) NOT NULL,
-  `jdrName` VARCHAR(100) NOT NULL,
-  `jdrNameFont` VARCHAR(100),
-  `jdrNameColor` VARCHAR(45) NOT NULL,
-  `jdrNameFontSize` INT NOT NULL,
-  `jdrImg1` VARCHAR(150) NOT NULL,
-  `jdrImg2` VARCHAR(100) NOT NULL,
-  `jdrText` VARCHAR(80) NOT NULL,
-  `textColor` VARCHAR(45) NOT NULL,
-  `textFont` VARCHAR(150) NOT NULL,
-  `jdrBgColor1` VARCHAR(45) NOT NULL,
-  `jdrBgColor2` VARCHAR(45) NOT NULL,
-  `buttonColor` VARCHAR(45) NOT NULL,
-  `buttonFont` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idcard`)
-) ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `enigmadb`.`stories`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enigmadb`.`stories` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NOT NULL,
-  `resume` VARCHAR(230) NOT NULL,
-  `creation_date` DATE NOT NULL,
-  `last_update` DATE NOT NULL,
-  `number_view` INT NULL DEFAULT NULL,
-  `win_rate` INT NULL DEFAULT NULL,
-  `money_earn` INT NULL DEFAULT NULL,
-  `is_deploy` TINYINT NULL DEFAULT NULL,
-  `heroes_idheroes` INT NOT NULL,
-  `img_url` VARCHAR(150) NOT NULL,
-  `shop_id` INT NOT NULL,
-  `is_complete` TINYINT NOT NULL DEFAULT '0',
-  `card_idcard` INT NOT NULL,
+  `resume` VARCHAR(230) NULL DEFAULT NULL,
+  `creation_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_update` DATE NULL DEFAULT NULL,
+  `number_view` INT NULL DEFAULT '0',
+  `win_rate` INT NULL DEFAULT '0',
+  `money_earn` INT NULL DEFAULT '0',
+  `is_deploy` TINYINT NOT NULL,
+  `heroes_idheroes` INT NOT NULL DEFAULT '0',
+  `img_url` VARCHAR(150) NULL DEFAULT NULL,
+  `shop_id` INT NOT NULL DEFAULT '0',
+  `is_complete` TINYINT NULL DEFAULT '0',
+  `card_idcard` INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`, `heroes_idheroes`, `shop_id`, `card_idcard`),
   INDEX `fk_stories_heroes1_idx` (`heroes_idheroes` ASC) VISIBLE,
   INDEX `fk_stories_shop1_idx` (`shop_id` ASC) VISIBLE,
-  INDEX `fk_stories_card1_idx` (`card_idcard` ASC) VISIBLE,
-  CONSTRAINT `fk_stories_card1`
-    FOREIGN KEY (`card_idcard`)
-    REFERENCES `enigmadb`.`card` (`idcard`),
-  CONSTRAINT `fk_stories_heroes1`
-    FOREIGN KEY (`heroes_idheroes`)
-    REFERENCES `enigmadb`.`heroes` (`idheroes`),
-  CONSTRAINT `fk_stories_shop1`
-    FOREIGN KEY (`shop_id`)
-    REFERENCES `enigmadb`.`shop` (`id`))
+  INDEX `fk_stories_card1_idx` (`card_idcard` ASC) VISIBLE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 138
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -205,6 +143,26 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
+-- Table `enigmadb`.`heroes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `enigmadb`.`heroes` (
+  `idheroes` INT NOT NULL AUTO_INCREMENT,
+  `class` VARCHAR(45) NULL DEFAULT NULL,
+  `name` VARCHAR(45) NULL DEFAULT NULL,
+  `health` INT NULL DEFAULT NULL,
+  `max_health` INT NULL DEFAULT NULL,
+  `money` INT NULL DEFAULT NULL,
+  `weapon` VARCHAR(45) NULL DEFAULT NULL,
+  `strength` INT NULL DEFAULT NULL,
+  `resistance` INT NULL DEFAULT NULL,
+  `img_hero` VARCHAR(150) NULL DEFAULT NULL,
+  PRIMARY KEY (`idheroes`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `enigmadb`.`inventory`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enigmadb`.`inventory` (
@@ -255,6 +213,7 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`users` (
   `role` VARCHAR(45) NOT NULL DEFAULT 'user',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -274,8 +233,23 @@ CREATE TABLE IF NOT EXISTS `enigmadb`.`gallery` (
     REFERENCES `enigmadb`.`users` (`id`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 9
+AUTO_INCREMENT = 13
 DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
+-- Table `enigmadb`.`shop`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `enigmadb`.`shop` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `price` INT NOT NULL,
+  `quantity` INT NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
