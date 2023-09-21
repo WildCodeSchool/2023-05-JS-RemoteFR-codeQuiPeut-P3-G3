@@ -7,10 +7,13 @@ import Footer from "../components/global/Footer"
 import "./Games.scss"
 import previous from "../assets/images/chevron-left-512.webp"
 import next from "../assets/images/chevron-right-512.webp"
+import { useNavigate } from "react-router-dom"
 
 export default function Home() {
   const [startIndex, setStartIndex] = useState(0)
   const [jdrCardData, setJdrCardData] = useState([])
+  const navigate = useNavigate()
+
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:4242/card")
@@ -33,6 +36,11 @@ export default function Home() {
     setStartIndex((startIndex - 2 + jdrCardData.length) % jdrCardData.length)
   }
   const [open, setOpen] = useState(false)
+
+  const handleClick = (index) => {
+    // console.log("click", index)
+    navigate(`/game?story=${index}&scene=0`)
+  }
 
   return (
     <>
@@ -72,9 +80,15 @@ export default function Home() {
               <h2 className="gamezzz">GAMES"</h2>
             </div>
             <div className="jdrCardApp">
-              {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
-                <JdrCard key={jdr.id} {...jdr} />
-              ))}
+              {jdrCardData
+                .slice(startIndex, startIndex + 2)
+                .map((jdr, index) => (
+                  <JdrCard
+                    key={jdr.id}
+                    {...jdr}
+                    handleClick={() => handleClick(index)}
+                  />
+                ))}
 
               <div className="pagination">
                 <button className="boutonPrev" onClick={handlePrevious}>
@@ -99,7 +113,12 @@ export default function Home() {
                 .slice(startIndex, startIndex + 2)
                 .map((jdr, index) => (
                   <React.Fragment key={jdr.id}>
-                    {jdr.jdrCategory === "Fantastic" && <JdrCard {...jdr} />}
+                    {jdr.jdrCategory === "Fantastic" && (
+                      <JdrCard
+                        {...jdr}
+                        handleClick={() => handleClick(index)}
+                      />
+                    )}
                   </React.Fragment>
                 ))}
 
@@ -122,11 +141,18 @@ export default function Home() {
               <h2 className="gamezzz">GAMES"</h2>
             </div>
             <div className="jdrCardApp">
-              {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
-                <React.Fragment key={jdr.id}>
-                  {jdr.jdrCategory === "Horror" && <JdrCard {...jdr} />}
-                </React.Fragment>
-              ))}
+              {jdrCardData
+                .slice(startIndex, startIndex + 2)
+                .map((jdr, index) => (
+                  <React.Fragment key={jdr.id}>
+                    {jdr.jdrCategory === "Horror" && (
+                      <JdrCard
+                        {...jdr}
+                        handleClick={() => handleClick(index)}
+                      />
+                    )}
+                  </React.Fragment>
+                ))}
 
               <div className="pagination">
                 <button className="boutonPrev" onClick={handlePrevious}>
@@ -146,11 +172,18 @@ export default function Home() {
               <h2 className="gamezzz">GAMES"</h2>
             </div>
             <div className="jdrCardApp">
-              {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
-                <React.Fragment key={jdr.id}>
-                  {jdr.jdrCategory === "Western" && <JdrCard {...jdr} />}
-                </React.Fragment>
-              ))}
+              {jdrCardData
+                .slice(startIndex, startIndex + 2)
+                .map((jdr, index) => (
+                  <React.Fragment key={jdr.id}>
+                    {jdr.jdrCategory === "Western" && (
+                      <JdrCard
+                        {...jdr}
+                        handleClick={() => handleClick(index)}
+                      />
+                    )}
+                  </React.Fragment>
+                ))}
 
               <div className="pagination">
                 <button className="boutonPrev" onClick={handlePrevious}>

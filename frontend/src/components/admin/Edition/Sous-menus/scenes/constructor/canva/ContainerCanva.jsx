@@ -133,12 +133,12 @@ const ContainerCanva = ({
   useEffect(() => {
     if (canvas) {
       const objectModifiedHandler = function (options) {
-        console.log("objet modifié", options.target)
+        // console.log("objet modifié", options.target)
         // setObjectSelected({ selected: true })
       }
 
       const selectionCreatedHandler = function (options) {
-        console.log("selection créé")
+        // console.log("selection créé")
         updateSelectedProperties(options.selected[0])
         updateStates(options.selected[0])
         setViewProperties(true)
@@ -150,7 +150,7 @@ const ContainerCanva = ({
       }
 
       const selectionModified = function (options) {
-        console.log("selection modifiée")
+        // console.log("selection modifiée")
         updateSelectedProperties(options.selected[0])
         updateStates(options.selected[0])
       }
