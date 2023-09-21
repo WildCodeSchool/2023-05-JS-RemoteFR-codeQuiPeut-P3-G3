@@ -10,7 +10,7 @@ import next from "../assets/images/chevron-right-512.webp"
 import { useNavigate } from "react-router-dom"
 
 export default function Home() {
-  const [startIndex, setStartIndex] = useState(0)
+  // const [startIndex, setStartIndex] = useState(0)
   const [jdrCardData, setJdrCardData] = useState([])
   const navigate = useNavigate()
 
@@ -28,12 +28,55 @@ export default function Home() {
     fetchData()
   }, [])
 
-  const handleNext = () => {
-    setStartIndex((startIndex + 2) % jdrCardData.length)
+  const [startIndexAllGames, setStartIndexAllGames] = useState(0)
+  const [startIndexFantastic, setStartIndexFantastic] = useState(0)
+  const [startIndexHorror, setStartIndexHorror] = useState(0)
+  const [startIndexWestern, setStartIndexWestern] = useState(0)
+
+  const handleNext = (section) => {
+    switch (section) {
+      case "allGamesSection":
+        setStartIndexAllGames((startIndexAllGames + 2) % jdrCardData.length)
+        break
+      case "fantasticGamesSection":
+        setStartIndexFantastic((startIndexFantastic + 2) % jdrCardData.length)
+        break
+      case "horrorGamesSection":
+        setStartIndexHorror((startIndexHorror + 2) % jdrCardData.length)
+        break
+      case "westernGamesSection":
+        setStartIndexWestern((startIndexWestern + 2) % jdrCardData.length)
+        break
+      default:
+        break
+    }
   }
 
-  const handlePrevious = () => {
-    setStartIndex((startIndex - 2 + jdrCardData.length) % jdrCardData.length)
+  const handlePrevious = (section) => {
+    switch (section) {
+      case "allGamesSection":
+        setStartIndexAllGames(
+          (startIndexAllGames - 2 + jdrCardData.length) % jdrCardData.length
+        )
+        break
+      case "fantasticGamesSection":
+        setStartIndexFantastic(
+          (startIndexFantastic - 2 + jdrCardData.length) % jdrCardData.length
+        )
+        break
+      case "horrorGamesSection":
+        setStartIndexHorror(
+          (startIndexHorror - 2 + jdrCardData.length) % jdrCardData.length
+        )
+        break
+      case "westernGamesSection":
+        setStartIndexWestern(
+          (startIndexWestern - 2 + jdrCardData.length) % jdrCardData.length
+        )
+        break
+      default:
+        break
+    }
   }
   const [open, setOpen] = useState(false)
 
@@ -81,20 +124,22 @@ export default function Home() {
             </div>
             <div className="jdrCardApp">
               {jdrCardData
-                .slice(startIndex, startIndex + 2)
-                .map((jdr, index) => (
-                  <JdrCard
-                    key={jdr.id}
-                    {...jdr}
-                    handleClick={() => handleClick(index)}
-                  />
+                .slice(startIndexAllGames, startIndexAllGames + 2)
+                .map((jdr) => (
+                  <JdrCard key={jdr.id} {...jdr} />
                 ))}
 
               <div className="pagination">
-                <button className="boutonPrev" onClick={handlePrevious}>
+                <button
+                  className="boutonPrev"
+                  onClick={() => handlePrevious("allGamesSection")}
+                >
                   <img src={previous} alt="" />
                 </button>
-                <button className="boutonNext" onClick={handleNext}>
+                <button
+                  className="boutonNext"
+                  onClick={() => handleNext("allGamesSection")}
+                >
                   <img src={next} alt="" />
                 </button>
               </div>
@@ -110,7 +155,7 @@ export default function Home() {
             </div>
             <div className="jdrCardApp">
               {jdrCardData
-                .slice(startIndex, startIndex + 2)
+                .slice(startIndexFantastic, startIndexFantastic + 2)
                 .map((jdr, index) => (
                   <React.Fragment key={jdr.id}>
                     {jdr.jdrCategory === "Fantastic" && (
@@ -123,10 +168,16 @@ export default function Home() {
                 ))}
 
               <div className="pagination">
-                <button className="boutonPrev" onClick={handlePrevious}>
+                <button
+                  className="boutonPrev"
+                  onClick={() => handlePrevious("fantasticGamesSection")}
+                >
                   <img src={previous} alt="" />
                 </button>
-                <button className="boutonNext" onClick={handleNext}>
+                <button
+                  className="boutonNext"
+                  onClick={() => handleNext("fantasticGamesSection")}
+                >
                   <img src={next} alt="" />
                 </button>
               </div>
@@ -142,7 +193,7 @@ export default function Home() {
             </div>
             <div className="jdrCardApp">
               {jdrCardData
-                .slice(startIndex, startIndex + 2)
+                .slice(startIndexHorror, startIndexHorror + 2)
                 .map((jdr, index) => (
                   <React.Fragment key={jdr.id}>
                     {jdr.jdrCategory === "Horror" && (
@@ -155,10 +206,16 @@ export default function Home() {
                 ))}
 
               <div className="pagination">
-                <button className="boutonPrev" onClick={handlePrevious}>
+                <button
+                  className="boutonPrev"
+                  onClick={() => handlePrevious("horrorGamesSection")}
+                >
                   <img src={previous} alt="" />
                 </button>
-                <button className="boutonNext" onClick={handleNext}>
+                <button
+                  className="boutonNext"
+                  onClick={() => handleNext("horrorGamesSection")}
+                >
                   <img src={next} alt="" />
                 </button>
               </div>
@@ -173,7 +230,7 @@ export default function Home() {
             </div>
             <div className="jdrCardApp">
               {jdrCardData
-                .slice(startIndex, startIndex + 2)
+                .slice(startIndexWestern, startIndexWestern + 2)
                 .map((jdr, index) => (
                   <React.Fragment key={jdr.id}>
                     {jdr.jdrCategory === "Western" && (
@@ -186,10 +243,16 @@ export default function Home() {
                 ))}
 
               <div className="pagination">
-                <button className="boutonPrev" onClick={handlePrevious}>
+                <button
+                  className="boutonPrev"
+                  onClick={() => handlePrevious("westernGamesSection")}
+                >
                   <img src={previous} alt="" />
                 </button>
-                <button className="boutonNext" onClick={handleNext}>
+                <button
+                  className="boutonNext"
+                  onClick={() => handleNext("westernGamesSection")}
+                >
                   <img src={next} alt="" />
                 </button>
               </div>

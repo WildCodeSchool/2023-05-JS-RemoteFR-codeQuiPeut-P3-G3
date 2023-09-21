@@ -101,7 +101,11 @@ router.put("/deploy/:id", storiesControllers.deploy)
 router.get("/users", usersControllers.browse)
 router.get("/users/:id", usersControllers.read)
 router.post("/users", usersControllers.add)
-router.put("/users/:id", usersControllers.edit)
+
+// TEST EDIT PROFILE
+router.put("/users/:id", usersControllers.editProfile)
+
+// router.put("/users/:id", usersControllers.edit)
 router.delete("/users/:id", usersControllers.destroy)
 router.post("/signup", hashPassword, validateUser, usersControllers.add)
 router.post("/login", usersControllers.findByMail, verifyPassword)
@@ -131,5 +135,7 @@ router.delete("/api-stories/:idStory/:idScene", deleteScene, getScene)
 router.put("/api-heroes/:idStory", addHero)
 router.get("/api-heroes/:idStory", getHeroes)
 router.delete("/api-heroes/:idStory/:idHero", deleteHero, getHeroes)
+
+router.put("/users/:id", usersControllers.editProfile)
 
 module.exports = router

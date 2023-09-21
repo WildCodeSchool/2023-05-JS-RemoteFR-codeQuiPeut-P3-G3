@@ -79,7 +79,6 @@ const ContainerCanva = ({
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Delete") {
-        console.log("touche supp")
         keyDeleteObject()
       }
     }
@@ -133,7 +132,6 @@ const ContainerCanva = ({
   useEffect(() => {
     if (canvas) {
       const objectModifiedHandler = function (options) {
-        // console.log("objet modifié", options.target)
         // setObjectSelected({ selected: true })
       }
 

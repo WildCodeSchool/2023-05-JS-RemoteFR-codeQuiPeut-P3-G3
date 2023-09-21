@@ -281,9 +281,9 @@ function InfoGeneral() {
                 onChange={(e) => setJdrText(e.target.value)}
               ></textarea>
             </div>
-            <h8 className="explainFormatting">
+            <p className="explainFormatting">
               Click on the text you want to format
-            </h8>
+            </p>
             <div className="cardGeneralTop">
               <div className="generalConstructorTop">
                 <WidgetText
