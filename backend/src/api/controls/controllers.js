@@ -93,7 +93,9 @@ module.exports.createStory = (req, res) => {
 
 module.exports.putScene = (req, res) => {
   const { idStory, idScene } = req.params
+  console.error("enregistrement de ", idStory, " scene ", idScene)
   const sceneContent = req.body
+  // console.log(sceneContent)
 
   const filePath = findPath(idStory)
 
@@ -196,6 +198,8 @@ module.exports.createScene = (req, res) => {
   }
 }
 
+/* ============================================================= */
+
 module.exports.deleteScene = (req, res, next) => {
   const { idStory, idScene } = req.params
 
@@ -219,6 +223,136 @@ module.exports.deleteScene = (req, res, next) => {
     } catch (error) {
       console.error("Erreur lors du chargement du fichier :", error)
       return res.status(500).json({ error: "Erreur lors de la suppression." })
+    }
+  } else {
+    return res.status(400).json({ error: "Le fichier n'existe pas." })
+  }
+}
+
+module.exports.getHero = (req, res) => {
+  const { idStory, idScene } = req.params
+  console.info("Get scene => id story : ", idStory, "id scene : ", idScene)
+
+  const filePath = findPath(idStory)
+
+  if (fs.existsSync(filePath)) {
+    try {
+      const loadedStory = require(filePath)
+      const story = loadedStory.story
+
+      //
+      if (!story.heroes) {
+        story.heroes = []
+      }
+
+      //
+
+      // eslint-disable-next-line no-undef
+      story.heroes.push(data)
+      res.json({
+        content: story.heroes[story.heroes.length - 1],
+      })
+
+      // Écrire le contenu dans le fichier
+      fs.writeFileSync(
+        filePath,
+        `module.exports.story = ${JSON.stringify(story, null, 2)};`
+      )
+    } catch (error) {
+      console.error("Erreur lors du chargement du fichier :", error)
+      return res
+        .status(500)
+        .json({ error: "Erreur lors du chargement du fichier." })
+    }
+  } else {
+    return res.status(400).json({ error: "Le fichier n'existe pas." })
+  }
+}
+
+/* ============================================================= */
+
+module.exports.deleteHero = (req, res, next) => {
+  const { idStory, idHero } = req.params
+  const filePath = findPath(idStory)
+
+  if (fs.existsSync(filePath)) {
+    try {
+      const loadedStory = require(filePath)
+      const story = loadedStory.story
+
+      if (story.heroes.length > 0) {
+        story.heroes.splice(idHero, 1)
+
+        // Écrire le contenu dans le fichier
+        fs.writeFileSync(
+          filePath,
+          `module.exports.story = ${JSON.stringify(story, null, 2)};`
+        )
+        next()
+      }
+    } catch (error) {
+      console.error("Erreur lors du chargement du fichier :", error)
+      return res.status(500).json({ error: "Erreur lors de la suppression." })
+    }
+  } else {
+    return res.status(400).json({ error: "Le fichier n'existe pas." })
+  }
+}
+
+/* ============================================================= */
+
+module.exports.getHeroes = (req, res) => {
+  const { idStory } = req.params
+  console.info("Get hero => id story : ")
+
+  const filePath = findPath(idStory)
+
+  if (fs.existsSync(filePath)) {
+    const loadedStory = require(filePath)
+    const heroes = loadedStory.story.heroes
+    return res.status(200).json(heroes)
+  } else {
+    return res.status(400).json({
+      error: "Le fichier n'existe pas ou l'index de la scène est invalide.",
+    })
+  }
+}
+
+module.exports.addHero = (req, res) => {
+  const { idStory } = req.params
+  const data = req.body
+
+  console.info("creation scene")
+
+  const filePath = findPath(idStory)
+
+  if (fs.existsSync(filePath)) {
+    try {
+      const loadedStory = require(filePath)
+      const story = loadedStory.story
+
+      //
+      if (!story.heroes) {
+        story.heroes = []
+      }
+
+      //
+
+      story.heroes.push(data)
+      res.json({
+        content: story.heroes[story.heroes.length - 1],
+      })
+
+      // Écrire le contenu dans le fichier
+      fs.writeFileSync(
+        filePath,
+        `module.exports.story = ${JSON.stringify(story, null, 2)};`
+      )
+    } catch (error) {
+      console.error("Erreur lors du chargement du fichier :", error)
+      return res
+        .status(500)
+        .json({ error: "Erreur lors du chargement du fichier." })
     }
   } else {
     return res.status(400).json({ error: "Le fichier n'existe pas." })

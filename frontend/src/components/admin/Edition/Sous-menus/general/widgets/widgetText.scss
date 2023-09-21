@@ -1,20 +1,25 @@
 @import "../../../../../../variables.scss";
 
-.widgetTitle {
+.widgeTitle {
   @include title-blocsAdmin;
 }
 
-.fontPropsContent {
+.fontContent {
   color: black;
   padding: 20px;
-  // display:flex;
-}
-
-.fontPropsSelection {
-  margin-top: 20px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  color: black;
-  gap: 10px;
+  flex-direction: column;
+
+  .formattingText {
+    font-size: 14px;
+  }
+
+  .fontSelection {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    gap: 10px;
+  }
 }

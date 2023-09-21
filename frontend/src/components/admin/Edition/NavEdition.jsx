@@ -39,9 +39,7 @@ function NavEdition({ view, setView }) {
           </button>
         </li>
 
-        <div className="nav__separator"></div>
-
-        <li>
+        {/* <li>
           <button
             type="button"
             className={`nav__button ${view === "Mindmap" ? "active" : ""}`}
@@ -49,7 +47,7 @@ function NavEdition({ view, setView }) {
           >
             Mindmap
           </button>
-        </li>
+        </li> */}
       </ul>
     </>
   )

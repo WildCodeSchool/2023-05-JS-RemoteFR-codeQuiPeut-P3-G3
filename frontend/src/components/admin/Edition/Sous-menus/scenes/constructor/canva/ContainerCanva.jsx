@@ -32,6 +32,8 @@ const ContainerCanva = ({
   /* 01. - Initialisation du canvas */
   useEffect(() => {
     setCanvas(initCanvas())
+    // console.log("Recupération story : ", editStatus.storyId, " scene 0 ")
+    // getScene(editStatus.storyId, 0)
   }, [])
 
   /* 02. - Resize canva */
@@ -132,7 +134,7 @@ const ContainerCanva = ({
     if (canvas) {
       const objectModifiedHandler = function (options) {
         console.log("objet modifié", options.target)
-        setObjectSelected({ selected: true })
+        // setObjectSelected({ selected: true })
       }
 
       const selectionCreatedHandler = function (options) {

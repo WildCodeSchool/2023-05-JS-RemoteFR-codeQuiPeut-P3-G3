@@ -67,24 +67,22 @@ function ActionType() {
     if (canvas) {
       const activeObject = canvas.getActiveObject()
       if (activeObject) {
-        // Récupérez la valeur actuelle du tableau "Actions"
+        // Recuperer la valeur actuelle du tableau "Actions"
         const currentActions = activeObject.get("Actions") || []
 
-        // Créez un nouvel objet à pousser dans le tableau
+        // Creer un nouvel objet à pousser dans le tableau
         const newAction = {
           type: selectedType,
           target: selectedTarget,
           number: selectedNumber,
         }
 
-        // Ajoutez le nouvel objet au tableau
+        // Ajouter le nouvel objet au tableau
         currentActions.push(newAction)
-
-        // Mettez à jour les propriétés de l'objet actif avec le tableau mis à jour
         activeObject.set({ Actions: currentActions })
 
-        // Appelez renderAll pour mettre à jour l'affichage du canvas
         canvas.renderAll()
+        console.log("actions pushées : ", currentActions)
         setUpdateActions(true)
       }
     }

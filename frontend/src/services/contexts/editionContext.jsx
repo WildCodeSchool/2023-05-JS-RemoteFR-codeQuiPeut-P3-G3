@@ -4,6 +4,7 @@ import { fabric } from "fabric"
 import axios from "axios"
 import { v4 as uuidv4 } from "uuid"
 import imgDelete from "../../assets/text_ui/minus.png"
+import { useSearchParams } from "react-router-dom"
 
 const EditionContext = createContext()
 
@@ -29,6 +30,7 @@ export const EditionContextProvider = ({ children }) => {
     properties: {
       Actions: [],
     },
+    link: "",
   })
 
   /* ================ STATES UPDATES  ==================== */
@@ -72,6 +74,8 @@ export const EditionContextProvider = ({ children }) => {
 
   const [tabElem, setTabElem] = useState([])
 
+  const [searchParams, setSearchParams] = useSearchParams()
+
   const [updateActions, setUpdateActions] = useState(false)
 
   /* ============================================= GESTIONS EVENEMENTS CANVAS  ========================================= */
@@ -88,17 +92,15 @@ export const EditionContextProvider = ({ children }) => {
   /* Update properties selected */
 
   const updateSelectedProperties = (object) => {
-    // console.log("02 ======= UPDATE FROM CANVAS ========= ")
     // console.info("Objet selectionné : ", object)
-
     setObjectSelected((prevObjectSelected) => {
       const newObject = {
         selected: true,
         type: object.type,
         id: object.id,
         properties: object.toObject(),
+        link: object.link,
       }
-      // console.log("Object selected updated : ", newObject)
 
       return newObject
     })
@@ -106,15 +108,17 @@ export const EditionContextProvider = ({ children }) => {
 
   /* <<<<================= Creation de nouveaux objets fabrics
 
-  /* add text */
+  /* ================ add text ================ */
   const addText = (canvi) => {
     const textId = uuidv4()
     const text = new fabric.Textbox("Texte", {
       height: 280,
       width: 200,
       fill: "black",
+      pos: { percX: "", percY: "" },
       id: textId,
       Actions: [],
+      link: "",
     })
 
     canvi.add(text)
@@ -122,7 +126,7 @@ export const EditionContextProvider = ({ children }) => {
     setIsAddingText(false)
   }
 
-  /* add rectangle */
+  /* ================ add rectangle =================== */
   const addRect = (canvi) => {
     const rectId = uuidv4()
 
@@ -130,8 +134,10 @@ export const EditionContextProvider = ({ children }) => {
       height: 200,
       width: 200,
       fill: "grey",
+      pos: { percX: "", percY: "" },
       id: rectId,
       Actions: [],
+      link: "",
     })
 
     canvi.add(rect)
@@ -139,13 +145,15 @@ export const EditionContextProvider = ({ children }) => {
     setIsAddingRect(false)
   }
 
-  /* add image */
+  /* ================ add image ================ */
   const addImage = (canvi, imageUrl) => {
     const imgId = uuidv4()
     fabric.Image.fromURL(imageUrl, (img) => {
       img.scale(0.75)
       img.id = imgId
+      img.pos = { percX: "", percY: "" }
       img.Actions = []
+      img.link = ""
       canvi.add(img)
     })
 
@@ -153,6 +161,7 @@ export const EditionContextProvider = ({ children }) => {
     setIsAddingPic(false)
   }
 
+  /* ================ add background ================ */
   const addBackground = () => {
     if (canvas && backgroundPath !== "" && isAddingBackground) {
       const backendBaseUrl = `http://localhost:4242/uploads/${backgroundPath}`
@@ -167,18 +176,18 @@ export const EditionContextProvider = ({ children }) => {
     }
   }
 
+  /* ================ delete object ================ */
   const keyDeleteObject = () => {
     const activeObject = canvas.getActiveObject()
 
     if (activeObject) {
-      console.log("activeObject : ", activeObject)
-      console.log("id de l'active object : ", activeObject.id)
       canvas.remove(activeObject)
       canvas.discardActiveObject()
       canvas.renderAll()
     }
   }
 
+  /* ================ update states ================ */
   const updateStates = (object) => {
     if (object) {
       // font style
@@ -258,10 +267,7 @@ export const EditionContextProvider = ({ children }) => {
   /* =================================================== REQUETES HTTP ================================================= */
 
   const getScene = (idStory, idScene) => {
-    console.log("IMPORT SCENE")
-
-    console.log(idStory)
-    console.log(idScene)
+    console.info("IMPORT STORY ", idStory, " SCENE ", idScene)
 
     axios
       .get(`http://localhost:4242/api-stories/${idStory}/${idScene}`)
@@ -272,17 +278,14 @@ export const EditionContextProvider = ({ children }) => {
           nbreScene: response.data.nbScenes,
           sceneId: response.data.id,
         }))
-        console.log(response.data.scene)
+
         setObjects(response.data.scene)
         canvas.clear()
         renderNewElements(response.data.scene)
       })
       .catch((error) => {
-        // Gérer les erreurs de la requête
         console.error("Erreur de la requête :", error)
       })
-
-    // canvas.clear()
 
     return () => {
       renderNewElements(objects)
@@ -290,35 +293,42 @@ export const EditionContextProvider = ({ children }) => {
   }
 
   const renderNewElements = (data) => {
-    console.log("render des elements")
-    console.log(data)
+    canvas.clear()
 
     // "textbox"
     for (const textboxId in data.textbox) {
       const textboxData = data.textbox[textboxId]
-      const textbox = new fabric.Textbox(textboxData.text, {
-        left: textboxData.left,
-        top: textboxData.top,
-        width: textboxData.width,
-        height: textboxData.height,
-        fill: textboxData.fill,
-        fontFamily: textboxData.fontFamily,
-        fontSize: textboxData.fontSize,
+      const textbox = new fabric.Textbox(textboxData.obj.text, {
+        left: textboxData.obj.left,
+        top: textboxData.obj.top,
+        width: textboxData.obj.width,
+        height: textboxData.obj.height,
+        fill: textboxData.obj.fill,
+        fontFamily: textboxData.obj.fontFamily,
+        fontSize: textboxData.obj.fontSize,
+        id: textboxData.id,
+        Actions: textboxData.Actions,
+        link: textboxData.link,
+        pos: textboxData.pos,
       })
 
       canvas.add(textbox)
+      canvas.renderAll()
     }
 
     // Parcourez les données de "rect"
     for (const rectId in data.rect) {
       const rectData = data.rect[rectId]
       const rect = new fabric.Rect({
-        left: rectData.left,
-        top: rectData.top,
-        width: rectData.width,
-        height: rectData.height,
-        fill: rectData.fill,
-        // Autres propriétés du rectangle ici
+        left: rectData.obj.left,
+        top: rectData.obj.top,
+        width: rectData.obj.width,
+        height: rectData.obj.height,
+        fill: rectData.obj.fill,
+        id: rectData.id,
+        link: rectData.link,
+        pos: rectData.pos,
+        Actions: rectData.Actions,
       })
 
       canvas.add(rect)
@@ -329,22 +339,40 @@ export const EditionContextProvider = ({ children }) => {
       const imgData = data.image[imgId]
       fabric.Image.fromURL(imgData.src, (img) => {
         img.set({
-          left: imgData.left,
-          top: imgData.top,
-          width: imgData.width,
-          height: imgData.height,
+          left: imgData.obj.left,
+          top: imgData.obj.top,
+          width: imgData.obj.width,
+          height: imgData.obj.height,
+          id: imgData.id,
+          link: imgData.link,
+          pos: imgData.pos,
+          Actions: imgData.Actions,
           // Autres propriétés de l'image ici
         })
         canvas.add(img)
+        canvas.renderAll()
       })
     }
 
-    canvas.renderAll()
+    const backgroundUrl = data.background
 
-    console.log(canvas.getObjects())
+    if (!backgroundUrl) {
+      canvas.backgroundColor = "white"
+    } else {
+      // Chargez l'image du fond
+      fabric.Image.fromURL(backgroundUrl, (img) => {
+        // Ajustez la mise à l'échelle pour remplir le canvas
+        img.scaleToWidth(canvas.width)
+        img.scaleToHeight(canvas.height)
+
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas))
+
+        canvas.renderAll()
+      })
+    }
+    canvas.renderAll()
   }
   const addScene = (idStory) => {
-    console.log("id story avant envoi : ", idStory)
     axios
       .post(`http://localhost:4242/api-stories/createScene/${idStory}`)
       .then((response) => {
@@ -359,19 +387,16 @@ export const EditionContextProvider = ({ children }) => {
           response.data.content
         )
         setObjects(response.data.content)
-        console.log(response.data.indexScene)
       })
       .catch((error) => {
-        console.log(error)
+        console.error(error)
       })
   }
 
   const deleteScene = (idStory, idScene) => {
-    console.log(`suppression de ${idStory} scene ${idScene}`)
     axios
       .delete([`http://localhost:4242/api-stories/${idStory}/${idScene}`])
       .then((response) => {
-        console.log(response)
         setEditStatus((prevEditStatus) => ({
           ...prevEditStatus,
           nbreScene: response.data.nbScenes,
@@ -379,7 +404,7 @@ export const EditionContextProvider = ({ children }) => {
         }))
       })
       .catch((error) => {
-        console.log(error)
+        console.error(error)
       })
   }
 
@@ -394,24 +419,35 @@ export const EditionContextProvider = ({ children }) => {
 
   const exportScenes = (data, idStory, idScene) => {
     const objectsOnCanvas = canvas.getObjects()
-
-    // Créez un objet pour stocker les objets triés par type
     const sortedObjects = {}
 
-    // Parcourez le tableau d'objets et organisez-les par type
     objectsOnCanvas.forEach((obj) => {
       const type = obj.type
       if (!sortedObjects[type]) {
         sortedObjects[type] = {}
       }
-      sortedObjects[type][obj.id] = obj.toObject()
+
+      // Mise à l'échelle pour avoir des positions en %
+      const { percX, percY } = MiseEchelle(obj.left, obj.top)
+
+      sortedObjects[type][obj.id] = {
+        obj,
+        Actions: obj.Actions,
+        id: obj.id,
+        link: obj.link,
+        pos: {
+          percX,
+          percY,
+        },
+      }
     })
 
-    // Maintenant, sortedObjects contient les objets triés par type
-    console.log(sortedObjects)
+    const background = canvas.backgroundImage
+    const backgroundUrl = background ? background._element.src : null
+
+    sortedObjects.background = backgroundUrl
 
     const dataExport = sortedObjects
-    console.log("data exportée : ", dataExport)
     axios
       .put(
         `http://localhost:4242/api-stories/${idStory}/${idScene}`,
@@ -419,10 +455,21 @@ export const EditionContextProvider = ({ children }) => {
       )
       .then((response) => {
         console.info("Export scene => Réponse serveur :", response.data)
+        alert(response.data)
       })
       .catch((error) => {
         console.error("Erreur de la requête :", error)
       })
+  }
+
+  const MiseEchelle = (left, top) => {
+    const canvasWidth = canvas.getWidth()
+    const canvasHeight = canvas.getHeight()
+
+    const percX = (left / canvasWidth) * 100
+    const percY = (top / canvasHeight) * 100
+
+    return { percX, percY }
   }
 
   return (
@@ -435,6 +482,8 @@ export const EditionContextProvider = ({ children }) => {
         setRender,
         addScene,
         objects,
+        setSearchParams,
+        searchParams,
         setObjects,
         updateActions,
         setUpdateActions,

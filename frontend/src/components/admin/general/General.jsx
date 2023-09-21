@@ -1,16 +1,16 @@
 import ButtonUI from "../../global/Buttons/ButtonUI"
 import "./General.scss"
 import { useEffect, useState } from "react"
-import { useSearchParams } from "react-router-dom"
 
 import axios from "axios"
+import { useEditionContext } from "../../../services/contexts/editionContext"
 
 function AdminGeneral({ setNav, selected }) {
   const [data, setData] = useState([])
   const [displayNewStory, setDisplayNewStory] = useState(false)
   const [title, setTitle] = useState("")
   const [storyCreated, setStoryCreated] = useState(false)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { searchParams, setSearchParams } = useEditionContext()
 
   /* Recupération des stories au montage */
   useEffect(() => {
@@ -95,7 +95,6 @@ function AdminGeneral({ setNav, selected }) {
 
   const handleModify = (id) => {
     setSearchParams({ story: id, scene: 0 })
-
     setNav("Edition")
   }
 

@@ -5,7 +5,6 @@ import { useState } from "react"
 import NavEdition from "./NavEdition"
 import EditAssets from "./Sous-menus/Assets/EditAssets"
 import EditGeneral from "./Sous-menus/general/EditGeneral"
-import EditMindmap from "./Sous-menus/mindmap/EditMindmap"
 import EditScenes from "./Sous-menus/scenes/EditScenes"
 
 /* styles */
@@ -23,7 +22,7 @@ function AdminEdition() {
         {view === "General" && <EditGeneral />}
         {view === "Assets" && <EditAssets />}
         {view === "Scenes" && <EditScenes />}
-        {view === "Mindmap" && <EditMindmap />}
+        {/* {view === "Mindmap" && <EditMindmap />} */}
       </div>
     </>
   )

@@ -7,4 +7,8 @@ module.exports.story = {
   },
 
   scenes: [{ textbox: {}, image: {}, rect: {} }],
+
+  heroes: [],
+  weapons: [],
+  consumables: [],
 }
