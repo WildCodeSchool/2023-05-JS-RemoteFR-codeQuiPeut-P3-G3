@@ -14,7 +14,7 @@ import imgDefault from "../../../../../../assets/images/imgIcon.png"
 import WidgetText from "../widgets/widgetText"
 
 function InfoGeneral() {
-  const [jdrName, setJdrName] = useState(null)
+  const [jdrName, setJdrName] = useState()
   const [jdrNameFont, setJdrNameFont] = useState("Arial, sans-serif")
   const [jdrNameColor, setJdrNameColor] = useState("#FFFFFF")
   const [jdrNameFontSize, setJdrNameFontSize] = useState(16)
