@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { gsap } from "gsap"
 import ScrollTrigger from "gsap/ScrollTrigger"
 
-import axios from "axios" // Importez Axios
+import axios from "axios"
 import JdrCard from "../components/global/JdRcard"
 import StarRating from "../components/home/CarouselNote"
 import Footer from "../components/global/Footer"

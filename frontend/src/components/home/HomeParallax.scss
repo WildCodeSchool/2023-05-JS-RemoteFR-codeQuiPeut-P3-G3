@@ -1,6 +1,6 @@
 .parallaxMain {
   height: 100%;
-    width: 100%;
+  width: 100%;
 
   .parallaxSection {
     position: relative;
@@ -10,6 +10,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    z-index: -1;
 
     .moonImg {
       mix-blend-mode: screen;
@@ -21,13 +22,7 @@
       z-index: 998;
 
     }
-    // .cloudsBackImg {
-    //   position: absolute;
-    //   width: 100%;
-    //   height: 100%;
-    //   object-fit: cover;
-    //   pointer-events: none;
-    // }
+    
     .cloudsFrontImg {
       position: absolute;
       width: 100%;
@@ -37,23 +32,12 @@
       z-index: 1001;
     }
 
-    // .castleDarkImg {
-    //   position: absolute;
-    //   width: 100%;
-    //   height: 100%;
-    //   object-fit: cover;
-    //   pointer-events: none;
-    //   z-index: 999;
-    // }
-
     .castleLightsImg {
       position: absolute;
       width: 100%;
       height: 100%;
       object-fit: cover;
       pointer-events: none;
-      // visibility: hidden;
-      // opacity: 0;
       z-index: 1000;
     }
 
@@ -68,101 +52,3 @@
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// .parallaxMain {
-//   height: 100%;
-//     width: 100%;
-
-//   .parallaxSection {
-//     position: relative;
-//     width: 100%;
-//     height: 100%;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     overflow: hidden;
-
-//     .moonImg {
-//       mix-blend-mode: screen;
-//       position: absolute;
-//       top: calc(50% + #{parallaxSectionHeight + 0.5}px);
-//       transition: top 0.5s ease-out;
-//       left: 50%;
-//       width: 100%;
-//       height: 100%;
-//       object-fit: cover;
-//       pointer-events: none;
-//       transform: translateX(-50%);
-//     }
-//     .cloudsBackImg {
-//       position: absolute;
-//       top: 0;
-//       left: 0;
-//       width: 100%;
-//       height: 100%;
-//       object-fit: cover;
-//       pointer-events: none;
-//     }
-//     .cloudsFrontImg {
-//       position: absolute;
-//       top: 0;
-//       left: 0;
-//       width: 100%;
-//       height: 100%;
-//       object-fit: cover;
-//       pointer-events: none;
-//       z-index: 1001;
-//     }
-
-//     .castleImg {
-//       position: absolute;
-//       top: 0;
-//       left: 0;
-//       width: 100%;
-//       height: 100%;
-//       object-fit: cover;
-//       pointer-events: none;
-
-//       &.fixed {
-//       // left: 50%;
-//       transform: translateX(-50%);
-//       top: 0;
-//       transition: top 0.5s ease-out;
-//       }
-//     }
-//     .starsImg {
-//       position: absolute;
-//       top: 0;
-//       left: 0;
-//       width: 100%;
-//       height: 100%;
-//       object-fit: cover;
-//       pointer-events: none;
-//     }
-//   }
-
-//   .parallaxSection::before{
-//     content: "";
-//     position: absolute;
-//     bottom: 0;
-//     width: 100%;
-//     height: 100%;
-//     z-index: 1000;
-//   }
-// }

@@ -31,6 +31,9 @@ const {
   deleteScene,
   createScene,
   deleteStory,
+  getHeroes,
+  deleteHero,
+  addHero,
 } = require("./api/controls/controllers")
 
 router.get("/card", cardControllers.browse)
@@ -97,7 +100,11 @@ router.put("/deploy/:id", storiesControllers.deploy)
 router.get("/users", usersControllers.browse)
 router.get("/users/:id", usersControllers.read)
 router.post("/users", usersControllers.add)
-router.put("/users/:id", usersControllers.edit)
+
+// TEST EDIT PROFILE
+router.put("/users/:id", usersControllers.editProfile)
+
+// router.put("/users/:id", usersControllers.edit)
 router.delete("/users/:id", usersControllers.destroy)
 router.post("/signup", hashPassword, validateUser, usersControllers.add)
 router.post("/login", usersControllers.findByMail, verifyPassword)
@@ -122,5 +129,12 @@ router.post("/api-stories/:filename", createStory)
 router.post("/api-stories/createScene/:idStory", createScene)
 router.put("/api-stories/:idStory/:idScene", putScene)
 router.delete("/api-stories/:idStory/:idScene", deleteScene, getScene)
+
+// heroes
+router.put("/api-heroes/:idStory", addHero)
+router.get("/api-heroes/:idStory", getHeroes)
+router.delete("/api-heroes/:idStory/:idHero", deleteHero, getHeroes)
+
+router.put("/users/:id", usersControllers.editProfile)
 
 module.exports = router
