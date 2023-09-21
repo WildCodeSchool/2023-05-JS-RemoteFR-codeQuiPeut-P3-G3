@@ -1,33 +1,48 @@
 import { Link } from "react-router-dom"
 import "./SelectHeroes.scss"
-import heroes from "../Game/Components/json/heroes.json"
-import Barbare from "../Game/Components/assets/img/heroes/archer.png"
+// import heroes from "../Game/Components/json/heroes.json"
+// import Barbare from "../Game/Components/assets/img/heroes/archer.png"
 import knight from "../Game/Components/assets/img/heroes/knight.png"
+import { useEffect } from "react"
+import { useGameContext } from "../../services/contexts/GameContext"
 
-function SelectHeroes() {
+function SelectHeroes({ setInit }) {
   // document.cookie = "volume=60"
   // document.cookie = "volumeToggle=true"
   // localStorage.setItem("quest", JSON.stringify(0))
   // localStorage.setItem("page", JSON.stringify(0))
 
+  // eslint-disable-next-line no-unused-vars
+  const { getHero, hero, setHero } = useGameContext()
+
+  useEffect(() => {
+    // console.log("Page select heroes")
+    getHero(138)
+  }, [])
   return (
     <div className="characters">
       <h1>Choisissez votre héroïne</h1>
 
       <div className="heroes">
-        {heroes &&
-          heroes.map((hero) => {
+        {hero &&
+          hero.map((hero, index) => {
             return (
-              <Link to="/game" key={hero.name} draggable={false}>
+              <Link key={hero.name} draggable={false}>
                 <div
                   className="heroesCard"
-                  onClick={() =>
+                  onClick={() => {
                     localStorage.setItem("hero", JSON.stringify(hero))
-                  }
+                    setInit(false)
+                  }}
                 >
-                  <div className="hero" key={hero.name}>
+                  <div className="hero" key={hero.index}>
                     <img
-                      src={hero?.class === "barbare" ? Barbare : knight}
+                      src={`${
+                        hero.img !== ""
+                          ? `http://localhost:4242/uploads/${hero.img}`
+                          : knight
+                      }`}
+                      // src={hero?.class === "barbare" ? Barbare : knight}
                       alt="hero"
                       className="imgHero"
                       draggable={false}
