@@ -32,11 +32,15 @@ const add = (req, res) => {
 }
 
 const read = (req, res) => {
+  // console.log(req.params)
+
+  const id = parseInt(req.params.id, 10)
   models.card
-    .find(req.params.id)
+    .findCard(id)
     .then(([rows]) => {
       if (rows[0] == null) {
         res.sendStatus(404)
+        // console.log(rows)
       } else {
         res.send(rows[0])
       }
@@ -49,6 +53,7 @@ const read = (req, res) => {
 
 const edit = (req, res) => {
   const card = req.body
+  // console.log("edit, var : ", card)
 
   // TODO validations (length, format...)
 
@@ -58,9 +63,9 @@ const edit = (req, res) => {
     .update(card)
     .then(([result]) => {
       if (result.affectedRows === 0) {
-        res.sendStatus(404)
+        // console.log(result)
       } else {
-        res.sendStatus(204)
+        res.sendStatus(201)
       }
     })
     .catch((err) => {

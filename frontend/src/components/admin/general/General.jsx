@@ -37,12 +37,14 @@ function AdminGeneral({ setNav, selected }) {
 
   /* Creation nouvelle story */
   const handleCreate = () => {
+    // console.log("create")
     const data = {
       title,
     }
     axios
       .post("http://localhost:4242/stories", data)
       .then((response) => {
+        // console.log("reponse : ", response)
         if (response.status === 200) {
           setStoryCreated(true)
           getStories()
@@ -79,11 +81,12 @@ function AdminGeneral({ setNav, selected }) {
   /* Suppression story */
   const handleDelete = (deleteId) => {
     const isSure = window.confirm("⚠️ Are you sure to delete this story?")
-
+    // console.log(deleteId)
     if (isSure) {
       axios
         .delete(`http://localhost:4242/stories/${deleteId}`, data)
         .then((response) => {
+          // console.log(response)
           if (response.status === 204) {
             alert("✅ story deleted ")
             getStories()
@@ -112,6 +115,7 @@ function AdminGeneral({ setNav, selected }) {
       const data = {
         deploy: deployState,
       }
+
       axios
         .put(`http://localhost:4242/deploy/${storyId}`, data)
         .then((response) => {
