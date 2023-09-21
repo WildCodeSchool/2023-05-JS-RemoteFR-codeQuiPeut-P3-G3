@@ -97,8 +97,13 @@
 }
 
 .jdrImg1 {
+  z-index: 999;
+  position: absolute;
   width: 250px;
   margin-top: 50px;
+  max-height: 40%;
+  right: 30px;
+  top: 15px;
 }
 
 .jdrText {
@@ -111,6 +116,9 @@
 }
 
 .jdrName {
+  position: absolute;
+  left: 20px;
+  top: 20px;
   width: 170px;
   text-align: center;
 }
