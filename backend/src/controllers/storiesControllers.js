@@ -78,8 +78,9 @@ const edit = (req, res) => {
     })
 }
 const destroy = (req, res, next) => {
+  const id = parseInt(req.params.id, 10)
   models.stories
-    .delete(req.params.id)
+    .deleteStoryWithCard(id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404)

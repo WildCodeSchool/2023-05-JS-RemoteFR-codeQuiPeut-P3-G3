@@ -23,6 +23,7 @@ function AdminGeneral({ setNav, selected }) {
       searchParams.delete("story")
       setSearchParams(searchParams)
     }
+    console.info("coucou", data)
   }, [])
 
   /* Animation quand story créee */
@@ -72,7 +73,7 @@ function AdminGeneral({ setNav, selected }) {
   const getStories = () => {
     axios.get("http://localhost:4242/stories").then((response) => {
       setData(response.data)
-      console.info(data)
+      console.info("coucou", data)
     })
   }
 

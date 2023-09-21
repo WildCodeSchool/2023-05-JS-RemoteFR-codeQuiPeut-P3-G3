@@ -57,6 +57,15 @@ class StoryManager extends AbstractManager {
       [deploy, id]
     )
   }
+
+  deleteStoryWithCard(id) {
+    return this.database.query(
+      `DELETE t, c FROM ${this.table} as t
+      INNER JOIN card AS c ON  t.card_idcard = c.idcard
+      WHERE t.id = ?`,
+      [id]
+    )
+  }
 }
 
 module.exports = StoryManager
