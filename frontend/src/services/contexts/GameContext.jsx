@@ -61,6 +61,9 @@ export const GameContextProvider = ({ children }) => {
   const [rects, setRects] = useState([])
   const [imgs, setImgs] = useState([])
   const [background, setBackground] = useState("")
+  // state du hero
+  // eslint-disable-next-line no-unused-vars
+  const [hero, setHero] = useState([])
 
   const getScene = (idStory, idScene) => {
     console.info("IMPORT STORY ", idStory, " SCENE ", idScene)
@@ -81,6 +84,18 @@ export const GameContextProvider = ({ children }) => {
       .catch((error) => {
         // Gérer les erreurs de la requête
         console.error("Erreur de la requête :", error)
+      })
+  }
+
+  // Test de la requete hero
+  const getHero = (idStory) => {
+    axios
+      .get(`http://localhost:4242/api-heroes/${idStory}`)
+      .then((response) => {
+        setHero(response.data.hero)
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération du héros :", error)
       })
   }
 
@@ -115,7 +130,7 @@ export const GameContextProvider = ({ children }) => {
   }
 
   const creationTextes = (object) => {
-    console.log("creation de textes")
+    // console.log("creation de textes")
     const textComponents = []
 
     for (const key in object) {
@@ -152,7 +167,7 @@ export const GameContextProvider = ({ children }) => {
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
         const elem = object[key]
-        console.log("elements : ", elem)
+        // console.log("elements : ", elem)
 
         const rectProperties = {
           strokeWidth: elem.obj.strokeWidth,
@@ -165,7 +180,7 @@ export const GameContextProvider = ({ children }) => {
           width: elem.obj.width * elem.obj.scaleX,
           cursor: elem.Actions.length > 0 && "pointer",
         }
-        console.log("propriétés rectangle : ", rectProperties)
+        // console.log("propriétés rectangle : ", rectProperties)
 
         gestionActions(elem.Actions)
 
@@ -208,15 +223,17 @@ export const GameContextProvider = ({ children }) => {
   }
 
   const add = (type, number) => {
-    console.log("execution add : ", type, number)
+    // console.log("execution add : ", type, number)
   }
 
+  // eslint-disable-next-line no-unused-vars
   const substract = (type, number) => {}
 
   return (
     <GameContext.Provider
       value={{
         getScene,
+        getHero,
         sceneContent,
         actualScene,
         creationTextes,
