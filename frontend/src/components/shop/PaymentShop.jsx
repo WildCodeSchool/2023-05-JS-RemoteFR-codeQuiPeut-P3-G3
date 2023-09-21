@@ -1,7 +1,154 @@
+import { useEffect, useState } from "react"
 import Payment from "../../assets/images/logoPaypal.png"
 import "./PaymentShop.scss"
+import axios from "axios"
 
-const PaymentShop = () => {
+const PaymentShop = (props) => {
+  const [monthPayments, setMonthPayments] = useState("Month")
+  const [yearPayments, setYearPayments] = useState("Year")
+
+  // ------------------ Fonnction call lors activ paynow
+  const removeItemsFromCart = () => {
+    // Envoie une requête DELETE au serveur pour supprimer les éléments du panier
+    if (cardNumber.trim() !== "" && cvc.trim() !== "") {
+      axios
+        .delete("http://localhost:4242/shopping_card_item/removeAll") // L'URL dépend de votre configuration de routage
+        .then((response) => {
+          if (response.status === 204) {
+            // Les champs sont valides, vous pouvez effectuer le paiement ici
+            // ...
+            // Suppression réussie, réinitialisez les champs de saisie et effectuez d'autres actions si nécessaire
+            setCardNumber("test")
+            setMonthPayments("Month")
+            setYearPayments("Year")
+            setCartItems([])
+            setCvc("")
+            alert("✅  Commande validée ! ")
+            window.location.reload()
+          } else {
+            // La suppression a échoué, gérez l'erreur ici si nécessaire
+          }
+        })
+        .catch((error) => {
+          // Gérez les erreurs de requête ici si nécessaire
+          console.error(error)
+        })
+    } else {
+      // Affichez un message d'erreur et empêchez le paiement
+      alert(" Merci remplir tout les champs ")
+    }
+  }
+
+  // ------------------ Récupération info cards page shop
+  const [cardInfo, setCardInfo] = useState([])
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4242/shop")
+      .then((response) => {
+        setCardInfo(response.data)
+      })
+      .catch((error) => {
+        console.error(
+          "Une erreur est survenue lors de la récupération des fichiers.",
+          error
+        )
+      })
+  }, [props.cartItems])
+
+  // ------------------ Récupération items de la table shopping_card_item
+  const [cartItems, setCartItems] = useState([])
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4242/shopping_card_item")
+      .then((response) => {
+        // Récup Data bdd de cart
+        const items = response.data
+        // MAJ CartItems
+        setCartItems(items)
+      })
+      .catch((error) => {
+        console.error(
+          "Une erreur est survenue lors de la récupération des produits.",
+          error
+        )
+      })
+  }, [props.cartItems])
+
+  // ------------------ Partie totalToPay Panier
+  let totalPrice = 0
+  cartItems.forEach((item) => {
+    totalPrice += cardInfo[item.shop_credit_item_id - 1]?.price
+  })
+
+  // ------------------ Parametrage saisie Section saisie de Payment
+  const [cardNumber, setCardNumber] = useState("")
+  const [cvc, setCvc] = useState("")
+
+  const handleCardNumberChange = (e) => {
+    let input = e.target.value
+
+    // Autorise uniquement chiffres
+    input = input.replace(/\D/g, "")
+
+    // Faire un espace tout les quatres chiffres
+    input = input.replace(/(\d{4})(?=\d)/g, "$1 ")
+
+    if (input.length > 19) {
+      input = input.slice(0, 16)
+    }
+
+    setCardNumber(input)
+  }
+
+  const handleCvcChange = (e) => {
+    let input = e.target.value
+
+    // Autorise uniquement chiffres
+    input = input.replace(/\D/g, "")
+
+    if (input.length > 3) {
+      input = input.slice(0, 3)
+    }
+
+    setCvc(input)
+  }
+
+  const handleDeleteItemCartClick = (deleteId) => {
+    const isSure = window.confirm("⚠️ Are you sure to delete this article?")
+    if (isSure) {
+      axios
+        .delete(`http://localhost:4242/shop/${deleteId}`)
+        .then((response) => {
+          if (response.status === 204) {
+            // useEffect(() => {
+            axios
+              .get("http://localhost:4242/shopping_card_item")
+              .then((response) => {
+                // Récup Data bdd de cart
+                const items = response.data
+                // MAJ CartItems
+                setCartItems(items)
+              })
+              .catch((error) => {
+                console.error(
+                  "Une erreur est survenue lors de la récupération des produits.",
+                  error
+                )
+              })
+            // }, [])
+            alert("✅  article deleted ")
+          }
+        })
+        .catch((err) => console.warn(err))
+    }
+  }
+
+  const handlePayNowClick = () => {
+    removeItemsFromCart()
+  }
+
   return (
     <div className="Shop_PaymentContainerGlobal">
       <div className="Shop_Payment_Title_Container">
@@ -11,9 +158,24 @@ const PaymentShop = () => {
       </div>
       <div className="Shop_Payment_Body">
         <div className="Shop_Payment_Left">
+          <ul className="cart-items-list">
+            {cartItems.map((item) => (
+              <li key={item.id} className="cart-item">
+                <a
+                  onClick={() => handleDeleteItemCartClick(item.id)}
+                  className="deleteShopButton"
+                >
+                  {" "}
+                  X{" "}
+                </a>
+                {cardInfo[item.shop_credit_item_id - 1]?.credit_quantity}{" "}
+                crédits - {cardInfo[item.shop_credit_item_id - 1]?.price} $
+              </li>
+            ))}
+          </ul>
           <p>
             To Pay <br />
-            <span className="BillsValues">25$</span>
+            <span className="BillsValues">{totalPrice} $</span>
           </p>
         </div>
         <div className="Shop_Payment_Right">
@@ -30,7 +192,12 @@ const PaymentShop = () => {
               <div className="Shop_Payment_Cat1">
                 <label>
                   Card Number
-                  <input type="text" placeholder="1234 5678 9012 3456" />
+                  <input
+                    type="tel"
+                    placeholder="1234 5678 9012 3456"
+                    value={cardNumber}
+                    onChange={handleCardNumberChange}
+                  />
                 </label>
               </div>
               <div className="Shop_Payment_Cat2">
@@ -39,7 +206,7 @@ const PaymentShop = () => {
                   <div className="expiration-inputs">
                     <select className="expiration-select">
                       <option value="" disabled selected>
-                        Month
+                        {monthPayments}
                       </option>
                       <option value="01">01 - January</option>
                       <option value="02">02 - February</option>
@@ -57,7 +224,7 @@ const PaymentShop = () => {
                     <span>/</span>
                     <select className="expiration-select">
                       <option value="" disabled selected>
-                        Year
+                        {yearPayments}
                       </option>
                       <option value="23">2023</option>
                       <option value="24">2024</option>
@@ -76,14 +243,33 @@ const PaymentShop = () => {
               <div className="Shop_Payment_Cat3">
                 <label>
                   CVC/CW
-                  <input type="text" placeholder="123" />
+                  <input
+                    type="tel"
+                    placeholder="123"
+                    value={cvc}
+                    onChange={handleCvcChange}
+                  />
                 </label>
               </div>
               <div className="Shop_Payment_Cat4">
-                <button className="Payment_ButtonPay">Pay Now</button>
+                <button
+                  className="Payment_ButtonPay"
+                  onClick={handlePayNowClick}
+                >
+                  Pay Now
+                </button>
                 <div className="Payment_Separator"></div>
                 <p>or select other payment method</p>
-                <img src={Payment} alt="Logo Payment" className="PayPal_Logo" />
+                <a
+                  href="https://www.paypal.com/fr/home"
+                  className="shopLinkPaypal"
+                >
+                  <img
+                    src={Payment}
+                    alt="Logo Payment"
+                    className="PayPal_Logo"
+                  />
+                </a>
               </div>
             </div>
           </div>

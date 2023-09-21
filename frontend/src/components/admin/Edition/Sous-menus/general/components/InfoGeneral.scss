@@ -290,6 +290,7 @@
 
             .cardBottomText {
               height: 100px;
+              cursor: pointer;
               width: 100%;
               background-color: transparent;
               border: none;
@@ -297,12 +298,6 @@
               text-wrap: wrap;
               overflow-wrap: break-word;
               z-index: 3;
-
-              .textDescription {
-                height: 100%;
-                width: 100%;
-                z-index: 4;
-              }
             }
 
             .cardButtonPlay {
