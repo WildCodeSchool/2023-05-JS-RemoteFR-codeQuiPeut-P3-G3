@@ -144,7 +144,7 @@ const createStoryWithCard = (req, res, next) => {
         buttonFont: "Arial, sans-serif",
         jdrCategory: "Autre",
         jdrPublic: "Public par défaut",
-        storyId: storyId,
+        storyId,
       }
 
       // Insérez la nouvelle carte avec des valeurs par défaut dans la table `card`
