@@ -9,7 +9,7 @@ import previous from "../assets/images/chevron-left-512.webp"
 import next from "../assets/images/chevron-right-512.webp"
 
 export default function Home() {
-  const [startIndex, setStartIndex] = useState(0)
+  // const [startIndex, setStartIndex] = useState(0)
   const [jdrCardData, setJdrCardData] = useState([])
   const fetchData = async () => {
     try {
