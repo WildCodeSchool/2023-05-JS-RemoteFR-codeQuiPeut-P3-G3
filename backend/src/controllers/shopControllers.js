@@ -19,6 +19,7 @@ const add = (req, res) => {
       res.json(result.insertId)
       console.info("Step 2 OK \n Envoi de l'id de la carte selectionner")
       console.info(result)
+      res.sendStatus(200)
     })
     .catch((err) => {
       console.error(err)
@@ -63,10 +64,9 @@ const read = (req, res) => {
 //     })
 // }
 
-// ---------------CHATGPT -------------
+// --------------- VERSION CHATGPT -------------
 const edit = async (req, res) => {
   const shopId = req.params.id
-
   try {
     // Récupérer les données de shop_credit_item avec l'ID spécifié
     const [shopData] = await models.shop.find(shopId)
@@ -96,8 +96,7 @@ const edit = async (req, res) => {
 // ------------------------------------
 
 const destroy = (req, res) => {
-  models.shop
-    .delete(req.params.id)
+  models.ShoppingCardItem.delete(req.params.id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404)
@@ -122,6 +121,21 @@ const getTotalCart = (req, res) => {
     })
 }
 
+const deleteAll = (req, res) => {
+  models.ShoppingCardItem.deleteAll()
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
+        res.sendStatus(404)
+      } else {
+        res.sendStatus(204)
+      }
+    })
+    .catch((err) => {
+      console.error(err)
+      res.sendStatus(500)
+    })
+}
+
 module.exports = {
   browse,
   add,
@@ -129,4 +143,5 @@ module.exports = {
   edit,
   destroy,
   getTotalCart,
+  deleteAll,
 }

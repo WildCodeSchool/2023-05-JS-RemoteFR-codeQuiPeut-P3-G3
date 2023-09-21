@@ -6,7 +6,9 @@ import axios from "axios"
 import "./Shop.scss"
 
 const Shop = () => {
-  // Récupération des informations des cards pour les afficher
+  const [cartItems, setCartItems] = useState([])
+
+  // ------------------ Récupération des informations des cards pour les afficher
   const [cardInfo, setCardInfo] = useState([])
 
   useEffect(() => {
@@ -16,7 +18,6 @@ const Shop = () => {
         setCardInfo(response.data)
       })
       .catch((error) => {
-        console.warn("Pouetpouet")
         console.error(
           "Une erreur est survenue lors de la récupération des fichiers.",
           error
@@ -24,14 +25,32 @@ const Shop = () => {
       })
   }, [])
 
-  // Envoi card choisie à la BDD
+  // ------------------ Envoi card choisie à la BDD
+
   const pushToCart = (cardShopId) => {
-    console.info("Step 1 OK \nRécupération idCard sélectionner")
-    console.info(cardShopId)
-    axios.put(`http://localhost:4242/shop/${cardShopId}`, {
-      cardShopId,
-    })
+    axios
+      .put(`http://localhost:4242/shop/${cardShopId}`, {
+        cardShopId,
+      })
+      .then((response) => {
+        // Mettez à jour l'état du panier avec les données mises à jour
+        setCartItems(response.data[0].insertId)
+        // Contient Id emplacement BDD table card_item
+        console.warn(cardShopId)
+        // contient ID card BDD table credit_item
+        alert(" Article ajouté au panier")
+      })
+      .catch((error) => {
+        console.error(
+          "Une erreur est survenue lors de l'ajout au panier.",
+          error
+        )
+      })
   }
+
+  useEffect(() => {
+    console.info(cartItems)
+  }, [cartItems])
 
   return (
     <div className="GlobalContainerShop">
@@ -86,7 +105,7 @@ const Shop = () => {
             pushToCart={pushToCart}
           />
         </div>
-        <PaymentShop />
+        <PaymentShop cartItems={cartItems} setCartItems={setCartItems} />
       </div>
       <Footer />
     </div>

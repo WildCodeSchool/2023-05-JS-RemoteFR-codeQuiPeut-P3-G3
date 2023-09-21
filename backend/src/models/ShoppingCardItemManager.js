@@ -27,6 +27,10 @@ class ShoppingCardItemManager extends AbstractManager {
       [item.shop_credit_item_id, item.quantity, item.user_id]
     )
   }
+
+  deleteAll() {
+    return this.database.query(`DELETE FROM ${this.table}`)
+  }
 }
 
 module.exports = ShoppingCardItemManager

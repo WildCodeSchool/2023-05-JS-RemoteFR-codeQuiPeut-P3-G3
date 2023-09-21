@@ -4,35 +4,36 @@ import "./PaymentShop.scss"
 import axios from "axios"
 
 const PaymentShop = (props) => {
-  const [cartItems, setCartItems] = useState([])
-  const [cartItemsTotal, setCartItemsTotal] = useState(0)
+  // ------------------ Fonnction call lors activ paynow
+  const removeItemsFromCart = () => {
+    // Envoie une requête DELETE au serveur pour supprimer les éléments du panier
+    if (cardNumber.trim() !== "" && cvc.trim() !== "") {
+      axios
+        .delete("http://localhost:4242/shopping_card_item/removeAll") // L'URL dépend de votre configuration de routage
+        .then((response) => {
+          if (response.status === 204) {
+            // Les champs sont valides, vous pouvez effectuer le paiement ici
+            // ...
+            // Suppression réussie, réinitialisez les champs de saisie et effectuez d'autres actions si nécessaire
+            setCardNumber("")
+            setCartItems([])
+            setCvc("")
+            alert("✅  Commande validée ! ")
+          } else {
+            // La suppression a échoué, gérez l'erreur ici si nécessaire
+          }
+        })
+        .catch((error) => {
+          // Gérez les erreurs de requête ici si nécessaire
+          console.error(error)
+        })
+    } else {
+      // Affichez un message d'erreur et empêchez le paiement
+      alert(" Merci remplir tout les champs ")
+    }
+  }
 
-  useEffect(() => {
-    // Effectuez une requête pour récupérer les produits de la table shopping_card_item depuis votre API
-    axios
-      .get("http://localhost:4242/shopping_card_item")
-      .then((response) => {
-        // Récupérez les données des produits
-        const items = response.data
-
-        // Mettez à jour l'état des produits
-        console.info(cartItemsTotal)
-        setCartItems(items)
-
-        // Calculez le total du prix en additionnant les prix de chaque produit
-        const total = items.reduce((acc, item) => acc + item.price, 0)
-        setCartItemsTotal(total)
-      })
-      .catch((error) => {
-        console.error(
-          "Une erreur est survenue lors de la récupération des produits.",
-          error
-        )
-      })
-  }, [])
-
-  // Récupération info cards
-
+  // ------------------ Récupération info cards page shop
   const [cardInfo, setCardInfo] = useState([])
 
   useEffect(() => {
@@ -42,35 +43,50 @@ const PaymentShop = (props) => {
         setCardInfo(response.data)
       })
       .catch((error) => {
-        console.warn("Pouetpouet")
         console.error(
           "Une erreur est survenue lors de la récupération des fichiers.",
           error
         )
       })
-  }, [])
+  }, [props.cartItems])
 
-  // Calcul du total des prix
+  // ------------------ Récupération items de la table shopping_card_item
+  const [cartItems, setCartItems] = useState([])
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4242/shopping_card_item")
+      .then((response) => {
+        // Récup Data bdd de cart
+        const items = response.data
+        // MAJ CartItems
+        setCartItems(items)
+      })
+      .catch((error) => {
+        console.error(
+          "Une erreur est survenue lors de la récupération des produits.",
+          error
+        )
+      })
+  }, [props.cartItems])
+
+  // ------------------ Partie totalToPay Panier
   let totalPrice = 0
-
-  // Ajoutez les prix à totalPrice
   cartItems.forEach((item) => {
     totalPrice += cardInfo[item.shop_credit_item_id - 1]?.price
   })
 
+  // ------------------ Parametrage saisie Section saisie de Payment
   const [cardNumber, setCardNumber] = useState("")
-  const [expirationMonth, setExpirationMonth] = useState("")
-  const [expirationYear, setExpirationYear] = useState("")
   const [cvc, setCvc] = useState("")
 
-  // Fonction de validation pour n'accepter que des chiffres
   const handleCardNumberChange = (e) => {
     let input = e.target.value
 
-    // Supprime tous les caractères non numériques
+    // Autorise uniquement chiffres
     input = input.replace(/\D/g, "")
 
-    // Ajoute des espaces après chaque groupe de quatre chiffres
+    // Faire un espace tout les quatres chiffres
     input = input.replace(/(\d{4})(?=\d)/g, "$1 ")
 
     if (input.length > 19) {
@@ -83,10 +99,9 @@ const PaymentShop = (props) => {
   const handleCvcChange = (e) => {
     let input = e.target.value
 
-    // Utilisez une expression régulière pour vérifier que l'entrée contient uniquement des chiffres
-    input = input.replace(/\D/g, "") // Supprime les caractères non numériques
+    // Autorise uniquement chiffres
+    input = input.replace(/\D/g, "")
 
-    // Limite la longueur de la saisie à 3 chiffres
     if (input.length > 3) {
       input = input.slice(0, 3)
     }
@@ -94,32 +109,38 @@ const PaymentShop = (props) => {
     setCvc(input)
   }
 
-  // Fonction de gestionnaire d'événements pour le bouton "Pay Now"
-  const handlePayNowClick = (props) => {
-    // Collectez toutes les informations dont vous avez besoin
-    const paymentData = {
-      cardNumber,
-      expirationMonth,
-      expirationYear,
-      cvc,
+  const handleDeleteItemCartClick = (deleteId) => {
+    const isSure = window.confirm("⚠️ Are you sure to delete this article?")
+    if (isSure) {
+      axios
+        .delete(`http://localhost:4242/shop/${deleteId}`)
+        .then((response) => {
+          if (response.status === 204) {
+            // useEffect(() => {
+            axios
+              .get("http://localhost:4242/shopping_card_item")
+              .then((response) => {
+                // Récup Data bdd de cart
+                const items = response.data
+                // MAJ CartItems
+                setCartItems(items)
+              })
+              .catch((error) => {
+                console.error(
+                  "Une erreur est survenue lors de la récupération des produits.",
+                  error
+                )
+              })
+            // }, [])
+            alert("✅  article deleted ")
+          }
+        })
+        .catch((err) => console.warn(err))
     }
+  }
 
-    console.info(paymentData)
-
-    // Vous pouvez ici envoyer ces données au serveur ou effectuer d'autres actions nécessaires
-    // Par exemple, vous pouvez utiliser Axios pour effectuer une requête POST au serveur
-    // axios.post("/votre/url/de/serveur", paymentData)
-    //   .then((response) => {
-    //     // Gérer la réponse du serveur si nécessaire
-    //   })
-    //   .catch((error) => {
-    //     // Gérer les erreurs si nécessaire
-    //   });
-
-    setCardNumber("")
-    setExpirationMonth("")
-    setExpirationYear("")
-    setCvc("")
+  const handlePayNowClick = () => {
+    removeItemsFromCart()
   }
 
   return (
@@ -134,6 +155,13 @@ const PaymentShop = (props) => {
           <ul className="cart-items-list">
             {cartItems.map((item) => (
               <li key={item.id} className="cart-item">
+                <a
+                  onClick={() => handleDeleteItemCartClick(item.id)}
+                  className="deleteShopButton"
+                >
+                  {" "}
+                  X{" "}
+                </a>
                 {cardInfo[item.shop_credit_item_id - 1]?.credit_quantity}{" "}
                 crédits - {cardInfo[item.shop_credit_item_id - 1]?.price} $
               </li>
@@ -226,7 +254,16 @@ const PaymentShop = (props) => {
                 </button>
                 <div className="Payment_Separator"></div>
                 <p>or select other payment method</p>
-                <img src={Payment} alt="Logo Payment" className="PayPal_Logo" />
+                <a
+                  href="https://www.paypal.com/fr/home"
+                  className="shopLinkPaypal"
+                >
+                  <img
+                    src={Payment}
+                    alt="Logo Payment"
+                    className="PayPal_Logo"
+                  />
+                </a>
               </div>
             </div>
           </div>
