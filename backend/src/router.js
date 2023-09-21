@@ -31,6 +31,9 @@ const {
   deleteScene,
   createScene,
   deleteStory,
+  getHeroes,
+  deleteHero,
+  addHero,
 } = require("./api/controls/controllers")
 
 router.get("/card", cardControllers.browse)
@@ -125,5 +128,10 @@ router.post("/api-stories/:filename", createStory)
 router.post("/api-stories/createScene/:idStory", createScene)
 router.put("/api-stories/:idStory/:idScene", putScene)
 router.delete("/api-stories/:idStory/:idScene", deleteScene, getScene)
+
+// heroes
+router.put("/api-heroes/:idStory", addHero)
+router.get("/api-heroes/:idStory", getHeroes)
+router.delete("/api-heroes/:idStory/:idHero", deleteHero, getHeroes)
 
 module.exports = router

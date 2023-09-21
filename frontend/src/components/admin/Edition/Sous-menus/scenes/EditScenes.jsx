@@ -91,7 +91,7 @@ function EditScenes() {
     }
   }
 
-  /* Affichage popup selection d'une image */
+  /* Affichage popup quand selection d'une image */
   useEffect(() => {
     if (isAddingPic || isAddingBackground) {
       setViewImgFinder(true)
