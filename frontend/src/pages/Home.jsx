@@ -43,23 +43,6 @@ export default function Home() {
     setStartIndex((startIndex - 2 + jdrCardData.length) % jdrCardData.length)
   }
 
-  // const pinHomeParallax = () => {
-  //   gsap.to(".image-container", {
-  //     scrollTrigger: {
-  //       trigger: ".image-container",
-  //       start: "top top",
-  //       end: "bottom top",
-  //       pin: true,
-  //       pinSpacing: false,
-  //       id: "imageContainer",
-  //       markers: true,
-  //     },
-  //   })
-  // }
-  // useEffect(() => {
-  //   pinHomeParallax()
-  // }, [])
-
   // GSAP parallax ------------------
   const pinMainDiv = () => {
     gsap.from(".image-container", {
