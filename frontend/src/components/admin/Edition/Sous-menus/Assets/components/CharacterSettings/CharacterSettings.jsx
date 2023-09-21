@@ -15,7 +15,6 @@ import axios from "axios"
 function CharacterSettings() {
   const [displayPopupImg, setDisplayPopupImg] = useState(false)
   const [selectedPathCharacter, setSelectedPathCharacter] = useState(null)
-  // PERSONNAGES HEROS
   const [hero, setHero] = useState([])
   const { editSettings, editStatus } = useEditionContext()
 
@@ -48,12 +47,11 @@ function CharacterSettings() {
   })
 
   // const checkAllElements = (obj) => {
-  //   // const allValuesDefined = Object.values(heroTemplate).every((value) => {
-  //   //   return value !== "" && value !== undefined
-  //   // })
+  //   const allValuesDefined = Object.values(obj).every((value) => {
+  //     return value !== "" && value !== undefined
+  //   })
 
-  //   // return allValuesDefined
-  //   return true
+  //   return allValuesDefined
   // }
 
   useEffect(() => {
@@ -69,7 +67,7 @@ function CharacterSettings() {
     if (story && scene) {
       editSettings(story, scene)
     }
-  }, [story, scene])
+  }, [scene, story])
 
   useEffect(() => {
     if (editStatus.storyId) {
@@ -114,34 +112,11 @@ function CharacterSettings() {
       )
       .then((res) => {
         if (res.status === 200) {
-          alert("hero supprimé avec succés")
+          alert("Hero deleted successfully")
           setHero(res.data)
         }
       })
   }
-
-  // const save = () => {
-  //   const valid = checkAllElements(heroTemplate)
-  //   if (valid) {
-  //     setHero((prev) => {
-  //       const newHeroArray = [...prev]
-  //       newHeroArray.push(heroTemplate)
-  //       return newHeroArray
-  //     })
-  //   } else {
-  //     alert("Fill all the fields")
-  //   }
-  // }
-
-  // const handleDelete = (index) => {
-  //   if (index !== undefined && index !== null) {
-  //     setHero((prev) => {
-  //       const newHeroArray = [...prev]
-  //       newHeroArray.splice(index, 1)
-  //       return newHeroArray
-  //     })
-  //   }
-  // }
 
   return (
     <>
@@ -188,7 +163,7 @@ function CharacterSettings() {
           })}
       </div>
       <div className="wrapCharacter">
-        <h4> Create new hero </h4>
+        <h4> Create a new hero </h4>
         <div className="wrapCharacter__cards">
           <section className="characterInfo">
             <div className="select__picture">
@@ -203,7 +178,7 @@ function CharacterSettings() {
                       : defaultImg
                   }
                   alt="imgCharacter"
-                />{" "}
+                />
               </button>
               {displayPopupImg && (
                 <PopupImgFinder
@@ -256,7 +231,7 @@ function CharacterSettings() {
 
             <div className="selectBloc">
               <div className="blocText">
-                <label htmlFor="Life">Nombre vies</label>
+                <label htmlFor="Life">Number of lives</label>
                 <input
                   type="text"
                   id="Life"
