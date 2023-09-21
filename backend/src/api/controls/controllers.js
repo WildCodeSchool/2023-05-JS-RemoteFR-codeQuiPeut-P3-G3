@@ -67,6 +67,8 @@ module.exports.createStory = (req, res) => {
   const { insertId } = req
   const { title } = req.body
 
+  // console.log("create story, id : ", insertId)
+
   const titleFormatted = title.trim().replace(/\s+/g, "_")
 
   const filename = insertId + "-" + titleFormatted
@@ -80,11 +82,15 @@ module.exports.createStory = (req, res) => {
 
   const { story } = require(modeleFilePath)
 
+  // console.log(filePath)
+
   fs.writeFileSync(
     filePath,
     `module.exports.story = ${JSON.stringify(story, null, 2)};\n`,
     { encoding: "utf-8", flag: "w", EOL: "\n" }
   )
+
+  // console.log("ficheir cree")
 
   return res.status(200).json({ message: "Fichier créé avec succès." })
 }
@@ -302,14 +308,16 @@ module.exports.deleteHero = (req, res, next) => {
 /* ============================================================= */
 
 module.exports.getHeroes = (req, res) => {
-  const { idStory } = req.params
-  console.info("Get hero => id story : ")
+  const { storyId } = req.params
+  console.info("Get hero => id story : ", storyId)
 
-  const filePath = findPath(idStory)
+  const filePath = findPath(storyId)
 
+  // console.log(filePath)
   if (fs.existsSync(filePath)) {
     const loadedStory = require(filePath)
     const heroes = loadedStory.story.heroes
+    // console.log(heroes)
     return res.status(200).json(heroes)
   } else {
     return res.status(400).json({

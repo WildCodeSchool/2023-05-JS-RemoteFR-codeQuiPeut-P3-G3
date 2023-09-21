@@ -1,7 +1,7 @@
 .gameHeaderHud {
   .mainHud {
     display: flex;
-    gap: 10px;
+    // gap: 10px;
     height: 50px;
     width: 210px;
     background-color: rgba(247, 149, 0, 0.5);
@@ -11,7 +11,17 @@
   .stats {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    // gap: 5px;
+    height: 100%;
+    width: 100%;
     justify-content: space-around;
+    align-items: center;
+    box-sizing: border-box;
+    padding-left: 15px;
+
+    img {
+      max-width: 14%;
+      object-fit: contain;
+    }
   }
 }

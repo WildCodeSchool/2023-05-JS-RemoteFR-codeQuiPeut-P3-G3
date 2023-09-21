@@ -133,7 +133,7 @@ router.delete("/api-stories/:idStory/:idScene", deleteScene, getScene)
 
 // heroes
 router.put("/api-heroes/:idStory", addHero)
-router.get("/api-heroes/:idStory", getHeroes)
+router.get("/api-heroes/:storyId", getHeroes)
 router.delete("/api-heroes/:idStory/:idHero", deleteHero, getHeroes)
 
 router.put("/users/:id", usersControllers.editProfile)

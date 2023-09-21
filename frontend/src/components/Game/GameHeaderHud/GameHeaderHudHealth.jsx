@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-
+import "./GameHeaderHudHealth.scss"
 import heart from "../Components/assets/img/ui/hud/heart.svg"
 import brokenHeart from "../Components/assets/img/ui/hud/broken-heart.svg"
 
@@ -7,7 +7,7 @@ const GameHeaderHudHealth = ({ hero }) => {
   const [life, setLife] = useState([hero?.heal])
   useEffect(() => {
     const result = []
-    for (let i = 0; i < hero?.maxHeal; i++) {
+    for (let i = 0; i < hero?.heal; i++) {
       if (i < hero.heal) {
         result.push(heart)
       } else {

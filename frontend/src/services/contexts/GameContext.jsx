@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import axios from "axios"
 import React, { createContext, useContext, useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { useSearchParams, useLocation } from "react-router-dom"
 
 const GameContext = createContext()
 
@@ -70,10 +70,23 @@ export const GameContextProvider = ({ children }) => {
   const [changeScene, setChangeScene] = useState(false)
   // eslint-disable-next-line no-unused-vars
   const [hero, setHero] = useState([])
+  const [heroSelected, setHeroSelected] = useState(null)
   const [searchParams, setSearchParams] = useSearchParams()
+
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+
   // const location = useLocation()
 
   /* ============================================================= */
+
+  const getParamsUrl = () => {
+    const storyId = params.get("story")
+    const sceneId = params.get("scene")
+    setSceneSettings({ storyId, sceneId })
+
+    return { storyId, sceneId }
+  }
 
   const getScene = (idStory, idScene) => {
     console.info("IMPORT STORY ", idStory, " SCENE ", idScene)
@@ -98,10 +111,10 @@ export const GameContextProvider = ({ children }) => {
   }
 
   // Test de la requete hero
-  const getHero = (idStory) => {
-    // console.log("appel de get hero avec id ", idStory)
+  const getHero = ({ storyId }) => {
+    // console.log("appel de get hero avec id ", storyId)
     axios
-      .get(`http://localhost:4242/api-heroes/${idStory}`)
+      .get(`http://localhost:4242/api-heroes/${storyId}`)
       .then((response) => {
         // console.log("réponse des heroes : ", response.data)
         setHero(response.data)
@@ -114,11 +127,16 @@ export const GameContextProvider = ({ children }) => {
   const gestionActions = (actions) => {
     const nbActions = actions.length
 
+    // console.log("Actions : ", actions)
+
     if (nbActions > 0) {
+      // console.log("boucle actions")
       for (const elem of actions) {
+        // console.log(elem)
         switch (elem.type) {
           case "add":
-            add(actions.target, actions.number)
+            // console.log("go fct add")
+            add(elem.target, elem.number)
             break
 
           case "subs":
@@ -153,7 +171,8 @@ export const GameContextProvider = ({ children }) => {
       const actions = elem.Actions
 
       if (actions.length > 0) {
-        gestionActions(elem.Actions)
+        gestionActions(actions)
+        // console.log("appel de gestion actions : ", actions)
       }
       // Gestion des links
       if (elem.link !== "") {
@@ -183,7 +202,7 @@ export const GameContextProvider = ({ children }) => {
           top: elem.pos.percY,
           height: elem.obj.height * elem.obj.scaleX,
           width: elem.obj.width * elem.obj.scaleY,
-          cursor: actions > 0 ? "pointer" : "default",
+          cursor: actions > 0 || elem.link !== "" ? "pointer" : "default",
         }
 
         const textScaleTransform = `scale(${scaleX}, ${scaleY})`
@@ -217,7 +236,8 @@ export const GameContextProvider = ({ children }) => {
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
         const elem = object[key]
-        // console.log("elements : ", elem)
+        // console.log(elem)
+        const actions = elem.Actions || []
 
         const rectProperties = {
           strokeWidth: elem.obj.strokeWidth,
@@ -228,7 +248,7 @@ export const GameContextProvider = ({ children }) => {
           top: elem.pos.percY,
           height: elem.obj.height * elem.obj.scaleY,
           width: elem.obj.width * elem.obj.scaleX,
-          // cursor: actions > 0 ? "pointer" : "default",
+          cursor: actions > 0 || elem.link !== "" ? "pointer" : "default",
         }
 
         rectComponents.push(
@@ -260,7 +280,7 @@ export const GameContextProvider = ({ children }) => {
           height: elem.obj.height * elem.obj.scaleY,
           width: elem.obj.width * elem.obj.scaleX,
           src: elem.obj.src,
-          cursor: actions > 0 ? "pointer" : "default",
+          cursor: actions > 0 || elem.link !== "" ? "pointer" : "default",
         }
 
         imgComponents.push(
@@ -279,7 +299,14 @@ export const GameContextProvider = ({ children }) => {
   /* ============================================================= */
 
   const add = (type, number) => {
-    // console.log("execution add : ", type, number)
+    // console.log("type et number", type, number)
+    switch (type) {
+      case "life":
+        // console.log("hero selected: ", heroSelected)
+        heroSelected.heal =
+          parseInt(heroSelected.heal, 10) + parseInt(number, 10)
+      // console.log("vie du hero : ", hero.heal)
+    }
   }
 
   // const substract = (type, number) => {}
@@ -306,12 +333,15 @@ export const GameContextProvider = ({ children }) => {
         background,
         setChangeScene,
         changeScene,
-        // getSceneUrl,
+        getParamsUrl,
         setSearchParams,
         searchParams,
         setSceneSettings,
         hero,
         setHero,
+        sceneSettings,
+        heroSelected,
+        setHeroSelected,
       }}
     >
       {children}

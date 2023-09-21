@@ -17,7 +17,7 @@ function ActionType() {
   const styles = {
     valueContainer: (base) => ({
       ...base,
-      maxHeight: 20,
+      maxHeight: 50,
       fontSize: 15,
     }),
     // Menu deroulat (partie texte)

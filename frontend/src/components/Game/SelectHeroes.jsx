@@ -13,11 +13,14 @@ function SelectHeroes({ setInit }) {
   // localStorage.setItem("page", JSON.stringify(0))
 
   // eslint-disable-next-line no-unused-vars
-  const { getHero, hero, setHero } = useGameContext()
+  const { getHero, hero, setHeroSelected } = useGameContext()
+  const { getParamsUrl } = useGameContext()
+  const {
+    sceneSettings: { storyId },
+  } = useGameContext()
 
   useEffect(() => {
-    // console.log("Page select heroes")
-    getHero(138)
+    getHero(getParamsUrl())
   }, [])
   return (
     <div className="characters">
@@ -27,11 +30,16 @@ function SelectHeroes({ setInit }) {
         {hero &&
           hero.map((hero, index) => {
             return (
-              <Link key={hero.name} draggable={false}>
+              <Link
+                to={`/game?story=${storyId}&scene=0`}
+                key={hero.name}
+                draggable={false}
+              >
                 <div
                   className="heroesCard"
                   onClick={() => {
                     localStorage.setItem("hero", JSON.stringify(hero))
+                    setHeroSelected(hero)
                     setInit(false)
                   }}
                 >

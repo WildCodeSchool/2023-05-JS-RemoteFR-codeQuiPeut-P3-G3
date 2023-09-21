@@ -40,6 +40,7 @@ const read = (req, res) => {
     .then(([rows]) => {
       if (rows[0] == null) {
         res.sendStatus(404)
+
         // console.log(rows)
       } else {
         res.send(rows[0])

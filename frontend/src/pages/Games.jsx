@@ -19,6 +19,7 @@ export default function Home() {
       const response = await axios.get("http://localhost:4242/card")
       // console.log(response.data)
       setJdrCardData(response.data)
+      // console.log(response.data)
     } catch (error) {
       console.error("Erreur lors de la récupération des données", error)
     }
@@ -80,9 +81,8 @@ export default function Home() {
   }
   const [open, setOpen] = useState(false)
 
-  const handleClick = (index) => {
-    // console.log("click", index)
-    navigate(`/game?story=${index}&scene=0`)
+  const handleClick = (storyId) => {
+    navigate(`/game?story=${storyId}`)
   }
 
   return (
@@ -125,8 +125,12 @@ export default function Home() {
             <div className="jdrCardApp">
               {jdrCardData
                 .slice(startIndexAllGames, startIndexAllGames + 2)
-                .map((jdr) => (
-                  <JdrCard key={jdr.id} {...jdr} />
+                .map((jdr, index) => (
+                  <JdrCard
+                    key={jdr.idcard}
+                    {...jdr}
+                    handleClick={() => handleClick(jdr.storyId)}
+                  />
                 ))}
 
               <div className="pagination">
@@ -157,14 +161,14 @@ export default function Home() {
               {jdrCardData
                 .slice(startIndexFantastic, startIndexFantastic + 2)
                 .map((jdr, index) => (
-                  <React.Fragment key={jdr.id}>
+                  <div key={jdr.idcard}>
                     {jdr.jdrCategory === "Fantastic" && (
                       <JdrCard
                         {...jdr}
-                        handleClick={() => handleClick(index)}
+                        handleClick={() => handleClick(jdr.storyId)}
                       />
                     )}
-                  </React.Fragment>
+                  </div>
                 ))}
 
               <div className="pagination">
@@ -195,14 +199,14 @@ export default function Home() {
               {jdrCardData
                 .slice(startIndexHorror, startIndexHorror + 2)
                 .map((jdr, index) => (
-                  <React.Fragment key={jdr.id}>
+                  <div key={jdr.idcard}>
                     {jdr.jdrCategory === "Horror" && (
                       <JdrCard
                         {...jdr}
-                        handleClick={() => handleClick(index)}
+                        handleClick={() => handleClick(jdr.storyId)}
                       />
                     )}
-                  </React.Fragment>
+                  </div>
                 ))}
 
               <div className="pagination">
@@ -232,14 +236,14 @@ export default function Home() {
               {jdrCardData
                 .slice(startIndexWestern, startIndexWestern + 2)
                 .map((jdr, index) => (
-                  <React.Fragment key={jdr.id}>
+                  <div key={jdr.idcard}>
                     {jdr.jdrCategory === "Western" && (
                       <JdrCard
                         {...jdr}
-                        handleClick={() => handleClick(index)}
+                        handleClick={() => handleClick(jdr.storyId)}
                       />
                     )}
-                  </React.Fragment>
+                  </div>
                 ))}
 
               <div className="pagination">
