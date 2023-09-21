@@ -121,5 +121,26 @@
       top: -5.5rem;
       left: -4.2rem;
     }
+    .introTitle {
+      font-family: $font-family1;
+      text-align: center;
+      color: white;
+
+      @media (min-width: 1300px) {
+        text-align: start;
+      }
+      .ingGame {
+        font-family: $font-family1;
+        font-size: clamp(1.2rem, 2.5vw, 2rem);
+        font-weight: 700;
+        color: white;
+
+        .introWordTitle {
+          font-family: $font-family1;
+          font-size: clamp(1.2rem, 2.5vw, 2rem);
+          color: #f97700;
+        }
+      }
+    }
   }
 }

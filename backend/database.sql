@@ -20,27 +20,27 @@ USE `enigmadb` ;
 -- -----------------------------------------------------
 -- Table `enigmadb`.`card`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enigmadb`.`card` (
-  `idcard` INT NOT NULL AUTO_INCREMENT,
-  `jdrName` VARCHAR(100) NOT NULL,
-  `jdrNameFont` VARCHAR(45) NOT NULL,
-  `jdrNameColor` VARCHAR(45) NOT NULL,
-  `jdrNameFontSize` INT NOT NULL,
-  `jdrImg1` VARCHAR(150) NOT NULL,
-  `jdrImg2` VARCHAR(100) NOT NULL,
-  `jdrText` VARCHAR(80) NOT NULL,
-  `textColor` VARCHAR(45) NOT NULL,
-  `textFont` VARCHAR(150) NOT NULL,
-  `jdrBgColor1` VARCHAR(45) NOT NULL,
-  `jdrBgColor2` VARCHAR(45) NOT NULL,
-  `buttonImg` VARCHAR(150) NOT NULL,
-  `jdrCategory` VARCHAR(45) NOT NULL,
-  `jdrPublic` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idcard`))
+CREATE TABLE IF NOT EXISTS enigmadb.card (
+  idcard INT NOT NULL AUTO_INCREMENT,
+  jdrName VARCHAR(100) NOT NULL,
+  jdrNameFont VARCHAR(45) NOT NULL,
+  jdrNameColor VARCHAR(45) NOT NULL,
+  jdrNameFontSize INT NOT NULL,
+  jdrImg1 VARCHAR(150) NOT NULL,
+  jdrImg2 VARCHAR(100) NOT NULL,
+  jdrText VARCHAR(80) NOT NULL,
+  textColor VARCHAR(45) NOT NULL,
+  textFont VARCHAR(150) NOT NULL,
+  jdrBgColor1 VARCHAR(45) NOT NULL,
+  jdrBgColor2 VARCHAR(45) NOT NULL,
+  buttonColor VARCHAR(150) NOT NULL,
+  buttonFont VARCHAR(150) NOT NULL,
+  jdrCategory VARCHAR(45) NOT NULL,
+  jdrPublic VARCHAR(45) NOT NULL,
+  PRIMARY KEY (idcard))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
-
 
 -- -----------------------------------------------------
 -- Table `enigmadb`.`enemies`
