@@ -33,11 +33,7 @@ function widgetText({
         <span>Text Formatting</span>
       </div>
       <div className="fontContent">
-        <span className="formattingText">
-          TITLE: Font family, size and color<br></br>
-          TEXT: Font family and color<br></br>
-          BUTTON: Font family
-        </span>
+        <span className="formattingText">Font family, size and color</span>
         <div className="fontSelection">
           <FontSelector
             setSelectedFont={setSelectedFont}

@@ -30,6 +30,7 @@ function InfoGeneral() {
   const [jdrPublic, setJdrPublic] = useState("")
   const [jdrCategory, setJdrCategory] = useState("")
   const [viewEditProperties, setViewEditProperties] = useState(true)
+  const [idCard, setIdCard] = useState(null)
 
   // ------------ TEXT FORMATTING -------------------
 
@@ -168,9 +169,39 @@ function InfoGeneral() {
     }
   }, [selectedPath])
 
+  const getCard = (storyId) => {
+    // console.log("get card id : ", storyId)
+    axios.get(`http://localhost:4242/card/${storyId}`).then((res) => {
+      // console.log(res)
+      const values = res.data
+      setJdrName(values.jdrName)
+      setJdrNameFont(values.jdrNameFont)
+      setJdrNameColor(values.jdrNameColor)
+      setJdrNameFontSize(values.jdrNameFontSize)
+      setJdrImg1(values.jdrImg1)
+      setJdrImg2(values.jdrImg2)
+      setJdrText(values.jdrText)
+      setJdrBgColor1(values.jdrBgColor1)
+      setJdrBgColor2(values.jdrBgColor2)
+      setButtonFont(values.buttonFont)
+      setButtonColor(values.buttonColor)
+      setJdrCategory(values.jdrCategory)
+      setJdrPublic(values.jdrPublic)
+      setJdrNameColor(values.jdrNameColor)
+      setTextColor(values.textColor)
+      setIdCard(values.idcard)
+
+      // console.log("ID CARD : ", values.idcard)
+    })
+  }
+
+  useEffect(() => {
+    getCard(138)
+  }, [])
+
   // --------------- Connection a la BDD ------------------
 
-  const saveCard = () => {
+  const saveCard = (storyId) => {
     const cardData = {
       jdrName,
       jdrNameFont,
@@ -189,7 +220,17 @@ function InfoGeneral() {
       jdrPublic,
     }
 
-    axios.post("http://localhost:4242/card", cardData)
+    axios
+      .put(`http://localhost:4242/card/${storyId}`, cardData)
+      .then((res) => {
+        if (res.status === 201) {
+          alert("carte modifiée avec succes")
+        }
+      })
+      .catch((error) => {
+        // console.log(error)
+        alert(`erreur : ${error.response.data.error}`)
+      })
   }
 
   return (
@@ -240,9 +281,9 @@ function InfoGeneral() {
                 onChange={(e) => setJdrText(e.target.value)}
               ></textarea>
             </div>
-            <h8 className="explainFormatting">
+            <p className="explainFormatting">
               Click on the text you want to format
-            </h8>
+            </p>
             <div className="cardGeneralTop">
               <div className="generalConstructorTop">
                 <WidgetText
@@ -278,7 +319,11 @@ function InfoGeneral() {
             </div>
           </div>
           <div className="buttonInfo">
-            <ButtonUI title={"save"} bgcolor={"#3f7841"} onClick={saveCard} />
+            <ButtonUI
+              title={"save"}
+              bgcolor={"#3f7841"}
+              onClick={() => saveCard(idCard)}
+            />
             <ButtonUI title={"delete"} bgcolor={"#902B00"} />
           </div>
         </div>

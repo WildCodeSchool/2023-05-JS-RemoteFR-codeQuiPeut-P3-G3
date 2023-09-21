@@ -84,6 +84,7 @@ const destroy = (req, res, next) => {
     .then(([result]) => {
       if (result.affectedRows === 0) {
         res.sendStatus(404)
+        // console.log(result)
       } else {
         // res.sendStatus(204)
         next()
@@ -115,6 +116,56 @@ const deploy = (req, res) => {
     })
 }
 
+const createStoryWithCard = (req, res, next) => {
+  const data = req.body
+  // console.log("YO")
+  models.stories
+    .insert(data)
+    .then(([result]) => {
+      const storyId = result.insertId
+      // console.log(" STORY ID : => ", storyId)
+      // console.log(result)
+
+      // Maintenant, insérez une nouvelle carte associée à la story avec des valeurs par défaut
+      const newCard = {
+        jdrName: "Nom par défaut",
+        jdrNameFont: "Arial, sans-serif",
+        jdrNameColor: "#000000",
+        jdrNameFontSize: 12,
+        jdrImg1: "",
+        jdrImg2: "",
+        jdrText: "Texte par défaut",
+        textColor: "#000000",
+        textFont: "Arial, sans-serif",
+        jdrBgColor1: "#FFFFFF",
+        jdrBgColor2: "#CCCCCC",
+        buttonColor: "#0000FF",
+        buttonFont: "Arial, sans-serif",
+        jdrCategory: "Autre",
+        jdrPublic: "Public par défaut",
+        storyId,
+      }
+
+      // Insérez la nouvelle carte avec des valeurs par défaut dans la table `card`
+      return models.card.insert(newCard)
+    })
+    .then(() => {
+      next() // Passez à l'étape suivante après avoir inséré la carte
+    })
+    .catch((err) => {
+      console.error(err)
+
+      // Vérifiez si l'erreur est due à un titre déjà existant
+      if (err.message === "Le titre existe déjà.") {
+        return res
+          .status(400)
+          .json({ error: "Une histoire porte déjà le même nom." })
+      }
+
+      res.status(500).json({ error: "Une erreur interne s'est produite." })
+    })
+}
+
 module.exports = {
   browse,
   add,
@@ -122,4 +173,5 @@ module.exports = {
   edit,
   destroy,
   deploy,
+  createStoryWithCard,
 }

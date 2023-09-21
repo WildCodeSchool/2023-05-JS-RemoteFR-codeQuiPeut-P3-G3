@@ -13,39 +13,43 @@
     box-sizing: border-box;
     // border: 10px solid green;
     // background-color: purple;
-    // background-image: url(../assets/images/parallax/sky.png);%
     .image-container {
       position: relative;
       height: auto;
       width: 100%;
       aspect-ratio: 677.45/400;
       z-index: -1;
+
       .image {
         display: block;
         height: 100%;
         width: 100%;
       }
 
-      .noParallaxImg {
-        position: absolute;
-        height: 100%;
-        width: 100%;
-        bottom: 0;
-        left: 0;
-      }
 
-      .cascadeImg {
-        position: absolute;
-        height: 30%;
-        width: 100%;
-        bottom: -1px;
-        left: 0;
-        z-index: 1;
-      }
     }
   }
 
   /* Element: .home__content */
+
+.belowParallax {
+  
+  .cascadeDiv {
+    width: 100%;
+    height: 20%;
+
+    .cascadeImg {
+      position: absolute;
+      height: 30%;
+      width: 100%;
+      // bottom: 150px;
+      top: 100px;
+      left: 0;
+      z-index: 1;
+    }
+  }
+}
+
   &__content {
     width: 100%;
     display: flex;
@@ -56,6 +60,11 @@
     background-color: #0c011c;
 
     // border: 10px solid red;
+    background-color: #0C011C;
+    z-index: 0;
+
+
+    
 
     /* Media query pour les marges en mode desktop */
     @media (min-width: 1024px) {
@@ -63,9 +72,11 @@
       padding-right: 5vh;
     }
 
-    /* Element: .home__content__description (premier élément enfant) */
+    /* Element: .home__content__desription (premier élément enfant) */
     > section:first-child {
       margin-top: calc(1vh + 8vw);
+
+      
     }
 
     /* Element: .home__content__avis (dernier élément enfant) */
@@ -87,8 +98,14 @@
       // background-color: white;
       max-width: 1300px;
     }
+
+  }
+
+  .footer {
+
   }
 }
+
 
 .jdrCardApp {
   display: flex;
