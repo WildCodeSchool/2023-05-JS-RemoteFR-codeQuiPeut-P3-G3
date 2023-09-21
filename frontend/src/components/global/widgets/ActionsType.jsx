@@ -82,7 +82,7 @@ function ActionType() {
         activeObject.set({ Actions: currentActions })
 
         canvas.renderAll()
-        console.log("actions pushées : ", currentActions)
+        // console.log("actions pushées : ", currentActions)
         setUpdateActions(true)
       }
     }
