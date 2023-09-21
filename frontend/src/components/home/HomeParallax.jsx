@@ -11,28 +11,25 @@ import stars from "../../assets/images/parallax/stars1.png"
 import "./HomeParallax.scss"
 
 gsap.registerPlugin(ScrollTrigger)
-gsap.registerPlugin(ScrollTrigger)
 
 export default function HomeParallax() {
   const parallaxSectionRef = useRef(null)
-  // const castleDarkRef = useRef(null)
   const castleLightsRef = useRef(null)
   const cloudsFrontRef = useRef(null)
   const moonRef = useRef(null)
   const starsRef = useRef(null)
   const skyRef = useRef(null)
 
-  // -------------- ScrollTrigger default settings ---------------
+  // ScrollTrigger default settings ---------------
   ScrollTrigger.defaults({
-    toggleActions: "play none reverse reset",
+    toggleActions: "play none reverse",
     markers: false,
   })
 
-  // TODO------------- Pin the castle image to a fixed position -----------------
+  // Pin the castle image to a fixed position -----------------
 
   const pinCastleLights = () => {
     gsap.to(castleLightsRef.current, {
-      // autoAlpha: 1,
       scrollTrigger: {
         trigger: parallaxSectionRef.current,
         start: "top top",
@@ -48,7 +45,7 @@ export default function HomeParallax() {
     pinCastleLights()
   }, [])
 
-  //  TODO---------------- Move the front clouds to the left -------------------
+  // Make the front clouds and move right -------------------
 
   const moveCloudsFront = () => {
     gsap.from(cloudsFrontRef.current, {
@@ -57,6 +54,7 @@ export default function HomeParallax() {
         trigger: parallaxSectionRef.current,
         start: "top top",
         end: "bottom top",
+        // end: "+=500",
         scrub: 2,
         duration: 3,
         id: "cloudsFront",
@@ -68,7 +66,7 @@ export default function HomeParallax() {
     moveCloudsFront()
   }, [])
 
-  //  TODO---------------- Move the stars to the right -------------------
+  // Make the stars appear and move down -------------------
   const moveStars = () => {
     gsap.from(starsRef.current, {
       y: -1000,
@@ -87,7 +85,7 @@ export default function HomeParallax() {
     moveStars()
   }, [])
 
-  //  TODO---------------- Move the moon up from behind the mountain -------------------
+  //  Move the moon up from behind the mountain -------------------
   const moveMoon = () => {
     gsap.to(moonRef.current, {
       y: -500,
@@ -105,8 +103,6 @@ export default function HomeParallax() {
   useEffect(() => {
     moveMoon()
   }, [])
-
-  // ----------------- To show that the parallax effect is complete -----------------
 
   return (
     <>
