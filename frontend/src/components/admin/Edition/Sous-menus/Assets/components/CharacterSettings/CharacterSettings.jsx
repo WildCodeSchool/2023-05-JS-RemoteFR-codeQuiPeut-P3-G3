@@ -46,34 +46,38 @@ function CharacterSettings() {
     },
   })
 
-  const checkAllElements = (obj) => {
-    const allValuesDefined = Object.values(obj).every((value) => {
-      return value !== "" && value !== undefined
-    })
+  // const checkAllElements = (obj) => {
+  //   const allValuesDefined = Object.values(obj).every((value) => {
+  //     return value !== "" && value !== undefined
+  //   })
 
-    return allValuesDefined
-  }
+  //   return allValuesDefined
+  // }
 
-  const save = () => {
-    const valid = checkAllElements(heroTemplate)
-    if (valid) {
-      setHero((prev) => ({
-        ...prev[0],
-        heroTemplate,
+  useEffect(() => {
+    if (selectedPathCharacter !== "") {
+      setHeroTemplate((prev) => ({
+        ...prev,
+        img: selectedPathCharacter,
       }))
-    } else {
-      alert("Fill in all the fields")
     }
+  }, [selectedPathCharacter])
+
+  useEffect(() => {
     if (story && scene) {
       editSettings(story, scene)
     }
-  }
+  }, [scene, story])
 
   useEffect(() => {
     if (editStatus.storyId) {
       apiGetHeroes(editStatus.storyId)
     }
   }, [editStatus.storyId])
+
+  useEffect(() => {
+    // console.log(heroTemplate.skills)
+  }, [heroTemplate.skills])
 
   const apiGetHeroes = (storyId) => {
     axios
@@ -86,6 +90,7 @@ function CharacterSettings() {
 
   const apiSetHeroes = () => {
     const data = heroTemplate
+    // console.log(heroTemplate)
     axios
       .put(`http://localhost:4242/api-heroes/${editStatus.storyId}`, data)
       .then((results) => {
@@ -129,22 +134,22 @@ function CharacterSettings() {
                     <b>Class :</b> {elem.class}
                   </p>
                   <p>
-                    <b>Life :</b> {elem.life}
+                    <b>Life :</b> {elem.heal}
                   </p>
                   <p>
                     <b>Money :</b> {elem.money}
                   </p>
                   <p>
-                    <b>Agility :</b> {elem.agility}
+                    <b>Agility :</b> {elem.skills.agility}
                   </p>
                   <p>
-                    <b>Strength :</b> {elem.strength}
+                    <b>Strength :</b> {elem.skills.strength}
                   </p>
                   <p>
-                    <b>Intelligence :</b> {elem.intelligence}
+                    <b>Intelligence :</b> {elem.skills.intelligence}
                   </p>
                   <p>
-                    <b>Resistance :</b> {elem.resistance}
+                    <b>Resistance :</b> {elem.skills.resistance}
                   </p>
 
                   <ButtonUI

@@ -16,8 +16,11 @@ function GameActions() {
 
   /* Initialisation */
   useEffect(() => {
+    // console.log("Page game Actions")
     setSceneLoaded(false)
-    const { storyId, sceneId } = getSceneUrl()
+    // const { storyId, sceneId } = getSceneUrl()
+    const storyId = 138
+    const sceneId = 0
     setSceneSettings({ storyId, sceneId })
     getScene(storyId, sceneId)
   }, [])
