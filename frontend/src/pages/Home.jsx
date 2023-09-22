@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useLayoutEffect } from "react"
 import { gsap } from "gsap"
+import { useNavigate } from "react-router-dom"
 import ScrollTrigger from "gsap/ScrollTrigger"
 
 import axios from "axios"
@@ -21,6 +22,7 @@ gsap.registerPlugin(ScrollTrigger)
 export default function Home() {
   const [startIndex, setStartIndex] = useState(0)
   const [jdrCardData, setJdrCardData] = useState([])
+  const navigate = useNavigate()
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:4242/card")
@@ -43,21 +45,12 @@ export default function Home() {
     setStartIndex((startIndex - 2 + jdrCardData.length) % jdrCardData.length)
   }
 
-  // GSAP parallax ------------------
-  const pinMainDiv = () => {
-    gsap.from(".image-container", {
-      scrollTrigger: {
-        trigger: ".belowParallax",
-        start: "top bottom",
-        end: "top top",
-        pin: true,
-        pinSpacing: true,
-        id: "mainDiv",
-      },
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      pinMainDiv()
+      pinFooter()
     })
-  }
-  useEffect(() => {
-    pinMainDiv()
+    return () => ctx.revert() // nettoyage de gsap
   }, [])
 
   const pinFooter = () => {
@@ -72,9 +65,24 @@ export default function Home() {
       },
     })
   }
-  useEffect(() => {
-    pinFooter()
-  }, [])
+  const pinMainDiv = () => {
+    gsap.from(".image-container", {
+      scrollTrigger: {
+        trigger: ".belowParallax",
+        start: "top bottom",
+        end: "top top",
+        pin: true,
+        pinSpacing: true,
+        id: "mainDiv",
+      },
+    })
+  }
+
+  const handleClick = (index) => {
+    // console.log("click")
+    // console.log(index)
+    navigate(`/game?story=${index}&scene=0`)
+  }
 
   return (
     <>
@@ -95,9 +103,15 @@ export default function Home() {
               <h2 className="gamezzz">GAMES"</h2>
             </div>
             <div className="jdrCardApp">
-              {jdrCardData.slice(startIndex, startIndex + 2).map((jdr) => (
-                <JdrCard key={jdr.id} {...jdr} />
-              ))}
+              {jdrCardData
+                .slice(startIndex, startIndex + 2)
+                .map((jdr, index) => (
+                  <JdrCard
+                    key={jdr.idcard}
+                    {...jdr}
+                    handleClick={() => handleClick(jdr.storyId)}
+                  />
+                ))}
 
               <div className="pagination">
                 <button className="boutonPrev" onClick={handlePrevious}>

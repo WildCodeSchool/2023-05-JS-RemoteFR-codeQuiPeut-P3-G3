@@ -64,6 +64,7 @@ export const EditionContextProvider = ({ children }) => {
   const [isAddingPic, setIsAddingPic] = useState(false)
   const [isAddingRect, setIsAddingRect] = useState(false)
   const [isAddingBackground, setIsAddingBackground] = useState(false)
+  const [selectedLink, setSelectedLink] = useState(null)
 
   // ACTIONS & SCENES
   const [editStatus, setEditStatus] = useState({
@@ -228,7 +229,10 @@ export const EditionContextProvider = ({ children }) => {
           </tr>
         ))
 
+        const link = activeObject.link
+
         setTabElem(newTabElem)
+        setSelectedLink(link.toString())
       }
     }
   }
@@ -537,6 +541,8 @@ export const EditionContextProvider = ({ children }) => {
         imgPath,
         keyDeleteObject,
         updateSelectedProperties,
+        selectedLink,
+        setSelectedLink,
       }}
     >
       {children}
