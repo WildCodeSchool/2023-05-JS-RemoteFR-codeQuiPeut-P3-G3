@@ -50,6 +50,7 @@ function ActionType() {
 
   const valueTarget = [
     { value: "life", label: "life" },
+    { value: "money", label: "money" },
     { value: "attack", label: "attack" },
     { value: "defense", label: "defense" },
     { value: "assets", label: "assets" },

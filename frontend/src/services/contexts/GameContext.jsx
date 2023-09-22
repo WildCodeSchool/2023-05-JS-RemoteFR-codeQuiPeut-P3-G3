@@ -140,7 +140,7 @@ export const GameContextProvider = ({ children }) => {
             break
 
           case "subs":
-            // Logique pour l'action "subs"
+            substract(elem.target, elem.number)
             break
 
           case "shop":
@@ -299,17 +299,48 @@ export const GameContextProvider = ({ children }) => {
   /* ============================================================= */
 
   const add = (type, number) => {
-    // console.log("type et number", type, number)
     switch (type) {
       case "life":
-        // console.log("hero selected: ", heroSelected)
-        heroSelected.heal =
-          parseInt(heroSelected.heal, 10) + parseInt(number, 10)
-      // console.log("vie du hero : ", hero.heal)
+        setHeroSelected((prev) => ({
+          ...prev,
+          heal: parseInt(prev.heal, 10) + parseInt(number, 10),
+        }))
+        break
+
+      case "money":
+        setHeroSelected((prev) => ({
+          ...prev,
+          money: parseInt(prev.money, 10) + parseInt(number, 10),
+        }))
+        break
+
+      default:
+        // Gérez le cas par défaut ici si nécessaire
+        break
     }
   }
 
-  // const substract = (type, number) => {}
+  const substract = (type, number) => {
+    switch (type) {
+      case "life":
+        setHeroSelected((prev) => ({
+          ...prev,
+          heal: parseInt(prev.heal, 10) - parseInt(number, 10),
+        }))
+        break
+
+      case "money":
+        setHeroSelected((prev) => ({
+          ...prev,
+          money: parseInt(prev.money, 10) - parseInt(number, 10),
+        }))
+        break
+
+      default:
+        // Gérez le cas par défaut ici si nécessaire
+        break
+    }
+  }
 
   return (
     <GameContext.Provider
