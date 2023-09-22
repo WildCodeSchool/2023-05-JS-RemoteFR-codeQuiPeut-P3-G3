@@ -79,7 +79,6 @@ const edit = (req, res) => {
 }
 const destroy = (req, res, next) => {
   const id = parseInt(req.params.id, 10)
-  // console.log(id)
   models.stories
     .deleteStoryWithCard(id)
     .then(([result]) => {

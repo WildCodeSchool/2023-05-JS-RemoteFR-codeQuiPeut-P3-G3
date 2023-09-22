@@ -112,6 +112,7 @@ function CharacterSettings() {
       )
       .then((res) => {
         if (res.status === 200) {
+          // console.log("Personnages récupérés après delete : ", res)
           alert("Hero deleted successfully")
           setHero(res.data)
         }

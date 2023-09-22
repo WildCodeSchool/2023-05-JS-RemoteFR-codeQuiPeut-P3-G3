@@ -271,7 +271,7 @@ function InfoGeneral() {
               </div>
             </div>
             <div className="storyName">
-              <label htmlFor="message">Story title :</label>
+              <label htmlFor="message">Card title :</label>
               <textarea
                 id="message"
                 name="message"

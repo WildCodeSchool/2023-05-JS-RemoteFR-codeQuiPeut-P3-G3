@@ -85,7 +85,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <div>
       <section className="home__hero">
         <div className="image-container">
           <HomeParallax />
@@ -131,6 +131,6 @@ export default function Home() {
       <section className="footer">
         <Footer />
       </section>
-    </>
+    </div>
   )
 }

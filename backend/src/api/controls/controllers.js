@@ -278,8 +278,9 @@ module.exports.getHero = (req, res) => {
 /* ============================================================= */
 
 module.exports.deleteHero = (req, res, next) => {
-  const { idStory, idHero } = req.params
-  const filePath = findPath(idStory)
+  // console.log("Wesh delete")
+  const { storyId, idHero } = req.params
+  const filePath = findPath(storyId)
 
   if (fs.existsSync(filePath)) {
     try {
@@ -294,6 +295,8 @@ module.exports.deleteHero = (req, res, next) => {
           filePath,
           `module.exports.story = ${JSON.stringify(story, null, 2)};`
         )
+        // console.log("next")
+
         next()
       }
     } catch (error) {
@@ -308,6 +311,7 @@ module.exports.deleteHero = (req, res, next) => {
 /* ============================================================= */
 
 module.exports.getHeroes = (req, res) => {
+  // console.log("get heroes")
   const { storyId } = req.params
   console.info("Get hero => id story : ", storyId)
 

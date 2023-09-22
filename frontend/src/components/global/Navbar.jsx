@@ -4,7 +4,7 @@ import logo from "../../assets/images/Group 131.png"
 import { useState, useEffect } from "react"
 import Cookies from "js-cookie"
 import ProfileIcon from "../../assets/images/Ellipse 122.png"
-import logout from "../../assets/images/Vector-logout.png"
+import logout from "../../assets/images/icons8-sortie-96.png"
 
 function NavBar() {
   const [isExploreOpen, setIsExploreOpen] = useState(false)
