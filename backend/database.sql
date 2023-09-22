@@ -191,22 +191,6 @@ CREATE TABLE `inventory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `shop`
---
-
-DROP TABLE IF EXISTS `shop`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `shop` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `type` int NOT NULL,
-  `name` varchar(45) NOT NULL,
-  `price` int NOT NULL,
-  `quantity` int NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `stories`
@@ -656,3 +640,56 @@ CREATE TABLE `weapons` (
 -- SET SQL_MODE=@OLD_SQL_MODE;
 -- SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 -- SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Table enigmadb.shop
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS enigmadb.shop (
+  id INT NOT NULL AUTO_INCREMENT,
+  type INT NOT NULL,
+  name VARCHAR(45) NOT NULL,
+  price INT NOT NULL,
+  quantity INT NOT NULL,
+  PRIMARY KEY (id))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+-- -----------------------------------------------------
+-- Table enigmadb.shop_credit_item
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS enigmadb.shop_credit_item (
+  id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  price INT(11) UNSIGNED NOT NULL,
+  items VARCHAR(100) NOT NULL,
+  credit_quantity  INT(11) UNSIGNED NULL,
+  discount  INT(11) UNSIGNED DEFAULT NULL, 
+  best_seller BOOLEAN DEFAULT FALSE,
+  subscribe BOOLEAN DEFAULT FALSE,
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
+
+INSERT INTO enigmadb.shop_credit_item(price, credit_quantity, items, discount, best_seller, subscribe)
+VALUES 
+(5, 100, "credits", NULL, FALSE, FALSE), 
+(25, 1000, "crédits", 50, TRUE, FALSE),
+(20, 500, "crédits", 20, FALSE, FALSE),
+(5, NULL, "/ months", FALSE, FALSE, TRUE);
+
+-- -----------------------------------------------------
+-- Table enigmadb.shopping_card_item
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS enigmadb.shopping_card_item (
+  id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  shop_credit_item_id INT(11) UNSIGNED NOT NULL,
+  quantity INT(11) UNSIGNED NOT NULL,
+  user_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (shop_credit_item_id)
+    REFERENCES enigmadb.shop_credit_item(id)
+  -- FOREIGN KEY (user_id)
+  --   REFERENCES enigmadb.users(id)
+    )
+  ENGINE = InnoDB;
