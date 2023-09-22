@@ -3,7 +3,7 @@ import { useGameContext } from "../../services/contexts/GameContext"
 import { useEffect } from "react"
 import styled from "styled-components"
 
-function GameActions() {
+function GameActions({ refBg }) {
   /* Recupération informations scenes au chargement */
 
   const { sceneContent, getScene } = useGameContext()
@@ -12,15 +12,14 @@ function GameActions() {
   const { texts, rects, imgs, background } = useGameContext()
   const { setTexts, setRects, setImgs, setBackground } = useGameContext()
   const { changeScene, setChangeScene, setSceneSettings } = useGameContext()
-  const { getSceneUrl } = useGameContext()
+  const { getParamsUrl } = useGameContext()
 
   /* Initialisation */
   useEffect(() => {
     // console.log("Page game Actions")
     setSceneLoaded(false)
     // const { storyId, sceneId } = getSceneUrl()
-    const storyId = 138
-    const sceneId = 0
+    const { storyId, sceneId } = getParamsUrl()
     setSceneSettings({ storyId, sceneId })
     getScene(storyId, sceneId)
   }, [])
@@ -30,7 +29,7 @@ function GameActions() {
     setSceneLoaded(false)
     const loadScene = async () => {
       if (changeScene) {
-        const { storyId, sceneId } = getSceneUrl()
+        const { storyId, sceneId } = getParamsUrl()
         setSceneSettings({ storyId, sceneId })
 
         // Call getScene and wait for the response
@@ -55,6 +54,7 @@ function GameActions() {
     if (sceneLoaded) {
       // console.log("scene loaded ! ")
       setBackground(sceneContent.background)
+      refBg.current.style.backgroundImage = `url(${sceneContent.background})`
       setTexts(creationTextes(sceneContent.textbox))
       setRects(creationRects(sceneContent.rect))
       setImgs(creationImg(sceneContent.image))
@@ -79,6 +79,7 @@ export default GameActions
 
 const StyledBackground = styled.div`
   position: absolute;
+  border-radius: 20px;
   top: 0;
   left: 0;
   height: 100%;

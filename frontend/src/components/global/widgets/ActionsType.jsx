@@ -17,7 +17,7 @@ function ActionType() {
   const styles = {
     valueContainer: (base) => ({
       ...base,
-      maxHeight: 20,
+      maxHeight: 50,
       fontSize: 15,
     }),
     // Menu deroulat (partie texte)
@@ -50,6 +50,7 @@ function ActionType() {
 
   const valueTarget = [
     { value: "life", label: "life" },
+    { value: "money", label: "money" },
     { value: "attack", label: "attack" },
     { value: "defense", label: "defense" },
     { value: "assets", label: "assets" },

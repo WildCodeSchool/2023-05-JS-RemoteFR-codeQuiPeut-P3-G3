@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from "react"
+import { useLocation } from "react-router-dom"
 import axios from "axios"
 import ColorSelector from "../../../../../global/texts-editor/ColorSelector"
 // import ButtonStandard from "../../../../../global/Buttons/ButtonStandard"
@@ -12,6 +13,7 @@ import PublicSelector from "../../../../../global/DropLists/PublicSelector"
 import PopupImgFinder from "../../../../../global/popups/ImageFinderPopup/PopupImgFinder"
 import imgDefault from "../../../../../../assets/images/imgIcon.png"
 import WidgetText from "../widgets/widgetText"
+import { useEditionContext } from "../../../../../../services/contexts/editionContext"
 
 function InfoGeneral() {
   const [jdrName, setJdrName] = useState()
@@ -32,10 +34,16 @@ function InfoGeneral() {
   const [viewEditProperties, setViewEditProperties] = useState(true)
   const [idCard, setIdCard] = useState(null)
 
+  const location = useLocation()
+  const params = new URLSearchParams(location.search)
+  const story = params.get("story")
+  const scene = params.get("scene")
+  const { editSettings } = useEditionContext()
+
   // ------------ TEXT FORMATTING -------------------
 
   const [selectedFont, setSelectedFont] = useState("Arial, sans-serif")
-  const [selectedSize, setSelectedSize] = useState(32)
+  const [selectedSize, setSelectedSize] = useState(16)
   const [selectedColor, setSelectedColor] = useState("#FFFFFF")
 
   const applyTextFormattingToJdrName = () => {
@@ -171,33 +179,38 @@ function InfoGeneral() {
 
   const getCard = (storyId) => {
     // console.log("get card id : ", storyId)
-    axios.get(`http://localhost:4242/card/${storyId}`).then((res) => {
-      // console.log(res)
-      const values = res.data
-      setJdrName(values.jdrName)
-      setJdrNameFont(values.jdrNameFont)
-      setJdrNameColor(values.jdrNameColor)
-      setJdrNameFontSize(values.jdrNameFontSize)
-      setJdrImg1(values.jdrImg1)
-      setJdrImg2(values.jdrImg2)
-      setJdrText(values.jdrText)
-      setJdrBgColor1(values.jdrBgColor1)
-      setJdrBgColor2(values.jdrBgColor2)
-      setButtonFont(values.buttonFont)
-      setButtonColor(values.buttonColor)
-      setJdrCategory(values.jdrCategory)
-      setJdrPublic(values.jdrPublic)
-      setJdrNameColor(values.jdrNameColor)
-      setTextColor(values.textColor)
-      setIdCard(values.idcard)
+    axios
+      .get(`http://localhost:4242/card/${storyId}`)
+      .then((res) => {
+        // console.log("réponse getCard : ", res)
+        const values = res.data
+        setJdrName(values.jdrName)
+        setJdrNameFont(values.jdrNameFont)
+        setJdrNameColor(values.jdrNameColor)
+        setJdrNameFontSize(values.jdrNameFontSize)
+        setJdrImg1(values.jdrImg1)
+        setJdrImg2(values.jdrImg2)
+        setJdrText(values.jdrText)
+        setJdrBgColor1(values.jdrBgColor1)
+        setJdrBgColor2(values.jdrBgColor2)
+        setButtonFont(values.buttonFont)
+        setButtonColor(values.buttonColor)
+        setJdrCategory(values.jdrCategory)
+        setJdrPublic(values.jdrPublic)
+        setJdrNameColor(values.jdrNameColor)
+        setTextColor(values.textColor)
+        setIdCard(values.idcard)
 
-      // console.log("ID CARD : ", values.idcard)
-    })
+        // console.log("ID CARD : ", values.idcard)
+      })
+      .catch((err) => console.error(err))
   }
 
+  // Récupération infos card chargement page
   useEffect(() => {
-    getCard(138)
-  }, [])
+    editSettings(story, scene)
+    getCard(story)
+  }, [story, scene])
 
   // --------------- Connection a la BDD ------------------
 
@@ -446,9 +459,9 @@ function InfoGeneral() {
                       color: textColor,
                     }}
                   >
-                    <div className="textDescription">
-                      {jdrText ? `${jdrText}` : "Description Goes Here"}
-                    </div>
+                    {/* <div className="textDescription"> */}
+                    {jdrText ? `${jdrText}` : "Description Goes Here"}
+                    {/* </div> */}
                   </div>
                   <div
                     className="cardButtonPlay"

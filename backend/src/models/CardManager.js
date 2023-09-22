@@ -9,11 +9,11 @@ class CardManager extends AbstractManager {
     return this.database.query(
       `SELECT ${this.table}.*
        FROM ${this.table}
-       INNER JOIN stories ON ${this.table}.idcard = stories.card_idcard
-       WHERE stories.id = ?`,
+       WHERE storyId = ?`,
       [cardId]
     )
   }
+  //  INNER JOIN stories ON ${this.table}.idcard = stories.card_idcard
 
   insert(card) {
     return this.database.query(

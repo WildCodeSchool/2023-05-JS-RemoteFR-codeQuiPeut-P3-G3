@@ -163,46 +163,49 @@ function AdminGeneral({ setNav, selected }) {
               </tr>
             </thead>
             <tbody>
-              {data.map((elem, index) => {
-                return (
-                  <>
-                    <tr key={elem.id}>
-                      <td style={{ textAlign: "left" }}>{elem.title}</td>
-                      <td>{elem.number_view}</td>
-                      <td>{elem.win_rate}</td>
-                      <td>{elem.money_earn}</td>
-                      <td>{formatDateToDDMMYYYY(elem.creation_date)}</td>
-                      <td>{formatDateToDDMMYYYY(elem.last_update)}</td>
-                      <td>
-                        <ButtonUI
-                          width="85px"
-                          title={elem.is_deploy ? "deployed" : "deploy"}
-                          bgcolor={elem.is_deploy ? "#3f7841" : "grey"}
-                          onClick={() => handleDeploy(elem.id, !elem.is_deploy)}
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <ButtonUI
-                          width="85px"
-                          title={"Modify"}
-                          bgcolor={"#3e86bb"}
-                          onClick={() => handleModify(elem.id)}
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <ButtonUI
-                          width="85px"
-                          title={"Delete"}
-                          bgcolor={"#902B00"}
-                          onClick={() => handleDelete(elem.id)}
-                        />
-                      </td>
-                    </tr>
-                  </>
-                )
-              })}
+              {data &&
+                data.map((elem, index) => {
+                  return (
+                    <>
+                      <tr key={elem.id}>
+                        <td style={{ textAlign: "left" }}>{elem.title}</td>
+                        <td>{elem.number_view}</td>
+                        <td>{elem.win_rate}</td>
+                        <td>{elem.money_earn}</td>
+                        <td>{formatDateToDDMMYYYY(elem.creation_date)}</td>
+                        <td>{formatDateToDDMMYYYY(elem.last_update)}</td>
+                        <td>
+                          <ButtonUI
+                            width="85px"
+                            title={elem.is_deploy ? "deployed" : "deploy"}
+                            bgcolor={elem.is_deploy ? "#3f7841" : "grey"}
+                            onClick={() =>
+                              handleDeploy(elem.id, !elem.is_deploy)
+                            }
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <ButtonUI
+                            width="85px"
+                            title={"Modify"}
+                            bgcolor={"#3e86bb"}
+                            onClick={() => handleModify(elem.id)}
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <ButtonUI
+                            width="85px"
+                            title={"Delete"}
+                            bgcolor={"#902B00"}
+                            onClick={() => handleDelete(elem.id)}
+                          />
+                        </td>
+                      </tr>
+                    </>
+                  )
+                })}
             </tbody>
           </table>
         </div>

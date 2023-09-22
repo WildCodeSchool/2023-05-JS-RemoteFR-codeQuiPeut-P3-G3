@@ -3,17 +3,22 @@ import GameHeaderHudHealth from "./GameHeaderHudHealth"
 // import GameHeaderHudInventory from "./GameHeaderHudInventory"
 import GameHeaderHudPortrait from "./GameHeaderHudPortrait"
 import "./GameHeaderHud.scss"
-const GameHeaderHud = ({ hero }) => {
+import { useGameContext } from "../../../services/contexts/GameContext"
+const GameHeaderHud = () => {
+  const { heroSelected } = useGameContext()
+
+  // console.log("chargement Hud et content : ", heroSelected)
+
   return (
     <div className="gameHeaderHud">
       <div className="mainHud">
-        <GameHeaderHudPortrait hero={hero} />
+        <GameHeaderHudPortrait />
         <div className="stats">
-          <GameHeaderHudHealth hero={hero} />
-          <GameHeaderHudGold hero={hero} />
+          <GameHeaderHudHealth hero={heroSelected} />
+          <GameHeaderHudGold hero={heroSelected} />
         </div>
       </div>
-      {/* <GameHeaderHudInventory hero={hero} /> */}
+      {/* <GameHeaderHudInventory hero={heroSelected} /> */}
     </div>
   )
 }

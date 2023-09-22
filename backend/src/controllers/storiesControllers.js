@@ -123,7 +123,9 @@ const createStoryWithCard = (req, res, next) => {
     .insert(data)
     .then(([result]) => {
       const storyId = result.insertId
+      req.insertId = result.insertId
       // console.log(" STORY ID : => ", storyId)
+      // console.log(req)
       // console.log(result)
 
       // Maintenant, insérez une nouvelle carte associée à la story avec des valeurs par défaut
@@ -150,6 +152,7 @@ const createStoryWithCard = (req, res, next) => {
       return models.card.insert(newCard)
     })
     .then(() => {
+      // console.log("next")
       next() // Passez à l'étape suivante après avoir inséré la carte
     })
     .catch((err) => {

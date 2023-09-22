@@ -6,25 +6,54 @@
 
 .Shop_Payment_Title_Container {
   h3 {
+    display: flex;
     font-family: $font-family1;
     font-size: 3rem;
+    color: white;
+    font-weight: 700;
   }
+
   .OrangeTitle {
     color: #f97700;
+    font-weight: 700;
   }
 }
 
 .Shop_Payment_Left {
+  background: linear-gradient(180deg, #4a1d8f 0%, #5c61b5 100%);
+  width: 20rem;
+  height: 46rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-around;
+  align-items: center;
   font-size: 20px;
   font-weight: 700;
-  margin-left: 1;
   text-align: center;
   white-space: nowrap;
+
+  .cart-items-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+
+    .cart-item {
+      margin-bottom: 50px;
+      color: white;
+      a {
+        color: red;
+        cursor: pointer;
+      }
+    }
+  }
 
   .BillsValues {
     font-size: 50px;
     font-weight: 700;
-    margin-top: 14;
     text-align: center;
   }
 }
@@ -48,22 +77,12 @@
   align-items: center;
 }
 
-.Shop_Payment_Left {
-  background: linear-gradient(180deg, #4a1d8f 0%, #5c61b5 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  width: 20rem;
-  height: 46rem;
-}
-
 .Shop_Payment_Right {
   background-color: rgb(255, 255, 255);
   color: black;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  // justify-content: center;
   width: 45rem;
   height: 46rem;
   padding-left: 2rem;
@@ -134,6 +153,10 @@
     }
   }
 
+  .shopLinkPaypal {
+    cursor: default;
+  }
+
   .Shop_Payment_Cat4 {
     display: flex;
     flex-direction: column;
@@ -144,6 +167,7 @@
       background-color: #564ba9;
       color: white;
       border: none;
+      cursor: pointer;
       border-radius: 7px;
       font-weight: 700;
       text-align: center;
@@ -172,6 +196,7 @@
 
     .PayPal_Logo {
       width: 60%;
+      cursor: pointer;
     }
   }
 }

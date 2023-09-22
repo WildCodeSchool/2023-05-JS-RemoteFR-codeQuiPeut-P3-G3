@@ -90,6 +90,9 @@ router.post("/shop", shopControllers.add)
 router.put("/shop/:id", shopControllers.edit)
 router.delete("/shop/:id", shopControllers.destroy)
 
+router.get("/shopping_card_item", shopControllers.getTotalCart)
+router.delete("/shopping_card_item/removeAll", shopControllers.deleteAll)
+
 router.get("/stories", storiesControllers.browse)
 router.get("/stories/:id/:scene?", storiesControllers.read)
 // router.post("/stories", storiesControllers.add, createStory)
@@ -133,7 +136,7 @@ router.delete("/api-stories/:idStory/:idScene", deleteScene, getScene)
 
 // heroes
 router.put("/api-heroes/:idStory", addHero)
-router.get("/api-heroes/:idStory", getHeroes)
+router.get("/api-heroes/:storyId", getHeroes)
 router.delete("/api-heroes/:idStory/:idHero", deleteHero, getHeroes)
 
 router.put("/users/:id", usersControllers.editProfile)

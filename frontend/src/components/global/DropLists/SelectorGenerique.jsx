@@ -1,5 +1,6 @@
 import Select from "react-select"
 import "./SelectorGenerique.scss"
+import { useEffect } from "react"
 
 function SelectorGenerique({
   selectedCategory,
@@ -7,24 +8,14 @@ function SelectorGenerique({
   options,
   styles,
 }) {
-  // const categoryOptions = [
-  //   { value: "Action", label: "Action" },
-  //   { value: "CyberPunk", label: "CyberPunk" },
-  //   { value: "Fantastic", label: "Fantastic" },
-  //   { value: "Horror", label: "Horror" },
-  //   { value: "Medieval", label: "Medieval" },
-  //   { value: "Mythology", label: "Mythology" },
-  //   { value: "Post-Apocaliptic", label: "Post-Apocaliptic" },
-  //   { value: "Prehistoric", label: "Prehistoric" },
-  //   { value: "Renaissance", label: "Renaissance" },
-  //   { value: "Sci-fi", label: "Sci-fi" },
-  //   { value: "Space", label: "Space" },
-  //   { value: "Western", label: "Western" },
-  // ]
-  // console.log(options)
   const handleCategoryChange = (selectedOption) => {
+    // console.log(selectedOption)
     setSelectedCategory(selectedOption.value)
   }
+
+  useEffect(() => {
+    // console.log(selectedCategory)
+  }, [selectedCategory])
 
   return (
     <div className="SelectorGenerique">
