@@ -12,6 +12,7 @@ import ProtectedUserRoute from "./ProtectedUserRoute"
 import Game from "./pages/Game"
 /* PACKAGES */
 import { Routes, Route, useLocation } from "react-router-dom"
+import { GameContextProvider } from "./services/contexts/GameContext"
 
 /* CSS */
 import "./App.scss"
@@ -33,9 +34,11 @@ function App() {
           <Navbar />
         </header>
       )}
-      <Routes>
-        <Route path="/Game" element={<Game />} />
-      </Routes>
+      <GameContextProvider>
+        <Routes>
+          <Route path="/Game" element={<Game />} />
+        </Routes>
+      </GameContextProvider>
       {/* MAIN CONTENT */}
       <main className="main-content">
         <Routes>

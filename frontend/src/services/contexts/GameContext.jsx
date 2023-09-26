@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import axios from "axios"
-import React, { createContext, useContext, useState } from "react"
+import React, { createContext, useContext, useState, useRef } from "react"
 import { useSearchParams, useLocation } from "react-router-dom"
 
 const GameContext = createContext()
@@ -75,6 +75,8 @@ export const GameContextProvider = ({ children }) => {
 
   const location = useLocation()
   const params = new URLSearchParams(location.search)
+
+  const refCanva = useRef(null)
 
   // const location = useLocation()
 
@@ -185,33 +187,39 @@ export const GameContextProvider = ({ children }) => {
   const creationTextes = (object) => {
     // console.log("creation de textes")
     const textComponents = []
+    // console.log("object: ", sceneContent)
+    const { canvaWidth } = sceneContent
+    const { gameWidth } = getSizeCanva()
+
+    const ratio = gameWidth / canvaWidth
+    // console.log(ratio)
 
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
         const elem = object[key]
         const actions = elem.Actions || []
 
-        const scaleX = elem.obj.scaleX || 1
-        const scaleY = elem.obj.scaleY || 1
+        // const scaleX = elem.obj.scaleX || 1
+        // const scaleY = elem.obj.scaleY || 1
 
         const textProperties = {
           fontFamily: elem.obj.fontFamily,
-          fontSize: elem.obj.fontSize,
+          fontSize: elem.obj.fontSize * ratio * elem.obj.scaleX, // Appliquer le ratio et la scaleX
           fill: elem.obj.fill,
-          left: elem.pos.percX,
-          top: elem.pos.percY,
-          height: elem.obj.height * elem.obj.scaleX,
-          width: elem.obj.width * elem.obj.scaleY,
+          left: elem.pos.percX, // Appliquer le ratio à la position horizontale
+          top: elem.pos.percY, // Appliquer le ratio à la position verticale
+          height: elem.obj.height * elem.obj.scaleY * ratio, // Appliquer scaleY et le ratio à la hauteur
+          width: elem.obj.width * elem.obj.scaleX * ratio, // Appliquer scaleX et le ratio à la largeur
           cursor: actions > 0 || elem.link !== "" ? "pointer" : "default",
         }
 
-        const textScaleTransform = `scale(${scaleX}, ${scaleY})`
+        // const textScaleTransform = `scale(${scaleX}, ${scaleY})`
 
-        const textStyles = {
-          transform: textScaleTransform,
-          transformOrigin: "top left",
-          fontSize: elem.obj.fontSize,
-        }
+        // const textStyles = {
+        //   transform: textScaleTransform,
+        //   transformOrigin: "top left",
+        //   fontSize: elem.obj.fontSize,
+        // }
 
         textComponents.push(
           <StyledText
@@ -219,8 +227,9 @@ export const GameContextProvider = ({ children }) => {
             textProperties={textProperties}
             onClick={() => handleClick(elem)}
           >
-            <div style={textStyles}>{elem.obj.text}</div>
+            <div>{elem.obj.text}</div>
           </StyledText>
+          // style={textStyles}
         )
       }
     }
@@ -232,6 +241,10 @@ export const GameContextProvider = ({ children }) => {
 
   const creationRects = (object) => {
     const rectComponents = []
+    const { canvaWidth } = sceneContent
+    const { gameWidth } = getSizeCanva()
+
+    const ratio = gameWidth / canvaWidth
 
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
@@ -246,8 +259,8 @@ export const GameContextProvider = ({ children }) => {
           fill: elem.obj.fill,
           left: elem.pos.percX,
           top: elem.pos.percY,
-          height: elem.obj.height * elem.obj.scaleY,
-          width: elem.obj.width * elem.obj.scaleX,
+          height: elem.obj.height * elem.obj.scaleY * ratio,
+          width: elem.obj.width * elem.obj.scaleX * ratio,
           cursor: actions > 0 || elem.link !== "" ? "pointer" : "default",
         }
 
@@ -269,6 +282,11 @@ export const GameContextProvider = ({ children }) => {
   const creationImg = (object) => {
     const imgComponents = []
 
+    const { canvaWidth } = sceneContent
+    const { gameWidth } = getSizeCanva()
+
+    const ratio = gameWidth / canvaWidth
+
     for (const key in object) {
       if (Object.prototype.hasOwnProperty.call(object, key)) {
         const elem = object[key]
@@ -277,8 +295,8 @@ export const GameContextProvider = ({ children }) => {
         const imgProperties = {
           left: elem.pos.percX,
           top: elem.pos.percY,
-          height: elem.obj.height * elem.obj.scaleY,
-          width: elem.obj.width * elem.obj.scaleX,
+          height: elem.obj.height * elem.obj.scaleY * ratio,
+          width: elem.obj.width * elem.obj.scaleX * ratio,
           src: elem.obj.src,
           cursor: actions > 0 || elem.link !== "" ? "pointer" : "default",
         }
@@ -342,6 +360,12 @@ export const GameContextProvider = ({ children }) => {
     }
   }
 
+  const getSizeCanva = () => {
+    const gameWidth = refCanva.current.clientWidth
+    const gameHeight = refCanva.current.clientHeight
+    return { gameWidth, gameHeight }
+  }
+
   return (
     <GameContext.Provider
       value={{
@@ -373,6 +397,7 @@ export const GameContextProvider = ({ children }) => {
         sceneSettings,
         heroSelected,
         setHeroSelected,
+        refCanva,
       }}
     >
       {children}

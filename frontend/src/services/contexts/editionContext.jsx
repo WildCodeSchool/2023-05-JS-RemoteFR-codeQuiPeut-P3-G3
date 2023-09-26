@@ -286,6 +286,7 @@ export const EditionContextProvider = ({ children }) => {
         setObjects(response.data.scene)
         canvas.clear()
         renderNewElements(response.data.scene)
+        console.log("scene importee: ", response.data.scene)
       })
       .catch((error) => {
         console.error("Erreur de la requête :", error)
@@ -302,9 +303,14 @@ export const EditionContextProvider = ({ children }) => {
     // "textbox"
     for (const textboxId in data.textbox) {
       const textboxData = data.textbox[textboxId]
+      const { left, top } = MiseEchelleInverse(
+        textboxData.pos.percX,
+        textboxData.pos.percY
+      )
+
       const textbox = new fabric.Textbox(textboxData.obj.text, {
-        left: textboxData.obj.left,
-        top: textboxData.obj.top,
+        left,
+        top,
         width: textboxData.obj.width,
         height: textboxData.obj.height,
         fill: textboxData.obj.fill,
@@ -314,25 +320,64 @@ export const EditionContextProvider = ({ children }) => {
         Actions: textboxData.Actions,
         link: textboxData.link,
         pos: textboxData.pos,
+        scaleX: textboxData.obj.scaleX,
+        scaleY: textboxData.obj.scaleY,
+        skewX: textboxData.obj.skewX,
+        skewY: textboxData.obj.skewY,
+        angle: textboxData.obj.angle,
+        flipX: textboxData.obj.flipX,
+        flipY: textboxData.obj.flipY,
       })
 
+      // const dataTextInfo = {
+      //   fontSize: 4,
+      //   height: 20,
+      //   width: 300,
+      //   top: top - 5,
+      //   left,
+      //   selectable: false,
+      //   id: textboxData.id,
+      //   Actions: textboxData.Actions,
+      //   link: textboxData.link,
+      //   pos: textboxData.pos,
+      // }
+
+      // const textInfo = `left:${left} top:${top} width:${textboxData.obj.width} height:${textboxData.obj.height} `
+
+      // const textboxInfo = new fabric.Textbox(textInfo, { dataTextInfo })
+      console.log(`${textboxData.pos.percX} %`)
+      console.log("textbox crée : ", textbox)
       canvas.add(textbox)
+      // canvas.add(textboxInfo)
       canvas.renderAll()
     }
 
     // Parcourez les données de "rect"
     for (const rectId in data.rect) {
       const rectData = data.rect[rectId]
+      const { left, top } = MiseEchelleInverse(
+        rectData.pos.percX,
+        rectData.pos.percY
+      )
       const rect = new fabric.Rect({
-        left: rectData.obj.left,
-        top: rectData.obj.top,
+        left,
+        top,
         width: rectData.obj.width,
         height: rectData.obj.height,
         fill: rectData.obj.fill,
+        stroke: rectData.obj.stroke,
+        strokeWidth: rectData.obj.strokeWidth,
         id: rectData.id,
         link: rectData.link,
         pos: rectData.pos,
         Actions: rectData.Actions,
+        scaleX: rectData.obj.scaleX,
+        scaleY: rectData.obj.scaleY,
+        angle: rectData.obj.angle,
+        flipX: rectData.obj.flipX,
+        flipY: rectData.obj.flipY,
+        rx: rectData.obj.rx,
+        ry: rectData.obj.ry,
       })
 
       canvas.add(rect)
@@ -341,16 +386,27 @@ export const EditionContextProvider = ({ children }) => {
     // Parcourez les données de "image"
     for (const imgId in data.image) {
       const imgData = data.image[imgId]
+      const { left, top } = MiseEchelleInverse(
+        imgData.pos.percX,
+        imgData.pos.percY
+      )
       fabric.Image.fromURL(imgData.src, (img) => {
         img.set({
-          left: imgData.obj.left,
-          top: imgData.obj.top,
+          left,
+          top,
           width: imgData.obj.width,
           height: imgData.obj.height,
           id: imgData.id,
           link: imgData.link,
           pos: imgData.pos,
           Actions: imgData.Actions,
+          scaleX: imgData.scaleX,
+          scaleY: imgData.scaleY,
+          angle: imgData.angle,
+          cropX: imgData.cropX,
+          cropY: imgData.cropY,
+          stroke: imgData.stroke,
+          strokeWidth: imgData.strokeWidth,
           // Autres propriétés de l'image ici
         })
         canvas.add(img)
@@ -451,6 +507,10 @@ export const EditionContextProvider = ({ children }) => {
 
     sortedObjects.background = backgroundUrl
 
+    const { canvasWidth, canvasHeight } = getWidthCanva()
+    sortedObjects.canvaHeight = canvasHeight
+    sortedObjects.canvaWidth = canvasWidth
+
     const dataExport = sortedObjects
     axios
       .put(
@@ -466,14 +526,40 @@ export const EditionContextProvider = ({ children }) => {
       })
   }
 
-  const MiseEchelle = (left, top) => {
+  const getWidthCanva = () => {
     const canvasWidth = canvas.getWidth()
     const canvasHeight = canvas.getHeight()
+
+    return { canvasWidth, canvasHeight }
+  }
+
+  const MiseEchelle = (left, top) => {
+    const { canvasWidth, canvasHeight } = getWidthCanva()
 
     const percX = (left / canvasWidth) * 100
     const percY = (top / canvasHeight) * 100
 
-    return { percX, percY }
+    return { percX, percY, canvasHeight, canvasWidth }
+  }
+
+  const MiseEchelleInverse = (percX, percY) => {
+    const { canvasWidth, canvasHeight } = getWidthCanva()
+
+    console.log("height : ", canvasHeight, " width : ", canvasWidth)
+
+    console.log("perc X : ", percX, " perc Y :", percY)
+
+    const left = (percX * canvasWidth) / 100
+    const top = (percY * canvasHeight) / 100
+
+    console.log("left calc : ", left, " top calc : ", top)
+
+    return { left, top }
+  }
+
+  const resetScene = () => {
+    canvas.clear()
+    canvas.setBackgroundColor("white")
   }
 
   return (
@@ -482,6 +568,7 @@ export const EditionContextProvider = ({ children }) => {
         canvas,
         setCanvas,
         editSettings,
+        resetScene,
         render,
         setRender,
         addScene,
