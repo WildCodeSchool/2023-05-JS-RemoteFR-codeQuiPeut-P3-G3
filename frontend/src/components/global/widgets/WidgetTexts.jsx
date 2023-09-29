@@ -33,7 +33,7 @@ function WidgetTexts({ viewEditProperties }) {
   /* =============== */
 
   const handleColorPicker = () => {
-    setDisplayCPicker(true)
+    setDisplayCPicker(!displayCPicker)
   }
 
   const handleCloseColorPicker = (color) => {
@@ -84,14 +84,16 @@ function WidgetTexts({ viewEditProperties }) {
               <div
                 className="previewColor"
                 style={{ backgroundColor: selectedColor }}
-              >
+              ></div>
+
+              {displayCPicker && (
                 <ColorSelector
                   state={displayCPicker}
                   onClose={handleCloseColorPicker}
                   selectedColor={selectedColor}
                   setSelectedColor={setSelectedColor}
                 />
-              </div>
+              )}
             </div>
           </div>
           <div className="objectProps__section">

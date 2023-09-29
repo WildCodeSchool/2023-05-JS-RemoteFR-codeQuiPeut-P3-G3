@@ -22,6 +22,7 @@
   padding: 20px;
 
   &__section {
+  
     // margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -44,8 +45,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      // max-height: 50px;
+      max-height: 50px;
       box-sizing: border-box;
+      position:relative;
+
 
       img {
         height: 100%;
@@ -68,7 +71,8 @@
 }
 
 .links {
-  margin-bottom: 120px;
+  margin-bottom: 150px;
+
 }
 
 .hidden {
@@ -105,6 +109,8 @@
 }
 
 .previewColor {
+  // position:absolute;
+  background-color: red;
   height: 30px;
   width: 30px;
   border-color: hsl(0, 0%, 80%);

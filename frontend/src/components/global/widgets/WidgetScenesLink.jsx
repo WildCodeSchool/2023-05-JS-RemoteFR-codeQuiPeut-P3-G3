@@ -67,7 +67,7 @@ function WidgetScenesLink() {
       const items = []
 
       for (let i = 0; i < editStatus.nbreScene; i++) {
-        items.push({ value: `${i.toString()}`, label: `scene ${i}` })
+        items.push({ value: `${i.toString()}`, label: `scene ${i + 1}` })
       }
 
       // Update the data state with the new items

@@ -24,7 +24,7 @@ function EditScenes() {
   const [viewEditProperties, setViewProperties] = useState(false)
 
   /* RECUPERATION DES PROPRIETES */
-  const { objectSelected, setObjectSelected, exportScenes } =
+  const { objectSelected, setObjectSelected, exportScenes, resetScene } =
     useEditionContext()
 
   /* Popup image viewer */
@@ -143,11 +143,18 @@ function EditScenes() {
               title={"save"}
               bgcolor={"#3f7841"}
               onClick={() => exportScenes(objects, story, scene)}
+              maxHeight="50px"
             />
-            <ButtonUI title={"reset"} bgcolor={"#0A0A0A"} />
+            <ButtonUI
+              title={"reset"}
+              bgcolor={"#0A0A0A"}
+              maxHeight="50px"
+              onClick={() => resetScene()}
+            />
             <ButtonUI
               title={"delete"}
               bgcolor={"#902B00"}
+              maxHeight="50px"
               onClick={() =>
                 deleteScene(editStatus.storyId, editStatus.sceneId)
               }
@@ -155,18 +162,19 @@ function EditScenes() {
           </div>
         </div>
         <div className="scenes__properties">
-          <WidgetPosition />
+          <div className="wrap-test">
+            <WidgetPosition />
+            {objectSelected.type === "textbox" && (
+              <WidgetTexts
+                viewEditProperties={viewEditProperties}
+                objectSelected={objectSelected}
+                setObjectSelected={setObjectSelected}
+              />
+            )}
 
-          {objectSelected.type === "textbox" && (
-            <WidgetTexts
-              viewEditProperties={viewEditProperties}
-              objectSelected={objectSelected}
-              setObjectSelected={setObjectSelected}
-            />
-          )}
-
-          <WidgetRect viewEditProperties={viewEditProperties} />
-          <WidgetScenesLink />
+            <WidgetRect viewEditProperties={viewEditProperties} />
+            <WidgetScenesLink />
+          </div>
         </div>
       </div>
       {/* Popup recherche image */}
