@@ -22,7 +22,6 @@
   padding: 20px;
 
   &__section {
-  
     // margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -47,8 +46,7 @@
       align-items: center;
       max-height: 50px;
       box-sizing: border-box;
-      position:relative;
-
+      position: relative;
 
       img {
         height: 100%;
@@ -72,7 +70,6 @@
 
 .links {
   margin-bottom: 150px;
-
 }
 
 .hidden {

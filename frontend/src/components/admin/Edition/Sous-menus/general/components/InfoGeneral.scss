@@ -124,7 +124,7 @@
           margin-left: auto;
           margin-right: auto;
           text-align: center;
-          position:relative;
+          position: relative;
         }
 
         .topRight {
@@ -139,12 +139,12 @@
             // align-items: center;
             // position:relative;
             // background-color: red;
-            width:200px;
-            height:200px;
-            position:absolute;
-            top:60%;
-            left:42%;
-            transform: translate(-50%,-50%);
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 60%;
+            left: 42%;
+            transform: translate(-50%, -50%);
           }
         }
       }
@@ -265,8 +265,6 @@
             width: 100%;
             bottom: 163px;
             z-index: 1;
-
-     
           }
 
           .cardBottomImg {
@@ -335,9 +333,9 @@
   }
 }
 
-.topBgColorSelector{
-  position:absolute;
-  top:0;
-  left:0;
+.topBgColorSelector {
+  position: absolute;
+  top: 0;
+  left: 0;
   background-color: red;
 }
