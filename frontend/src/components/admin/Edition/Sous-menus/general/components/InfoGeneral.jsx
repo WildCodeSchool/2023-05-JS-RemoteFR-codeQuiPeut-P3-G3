@@ -310,15 +310,7 @@ function InfoGeneral() {
                 />
               </div>
               <div className="topRight">
-                <div className="topImg">
-                  {viewImgFinder && (
-                    <PopupImgFinder
-                      setViewImgFinder={setViewImgFinder}
-                      setSelectedPath={setSelectedPath}
-                      selectedPath={selectedPath}
-                    />
-                  )}
-                </div>
+                <div className="topImg"></div>
                 <div className="topBgColor">
                   <div className="topBgColorSelector"></div>
                   <ColorSelector
@@ -341,6 +333,13 @@ function InfoGeneral() {
           </div>
         </div>
 
+        {viewImgFinder && (
+          <PopupImgFinder
+            setViewImgFinder={setViewImgFinder}
+            setSelectedPath={setSelectedPath}
+            selectedPath={selectedPath}
+          />
+        )}
         {/* -------------- VUE DU RESULTAT COTE CARD --------------- */}
 
         <div className="pictureGeneral">
@@ -420,13 +419,13 @@ function InfoGeneral() {
                   width="402"
                   height="112"
                   viewBox="0 0 402 112"
-                  fill="none"
+                  fill="#none"
                 >
                   <path
                     fillRule="evenodd"
                     clipRule="evenodd"
                     d="M401.198 111.581C401.198 121.174 417.91 -37.4809 298.777 8.32094C0.00046601 101.075 1.93865e-05 101.075 1.93865e-05 100.987L0.000111791 111.581C0.000111791 111.581 84.8331 111.581 133.73 111.581C182.627 111.581 241.782 111.581 290.68 111.581C339.577 111.581 376.933 111.581 401.198 111.581Z"
-                    fill={jdrBgColor2}
+                    fill={jdrBgColor2 ?? "#f8c86b"}
                   />
                 </svg>
                 <img

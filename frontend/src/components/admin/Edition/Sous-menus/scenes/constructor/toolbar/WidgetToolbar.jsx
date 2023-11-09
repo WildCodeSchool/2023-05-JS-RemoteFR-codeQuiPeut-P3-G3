@@ -1,18 +1,18 @@
-import { useState } from "react"
+// import { useState } from "react"
 
 import "./WidgetToolbar.scss"
 
 import imgButton from "../../../../../../../assets/user_ui/button.png"
 import imgImage from "../../../../../../../assets/user_ui/image_add.png"
 import imgPerson from "../../../../../../../assets/user_ui/person.png"
-import imgSwitchOff from "../../../../../../../assets/user_ui/switch_off.png"
-import imgSwitchOn from "../../../../../../../assets/user_ui/switch_on.png"
+// import imgSwitchOff from "../../../../../../../assets/user_ui/switch_off.png"
+// import imgSwitchOn from "../../../../../../../assets/user_ui/switch_on.png"
 import imgText from "../../../../../../../assets/user_ui/text.png"
-import ListDeroulante from "../../../../../../global/ListDeroulante"
+// import ListDeroulante from "../../../../../../global/ListDeroulante"
 import { useEditionContext } from "../../../../../../../services/contexts/editionContext"
 
 function WidgetToolbar() {
-  const [isFight, setFight] = useState(false)
+  // const [isFight, setFight] = useState(false)
 
   const {
     setIsAddingPic,
@@ -59,7 +59,7 @@ function WidgetToolbar() {
         </button>
       </div>
       <div className="toolbar__right">
-        <span> Fight </span>
+        {/* <span> Fight </span>
         <button
           type="button"
           className="btn-toolbar"
@@ -69,7 +69,7 @@ function WidgetToolbar() {
           <img src={isFight ? imgSwitchOn : imgSwitchOff} alt="icon-switch" />
         </button>
         <span> Enemy</span>
-        <ListDeroulante />
+        <ListDeroulante /> */}
       </div>
     </div>
   )

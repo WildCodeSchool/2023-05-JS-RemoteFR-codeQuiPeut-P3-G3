@@ -13,7 +13,7 @@ function ColorSelector({ state, onClose, selectedColor, setSelectedColor }) {
   return (
     <div className={`color-picker ${state ? "visible" : ""}`}>
       <ChromePicker color={selectedColor} onChange={handleColorChange} />
-      <button onClick={handleConfirm}>Confirmer</button>
+      <button onClick={handleConfirm}>quit</button>
     </div>
   )
 }

@@ -124,6 +124,7 @@
           margin-left: auto;
           margin-right: auto;
           text-align: center;
+          position: relative;
         }
 
         .topRight {
@@ -133,9 +134,17 @@
 
           .topImg,
           .topBgColor {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            // display: flex;
+            // flex-direction: column;
+            // align-items: center;
+            // position:relative;
+            // background-color: red;
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 60%;
+            left: 42%;
+            transform: translate(-50%, -50%);
           }
         }
       }
@@ -322,4 +331,11 @@
       }
     }
   }
+}
+
+.topBgColorSelector {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: red;
 }
