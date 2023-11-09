@@ -1,18 +1,18 @@
 module.exports.story = {
-  "global": {
-    "description": "",
-    "name": "",
-    "category": "",
-    "public": ""
+  global: {
+    description: "",
+    name: "",
+    category: "",
+    public: "",
   },
-  "scenes": [
+  scenes: [
     {
-      "textbox": {},
-      "image": {},
-      "rect": {}
-    }
+      textbox: {},
+      image: {},
+      rect: {},
+    },
   ],
-  "heroes": [],
-  "weapons": [],
-  "consumables": []
-};
+  heroes: [],
+  weapons: [],
+  consumables: [],
+}
