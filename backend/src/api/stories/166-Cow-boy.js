@@ -10,16 +10,6 @@ module.exports.story = {
       "textbox": {},
       "image": {},
       "rect": {}
-    },
-    {
-      "textbox": {},
-      "image": {},
-      "rect": {}
-    },
-    {
-      "textbox": {},
-      "image": {},
-      "rect": {}
     }
   ],
   "heroes": [],

@@ -58,7 +58,7 @@ function Register() {
       })
       .catch((error) => {
         console.error(error)
-        setError("Email and pseudo must be unique and psswords must match")
+        setError("Email and pseudo must be unique and passwords must match")
         // Handle error
       })
   }
