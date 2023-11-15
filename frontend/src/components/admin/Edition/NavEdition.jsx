@@ -8,10 +8,10 @@ function NavEdition({ view, setView }) {
         <li>
           <button
             type="button"
-            className={`nav__button ${view === "General" ? "active" : ""}`}
-            onClick={() => setView("General")}
+            className={`nav__button ${view === "Vignette" ? "active" : ""}`}
+            onClick={() => setView("Vignette")}
           >
-            General
+            Vignette
           </button>
         </li>
 

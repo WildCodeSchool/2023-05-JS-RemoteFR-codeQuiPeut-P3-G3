@@ -20,6 +20,8 @@ const StyledText = styled.div`
   height: ${(props) => props.textProperties.height}px;
   width: ${(props) => props.textProperties.width}px;
   cursor: ${(props) => props.textProperties.cursor};
+  transform: rotate(${(props) => props.textProperties.angle}deg);
+  text-align: ${(props) => props.textProperties.textAlign};
   z-index: 3;
 `
 
@@ -35,6 +37,7 @@ const StyledRect = styled.div`
   height: ${(props) => props.rectProperties.height}px;
   width: ${(props) => props.rectProperties.width}px;
   cursor: ${(props) => props.rectProperties.cursor};
+  transform: rotate(${(props) => props.rectProperties.angle}deg);
   z-index: 2;
 `
 
@@ -46,6 +49,7 @@ const StyledImg = styled.img`
   width: ${(props) => props.imgProperties.width}px;
   content: url("${(props) => props.imgProperties.src}");
   cursor: ${(props) => props.imgProperties.cursor};
+  transform: rotate(${(props) => props.imgProperties.angle}deg);
   z-index: 1;
 `
 /* ============================================================= */
@@ -209,8 +213,10 @@ export const GameContextProvider = ({ children }) => {
           left: elem.pos.percX, // Appliquer le ratio à la position horizontale
           top: elem.pos.percY, // Appliquer le ratio à la position verticale
           height: elem.obj.height * elem.obj.scaleY * ratio, // Appliquer scaleY et le ratio à la hauteur
-          width: elem.obj.width * elem.obj.scaleX * ratio, // Appliquer scaleX et le ratio à la largeur
+          width: elem.obj.width * elem.obj.scaleX * ratio,
+          angle: elem.obj.angle, // Appliquer scaleX et le ratio à la largeur
           cursor: actions > 0 || elem.link !== "" ? "pointer" : "default",
+          textAlign: elem.obj.textAlign,
         }
 
         // const textScaleTransform = `scale(${scaleX}, ${scaleY})`
@@ -261,8 +267,11 @@ export const GameContextProvider = ({ children }) => {
           top: elem.pos.percY,
           height: elem.obj.height * elem.obj.scaleY * ratio,
           width: elem.obj.width * elem.obj.scaleX * ratio,
+          angle: elem.obj.angle,
           cursor: actions > 0 || elem.link !== "" ? "pointer" : "default",
         }
+
+        console.log(rectProperties.angle)
 
         rectComponents.push(
           <StyledRect
@@ -298,6 +307,7 @@ export const GameContextProvider = ({ children }) => {
           height: elem.obj.height * elem.obj.scaleY * ratio,
           width: elem.obj.width * elem.obj.scaleX * ratio,
           src: elem.obj.src,
+          angle: elem.obj.angle,
           cursor: actions > 0 || elem.link !== "" ? "pointer" : "default",
         }
 

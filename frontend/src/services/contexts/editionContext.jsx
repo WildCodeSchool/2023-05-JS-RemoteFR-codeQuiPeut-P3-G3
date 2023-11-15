@@ -315,6 +315,7 @@ export const EditionContextProvider = ({ children }) => {
         height: textboxData.obj.height,
         fill: textboxData.obj.fill,
         fontFamily: textboxData.obj.fontFamily,
+        textAlign: textboxData.obj.textAlign,
         fontSize: textboxData.obj.fontSize,
         id: textboxData.id,
         Actions: textboxData.Actions,
@@ -384,13 +385,16 @@ export const EditionContextProvider = ({ children }) => {
     }
 
     // Parcourez les données de "image"
+    console.log("DATA IMAGE ==> ", data.image)
     for (const imgId in data.image) {
       const imgData = data.image[imgId]
+      console.log("CONTENU IMAGE DE L'ID : ", imgData)
       const { left, top } = MiseEchelleInverse(
         imgData.pos.percX,
         imgData.pos.percY
       )
-      fabric.Image.fromURL(imgData.src, (img) => {
+      console.log("Source image : ", imgData.obj.src)
+      fabric.Image.fromURL(imgData.obj.src, (img) => {
         img.set({
           left,
           top,
@@ -400,17 +404,19 @@ export const EditionContextProvider = ({ children }) => {
           link: imgData.link,
           pos: imgData.pos,
           Actions: imgData.Actions,
-          scaleX: imgData.scaleX,
-          scaleY: imgData.scaleY,
-          angle: imgData.angle,
-          cropX: imgData.cropX,
-          cropY: imgData.cropY,
-          stroke: imgData.stroke,
-          strokeWidth: imgData.strokeWidth,
+          scaleX: imgData.obj.scaleX,
+          scaleY: imgData.obj.scaleY,
+          angle: imgData.obj.angle,
+          cropX: imgData.obj.cropX,
+          cropY: imgData.obj.cropY,
+          stroke: imgData.obj.stroke,
+          strokeWidth: imgData.obj.strokeWidth,
+
           // Autres propriétés de l'image ici
         })
         canvas.add(img)
         canvas.renderAll()
+        console.log(" contenu image :", img.src)
       })
     }
 

@@ -291,7 +291,7 @@ function CharacterSettings() {
             </div>
           </section>
 
-          <section className="characterWeapons">
+          {/* <section className="characterWeapons">
             <div className="titleSection">
               <img src={imgSword} alt="imgMoney" />
             </div>
@@ -299,7 +299,7 @@ function CharacterSettings() {
               <label htmlFor="Unit">Unit</label>
               <input type="text" id="Unit" name="Unit" placeholder="dollar" />
             </div>
-          </section>
+          </section> */}
 
           <section className="characterSkills">
             <div className="titleSection">

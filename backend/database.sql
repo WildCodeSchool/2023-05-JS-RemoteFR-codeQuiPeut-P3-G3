@@ -41,8 +41,18 @@ CREATE TABLE `card` (
   `jdrPublic` varchar(45) NOT NULL,
   `storyId` int DEFAULT NULL,
   PRIMARY KEY (`idcard`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `card`
+--
+
+LOCK TABLES `card` WRITE;
+/*!40000 ALTER TABLE `card` DISABLE KEYS */;
+INSERT INTO `card` VALUES (26,'TO DIE IN THE WEST','Inika','#ffffff',24,'chapo-removebg-preview_1695371771017.png','saloon-removebg-preview_1695371807607.png','EXPLORE THE WILDERNESS','#514532','Inika','#514532','#ddb78b','#62503a','Inika','Western','12 to 18 yrs old',166),(27,'LE DECLIN DES AMES','Cinzel Decorative','#f3ad44',30,'logo_merlin_1695372092169.png','Calque2_1695372104680.png','\"Your choices shape your destiny, explore the decline and become a legend.\"','#ffffff','Inika','#44114d','#f3ad44','#44114d','Inika','Fantastic','6 to 12 yrs old',167),(28,'CTHULHU MAY DIE','Inika','#161a16',28,'pngaaa 18(1)_1695216543388_1695372408916.png','Group_133-removebg-preview_1695372345849.png','Will you dare to face the Cthulhu in this role-playing game?','#ffffff','Inika','#123721','#121313','#161a16','Inika','Horror','18 to 101 yrs old',168),(29,'MALEFICE','Inika','#a09494',30,'imgmalefice_1695279161963_1695373060841.png','grave_1694612270314_1695373075126.png','\"Will you dare to unravel the enchanting mysteries of \'Malefices\'?\"','#a09494','Inika','#450303','#131111','#5d0707','Inika','Horror','18 to 101 yrs old',169);
+/*!40000 ALTER TABLE `card` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `chapters`
@@ -68,6 +78,15 @@ CREATE TABLE `chapters` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `chapters`
+--
+
+LOCK TABLES `chapters` WRITE;
+/*!40000 ALTER TABLE `chapters` DISABLE KEYS */;
+/*!40000 ALTER TABLE `chapters` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `choices`
 --
 
@@ -81,6 +100,15 @@ CREATE TABLE `choices` (
   PRIMARY KEY (`idchoices`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `choices`
+--
+
+LOCK TABLES `choices` WRITE;
+/*!40000 ALTER TABLE `choices` DISABLE KEYS */;
+/*!40000 ALTER TABLE `choices` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `choices_has_chapters`
@@ -99,6 +127,15 @@ CREATE TABLE `choices_has_chapters` (
   CONSTRAINT `fk_choices_has_chapters_choices1` FOREIGN KEY (`choices_idchoices`) REFERENCES `choices` (`idchoices`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `choices_has_chapters`
+--
+
+LOCK TABLES `choices_has_chapters` WRITE;
+/*!40000 ALTER TABLE `choices_has_chapters` DISABLE KEYS */;
+/*!40000 ALTER TABLE `choices_has_chapters` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `consomables`
@@ -120,6 +157,15 @@ CREATE TABLE `consomables` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `consomables`
+--
+
+LOCK TABLES `consomables` WRITE;
+/*!40000 ALTER TABLE `consomables` DISABLE KEYS */;
+/*!40000 ALTER TABLE `consomables` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `enemies`
 --
 
@@ -136,6 +182,15 @@ CREATE TABLE `enemies` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `enemies`
+--
+
+LOCK TABLES `enemies` WRITE;
+/*!40000 ALTER TABLE `enemies` DISABLE KEYS */;
+/*!40000 ALTER TABLE `enemies` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `gallery`
 --
 
@@ -150,8 +205,18 @@ CREATE TABLE `gallery` (
   PRIMARY KEY (`id`),
   KEY `gallery_ibfk_1` (`user_id`),
   CONSTRAINT `gallery_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `gallery`
+--
+
+LOCK TABLES `gallery` WRITE;
+/*!40000 ALTER TABLE `gallery` DISABLE KEYS */;
+INSERT INTO `gallery` VALUES (16,NULL,'chapo-removebg-preview_1695371771017.png','2023-09-22 08:36:11'),(17,NULL,'saloon_1695371787080.jpeg','2023-09-22 08:36:27'),(18,NULL,'saloon-removebg-preview_1695371807607.png','2023-09-22 08:36:47'),(19,NULL,'logo_merlin_1695372092169.png','2023-09-22 08:41:32'),(20,NULL,'Calque2_1695372104680.png','2023-09-22 08:41:44'),(21,NULL,'Group_133-removebg-preview_1695372345849.png','2023-09-22 08:45:45'),(22,NULL,'pngaaa 18(1)_1695216543388_1695372408916.png','2023-09-22 08:46:48'),(23,NULL,'imgmalefice_1695279161963_1695373060841.png','2023-09-22 08:57:40'),(24,NULL,'grave_1694612270314_1695373075126.png','2023-09-22 08:57:55'),(25,NULL,'kisspng-cowboy-clip-art-camera-man-5aa5ebb84ee2d4_1695373496741.jpeg','2023-09-22 09:04:56'),(26,NULL,'kisspng-cowboy-clip-art-camera-man-5aa5ebb84ee2d4_1695373496741_1695373562596.jpeg','2023-09-22 09:06:02'),(27,NULL,'kisspng-cowboy-clip-art-camera-man-5aa5ebb84ee2d4_1695373631821.png','2023-09-22 09:07:11'),(28,NULL,'610-AsQRa4L_1695373748700.png','2023-09-22 09:09:08'),(29,NULL,'far-west-salon-chateau-eau_1284-32461_1695373818265.jpeg','2023-09-22 09:10:18'),(30,NULL,'LE SALOUNNES_1695375453526.avif','2023-09-22 09:37:33'),(31,NULL,'paysage-foret-desertique-vide-scene-heure-du-coucher-du-soleil_1308-56793_1695376702953.jpeg','2023-09-22 09:58:22'),(32,NULL,'PONEYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY_1695377040628.jpeg','2023-09-22 10:04:00'),(33,NULL,'PONEYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY-removebg-preview_1695377073636.png','2023-09-22 10:04:33'),(34,NULL,'snake-01_1695377551476.png','2023-09-22 10:12:31');
+/*!40000 ALTER TABLE `gallery` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `heroes`
@@ -176,6 +241,15 @@ CREATE TABLE `heroes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `heroes`
+--
+
+LOCK TABLES `heroes` WRITE;
+/*!40000 ALTER TABLE `heroes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `heroes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `inventory`
 --
 
@@ -191,6 +265,96 @@ CREATE TABLE `inventory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `inventory`
+--
+
+LOCK TABLES `inventory` WRITE;
+/*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop`
+--
+
+DROP TABLE IF EXISTS `shop`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` int NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `price` int NOT NULL,
+  `quantity` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop`
+--
+
+LOCK TABLES `shop` WRITE;
+/*!40000 ALTER TABLE `shop` DISABLE KEYS */;
+/*!40000 ALTER TABLE `shop` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shop_credit_item`
+--
+
+DROP TABLE IF EXISTS `shop_credit_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shop_credit_item` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `price` int unsigned NOT NULL,
+  `items` varchar(100) NOT NULL,
+  `credit_quantity` int unsigned DEFAULT NULL,
+  `discount` int unsigned DEFAULT NULL,
+  `best_seller` tinyint(1) DEFAULT '0',
+  `subscribe` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shop_credit_item`
+--
+
+LOCK TABLES `shop_credit_item` WRITE;
+/*!40000 ALTER TABLE `shop_credit_item` DISABLE KEYS */;
+INSERT INTO `shop_credit_item` VALUES (1,5,'credits',100,NULL,0,0),(2,25,'crédits',1000,50,1,0),(3,20,'crédits',500,20,0,0),(4,5,'/ months',NULL,0,0,1);
+/*!40000 ALTER TABLE `shop_credit_item` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shopping_card_item`
+--
+
+DROP TABLE IF EXISTS `shopping_card_item`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shopping_card_item` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `shop_credit_item_id` int unsigned NOT NULL,
+  `quantity` int unsigned NOT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `shop_credit_item_id` (`shop_credit_item_id`),
+  CONSTRAINT `shopping_card_item_ibfk_1` FOREIGN KEY (`shop_credit_item_id`) REFERENCES `shop_credit_item` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shopping_card_item`
+--
+
+LOCK TABLES `shopping_card_item` WRITE;
+/*!40000 ALTER TABLE `shopping_card_item` DISABLE KEYS */;
+/*!40000 ALTER TABLE `shopping_card_item` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `stories`
@@ -218,8 +382,18 @@ CREATE TABLE `stories` (
   KEY `fk_stories_heroes1_idx` (`heroes_idheroes`),
   KEY `fk_stories_shop1_idx` (`shop_id`),
   KEY `fk_stories_card1_idx` (`card_idcard`)
-) ENGINE=InnoDB AUTO_INCREMENT=166 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stories`
+--
+
+LOCK TABLES `stories` WRITE;
+/*!40000 ALTER TABLE `stories` DISABLE KEYS */;
+INSERT INTO `stories` VALUES (166,'TO DIE IN THE WEST',NULL,'2023-09-22 08:34:23','2023-09-22',0,0,0,1,0,NULL,0,0,0),(167,'LE DECLIN DES AMES',NULL,'2023-09-22 08:38:26','2023-09-22',0,0,0,0,0,NULL,0,0,0),(168,'CTHULHU MAY DIE',NULL,'2023-09-22 08:43:42','2023-09-22',0,0,0,0,0,NULL,0,0,0),(169,'MALEFICE',NULL,'2023-09-22 08:56:38','2023-09-22',0,0,0,0,0,NULL,0,0,0);
+/*!40000 ALTER TABLE `stories` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `users`
@@ -240,8 +414,18 @@ CREATE TABLE `users` (
   `actual_chapter` int DEFAULT NULL,
   `role` varchar(45) NOT NULL DEFAULT 'user',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (6,'Jean ','Bave','$argon2id$v=19$m=65536,t=5,p=1$j6HilK8NZpjbs3vamsIxIQ$66WDfgLyudktD884/7c0QbHTbU0NKFI/KMp2wSxhpro','nayan.nanouche@gmail.com','JBLEBGDU78',NULL,NULL,NULL,'admin'),(7,'Jean ','Bave','$argon2id$v=19$m=65536,t=5,p=1$ciiilpHp5YdVr2ZgKGaSNA$xgJOtZQkmkDwWxH/2QpGaU82yF9tpV/+Z+EKW3AgQUk','nayan.nanouche@gmail.com','JBLEBGDU78',NULL,NULL,NULL,'admin');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `users_has_chapters`
@@ -260,6 +444,15 @@ CREATE TABLE `users_has_chapters` (
   CONSTRAINT `fk_users_has_chapters_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users_has_chapters`
+--
+
+LOCK TABLES `users_has_chapters` WRITE;
+/*!40000 ALTER TABLE `users_has_chapters` DISABLE KEYS */;
+/*!40000 ALTER TABLE `users_has_chapters` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `weapons`
@@ -283,6 +476,15 @@ CREATE TABLE `weapons` (
   CONSTRAINT `fk_weapons_inventory1` FOREIGN KEY (`inventory_idinventory`, `inventory_heroes_idheroes`) REFERENCES `inventory` (`idinventory`, `heroes_idheroes`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `weapons`
+--
+
+LOCK TABLES `weapons` WRITE;
+/*!40000 ALTER TABLE `weapons` DISABLE KEYS */;
+/*!40000 ALTER TABLE `weapons` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -293,403 +495,4 @@ CREATE TABLE `weapons` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-22  1:44:18
-
-
-
--- ********************* SAUVEGARDE NAYAN ****************************** : 
-
--- -- MySQL Workbench Forward Engineering
-
--- SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
--- SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
--- SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
--- -- -----------------------------------------------------
--- -- Schema mydb
--- -- -----------------------------------------------------
--- -- -----------------------------------------------------
--- -- Schema enigmadb
--- -- -----------------------------------------------------
-
--- -- -----------------------------------------------------
--- -- Schema enigmadb
--- -- -----------------------------------------------------
--- CREATE SCHEMA IF NOT EXISTS `enigmadb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
--- USE `enigmadb` ;
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`card`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS enigmadb.card (
---   idcard INT NOT NULL AUTO_INCREMENT,
---   jdrName VARCHAR(100) NOT NULL,
---   jdrNameFont VARCHAR(45) NOT NULL,
---   jdrNameColor VARCHAR(45) NOT NULL,
---   jdrNameFontSize INT NOT NULL,
---   jdrImg1 VARCHAR(150) NOT NULL,
---   jdrImg2 VARCHAR(100) NOT NULL,
---   jdrText VARCHAR(80) NOT NULL,
---   textColor VARCHAR(45) NOT NULL,
---   textFont VARCHAR(150) NOT NULL,
---   jdrBgColor1 VARCHAR(45) NOT NULL,
---   jdrBgColor2 VARCHAR(45) NOT NULL,
---   buttonColor VARCHAR(150) NOT NULL,
---   buttonFont VARCHAR(150) NOT NULL,
---   jdrCategory VARCHAR(45) NOT NULL,
---   jdrPublic VARCHAR(45) NOT NULL,
---   PRIMARY KEY (idcard))
--- ENGINE = InnoDB
--- DEFAULT CHARACTER SET = utf8mb4
--- COLLATE = utf8mb4_0900_ai_ci;
-
-
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`enemies`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`enemies` (
---   `enemy_id` INT NOT NULL AUTO_INCREMENT,
---   `health` INT NOT NULL,
---   `resistance` INT NULL DEFAULT NULL,
---   `strength` INT NULL DEFAULT NULL,
---   PRIMARY KEY (`enemy_id`))
--- ENGINE = InnoDB
--- DEFAULT CHARACTER SET = utf8mb4
--- COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`stories`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`stories` (
---   `id` INT NOT NULL AUTO_INCREMENT,
---   `title` VARCHAR(100) NOT NULL,
---   `resume` VARCHAR(230) NULL DEFAULT NULL,
---   `creation_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
---   `last_update` DATE NULL DEFAULT NULL,
---   `number_view` INT NULL DEFAULT '0',
---   `win_rate` INT NULL DEFAULT '0',
---   `money_earn` INT NULL DEFAULT '0',
---   `is_deploy` TINYINT NOT NULL,
---   `heroes_idheroes` INT NOT NULL DEFAULT '0',
---   `img_url` VARCHAR(150) NULL DEFAULT NULL,
---   `shop_id` INT NOT NULL DEFAULT '0',
---   `is_complete` TINYINT NULL DEFAULT '0',
---   `card_idcard` INT NOT NULL DEFAULT '0',
---   PRIMARY KEY (`id`, `heroes_idheroes`, `shop_id`, `card_idcard`),
---   INDEX `fk_stories_heroes1_idx` (`heroes_idheroes` ASC) VISIBLE,
---   INDEX `fk_stories_shop1_idx` (`shop_id` ASC) VISIBLE,
---   INDEX `fk_stories_card1_idx` (`card_idcard` ASC) VISIBLE)
--- ENGINE = InnoDB
--- AUTO_INCREMENT = 138
--- DEFAULT CHARACTER SET = utf8mb4
--- COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`chapters`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`chapters` (
---   `idchapters` INT NOT NULL AUTO_INCREMENT,
---   `title` VARCHAR(45) NOT NULL,
---   `text` VARCHAR(5000) NOT NULL,
---   `is_battle` TINYINT NOT NULL,
---   `stories_id` INT NOT NULL,
---   `stories_heroes_idheroes` INT NOT NULL,
---   `enemies_enemy_id` INT NOT NULL,
---   PRIMARY KEY (`idchapters`, `stories_id`, `stories_heroes_idheroes`, `enemies_enemy_id`),
---   INDEX `fk_chapters_stories1_idx` (`stories_id` ASC, `stories_heroes_idheroes` ASC) VISIBLE,
---   INDEX `fk_chapters_enemies1_idx` (`enemies_enemy_id` ASC) VISIBLE,
---   CONSTRAINT `fk_chapters_enemies1`
---     FOREIGN KEY (`enemies_enemy_id`)
---     REFERENCES `enigmadb`.`enemies` (`enemy_id`),
---   CONSTRAINT `fk_chapters_stories1`
---     FOREIGN KEY (`stories_id` , `stories_heroes_idheroes`)
---     REFERENCES `enigmadb`.`stories` (`id` , `heroes_idheroes`))
--- ENGINE = InnoDB
--- DEFAULT CHARACTER SET = utf8mb4
--- COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`choices`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`choices` (
---   `idchoices` INT NOT NULL AUTO_INCREMENT,
---   `button_text` VARCHAR(100) NULL DEFAULT NULL,
---   `next_chapter` INT NULL DEFAULT NULL,
---   PRIMARY KEY (`idchoices`))
--- ENGINE = InnoDB
--- DEFAULT CHARACTER SET = utf8mb4
--- COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`choices_has_chapters`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`choices_has_chapters` (
---   `choices_idchoices` INT NOT NULL,
---   `chapters_idchapters` INT NOT NULL,
---   PRIMARY KEY (`choices_idchoices`, `chapters_idchapters`),
---   INDEX `fk_choices_has_chapters_chapters1_idx` (`chapters_idchapters` ASC) VISIBLE,
---   INDEX `fk_choices_has_chapters_choices1_idx` (`choices_idchoices` ASC) VISIBLE,
---   CONSTRAINT `fk_choices_has_chapters_chapters1`
---     FOREIGN KEY (`chapters_idchapters`)
---     REFERENCES `enigmadb`.`chapters` (`idchapters`),
---   CONSTRAINT `fk_choices_has_chapters_choices1`
---     FOREIGN KEY (`choices_idchoices`)
---     REFERENCES `enigmadb`.`choices` (`idchoices`))
--- ENGINE = InnoDB
--- DEFAULT CHARACTER SET = utf8mb4
--- COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`heroes`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`heroes` (
---   `idheroes` INT NOT NULL AUTO_INCREMENT,
---   `class` VARCHAR(45) NULL DEFAULT NULL,
---   `name` VARCHAR(45) NULL DEFAULT NULL,
---   `health` INT NULL DEFAULT NULL,
---   `max_health` INT NULL DEFAULT NULL,
---   `money` INT NULL DEFAULT NULL,
---   `weapon` VARCHAR(45) NULL DEFAULT NULL,
---   `strength` INT NULL DEFAULT NULL,
---   `resistance` INT NULL DEFAULT NULL,
---   `img_hero` VARCHAR(150) NULL DEFAULT NULL,
---   PRIMARY KEY (`idheroes`))
--- ENGINE = InnoDB
--- DEFAULT CHARACTER SET = utf8mb4
--- COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`inventory`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`inventory` (
---   `idinventory` INT NOT NULL AUTO_INCREMENT,
---   `heroes_idheroes` INT NOT NULL,
---   PRIMARY KEY (`idinventory`, `heroes_idheroes`),
---   INDEX `fk_inventory_heroes1_idx` (`heroes_idheroes` ASC) VISIBLE,
---   CONSTRAINT `fk_inventory_heroes1`
---     FOREIGN KEY (`heroes_idheroes`)
---     REFERENCES `enigmadb`.`heroes` (`idheroes`))
--- ENGINE = InnoDB
--- DEFAULT CHARACTER SET = utf8mb4
--- COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`consomables`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`consomables` (
---   `idconsomables` INT NOT NULL,
---   `conso_name` VARCHAR(45) NOT NULL,
---   `conso_img` VARCHAR(150) NOT NULL,
---   `inventory_idinventory` INT NOT NULL,
---   `inventory_heroes_idheroes` INT NOT NULL,
---   PRIMARY KEY (`idconsomables`, `inventory_idinventory`, `inventory_heroes_idheroes`),
---   INDEX `fk_consomables_inventory1_idx` (`inventory_idinventory` ASC, `inventory_heroes_idheroes` ASC) VISIBLE,
---   CONSTRAINT `fk_consomables_inventory1`
---     FOREIGN KEY (`inventory_idinventory` , `inventory_heroes_idheroes`)
---     REFERENCES `enigmadb`.`inventory` (`idinventory` , `heroes_idheroes`))
--- ENGINE = InnoDB
--- DEFAULT CHARACTER SET = utf8mb4
--- COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`users`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`users` (
---   `id` INT NOT NULL AUTO_INCREMENT,
---   `firstname` VARCHAR(45) NOT NULL,
---   `lastname` VARCHAR(45) NOT NULL,
---   `hashedPassword` VARCHAR(100) NOT NULL,
---   `mail` VARCHAR(100) NOT NULL,
---   `pseudo` VARCHAR(45) NOT NULL,
---   `coins` INT NULL DEFAULT NULL,
---   `experience` INT NULL DEFAULT NULL,
---   `actual_chapter` INT NULL DEFAULT NULL,
---   `role` VARCHAR(45) NOT NULL DEFAULT 'user',
---   PRIMARY KEY (`id`))
--- ENGINE = InnoDB
--- AUTO_INCREMENT = 5
--- DEFAULT CHARACTER SET = utf8mb4
--- COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`gallery`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`gallery` (
---   `id` INT NOT NULL AUTO_INCREMENT,
---   `user_id` INT NULL DEFAULT NULL,
---   `file_path` VARCHAR(255) NOT NULL,
---   `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
---   PRIMARY KEY (`id`),
---   INDEX `gallery_ibfk_1` (`user_id` ASC) VISIBLE,
---   CONSTRAINT `gallery_ibfk_1`
---     FOREIGN KEY (`user_id`)
---     REFERENCES `enigmadb`.`users` (`id`)
---     ON DELETE CASCADE)
--- ENGINE = InnoDB
--- AUTO_INCREMENT = 13
--- DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`shop`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`shop` (
---   `id` INT NOT NULL AUTO_INCREMENT,
---   `type` INT NOT NULL,
---   `name` VARCHAR(45) NOT NULL,
---   `price` INT NOT NULL,
---   `quantity` INT NOT NULL,
---   PRIMARY KEY (`id`))
--- ENGINE = InnoDB
--- DEFAULT CHARACTER SET = utf8mb4
--- COLLATE = utf8mb4_0900_ai_ci;
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`shop_credit_item`
--- -- -----------------------------------------------------
-
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`shop_credit_item` (
---   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
---   `price` INT(11) UNSIGNED NOT NULL,
---   `items` VARCHAR(100) NOT NULL,
---   `credit_quantity`  INT(11) UNSIGNED NULL,
---   `discount`  INT(11) UNSIGNED DEFAULT NULL, 
---   `best_seller` BOOLEAN DEFAULT FALSE,
---   `subscribe` BOOLEAN DEFAULT FALSE,
---   PRIMARY KEY (`id`))
--- ENGINE = InnoDB;
-
--- INSERT INTO `enigmadb`.`shop_credit_item`(`price`, `credit_quantity`, `items`, `discount`, `best_seller`, `subscribe`)
--- VALUES 
--- (5, 100, "credits", NULL, FALSE, FALSE), 
--- (25, 1000, "crédits", 50, TRUE, FALSE),
--- (20, 500, "crédits", 20, FALSE, FALSE),
--- (5, NULL, "/ months", FALSE, FALSE, TRUE);
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`shopping_card_item`
--- -- -----------------------------------------------------
-
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`shopping_card_item` (
---   `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
---   `shop_credit_item_id` INT(11) UNSIGNED NOT NULL,
---   `quantity` INT(11) UNSIGNED NOT NULL,
---   `user_id` INT NOT NULL,
---   PRIMARY KEY (`id`),
---   FOREIGN KEY (`shop_credit_item_id`)
---     REFERENCES `enigmadb`.`shop_credit_item`(`id`)
---   -- FOREIGN KEY (`user_id`)
---   --   REFERENCES `enigmadb`.`users`(`id`)
---     )
---   ENGINE = InnoDB;
-
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`users_has_chapters`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`users_has_chapters` (
---   `users_id` INT NOT NULL,
---   `chapters_idchapters` INT NOT NULL,
---   PRIMARY KEY (`users_id`, `chapters_idchapters`),
---   INDEX `fk_users_has_chapters_chapters1_idx` (`chapters_idchapters` ASC) VISIBLE,
---   INDEX `fk_users_has_chapters_users1_idx` (`users_id` ASC) VISIBLE,
---   CONSTRAINT `fk_users_has_chapters_chapters1`
---     FOREIGN KEY (`chapters_idchapters`)
---     REFERENCES `enigmadb`.`chapters` (`idchapters`),
---   CONSTRAINT `fk_users_has_chapters_users1`
---     FOREIGN KEY (`users_id`)
---     REFERENCES `enigmadb`.`users` (`id`))
--- ENGINE = InnoDB
--- DEFAULT CHARACTER SET = utf8mb4
--- COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -- -----------------------------------------------------
--- -- Table `enigmadb`.`weapons`
--- -- -----------------------------------------------------
--- CREATE TABLE IF NOT EXISTS `enigmadb`.`weapons` (
---   `iditems` INT NOT NULL AUTO_INCREMENT,
---   `name` VARCHAR(45) NULL DEFAULT NULL,
---   `description` VARCHAR(45) NULL DEFAULT NULL,
---   `image` VARCHAR(255) NULL DEFAULT NULL,
---   `buy_price` INT NULL DEFAULT NULL,
---   `sell_price` INT NULL DEFAULT NULL,
---   `damage` INT NULL DEFAULT NULL,
---   `inventory_idinventory` INT NOT NULL,
---   `inventory_heroes_idheroes` INT NOT NULL,
---   PRIMARY KEY (`iditems`, `inventory_idinventory`, `inventory_heroes_idheroes`),
---   INDEX `fk_weapons_inventory1_idx` (`inventory_idinventory` ASC, `inventory_heroes_idheroes` ASC) VISIBLE,
---   CONSTRAINT `fk_weapons_inventory1`
---     FOREIGN KEY (`inventory_idinventory` , `inventory_heroes_idheroes`)
---     REFERENCES `enigmadb`.`inventory` (`idinventory` , `heroes_idheroes`))
--- ENGINE = InnoDB
--- DEFAULT CHARACTER SET = utf8mb4
--- COLLATE = utf8mb4_0900_ai_ci;
-
-
--- SET SQL_MODE=@OLD_SQL_MODE;
--- SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
--- SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
--- -----------------------------------------------------
--- Table enigmadb.shop
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS enigmadb.shop (
-  id INT NOT NULL AUTO_INCREMENT,
-  type INT NOT NULL,
-  name VARCHAR(45) NOT NULL,
-  price INT NOT NULL,
-  quantity INT NOT NULL,
-  PRIMARY KEY (id))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
--- -----------------------------------------------------
--- Table enigmadb.shop_credit_item
--- -----------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS enigmadb.shop_credit_item (
-  id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  price INT(11) UNSIGNED NOT NULL,
-  items VARCHAR(100) NOT NULL,
-  credit_quantity  INT(11) UNSIGNED NULL,
-  discount  INT(11) UNSIGNED DEFAULT NULL, 
-  best_seller BOOLEAN DEFAULT FALSE,
-  subscribe BOOLEAN DEFAULT FALSE,
-  PRIMARY KEY (id))
-ENGINE = InnoDB;
-
-INSERT INTO enigmadb.shop_credit_item(price, credit_quantity, items, discount, best_seller, subscribe)
-VALUES 
-(5, 100, "credits", NULL, FALSE, FALSE), 
-(25, 1000, "crédits", 50, TRUE, FALSE),
-(20, 500, "crédits", 20, FALSE, FALSE),
-(5, NULL, "/ months", FALSE, FALSE, TRUE);
-
--- -----------------------------------------------------
--- Table enigmadb.shopping_card_item
--- -----------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS enigmadb.shopping_card_item (
-  id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  shop_credit_item_id INT(11) UNSIGNED NOT NULL,
-  quantity INT(11) UNSIGNED NOT NULL,
-  user_id INT NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (shop_credit_item_id)
-    REFERENCES enigmadb.shop_credit_item(id)
-  -- FOREIGN KEY (user_id)
-  --   REFERENCES enigmadb.users(id)
-    )
-  ENGINE = InnoDB;
+-- Dump completed on 2023-09-29 10:02:39

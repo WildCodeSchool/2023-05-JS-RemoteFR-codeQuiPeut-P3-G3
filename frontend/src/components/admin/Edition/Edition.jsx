@@ -11,7 +11,7 @@ import EditScenes from "./Sous-menus/scenes/EditScenes"
 import "./Edition.scss"
 
 function AdminEdition() {
-  const [view, setView] = useState("General")
+  const [view, setView] = useState("Vignette")
 
   return (
     <>
@@ -19,7 +19,7 @@ function AdminEdition() {
         <NavEdition view={view} setView={setView} />
       </div>
       <div className="edition__wrapContent">
-        {view === "General" && <EditGeneral />}
+        {view === "Vignette" && <EditGeneral />}
         {view === "Assets" && <EditAssets />}
         {view === "Scenes" && <EditScenes />}
         {/* {view === "Mindmap" && <EditMindmap />} */}

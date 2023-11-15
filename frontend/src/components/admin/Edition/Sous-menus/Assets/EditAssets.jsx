@@ -12,7 +12,7 @@ function EditAssets() {
         init={false}
         Composant={CharacterSettings}
       /> */}
-      <DropSection
+      {/* <DropSection
         title={"Consumables"}
         init={false}
         Composant={CharacterSettings}
@@ -21,7 +21,7 @@ function EditAssets() {
         title={"Weapons"}
         init={false}
         Composant={CharacterSettings}
-      />
+      /> */}
     </div>
   )
 }
