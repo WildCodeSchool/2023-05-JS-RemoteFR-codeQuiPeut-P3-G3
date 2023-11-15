@@ -14,6 +14,7 @@ function ProfilPartieBasse({
   userId,
   hashedPassword,
 }) {
+  const [editPassword, setEditPassword] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [editedData, setEditedData] = useState({
     mail,
@@ -22,7 +23,13 @@ function ProfilPartieBasse({
     firstname,
     hashedPassword,
   })
-
+  //  Fonction pour gérer le reset password
+  const handleEditPassword = () => {
+    setEditPassword(true)
+  }
+  const cancelEditPassword = () => {
+    setEditPassword(false)
+  }
   const handleEditClick = () => {
     setEditedData({ mail, pseudo, lastname, firstname, hashedPassword })
     setIsEditing(true)
@@ -52,12 +59,21 @@ function ProfilPartieBasse({
     <>
       <div className="GlobalContainerPartieBasseGauche">
         <div className="BlocNumero">
-          <img src={icone1} alt="icone person details" />{" "}
+          <img
+            src={icone1}
+            alt="icone person details"
+            onClick={handleEditPassword}
+          />{" "}
           <div className="PersonnalDetails"> Personal details</div>
         </div>
         <div className="BlocNumero">
           <img src={icone3} alt="icone Key" />{" "}
-          <div className="ResetPassword"> Reset Password </div>
+          <input
+            type="button"
+            className="ResetPassword"
+            value="Reset Password"
+            onClick={handleEditPassword}
+          />
         </div>
       </div>
       <div className="GlobalContainerPartieBasseDroite">
@@ -144,6 +160,44 @@ function ProfilPartieBasse({
           </div>
         )}
       </div>
+      {editPassword && (
+        <div className="popup-password-reset">
+          <label htmlFor="firstName" className="label-bold">
+            Old Password:
+          </label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={hashedPassword}
+            className="input-style"
+          />
+          <label htmlFor="firstName" className="label-bold">
+            New Password:
+          </label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={editedData.firstname}
+            onChange={handleInputChange}
+            className="input-style"
+          />
+          <label htmlFor="firstName" className="label-bold">
+            Confirm Password:
+          </label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={editedData.firstname}
+            onChange={handleInputChange}
+            className="input-style"
+          />
+          <input type="button" value="Save" />
+          <input type="button" value="cancel" onClick={cancelEditPassword} />
+        </div>
+      )}
     </>
   )
 }

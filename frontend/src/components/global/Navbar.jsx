@@ -37,34 +37,37 @@ function NavBar() {
   return (
     <>
       <div className="navbar-container">
-        <Link to="/">
-          <input type="image" src={logo} alt="logo" className="logo-navbar" />
-        </Link>
-
         <div
-          className="dropdown-navbar"
+          className="logo-explore-navbar"
           onMouseEnter={handleDropdown}
           onMouseLeave={handleDropdown2}
         >
-          <button className="dropbtn-navbar">
-            Explore
-            <i className="fa fa-caret-down"></i>
-          </button>
-          {isExploreOpen && (
-            <div className="dropdown-content-navbar" id="myDropdown">
-              <Link to="/games">
-                <option value="">Games</option>
-              </Link>
-              <Link to="/shop">
-                <option value="">Shop</option>
-              </Link>
-              <Link to="admin">
-                <option value="">Admin</option>
-              </Link>
-            </div>
-          )}
+          <Link to="/">
+            <input type="image" src={logo} alt="logo" className="logo-navbar" />
+          </Link>
+
+          <div className="dropdown-navbar">
+            <button className="dropbtn-navbar">
+              Explore
+              <i className="fa fa-caret-down"></i>
+            </button>
+
+            {isExploreOpen && (
+              <div className="dropdown-content-navbar" id="myDropdown">
+                <Link to="/games">
+                  <option value="">Games</option>
+                </Link>
+                <Link to="/shop">
+                  <option value="">Shop</option>
+                </Link>
+                <Link to="admin">
+                  <option value="">Admin</option>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
-        <input type="text" placeholder="Search..." className="search-navbar" />
+        {/* <input type="text" placeholder="Search..." className="search-navbar" /> */}
         {isAuthenticated ? (
           <div className="profile-navbar">
             <input

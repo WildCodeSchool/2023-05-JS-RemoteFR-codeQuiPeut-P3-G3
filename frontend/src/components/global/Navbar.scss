@@ -12,12 +12,20 @@
     height: 100%;
   }
 
+  .logo-explore-navbar {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+  }
+
   .dropdown-navbar {
     height: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    padding-left: 2rem;
 
     .dropbtn-navbar {
       background-color: $color--darkestPurple;
@@ -34,7 +42,7 @@
       flex-direction: column;
       position: absolute;
       top: 6%;
-      left: 27%;
+      left: 9%;
       background-color: $color--darkestPurple;
       border: 1px solid $color--darkestPurple;
       border-radius: 4px;

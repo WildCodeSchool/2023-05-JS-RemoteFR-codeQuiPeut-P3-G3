@@ -5,13 +5,18 @@ const userSchema = Joi.object({
   lastname: Joi.string().max(50).required(),
   mail: Joi.string().email().max(55).required(),
   pseudo: Joi.string().max(50).required(),
+  pwd: Joi.string()
+    .min(8)
+    .max(50)
+    .regex(/^(?=.*[A-Z])(?=.*[!@#$%^&*])/)
+    .required(),
 })
 
 const validateUser = (req, res, next) => {
-  const { firstname, lastname, mail, pseudo } = req.body
+  const { firstname, lastname, mail, pseudo, pwd } = req.body
 
   const { error } = userSchema.validate(
-    { firstname, lastname, mail, pseudo },
+    { firstname, lastname, mail, pseudo, pwd },
 
     { abortEarly: false }
   )

@@ -9,14 +9,14 @@
   justify-content: space-evenly;
   margin-block: auto;
 
-  .BlocNumero,
-  .GlobalContainerWelcome {
+  .BlocNumero {
     display: flex;
     align-items: flex-end;
     font-family: "Inika";
     font-size: 1.4rem;
     margin-left: 25%;
     width: fit-content;
+    cursor: pointer;
   }
 }
 
@@ -28,6 +28,11 @@
 .PaymentHistory,
 .ResetPassword {
   margin-left: 10px;
+  border: none;
+  background: none;
+  font-family: "Inika";
+  font-size: 1.4rem;
+  cursor: pointer;
 }
 
 .GlobalContainerPartieBasseDroite {
