@@ -168,10 +168,11 @@ module.exports.deleteStory = (req, res) => {
 module.exports.createScene = (req, res) => {
   const { idStory } = req.params
 
-  console.info("creation scene")
+  console.info("creation scene, id story :", idStory)
 
   const filePath = findPath(idStory)
 
+  console.log(filePath)
   if (fs.existsSync(filePath)) {
     try {
       const loadedStory = require(filePath)

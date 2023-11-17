@@ -29,6 +29,7 @@
     "concurrently": "^7.6.0",
     "cross-env": "^7.0.3",
     "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-security": "^1.7.1",
     "husky": "^8.0.3"
   },
   "dependencies": {

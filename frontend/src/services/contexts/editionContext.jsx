@@ -34,8 +34,6 @@ export const EditionContextProvider = ({ children }) => {
   })
 
   /* ================ STATES UPDATES  ==================== */
-  const [updated, setUpdated] = useState(false)
-  const [render, setRender] = useState(false)
 
   /* =================== CANVA =========================== */
   const [canvas, setCanvas] = useState("")
@@ -124,6 +122,7 @@ export const EditionContextProvider = ({ children }) => {
 
     canvi.add(text)
     canvi.renderAll()
+
     setIsAddingText(false)
   }
 
@@ -284,7 +283,7 @@ export const EditionContextProvider = ({ children }) => {
         }))
 
         setObjects(response.data.scene)
-        canvas.clear()
+
         renderNewElements(response.data.scene)
         console.log("scene importee: ", response.data.scene)
       })
@@ -468,6 +467,7 @@ export const EditionContextProvider = ({ children }) => {
           nbreScene: response.data.nbScenes,
           sceneId: response.data.id,
         }))
+        setObjects(null)
       })
       .catch((error) => {
         console.error(error)
@@ -575,8 +575,6 @@ export const EditionContextProvider = ({ children }) => {
         setCanvas,
         editSettings,
         resetScene,
-        render,
-        setRender,
         addScene,
         objects,
         setSearchParams,
@@ -588,8 +586,6 @@ export const EditionContextProvider = ({ children }) => {
         setObjectSelected,
         exportScenes,
         getScene,
-        setUpdated,
-        updated,
         getActions,
         initCanvas,
         selectedColor,
