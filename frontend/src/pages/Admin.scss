@@ -3,7 +3,7 @@
 /* Block: .admin */
 .admin {
   width: 100%;
-  /* La hauteur est calculée en soustrayant la hauteur de la navigation (définie dans variables.scss) de 100vh */
+  /* La hauteur est calculée en soustrayant la hauteur de la navigation */
   min-height: calc(100vh - $height-nav);
   box-sizing: border-box;
   font-family: $font-family3;

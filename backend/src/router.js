@@ -120,12 +120,16 @@ router.put("/weapons/:id", weaponsControllers.edit)
 router.delete("/weapons/:id", weaponsControllers.destroy)
 
 // Test admin route
-router.get("/admin", verifyToken, verifyAdminRole)
+// router.get("/admin", verifyToken, verifyAdminRole)
 
 /* Test images files */
 router.post("/addPicture/:filename", picturesControllers.add)
 router.delete("/deletePicture/:id", picturesControllers.destroy)
 router.get("/displayAllPictures", picturesControllers.browse)
+
+router.put("/users/:id", usersControllers.editProfile)
+
+router.use("/api-stories", verifyToken)
 
 // router.get("/api-stories/:idStory/:idScene", getStory)
 router.get("/api-stories/:idStory/:idScene", getScene)
@@ -138,7 +142,5 @@ router.delete("/api-stories/:idStory/:idScene", deleteScene, getScene)
 router.put("/api-heroes/:idStory", addHero)
 router.get("/api-heroes/:storyId", getHeroes)
 router.delete("/api-heroes/:storyId/:idHero", deleteHero, getHeroes)
-
-router.put("/users/:id", usersControllers.editProfile)
 
 module.exports = router

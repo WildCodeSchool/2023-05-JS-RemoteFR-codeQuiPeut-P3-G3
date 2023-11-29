@@ -1,14 +1,19 @@
 @import "./variables.scss";
 html {
   background-color: $color--darkestPurple;
+  margin: 0 auto;
 }
 
 body {
   margin: 0;
   padding: 0;
   height: 100%;
+  max-width: 2180px;
+  
   // A SUPPRIMER PLUS TARD
   color: white;
+  
+  margin: 0 auto;
 }
 
 #root {
@@ -19,7 +24,7 @@ body {
 /* ELEMENTS */
 header {
   width: 100%;
-  height: $height-nav;
+  // height: $height-nav;
   box-sizing: border-box;
 }
 

@@ -271,8 +271,6 @@ export const GameContextProvider = ({ children }) => {
           cursor: actions > 0 || elem.link !== "" ? "pointer" : "default",
         }
 
-        console.log(rectProperties.angle)
-
         rectComponents.push(
           <StyledRect
             key={key}

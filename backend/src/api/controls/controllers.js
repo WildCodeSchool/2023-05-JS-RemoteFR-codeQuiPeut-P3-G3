@@ -21,6 +21,14 @@ const findPath = (idStory) => {
   return null
 }
 
+const writeJsonFile = (filePath, data) => {
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2), {
+    encoding: "utf-8",
+    flag: "w",
+    EOL: "\n",
+  })
+}
+
 /* ============================================================= */
 
 module.exports.getStory = (req, res) => {
@@ -62,17 +70,17 @@ module.exports.getScene = (req, res) => {
 }
 
 /* ============================================================= */
-
+// MAJ
 module.exports.createStory = (req, res) => {
   const { insertId } = req
   const { title } = req.body
 
-  // console.log("create story, id : ", insertId)
+  console.log("insert id : ", insertId)
 
   const titleFormatted = title.trim().replace(/\s+/g, "_")
 
   const filename = insertId + "-" + titleFormatted
-  const filePath = path.join(__dirname, "../", "stories", `${filename}.js`)
+  const filePath = path.join(__dirname, "../", "stories", `${filename}.json`)
 
   if (fs.existsSync(filePath)) {
     return res.status(400).json({ error: "Le fichier existe déjà." })
@@ -82,15 +90,11 @@ module.exports.createStory = (req, res) => {
 
   const { story } = require(modeleFilePath)
 
-  // console.log(filePath)
-
-  fs.writeFileSync(
-    filePath,
-    `module.exports.story = ${JSON.stringify(story, null, 2)};\n`,
-    { encoding: "utf-8", flag: "w", EOL: "\n" }
-  )
-
-  // console.log("ficheir cree")
+  fs.writeFileSync(filePath, JSON.stringify({ story }, null, 2), {
+    encoding: "utf-8",
+    flag: "w",
+    EOL: "\n",
+  })
 
   return res.status(200).json({ message: "Fichier créé avec succès." })
 }
@@ -99,22 +103,23 @@ module.exports.createStory = (req, res) => {
 
 module.exports.putScene = (req, res) => {
   const { idStory, idScene } = req.params
-  console.error("enregistrement de ", idStory, " scene ", idScene)
   const sceneContent = req.body
-  // console.log(sceneContent)
 
   const filePath = findPath(idStory)
 
   if (fs.existsSync(filePath)) {
     try {
-      const loadedStory = require(filePath)
-      const story = loadedStory.story
+      const loadedData = require(filePath)
+      const story = loadedData.story || {} // Accédez directement à loadedData.story
 
       if (!story.scenes) {
         story.scenes = []
       }
 
-      if (typeof story.scenes[idScene] === "undefined") {
+      if (
+        typeof story.scenes[idScene] === "undefined" ||
+        !story.scenes[idScene]
+      ) {
         console.info("scene non définie")
         story.scenes.push(sceneContent)
         res.send("Scène ajoutée")
@@ -125,10 +130,7 @@ module.exports.putScene = (req, res) => {
       }
 
       // Écrire le contenu dans le fichier
-      fs.writeFileSync(
-        filePath,
-        `module.exports.story = ${JSON.stringify(story, null, 2)};`
-      )
+      writeJsonFile(filePath, loadedData) // Utilisez loadedData pour écrire le fichier correctement
     } catch (error) {
       console.error("Erreur lors du chargement du fichier :", error)
       return res
@@ -162,7 +164,6 @@ module.exports.deleteStory = (req, res) => {
 
   res.status(204).json({ message: "Fichiers supprimés avec succès." })
 }
-
 /* ============================================================= */
 
 module.exports.createScene = (req, res) => {
@@ -172,7 +173,6 @@ module.exports.createScene = (req, res) => {
 
   const filePath = findPath(idStory)
 
-  console.log(filePath)
   if (fs.existsSync(filePath)) {
     try {
       const loadedStory = require(filePath)
@@ -190,10 +190,7 @@ module.exports.createScene = (req, res) => {
       }
 
       // Écrire le contenu dans le fichier
-      fs.writeFileSync(
-        filePath,
-        `module.exports.story = ${JSON.stringify(story, null, 2)};`
-      )
+      writeJsonFile(filePath, { story })
     } catch (error) {
       console.error("Erreur lors du chargement du fichier :", error)
       return res
@@ -204,7 +201,6 @@ module.exports.createScene = (req, res) => {
     return res.status(400).json({ error: "Le fichier n'existe pas." })
   }
 }
-
 /* ============================================================= */
 
 module.exports.deleteScene = (req, res, next) => {
@@ -221,10 +217,7 @@ module.exports.deleteScene = (req, res, next) => {
         story.scenes.splice(idScene, 1)
 
         // Écrire le contenu dans le fichier
-        fs.writeFileSync(
-          filePath,
-          `module.exports.story = ${JSON.stringify(story, null, 2)};`
-        )
+        writeJsonFile(filePath, { story })
         next()
       }
     } catch (error) {
@@ -277,28 +270,31 @@ module.exports.getHero = (req, res) => {
 }
 
 /* ============================================================= */
+// const fs = require('fs');
+// const { findPath } = require('./util'); // Assurez-vous d'importer correctement votre fonction findPath
 
 module.exports.deleteHero = (req, res, next) => {
-  // console.log("Wesh delete")
   const { storyId, idHero } = req.params
   const filePath = findPath(storyId)
 
   if (fs.existsSync(filePath)) {
     try {
-      const loadedStory = require(filePath)
-      const story = loadedStory.story
+      const loadedData = require(filePath)
+      const story = loadedData.story || {}
 
-      if (story.heroes.length > 0) {
+      if (
+        story.heroes &&
+        story.heroes.length > 0 &&
+        idHero < story.heroes.length
+      ) {
         story.heroes.splice(idHero, 1)
 
         // Écrire le contenu dans le fichier
-        fs.writeFileSync(
-          filePath,
-          `module.exports.story = ${JSON.stringify(story, null, 2)};`
-        )
-        // console.log("next")
+        fs.writeFileSync(filePath, JSON.stringify(loadedData, null, 2))
 
         next()
+      } else {
+        return res.status(404).json({ error: "Héros non trouvé." })
       }
     } catch (error) {
       console.error("Erreur lors du chargement du fichier :", error)
@@ -335,32 +331,26 @@ module.exports.addHero = (req, res) => {
   const { idStory } = req.params
   const data = req.body
 
-  console.info("creation scene")
+  console.info("Création de héros")
 
   const filePath = findPath(idStory)
 
   if (fs.existsSync(filePath)) {
     try {
-      const loadedStory = require(filePath)
-      const story = loadedStory.story
+      const loadedData = require(filePath)
+      const story = loadedData.story || {}
 
-      //
-      if (!story.heroes) {
-        story.heroes = []
-      }
-
-      //
+      // Si la propriété heroes n'existe pas, initialisez-la comme un tableau vide
+      story.heroes = story.heroes || []
 
       story.heroes.push(data)
+
+      // Écrire le contenu dans le fichier
+      fs.writeFileSync(filePath, JSON.stringify(loadedData, null, 2))
+
       res.json({
         content: story.heroes[story.heroes.length - 1],
       })
-
-      // Écrire le contenu dans le fichier
-      fs.writeFileSync(
-        filePath,
-        `module.exports.story = ${JSON.stringify(story, null, 2)};`
-      )
     } catch (error) {
       console.error("Erreur lors du chargement du fichier :", error)
       return res
