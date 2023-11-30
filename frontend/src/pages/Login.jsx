@@ -24,23 +24,32 @@ function Login() {
     axios
       .post("http://localhost:4242/login", userData)
       .then((response) => {
+        // console.log(response) // Ajoutez cette ligne pour voir la réponse complète
+        // console.log(response.data.token)
         if (response.data !== undefined && response.data !== null) {
           const token = response.data.token
-          Cookies.set("authToken", token, { expires: 0.5, sameSite: "strict" })
+          // const expirationDate = new Date(Date.now() + 10 * 1000)
+
+          Cookies.set("authToken", token, {
+            expires: 0.5,
+            sameSite: "strict",
+          })
           Cookies.set("loggedInUser", JSON.stringify(response.data.user), {
             sameSite: "strict",
           })
           Cookies.set("idUser", JSON.stringify(response.data.user.id), {
             sameSite: "strict",
           })
+          Cookies.set("userRole", JSON.stringify(response.data.user.role), {
+            sameSite: "strict",
+          })
 
           navigate("/")
         } else {
-          // Gérer le cas où l'inscription n'a pas réussi
+          alert("Connexion echouée")
         }
       })
       .catch((error) => {
-        // console.error(error)
         setError(error.response.data.message)
       })
   }

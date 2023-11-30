@@ -1,6 +1,7 @@
 const models = require("../models")
 
 const browse = (req, res) => {
+  console.log("récupération stories")
   models.stories
     .findAll()
     .then(([rows]) => {
@@ -124,11 +125,7 @@ const createStoryWithCard = (req, res, next) => {
     .then(([result]) => {
       const storyId = result.insertId
       req.insertId = result.insertId
-      // console.log(" STORY ID : => ", storyId)
-      // console.log(req)
-      // console.log(result)
 
-      // Maintenant, insérez une nouvelle carte associée à la story avec des valeurs par défaut
       const newCard = {
         jdrName: "Nom par défaut",
         jdrNameFont: "Arial, sans-serif",

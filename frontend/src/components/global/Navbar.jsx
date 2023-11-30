@@ -54,13 +54,13 @@ function NavBar() {
 
             {isExploreOpen && (
               <div className="dropdown-content-navbar" id="myDropdown">
-                <Link to="/games">
+                <Link to="/games" className="linkNav">
                   <option value="">Games</option>
                 </Link>
-                <Link to="/shop">
+                <Link to="/shop" className="linkNav">
                   <option value="">Shop</option>
                 </Link>
-                <Link to="admin">
+                <Link to="admin" className="linkNav">
                   <option value="">Admin</option>
                 </Link>
               </div>

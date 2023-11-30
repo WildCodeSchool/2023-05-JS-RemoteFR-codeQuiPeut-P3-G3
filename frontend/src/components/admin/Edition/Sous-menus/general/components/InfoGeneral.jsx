@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from "react"
+import Cookies from "js-cookie"
 import { useLocation } from "react-router-dom"
 import axios from "axios"
 import ColorSelector from "../../../../../global/texts-editor/ColorSelector"
@@ -39,6 +40,14 @@ function InfoGeneral() {
   const story = params.get("story")
   const scene = params.get("scene")
   const { editSettings } = useEditionContext()
+
+  const authToken = Cookies.get("authToken")
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }
 
   // ------------ TEXT FORMATTING -------------------
 
@@ -96,6 +105,8 @@ function InfoGeneral() {
   const divCardTop = useRef(null)
   const divCardBottom = useRef(null)
   const divCardButton = useRef(null)
+  const mainBackground = useRef(null)
+  const divWave = useRef(null)
 
   // const handleColorPicker = () => {
   //   setDisplayCPicker(true)
@@ -126,11 +137,14 @@ function InfoGeneral() {
 
   useEffect(() => {
     if (clickedElement === "buttonBgTop") {
-      divCardTop.current.style.backgroundColor = selectedColor
+      // divCardTop.current.style.backgroundColor = selectedColor
+      // divCardBottom
+      mainBackground.current.style.backgroundColor = selectedColor
       updateBackgroundColor(setJdrBgColor1, selectedColor)
+      // updateBackgroundColor(setJdrBgColor2, selectedColor)
     }
     if (clickedElement === "buttonBgBottom") {
-      divCardBottom.current.style.backgroundColor = selectedColor
+      divWave.current.style.backgroundColor = selectedColor
       updateBackgroundColor(setJdrBgColor2, selectedColor)
     }
     if (clickedElement === "buttonBgButton") {
@@ -200,8 +214,10 @@ function InfoGeneral() {
         setJdrNameColor(values.jdrNameColor)
         setTextColor(values.textColor)
         setIdCard(values.idcard)
+        setImgPathBottom(values.jdrImg2)
+        setImgPathTop(values.jdrImg1)
 
-        // console.log("ID CARD : ", values.idcard)
+        console.log("ID CARD : ", values)
       })
       .catch((err) => console.error(err))
   }
@@ -234,7 +250,7 @@ function InfoGeneral() {
     }
 
     axios
-      .put(`http://localhost:4242/card/${storyId}`, cardData)
+      .put(`http://localhost:4242/card/${storyId}`, cardData, config)
       .then((res) => {
         if (res.status === 201) {
           alert("carte modifiée avec succes")
@@ -380,7 +396,7 @@ function InfoGeneral() {
                 />
               </div>
             </div>
-            <div className="pictureMain">
+            <div className="pictureMain" ref={mainBackground}>
               <div
                 className="cardTop"
                 ref={divCardTop}
@@ -412,39 +428,13 @@ function InfoGeneral() {
                   alt="image top"
                 />
               </div>
-              <div className="waveAndBottomImg">
-                <svg
-                  className="wave"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="402"
-                  height="112"
-                  viewBox="0 0 402 112"
-                  fill="#none"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M401.198 111.581C401.198 121.174 417.91 -37.4809 298.777 8.32094C0.00046601 101.075 1.93865e-05 101.075 1.93865e-05 100.987L0.000111791 111.581C0.000111791 111.581 84.8331 111.581 133.73 111.581C182.627 111.581 241.782 111.581 290.68 111.581C339.577 111.581 376.933 111.581 401.198 111.581Z"
-                    fill={jdrBgColor2 ?? "#f8c86b"}
-                  />
-                </svg>
-                <img
-                  className="cardBottomImg"
-                  ref={divImgBottom}
-                  src={
-                    imgPathBottom
-                      ? `http://localhost:4242/uploads/${imgPathBottom}`
-                      : imgDefault
-                  }
-                  alt="image bottom"
-                />
-              </div>
+
               <div
                 className="cardBottom"
                 ref={divCardBottom}
                 style={{
                   backgroundColor:
-                    clickedElement === ".buttonBgBottom" ? jdrBgColor2 : "",
+                    clickedElement === ".buttonBgTop" ? jdrBgColor1 : "",
                 }}
               >
                 <div className="cardBottomTextButton">
@@ -485,6 +475,24 @@ function InfoGeneral() {
                     </h4>
                   </div>
                 </div>
+              </div>
+              <div className="waveAndBottomImg">
+                <svg
+                  className="wave"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="402"
+                  height="112"
+                  viewBox="0 0 402 112"
+                  fill="#none"
+                >
+                  <path
+                    ref={divWave}
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M401.198 111.581C401.198 121.174 417.91 -37.4809 298.777 8.32094C0.00046601 101.075 1.93865e-05 101.075 1.93865e-05 100.987L0.000111791 111.581C0.000111791 111.581 84.8331 111.581 133.73 111.581C182.627 111.581 241.782 111.581 290.68 111.581C339.577 111.581 376.933 111.581 401.198 111.581Z"
+                    fill={jdrBgColor2 ?? "#f8c86b"}
+                  />
+                </svg>
               </div>
             </div>
           </div>

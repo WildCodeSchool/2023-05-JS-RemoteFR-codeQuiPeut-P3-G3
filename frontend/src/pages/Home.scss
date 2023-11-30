@@ -92,83 +92,11 @@
   }
 
   .footer {
+    height:10vh;
   }
 }
 
-.jdrCardApp {
-  display: flex;
-  position: relative;
-}
 
-.pagination {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-}
-
-.pagination button img {
-  width: 40px;
-  border-radius: 25%;
-}
-
-.boutonNext {
-  position: absolute;
-  bottom: 50%;
-  right: -25px;
-  border-radius: 50%;
-  width: 40px;
-  color: aliceblue;
-  height: 40px;
-  background-color: #fff;
-  border: none;
-  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
-
-  cursor: pointer;
-  position: absolute;
-  transform: translate(-50%, 0);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  z-index: 999;
-}
-
-.boutonNext img {
-  width: 30px;
-  height: 30px;
-}
-
-.boutonPrev {
-  position: absolute;
-  left: -25px;
-  bottom: 50%;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  background-color: #fff;
-
-  border: none;
-  border-radius: 50%;
-  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
-
-  cursor: pointer;
-  position: absolute;
-  transform: translate(-50%, 0);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  z-index: 999;
-}
-
-.boutonPrev img {
-  width: 30px;
-  height: 30px;
-}
 
 .allGames {
   display: flex;

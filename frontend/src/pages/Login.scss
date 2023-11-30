@@ -1,9 +1,16 @@
+@import "../variables.scss";
+
+
 .container-login {
   display: flex;
+  width:100%;
+  max-width: 1000px;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
-  margin-top: 2rem;
+  padding-top: 10vh;
+  margin: 0 auto;
+
+  font-family: $font-family2 ;
 
   .top-login {
     background-color: white;

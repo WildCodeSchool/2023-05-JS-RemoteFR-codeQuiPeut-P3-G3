@@ -1,11 +1,13 @@
 @import "../variables.scss";
 
+
 .avatar {
   display: flex;
   height: 35vh;
   background-color: $color--darkestPurple;
   align-items: center;
   justify-content: center;
+
 
   .globalContainerProfil {
     height: 60%;

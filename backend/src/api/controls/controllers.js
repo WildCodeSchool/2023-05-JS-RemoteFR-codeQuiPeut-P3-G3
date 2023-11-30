@@ -70,12 +70,12 @@ module.exports.getScene = (req, res) => {
 }
 
 /* ============================================================= */
-// MAJ
+
 module.exports.createStory = (req, res) => {
   const { insertId } = req
   const { title } = req.body
 
-  console.log("insert id : ", insertId)
+  // console.log("insert id : ", insertId)
 
   const titleFormatted = title.trim().replace(/\s+/g, "_")
 
@@ -201,6 +201,7 @@ module.exports.createScene = (req, res) => {
     return res.status(400).json({ error: "Le fichier n'existe pas." })
   }
 }
+
 /* ============================================================= */
 
 module.exports.deleteScene = (req, res, next) => {

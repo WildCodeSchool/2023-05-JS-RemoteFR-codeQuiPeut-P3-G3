@@ -1,5 +1,6 @@
 import "./widgetScenes.scss"
 import { useEffect, useState } from "react"
+import Cookies from "js-cookie"
 
 import imgImport from "../../../../../../assets/user_ui/import.png"
 import imgExport from "../../../../../../assets/user_ui/export.png"
@@ -11,13 +12,20 @@ function WidgetScenes() {
   const { editStatus, addScene } = useEditionContext()
   const { getScene, setSearchParams, editSettings } = useEditionContext()
 
-  const handleClickScene = (idScene) => {
+  const MajScene = (idScene) => {
+    // console.log("mise à jour scene : ", idScene)
     getScene(editStatus.storyId, idScene)
     setSearchParams({ story: editStatus.storyId, scene: idScene })
     editSettings(editStatus.storyId, idScene)
+    // console.log("récupération faite")
+  }
+
+  const handleClickScene = (idScene) => {
+    MajScene(idScene)
   }
 
   const [boutons, setBoutons] = useState([])
+
   useEffect(() => {
     const boutons = []
 
@@ -26,7 +34,7 @@ function WidgetScenes() {
         <ButtonUI
           key={i}
           title={`scene ${i + 1}`}
-          bgcolor={parseInt(editStatus.sceneId) === i ? "#0c426a" : "#3e86bb"}
+          bgcolor={parseInt(editStatus.sceneId) === i ? "#3e86bb" : "#0c426a"}
           width={"100%"}
           onClick={() => handleClickScene(i)}
         />
@@ -35,6 +43,10 @@ function WidgetScenes() {
 
     setBoutons(boutons)
   }, [editStatus])
+
+  useEffect(() => {
+    MajScene(0)
+  }, [])
 
   return (
     <>

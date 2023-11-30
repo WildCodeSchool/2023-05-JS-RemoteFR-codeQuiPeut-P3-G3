@@ -1,6 +1,8 @@
 import ButtonUI from "../../global/Buttons/ButtonUI"
 import "./General.scss"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+import Cookies from "js-cookie"
 
 import axios from "axios"
 import { useEditionContext } from "../../../services/contexts/editionContext"
@@ -11,6 +13,15 @@ function AdminGeneral({ setNav, selected }) {
   const [title, setTitle] = useState("")
   const [storyCreated, setStoryCreated] = useState(false)
   const { searchParams, setSearchParams } = useEditionContext()
+  const navigate = useNavigate()
+
+  const authToken = Cookies.get("authToken")
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }
 
   /* Recupération des stories au montage */
   useEffect(() => {
@@ -23,7 +34,6 @@ function AdminGeneral({ setNav, selected }) {
       searchParams.delete("story")
       setSearchParams(searchParams)
     }
-    console.info("coucou", data)
   }, [])
 
   /* Animation quand story créee */
@@ -38,14 +48,12 @@ function AdminGeneral({ setNav, selected }) {
 
   /* Creation nouvelle story */
   const handleCreate = () => {
-    // console.log("create")
     const data = {
       title,
     }
     axios
-      .post("http://localhost:4242/stories", data)
+      .post("http://localhost:4242/stories", data, config)
       .then((response) => {
-        // console.log("reponse : ", response)
         if (response.status === 200) {
           setStoryCreated(true)
           getStories()
@@ -73,10 +81,29 @@ function AdminGeneral({ setNav, selected }) {
 
   /* Recuperation et affichage des story */
   const getStories = () => {
-    axios.get("http://localhost:4242/stories").then((response) => {
-      setData(response.data)
-      console.info("coucou", data)
-    })
+    axios
+      .get("http://localhost:4242/stories", config)
+      .then((response) => {
+        setData(response.data)
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          // Le serveur a répondu avec un code 401 (Non autorisé), ce qui indique probablement un jeton expiré.
+          // Supprimez le cookie et déconnectez l'utilisateur.
+          Cookies.remove("authToken")
+          Cookies.remove("loggedInUser")
+          Cookies.remove("idUser")
+
+          // Redirigez l'utilisateur vers la page de connexion ou une page appropriée.
+          navigate("/")
+        } else {
+          // Gérez les autres erreurs ici
+          console.error(
+            "Erreur de réponse du serveur:",
+            error.response ? error.response.data : error.message
+          )
+        }
+      })
   }
 
   /* Suppression story */
@@ -85,7 +112,7 @@ function AdminGeneral({ setNav, selected }) {
     // console.log(deleteId)
     if (isSure) {
       axios
-        .delete(`http://localhost:4242/stories/${deleteId}`, data)
+        .delete(`http://localhost:4242/stories/${deleteId}`, data, config)
         .then((response) => {
           // console.log(response)
           if (response.status === 204) {
@@ -118,7 +145,7 @@ function AdminGeneral({ setNav, selected }) {
       }
 
       axios
-        .put(`http://localhost:4242/deploy/${storyId}`, data)
+        .put(`http://localhost:4242/deploy/${storyId}`, data, config)
         .then((response) => {
           if (response.status === 204) {
             alert("✅ Update success")

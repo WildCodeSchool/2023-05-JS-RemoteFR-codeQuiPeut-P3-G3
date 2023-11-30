@@ -16,20 +16,27 @@ function NavAdmin({ setNav, selected }) {
             <button
               type="button"
               className={`nav__item ${selected === "General" ? "active" : ""}`}
-              onClick={() => setNav("General")}
+              onClick={() => {
+                // console.log(selected)
+                setNav("General")
+              }}
             >
               General
             </button>
           </li>
-          <li>
-            <button
-              type="button"
-              className={`nav__item ${selected === "Edition" ? "active" : ""}`}
-              onClick={() => setNav("Edition")}
-            >
-              Edition
-            </button>
-          </li>
+          {selected === "General" ? null : (
+            <li>
+              <button
+                type="button"
+                className={`nav__item ${
+                  selected === "Edition" ? "active" : ""
+                }`}
+                onClick={() => setNav("Edition")}
+              >
+                Edition
+              </button>
+            </li>
+          )}
           <li>
             <button
               type="button"

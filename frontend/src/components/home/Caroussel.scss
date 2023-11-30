@@ -1,0 +1,80 @@
+.jdrCardApp {
+    display: flex;
+    position: relative;
+    width:100%;
+    height:40vh;
+    justify-content: space-evenly;
+    align-items:center;
+  }
+
+  .carourou{
+    height:100%;
+   aspect-ratio: 1/1;
+   width:auto;
+   max-width: 100%;
+   display:flex;
+   justify-content: center;
+   align-items: center;
+  }
+
+  .jdrCardGlobal{
+    height: 90%;
+    width: 90%;
+    
+  }
+  
+  .pagination {
+    height: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width: 5%;
+  }
+  
+  .pagination button img {
+    width: 100%;
+    border-radius: 25%;
+  }
+  
+  .boutonNext {
+    border-radius: 50%;
+    width: 40px;
+    color: aliceblue;
+    height: 40px;
+    background-color: #fff;
+    border: none;
+    box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
+  
+    cursor: pointer;  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .boutonNext img {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .boutonPrev {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+  
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
+  
+    cursor: pointer;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+  
+  .boutonPrev img {
+    width: 30px;
+    height: 30px;
+  }

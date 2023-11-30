@@ -3,23 +3,20 @@ import axios from "axios"
 import JdrCard from "../components/global/JdRcard"
 import downarrow from "../assets/images/downarrow.png"
 import Footer from "../components/global/Footer"
-
 import "./Games.scss"
+import "../components/home/Caroussel.scss"
 import previous from "../assets/images/chevron-left-512.webp"
 import next from "../assets/images/chevron-right-512.webp"
 import { useNavigate } from "react-router-dom"
 
 export default function Home() {
-  // const [startIndex, setStartIndex] = useState(0)
   const [jdrCardData, setJdrCardData] = useState([])
   const navigate = useNavigate()
 
   const fetchData = async () => {
     try {
       const response = await axios.get("http://localhost:4242/card")
-      // console.log(response.data)
       setJdrCardData(response.data)
-      // console.log(response.data)
     } catch (error) {
       console.error("Erreur lors de la récupération des données", error)
     }
@@ -33,20 +30,30 @@ export default function Home() {
   const [startIndexFantastic, setStartIndexFantastic] = useState(0)
   const [startIndexHorror, setStartIndexHorror] = useState(0)
   const [startIndexWestern, setStartIndexWestern] = useState(0)
+  const [open, setOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 800)
 
   const handleNext = (section) => {
     switch (section) {
       case "allGamesSection":
-        setStartIndexAllGames((startIndexAllGames + 2) % jdrCardData.length)
+        setStartIndexAllGames(
+          (startIndexAllGames + (isMobile ? 1 : 2)) % jdrCardData.length
+        )
         break
       case "fantasticGamesSection":
-        setStartIndexFantastic((startIndexFantastic + 2) % jdrCardData.length)
+        setStartIndexFantastic(
+          (startIndexFantastic + (isMobile ? 1 : 2)) % jdrCardData.length
+        )
         break
       case "horrorGamesSection":
-        setStartIndexHorror((startIndexHorror + 2) % jdrCardData.length)
+        setStartIndexHorror(
+          (startIndexHorror + (isMobile ? 1 : 2)) % jdrCardData.length
+        )
         break
       case "westernGamesSection":
-        setStartIndexWestern((startIndexWestern + 2) % jdrCardData.length)
+        setStartIndexWestern(
+          (startIndexWestern + (isMobile ? 1 : 2)) % jdrCardData.length
+        )
         break
       default:
         break
@@ -57,33 +64,48 @@ export default function Home() {
     switch (section) {
       case "allGamesSection":
         setStartIndexAllGames(
-          (startIndexAllGames - 2 + jdrCardData.length) % jdrCardData.length
+          (startIndexAllGames - (isMobile ? 1 : 2) + jdrCardData.length) %
+            jdrCardData.length
         )
         break
       case "fantasticGamesSection":
         setStartIndexFantastic(
-          (startIndexFantastic - 2 + jdrCardData.length) % jdrCardData.length
+          (startIndexFantastic - (isMobile ? 1 : 2) + jdrCardData.length) %
+            jdrCardData.length
         )
         break
       case "horrorGamesSection":
         setStartIndexHorror(
-          (startIndexHorror - 2 + jdrCardData.length) % jdrCardData.length
+          (startIndexHorror - (isMobile ? 1 : 2) + jdrCardData.length) %
+            jdrCardData.length
         )
         break
       case "westernGamesSection":
         setStartIndexWestern(
-          (startIndexWestern - 2 + jdrCardData.length) % jdrCardData.length
+          (startIndexWestern - (isMobile ? 1 : 2) + jdrCardData.length) %
+            jdrCardData.length
         )
         break
       default:
         break
     }
   }
-  const [open, setOpen] = useState(false)
 
   const handleClick = (storyId) => {
     navigate(`/game?story=${storyId}`)
   }
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 800)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
 
   return (
     <>
@@ -100,7 +122,7 @@ export default function Home() {
           </button>
         </div>
         <div className={`dropdown-menu ${open ? "active" : "inactive"}`}>
-          <ul>
+          <ul className="dropdown-list">
             <DropdownItem text={"All Games"} anchor={"allGamesSection"} />
             <DropdownItem text={"Fantastic"} anchor={"fantasticGamesSection"} />
             <DropdownItem text={"Horror"} anchor={"horrorGamesSection"} />
@@ -119,27 +141,30 @@ export default function Home() {
         {jdrCardData.length > 0 && (
           <section className="home__content__games" id="allGamesSection">
             <div className="allGames">
-              <h1 className="All">"ALL</h1>
-              <h2 className="gamezzz">GAMES"</h2>
+              <h1 className="All">ALL</h1>
+              <h2 className="gamezzz">GAMES</h2>
             </div>
             <div className="jdrCardApp">
-              {jdrCardData
-                .slice(startIndexAllGames, startIndexAllGames + 2)
-                .map((jdr, index) => (
-                  <JdrCard
-                    key={jdr.idcard}
-                    {...jdr}
-                    handleClick={() => handleClick(jdr.storyId)}
-                  />
-                ))}
-
               <div className="pagination">
-                <button
-                  className="boutonPrev"
-                  onClick={() => handlePrevious("allGamesSection")}
-                >
+                <button className="boutonPrev" onClick={handlePrevious}>
                   <img src={previous} alt="" />
                 </button>
+              </div>
+              {jdrCardData
+                .slice(
+                  startIndexAllGames,
+                  startIndexAllGames + (isMobile ? 1 : 2)
+                )
+                .map((jdr, index) => (
+                  <div key={jdr.idcard} className="carourou">
+                    <JdrCard
+                      key={jdr.idcard}
+                      {...jdr}
+                      handleClick={() => handleClick(jdr.storyId)}
+                    />
+                  </div>
+                ))}
+              <div className="pagination">
                 <button
                   className="boutonNext"
                   onClick={() => handleNext("allGamesSection")}
@@ -151,6 +176,8 @@ export default function Home() {
           </section>
         )}
 
+        {/* Ajoute les sections supplémentaires en fonction des catégories de jeux (fantastic, horror, etc.) */}
+        {/* Assure-toi de mettre à jour startIndex selon la catégorie de chaque section. */}
         {jdrCardData.length > 0 && (
           <section className="home__content__games" id="fantasticGamesSection">
             <div className="allGames">
@@ -158,10 +185,18 @@ export default function Home() {
               <h2 className="gamezzz">GAMES"</h2>
             </div>
             <div className="jdrCardApp">
+              <div className="pagination">
+                <button className="boutonPrev" onClick={handlePrevious}>
+                  <img src={previous} alt="" />
+                </button>
+              </div>
               {jdrCardData
-                .slice(startIndexFantastic, startIndexFantastic + 2)
+                .slice(
+                  startIndexFantastic,
+                  startIndexFantastic + (isMobile ? 1 : 2)
+                )
                 .map((jdr, index) => (
-                  <div key={jdr.idcard}>
+                  <div key={jdr.idcard} className="carourou">
                     {jdr.jdrCategory === "Fantastic" && (
                       <JdrCard
                         {...jdr}
@@ -172,12 +207,6 @@ export default function Home() {
                 ))}
 
               <div className="pagination">
-                <button
-                  className="boutonPrev"
-                  onClick={() => handlePrevious("fantasticGamesSection")}
-                >
-                  <img src={previous} alt="" />
-                </button>
                 <button
                   className="boutonNext"
                   onClick={() => handleNext("fantasticGamesSection")}
@@ -196,10 +225,15 @@ export default function Home() {
               <h2 className="gamezzz">GAMES"</h2>
             </div>
             <div className="jdrCardApp">
+              <div className="pagination">
+                <button className="boutonPrev" onClick={handlePrevious}>
+                  <img src={previous} alt="" />
+                </button>
+              </div>
               {jdrCardData
-                .slice(startIndexHorror, startIndexHorror + 2)
+                .slice(startIndexHorror, startIndexHorror + (isMobile ? 1 : 2))
                 .map((jdr, index) => (
-                  <div key={jdr.idcard}>
+                  <div key={jdr.idcard} className="carourou">
                     {jdr.jdrCategory === "Horror" && (
                       <JdrCard
                         {...jdr}
@@ -210,12 +244,6 @@ export default function Home() {
                 ))}
 
               <div className="pagination">
-                <button
-                  className="boutonPrev"
-                  onClick={() => handlePrevious("horrorGamesSection")}
-                >
-                  <img src={previous} alt="" />
-                </button>
                 <button
                   className="boutonNext"
                   onClick={() => handleNext("horrorGamesSection")}
@@ -233,10 +261,18 @@ export default function Home() {
               <h2 className="gamezzz">GAMES"</h2>
             </div>
             <div className="jdrCardApp">
+              <div className="pagination">
+                <button className="boutonPrev" onClick={handlePrevious}>
+                  <img src={previous} alt="" />
+                </button>
+              </div>
               {jdrCardData
-                .slice(startIndexWestern, startIndexWestern + 2)
+                .slice(
+                  startIndexWestern,
+                  startIndexWestern + (isMobile ? 1 : 2)
+                )
                 .map((jdr, index) => (
-                  <div key={jdr.idcard}>
+                  <div key={jdr.idcard} className="carourou">
                     {jdr.jdrCategory === "Western" && (
                       <JdrCard
                         {...jdr}
@@ -247,12 +283,6 @@ export default function Home() {
                 ))}
 
               <div className="pagination">
-                <button
-                  className="boutonPrev"
-                  onClick={() => handlePrevious("westernGamesSection")}
-                >
-                  <img src={previous} alt="" />
-                </button>
                 <button
                   className="boutonNext"
                   onClick={() => handleNext("westernGamesSection")}

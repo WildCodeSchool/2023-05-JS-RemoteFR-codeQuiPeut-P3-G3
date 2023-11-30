@@ -2,7 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import "./CompLocal.scss"
 
-function CompLocal({ setSelectedPath }) {
+function CompLocal({ setSelectedPath, config }) {
   const [images, setImages] = useState([])
   /* Faire un .env front? */
   const backendBaseUrl = "http://localhost:4242"
@@ -14,11 +14,12 @@ function CompLocal({ setSelectedPath }) {
 
   useEffect(() => {
     axios
-      .get(`${backendBaseUrl}/displayAllPictures`)
+      .get(`${backendBaseUrl}/displayAllPictures`, config)
       .then((response) => {
         const imageNames = response.data.files
         // console.log("récupération des images : ", imageNames)
         setImages(imageNames)
+        console.log("recuperation image")
       })
       .catch((error) => {
         console.error(

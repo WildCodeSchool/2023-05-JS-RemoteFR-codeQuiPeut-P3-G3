@@ -5,7 +5,7 @@ function NavEdition({ view, setView }) {
   return (
     <>
       <ul className="nav__edition">
-        <li>
+        <li className="nav__edition_link">
           <button
             type="button"
             className={`nav__button ${view === "Vignette" ? "active" : ""}`}
@@ -17,7 +17,7 @@ function NavEdition({ view, setView }) {
 
         <div className="nav__separator"></div>
 
-        <li>
+        <li className="nav__edition_link">
           <button
             type="button"
             className={`nav__button ${view === "Assets" ? "active" : ""}`}
@@ -29,7 +29,7 @@ function NavEdition({ view, setView }) {
 
         <div className="nav__separator"></div>
 
-        <li>
+        <li className="nav__edition_link">
           <button
             type="button"
             className={`nav__button ${view === "Scenes" ? "active" : ""}`}

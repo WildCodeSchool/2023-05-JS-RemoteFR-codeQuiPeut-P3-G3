@@ -10,7 +10,7 @@ function Footer() {
             <span className="icon">&#x260E;</span> 08 92 92 92 92
           </p>
           <p>
-            <span className="icon">&#x2709;</span> chickenlord@gmail.com
+            <span className="icon">&#x2709;</span> contact@enigma.io
           </p>
           <div className="line-div-footer"></div>
         </div>

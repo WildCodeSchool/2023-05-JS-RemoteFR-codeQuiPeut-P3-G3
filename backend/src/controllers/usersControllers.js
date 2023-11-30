@@ -84,28 +84,44 @@ const destroy = (req, res) => {
     })
 }
 
+/* ================================================= */
+
 const findByMail = (req, res, next) => {
+  // Récupère les informations de connexion depuis le corps de la requête.
+  const { mail, pwd } = req.body
+
+  // Vérifie que l'e-mail et le mot de passe sont fournis.
+  if (!mail || !pwd) {
+    return res
+      .status(401)
+      .json({ message: "Adresse e-mail et mot de passe requis" })
+  }
+
+  // Appelle la méthode du modèle "users" pour rechercher un utilisateur par e-mail et mot de passe.
   models.users
-    .getUserByEmailAndPassToNext(req.body, req, res, next)
+    .browseMail(mail, req, next)
     .then((user) => {
+      // Si un utilisateur est trouvé
       if (user) {
-        // return res.status(200).json(user)
+        // Passe les informations de l'utilisateur à la prochaine fonction middleware (next).
+        req.user = user
+        next()
       } else {
-        // return res
-        //   .status(401)
-        //   .json({ message: "Email ou mot de passe incorrect" })
+        // Sinon réponse avec un statut non autorisé si l'utilisateur n'est pas trouvé.
+        res.status(401).json({ message: "Adresse e-mail inconnue" })
       }
     })
-    .catch((err) => {
-      console.error(err)
-      return err
+    .catch((error) => {
+      // En cas d'erreur, affiche l'erreur dans la console et renvoie une réponse avec un statut serveur interne.
+      console.error(error)
+      res.status(500).json({ error: "Erreur interne du serveur" })
     })
 }
 
+/* ================================================= */
+
 const editProfile = (req, res) => {
   const users = req.body
-
-  // TODO validations (length, format...)
 
   users.id = parseInt(req.params.id, 10)
 

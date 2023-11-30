@@ -10,7 +10,6 @@ function ProtectedRoutes() {
     : null
   const isAdmin = user && user.role === "admin"
 
-  // Si c'est une route d'administration, vérifiez le rôle de l'utilisateur
   if (isLoggedIn && isAdmin) {
     return <Outlet />
   } else {

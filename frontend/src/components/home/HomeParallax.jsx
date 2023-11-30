@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useLayoutEffect, useRef } from "react"
 import { gsap } from "gsap"
 import ScrollTrigger from "gsap/ScrollTrigger"
 
@@ -41,7 +41,7 @@ export default function HomeParallax() {
     })
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     pinCastleLights()
   }, [])
 
@@ -62,7 +62,7 @@ export default function HomeParallax() {
     })
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     moveCloudsFront()
   }, [])
 
@@ -81,7 +81,7 @@ export default function HomeParallax() {
     })
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     moveStars()
   }, [])
 
@@ -100,7 +100,7 @@ export default function HomeParallax() {
     })
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     moveMoon()
   }, [])
 

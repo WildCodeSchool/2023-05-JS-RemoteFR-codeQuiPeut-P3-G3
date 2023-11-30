@@ -9,6 +9,8 @@ import ButtonUI from "../../../../../../global/Buttons/ButtonUI"
 import { useEditionContext } from "../../../../../../../services/contexts/editionContext"
 import { useLocation } from "react-router-dom"
 
+import Cookies from "js-cookie"
+
 import axios from "axios"
 
 function CharacterSettings() {
@@ -21,6 +23,14 @@ function CharacterSettings() {
   const params = new URLSearchParams(location.search)
   const story = params.get("story")
   const scene = params.get("scene")
+
+  const authToken = Cookies.get("authToken")
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }
 
   const [heroTemplate, setHeroTemplate] = useState({
     class: "",
@@ -45,13 +55,10 @@ function CharacterSettings() {
     },
   })
 
-  // const checkAllElements = (obj) => {
-  //   const allValuesDefined = Object.values(obj).every((value) => {
-  //     return value !== "" && value !== undefined
-  //   })
-
-  //   return allValuesDefined
-  // }
+  useEffect(() => {
+    // console.log("story id : ", storyId)
+    apiGetHeroes(story)
+  }, [story])
 
   useEffect(() => {
     if (selectedPathCharacter !== "") {
@@ -80,7 +87,7 @@ function CharacterSettings() {
 
   const apiGetHeroes = (storyId) => {
     axios
-      .get(`http://localhost:4242/api-heroes/${storyId}`)
+      .get(`http://localhost:4242/api-heroes/${storyId}`, config)
       .then((res) => {
         setHero(res.data)
       })
@@ -91,7 +98,11 @@ function CharacterSettings() {
     const data = heroTemplate
     // console.log(heroTemplate)
     axios
-      .put(`http://localhost:4242/api-heroes/${editStatus.storyId}`, data)
+      .put(
+        `http://localhost:4242/api-heroes/${editStatus.storyId}`,
+        data,
+        config
+      )
       .then((results) => {
         setHero((prev) => {
           const newHeroArray = [...prev]
@@ -107,7 +118,8 @@ function CharacterSettings() {
   const apiDeleteHero = (idHero) => {
     axios
       .delete(
-        `http://localhost:4242/api-heroes/${editStatus.storyId}/${idHero}`
+        `http://localhost:4242/api-heroes/${editStatus.storyId}/${idHero}`,
+        config
       )
       .then((res) => {
         if (res.status === 200) {

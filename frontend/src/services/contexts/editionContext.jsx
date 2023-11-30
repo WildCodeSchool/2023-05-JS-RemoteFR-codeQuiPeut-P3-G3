@@ -5,6 +5,15 @@ import axios from "axios"
 import { v4 as uuidv4 } from "uuid"
 import imgDelete from "../../assets/text_ui/minus.png"
 import { useSearchParams } from "react-router-dom"
+import Cookies from "js-cookie"
+
+const authToken = Cookies.get("authToken")
+
+const config = {
+  headers: {
+    Authorization: `Bearer ${authToken}`,
+  },
+} // Utilisation directe de l'objet headers dans la configuration axios
 
 const EditionContext = createContext()
 
@@ -253,20 +262,6 @@ export const EditionContextProvider = ({ children }) => {
     }
   }
 
-  /* ======= ANNEXES ====== */
-
-  // const resetStates = () => {
-  //   setSelectedColor("")
-  //   setSelectedFont("")
-  //   setSelectedSize("")
-  //   setAlignment("")
-
-  //   setSelectedSizeBorder("")
-  //   setSelectedSizeRadius("")
-  //   setSelectedColorBorder("")
-  //   setSelectedColorBg("")
-  // }
-
   /* =================================================== REQUETES HTTP ================================================= */
 
   const getScene = (idStory, idScene) => {
@@ -328,21 +323,6 @@ export const EditionContextProvider = ({ children }) => {
         flipX: textboxData.obj.flipX,
         flipY: textboxData.obj.flipY,
       })
-
-      // const dataTextInfo = {
-      //   fontSize: 4,
-      //   height: 20,
-      //   width: 300,
-      //   top: top - 5,
-      //   left,
-      //   selectable: false,
-      //   id: textboxData.id,
-      //   Actions: textboxData.Actions,
-      //   link: textboxData.link,
-      //   pos: textboxData.pos,
-      // }
-
-      // const textInfo = `left:${left} top:${top} width:${textboxData.obj.width} height:${textboxData.obj.height} `
 
       // const textboxInfo = new fabric.Textbox(textInfo, { dataTextInfo })
       console.log(`${textboxData.pos.percX} %`)
@@ -437,9 +417,26 @@ export const EditionContextProvider = ({ children }) => {
     }
     canvas.renderAll()
   }
+
+  // const getHeaders = () => {
+  //   const authToken = Cookies.get("authToken")
+
+  //   return {
+  //     headers: {
+  //       Authorization: `Bearer ${authToken}`,
+  //     },
+  //   }
+  // }
+
   const addScene = (idStory) => {
+    // const headers = getHeaders().headers
+    // console.log(headers.headers)
     axios
-      .post(`http://localhost:4242/api-stories/createScene/${idStory}`)
+      .post(
+        `http://localhost:4242/api-stories/createScene/${idStory}`,
+        null,
+        config // La donnée à envoyer, ici null car la route semble ne pas nécessiter de données dans le corps
+      )
       .then((response) => {
         console.info("Add scene => Réponse serveur :", response.data)
         setEditStatus((prevEditStatus) => ({
@@ -460,7 +457,10 @@ export const EditionContextProvider = ({ children }) => {
 
   const deleteScene = (idStory, idScene) => {
     axios
-      .delete([`http://localhost:4242/api-stories/${idStory}/${idScene}`])
+      .delete(
+        [`http://localhost:4242/api-stories/${idStory}/${idScene}`],
+        config
+      )
       .then((response) => {
         setEditStatus((prevEditStatus) => ({
           ...prevEditStatus,
@@ -521,7 +521,8 @@ export const EditionContextProvider = ({ children }) => {
     axios
       .put(
         `http://localhost:4242/api-stories/${idStory}/${idScene}`,
-        dataExport
+        dataExport,
+        config
       )
       .then((response) => {
         console.info("Export scene => Réponse serveur :", response.data)

@@ -6,6 +6,7 @@ import imgQuit from "../../../../assets/user_ui/quit_white.png"
 import CompUpload from "./Download/CompUpload"
 import CompWebSearch from "./WebSearch/compWebSearch"
 import CompLocal from "./Local/CompLocal"
+import Cookies from "js-cookie"
 
 function PopupImgFinder({
   setViewImgFinder,
@@ -14,6 +15,14 @@ function PopupImgFinder({
   selectedPath,
 }) {
   const [viewState, setView] = useState("local")
+
+  const authToken = Cookies.get("authToken")
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }
 
   return (
     <div className="popupFinder">
@@ -49,12 +58,13 @@ function PopupImgFinder({
 
       <div className="popupFinderContent">
         {viewState === "local" && (
-          <CompLocal setSelectedPath={setSelectedPath} />
+          <CompLocal setSelectedPath={setSelectedPath} config={config} />
         )}
         {viewState === "upload" && (
           <CompUpload
             setSelectedPath={setSelectedPath}
             onClickCancel={() => setViewImgFinder(false)}
+            config={config}
           />
         )}
         {viewState === "webSearch" && <CompWebSearch />}

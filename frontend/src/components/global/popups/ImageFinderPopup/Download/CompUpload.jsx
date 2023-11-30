@@ -5,7 +5,7 @@ import axios from "axios"
 import imgImport from "../../../../../assets/user_ui/import.png"
 import ButtonUI from "../../../Buttons/ButtonUI"
 
-function CompUpload({ onClickCancel, setSelectedPath }) {
+function CompUpload({ onClickCancel, setSelectedPath, config }) {
   const [success, setSuccess] = useState("")
 
   const [selectedFile, setSelectedFile] = useState()
@@ -43,7 +43,8 @@ function CompUpload({ onClickCancel, setSelectedPath }) {
       try {
         const response = await axios.post(
           `http://localhost:4242/addPicture/${selectedFile.name}`,
-          formData
+          formData,
+          config
         )
         // alert(response.data.fileName)
         // setImageUrl(response.data.fileName)

@@ -15,14 +15,17 @@ app.use(express.json())
 
 const cors = require("cors")
 
-app.use(cors())
+app.use(cors({ origin: "*" }))
 
 app.use(
   cors({
     origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
-    optionsSuccessStatus: 200,
+    optionsSuccessStatus: 204,
+    credentials: true,
   })
 )
+
+app.options("*", cors())
 
 /* Laisse le répertoire uploads accessible */
 app.use("/uploads", express.static("uploads"))

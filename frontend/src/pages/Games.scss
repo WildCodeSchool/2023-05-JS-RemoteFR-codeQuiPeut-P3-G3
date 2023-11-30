@@ -50,81 +50,6 @@
   }
 }
 
-.jdrCardApp {
-  display: flex;
-  position: relative;
-}
-
-.pagination {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-}
-
-.pagination button img {
-  width: 40px;
-  border-radius: 25%;
-}
-
-.boutonNext {
-  position: absolute;
-  bottom: 50%;
-  right: -25px;
-  border-radius: 50%;
-  width: 40px;
-  color: aliceblue;
-  height: 40px;
-  background-color: #fff;
-  border: none;
-  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
-
-  cursor: pointer;
-  position: absolute;
-  transform: translate(-50%, 0);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  z-index: 999;
-}
-
-.boutonNext img {
-  width: 30px;
-  height: 30px;
-}
-
-.boutonPrev {
-  position: absolute;
-  left: -25px;
-  bottom: 50%;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  background-color: #fff;
-
-  border: none;
-  border-radius: 50%;
-  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
-
-  cursor: pointer;
-  position: absolute;
-  transform: translate(-50%, 0);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  z-index: 999;
-}
-
-.boutonPrev img {
-  width: 30px;
-  height: 30px;
-}
-
 .allGames {
   display: flex;
   font-size: 30px;
@@ -142,36 +67,70 @@
   font-size: 35px;
 }
 
+// .carourou{
+//   height:100%;
+//   width: 100%;
+// }
+
 .dropdown-menu.active {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
   transition: var(--speed) ease;
+  padding:0;
+  position:absolute;
+  z-index:100;
 }
 
 .dropdown-menu.inactive {
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-20px);
+  // transform: translateY(-20px);
   transition: var(--speed) ease;
 }
 
-ul {
+.dropdown-list {
   list-style: none;
   color: black;
+  width: 100%;
+  padding: 0;
+  line-height: 2rem;
+
+}
+
+.dropdownItem{
+  padding:0;
+  padding:1rem;
+  box-sizing: border-box;
+  
 }
 
 a {
   text-decoration: none;
+  font-family: $font-family2;
+  font-size:1.2rem;
+  width:100%;
+  color:$color--darkestPurple;
+
+}
+
+
+.dropdownItem:hover {
+  background-color: black;
+  color:white;
+
+  a{
+    color:white;
+  }
 }
 
 .dropdown-menu {
   margin-left: 400px;
-
   background-color: white;
   border-radius: var(--border-radius);
   padding: 10px 20px;
   width: 200px;
+
 }
 
 .dropdown-menu::before {
@@ -233,4 +192,5 @@ h3 {
 
 .menu-container {
   margin-left: 150px;
+  height:20vh;
 }
